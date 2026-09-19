@@ -1,0 +1,61 @@
+generated: '2026-09-19'
+method: searched
+source: https://pypi.org/pypi/airia/json
+description: >-
+  First-party client libraries Airia publishes. One package is on a public registry (PyPI); the iOS
+  SDK is distributed through a private JFrog Swift package registry that needs a token from an Airia
+  account representative, so it has no public metadata endpoint to read a version from. npm, NuGet,
+  Maven Central, RubyGems, crates.io and pkg.go.dev were searched and carry no first-party Airia
+  package.
+packages:
+- name: airia
+  registry: pypi
+  url: https://pypi.org/project/airia/
+  official: true
+  language: python
+  version: 0.1.41
+  published: '2026-02-13'
+  license: MIT
+  requires: '>=3.9'
+  author: Airia LLC <support@airia.com>
+  description: >-
+    Airia Python API library with synchronous (AiriaClient) and asynchronous (AiriaAsyncClient)
+    clients, pipeline (agent) execution, optional OpenAI and Anthropic gateway integrations, and
+    correlation-id request tracing.
+  docs: https://airiallc.github.io/airia-python
+  source_repo: https://github.com/AiriaLLC/airia-python
+  note: >-
+    Version and date read from registry.pypi metadata on 2026-09-19. The MkDocs documentation site at
+    airiallc.github.io/airia-python is live (200) and covers clients, attachments, conversations,
+    data store, data vector search, deployments, guardrails, library, models, pipeline execution and
+    tools; the source repository the README names (github.com/AiriaLLC/airia-python) returns 404 for
+    an anonymous visitor, so the SDK's docs are public while its code is not.
+- name: AiriaSDK
+  registry: other
+  registry_url: https://airia.jfrog.io/artifactory/api/swift/airia-swift-local
+  official: true
+  language: swift
+  platform: ios
+  version: null
+  published: null
+  install: swift package-registry set --global --scope airia https://airia.jfrog.io/artifactory/api/swift/airia-swift-local
+  dependency_id: airia.AiriaSDK
+  docs: https://airia.ai/docs/developers-hub/capabilities/download-sdk
+  note: >-
+    Private Swift Package Registry on JFrog. Access requires a token obtained from an Airia account
+    representative, so there is no anonymous metadata endpoint and no readable version; the docs show
+    `.package(id: "airia.AiriaSDK", from: "1.0.0")` as the example floor, which is an example, not a
+    published latest version. Recorded as checked-and-unreadable, not as absent.
+searched_registries:
+- registry: npm
+  result: no first-party package (airia, @airia/*, airia-sdk, airia-mcp all 404 on registry.npmjs.org)
+- registry: nuget
+  result: no first-party package, despite the API being an ASP.NET Core/NSwag surface
+- registry: maven-central
+  result: none
+- registry: rubygems
+  result: none
+- registry: crates.io
+  result: none
+- registry: pkg.go.dev
+  result: none

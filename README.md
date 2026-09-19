@@ -64,5 +64,21 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AIRIA is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Airia (Airia LLC) is an enterprise AI orchestration, security and governance platform — an agent
+builder, a model routing and cost gateway, an MCP Gateway fronting approved tool servers, and an AI
+discovery/governance layer typed against the EU AI Act, NIST AI RMF and ISO/IEC 42001.
+
+Profiled 2026-09-19 from public surfaces:
+
+- **Website** — https://airia.com/
+- **Documentation** — https://airia.ai/docs
+- **API reference** — https://api.airia.ai/docs/ (Scalar)
+- **OpenAPI** — https://api.airia.ai/swagger/v1/swagger.yaml — OpenAPI 3.0, 1,299 operations across
+  187 tags, 2,188 schemas, `X-API-Key` auth. Saved verbatim to `openapi/airia-openapi.yml`.
+- **MCP Gateway** — `https://mcp-gateway.airia.ai/gateway/{gateway-id}/mcp`, OAuth 2.1 with RFC 9728
+  protected-resource metadata and dynamic client registration (`mcp/`, `well-known/`).
+- **Python SDK** — https://pypi.org/project/airia/ (`packages/`)
+- **Status** — https://status.airia.com/ · **Trust center** — https://trust.airia.com/
+
+Everything in this repository was fetched from a public URL with no credentials; each artifact
+records the URL it came from and the HTTP status observed.

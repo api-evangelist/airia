@@ -1,0 +1,33 @@
+generated: '2026-09-19'
+method: searched
+source: https://airia.ai/docs/llms.txt
+description: >-
+  Airia publishes TWO llms.txt files, and they serve different audiences. The docs site serves a
+  219-line index of every documentation page with a one-line description
+  (https://airia.ai/docs/llms.txt, text/plain, 27.8 KB, saved as airia-llms.txt); the marketing site
+  serves a 48-line curated company/product index (https://airia.com/llms.txt, text/plain, 5.3 KB,
+  saved as airia-com-llms.txt). Both were fetched with a 200 and saved verbatim. A third path,
+  https://airia.ai/llms.txt, answers 200 with the application's HTML shell rather than a text file,
+  so it is a false positive and was not saved.
+files:
+- file: airia-llms.txt
+  url: https://airia.ai/docs/llms.txt
+  status: 200
+  content_type: text/plain;charset=UTF-8
+  bytes: 27824
+  lines: 219
+  subject: documentation index
+- file: airia-com-llms.txt
+  url: https://airia.com/llms.txt
+  status: 200
+  content_type: text/plain
+  bytes: 5321
+  lines: 48
+  subject: company and product index
+not_saved:
+- url: https://airia.ai/llms.txt
+  status: 200
+  reason: returns the SPA HTML shell (75 KB of markup), not an llms.txt document
+llms_full:
+  published: false
+  note: No llms-full.txt was found on either host.

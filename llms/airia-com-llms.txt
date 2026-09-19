@@ -1,0 +1,64 @@
+# Airia
+
+> Airia is a full-stack AI platform for enterprises that need to deploy AI agents with security, governance, and cost control built in. The platform provides agent orchestration, security posture management, AI governance, model lifecycle management, and cost optimization in one unified surface.
+
+Airia is used by organizations including ArcelorMittal, BuzzFeed, Mars, Northwestern, 8x8, Kyndryl, KOA, and Learning Care Group. The platform connects to enterprise data and 1,000+ business systems while enforcing centralized policies on every model call, every retrieval, and every agent action.
+
+## Platform — Orchestration
+
+- [AI Platform overview](https://airia.com/ai-platform): The orchestration, security, and governance layer for enterprise AI
+- [Orchestration](https://airia.com/ai-platform/orchestration): Coordinate models, agents, tools, and data with policy-aware execution
+- [Agent Builder](https://airia.com/ai-platform/agent-builder): Design AI agents with no-code, low-code, or pro-code — all under the same governance
+- [Prototyping Studio](https://airia.com/ai-platform/prototyping-studio): Iterate on prompts, models, and workflows in a sandbox that mirrors production
+- [Cost Optimization](https://airia.com/ai-platform/cost-optimization): Forecast spend, enforce budgets, route requests to the most cost-effective model
+- [Model Lifecycle Management](https://airia.com/ai-platform/model-lifecycle): Approve, version, retire, and route across providers
+- [Routing Engine](https://airia.com/ai-platform/routing-engine): Dynamically route requests based on performance, cost, and policy
+- [Data Integration](https://airia.com/ai-platform/data-integration): Connect agents to enterprise systems with permissions enforced at retrieval
+- [MCP Capabilities](https://airia.com/ai-platform/mcp-capabilities): Native Model Context Protocol support for tool and data access
+- [Deployment](https://airia.com/ai-platform/deployment): Deploy agents in your VPC or ours
+
+## Platform — Security & Governance
+
+- [Security overview](https://airia.com/ai-platform/security): Centralized policy enforcement across every AI interaction
+- [Security Posture Management](https://airia.com/ai-platform/security-posture-management): Continuously evaluate AI risk across models, agents, and integrations
+- [AI Discovery](https://airia.com/ai-platform/ai-discovery): Find shadow AI usage across the enterprise
+- [AI Inventory Management](https://airia.com/ai-platform/ai-inventory-management): Single source of truth for every AI asset in production
+- [Agent Constraints](https://airia.com/ai-platform/agent-constraints): Boundaries that govern what agents can do, see, and execute
+- [Agent Red Teaming](https://airia.com/ai-platform/agent-red-teaming): Stress-test agents against jailbreaks and adversarial inputs
+- [Guardrails](https://airia.com/ai-platform/guardrails): Runtime safety controls for prompts, outputs, and tool calls
+- [System Controls](https://airia.com/ai-platform/system-controls): Authentication, authorization, and audit at the platform layer
+- [Governance overview](https://airia.com/ai-platform/governance): The policy and accountability layer for enterprise AI
+- [Governance Dashboard](https://airia.com/ai-platform/governance-dashboard): Real-time visibility into AI usage, risk, and compliance posture
+- [Compliance Reporting](https://airia.com/ai-platform/compliance-reporting): Audit-ready reports for SOC 2, ISO 27001, EU AI Act, and more
+- [Risk Classifications](https://airia.com/ai-platform/risk-classifications): Tier AI use cases by risk level and apply matched controls
+- [AI Model Management](https://airia.com/ai-platform/ai-model-management): Approve, gate, and monitor every model in your stack
+
+## Pricing & Trial
+
+- [Pricing](https://airia.com/pricing): Plans for individuals, teams, and enterprises
+- [Request a demo](https://airia.com/request-demo): Talk with the Airia team about rollout, pricing, and governance needs
+- [Request a personalized demo](https://airia.com/request-demo): Schedule a 30-minute walkthrough with a solutions engineer
+
+## Company
+
+- [About](https://airia.com/about): Mission, leadership, and how Airia is structured
+- [Partners](https://airia.com/partners): SI, technology, and reseller partners
+- [Contact](https://airia.com/contact-us): Talk to sales, security, partnerships, or press
+- [Frequently Asked Questions](https://airia.com/frequently-asked-questions): Answers to common platform, security, and pricing questions
+
+## Resources
+
+- [Blog](https://airia.com/blog): Posts on AI orchestration, governance, and enterprise deployment patterns
+- [Resources library](https://airia.com/resources): Whitepapers, ebooks, webinars, and analyst reports
+- [Videos](https://airia.com/videos): Product demos, customer talks, and event recordings
+- [Airia in Action](https://airia.com/airia-in-action): Customer stories and live deployments
+- [News](https://airia.com/category/airia-news): Product launches, partnerships, and analyst recognition
+- [Integrations](https://airia.com/integrations): 1,000+ business systems Airia connects to natively
+
+## Creator program
+
+- [Creator Signup](https://airia.com/creator-signup): Build agents on Airia, get discovered by enterprises, get paid
+
+## Legal
+
+- [Privacy Policy](https://airia.com/privacy-policy)

@@ -1,0 +1,69 @@
+generated: '2026-09-19'
+method: searched
+source: https://airia.ai/docs/build/interface-options/usage_limits
+description: >-
+  Airia publishes agent-execution rate limits and document-ingestion ceilings per licence tier on its
+  Usage Limits page. The OpenAPI declares 429 responses on 10 operations (agent execution, AI-asset
+  sync, MCP deployment provisioning and the public governance share endpoints), all returning the
+  ProblemDetails shape. No RateLimit-* or X-RateLimit-* response headers are documented, and none
+  could be observed without a credential — every unauthenticated request to api.airia.ai returns 401
+  before any limit is applied — so the runtime signal an agent would need is not published.
+limit_count: 3
+limits:
+- scope: per-tenant
+  tier: Professional
+  limit: 3
+  unit: agent executions
+  window: second
+  burst: null
+  source: https://airia.ai/docs/build/interface-options/usage_limits
+- scope: per-tenant
+  tier: Teams
+  limit: 4
+  unit: agent executions
+  window: second
+  burst: null
+  source: https://airia.ai/docs/build/interface-options/usage_limits
+- scope: per-tenant
+  tier: Enterprise
+  limit: 5
+  unit: agent executions
+  window: second
+  burst: null
+  note: >-
+    Published as a default that "may be amended based on the Customer's agreement with Airia" — a
+    negotiated ceiling, not a fixed one.
+  source: https://airia.ai/docs/build/interface-options/usage_limits
+quotas:
+- scope: per-tenant
+  tier: Professional
+  limit: 25
+  unit: GB
+  measure: document ingestion
+- scope: per-tenant
+  tier: Teams
+  limit: 50
+  unit: GB
+  measure: document ingestion
+- scope: per-tenant
+  tier: Enterprise
+  limit: 100
+  unit: GB
+  measure: document ingestion
+  note: Default, amendable by agreement.
+exhaustion:
+  status: 429
+  body: ProblemDetails (application/json)
+  operations_declaring_429: 10
+  retry_after: not documented
+response_headers:
+  documented: []
+  observed: []
+  note: >-
+    No rate-limit headers are documented and none could be observed anonymously; api.airia.ai answers
+    401 to every credential-less request. An agent cannot read remaining budget from a response today.
+budgets:
+  description: >-
+    Separate from rate limits, Airia enforces spend budgets at gateway and per-user level (daily,
+    weekly, monthly) for model traffic; exhaustion surfaces as 402 on 12 operations.
+  source: https://airia.com/ai-platform/cost-optimization

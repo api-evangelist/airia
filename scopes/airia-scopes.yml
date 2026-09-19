@@ -1,0 +1,80 @@
+generated: '2026-09-19'
+method: probed
+source: https://mcp-gateway.airia.ai/.well-known/oauth-protected-resource
+docs: https://airia.ai/docs/settings/developer/api-keys
+description: >-
+  OAuth scopes Airia publishes. These come from the MCP Gateway's RFC 9728 protected-resource
+  metadata and the Keycloak realm's OpenID discovery document, both fetched anonymously — not from
+  the REST OpenAPI, which declares only apiKey schemes (X-API-Key and a session cookie) and no
+  oauth2 securityScheme at all. So the platform REST API is not scope-governed; the MCP Gateway is.
+  Access to the REST API is instead governed by ROLES bound to a key, which are resolved live on
+  every request; the role/permission vocabulary is documented in the console's permissions reference
+  and is not published anonymously.
+authorization_servers:
+- issuer: https://mcp-gateway.airia.ai
+  metadata: well-known/airia-mcp-gateway-oauth-authorization-server.json
+  authorization_endpoint: https://identity.airia.ai/auth/realms/airia/protocol/openid-connect/auth
+  token_endpoint: https://identity.airia.ai/auth/realms/airia/protocol/openid-connect/token
+  registration_endpoint: https://mcp-gateway.airia.ai/.well-known/oauth-authorization-server/v1/register
+  pkce: S256
+- issuer: https://identity.airia.ai/auth/realms/airia
+  metadata: well-known/airia-identity-openid-configuration.json
+  registration_endpoint: https://identity.airia.ai/auth/realms/airia/clients-registrations/openid-connect
+resources:
+- resource: https://mcp-gateway.airia.ai
+  metadata: well-known/airia-mcp-gateway-oauth-protected-resource.json
+  bearer_methods_supported:
+  - header
+- resource: https://prodaus.mcp-gateway.airia.ai
+  metadata: well-known/airia-prodaus-mcp-gateway-oauth-protected-resource.json
+  note: Australian regional gateway; identical scope set.
+scopes:
+- name: mcp.read
+  description: Read access to the MCP Gateway — list and inspect the tools, resources and skills a gateway exposes.
+  source: https://mcp-gateway.airia.ai/.well-known/oauth-protected-resource
+- name: mcp.write
+  description: Invoke tools through the MCP Gateway.
+  source: https://mcp-gateway.airia.ai/.well-known/oauth-protected-resource
+- name: openid
+  description: Standard OIDC scope; issues an ID token.
+- name: profile
+  description: Standard OIDC profile claims.
+- name: email
+  description: Standard OIDC email claim.
+- name: address
+  description: Standard OIDC address claim.
+- name: phone
+  description: Standard OIDC phone claim.
+- name: roles
+  description: Keycloak realm/client roles claim — the roles that decide what a token can do inside Airia.
+- name: groups
+  description: Keycloak group membership claim.
+- name: active_organization
+  description: The tenant/organization the token is currently acting within.
+- name: enterprise
+  description: Airia enterprise client scope.
+- name: basic
+  description: Keycloak basic scope (sub, auth_time).
+- name: acr
+  description: Authentication context class reference.
+- name: web-origins
+  description: Keycloak CORS origins scope.
+- name: microprofile-jwt
+  description: MicroProfile JWT claims (upn, groups).
+identity_realm_only_scopes:
+- name: airia-knowledge
+  description: >-
+    Present on the identity.airia.ai realm but NOT in the MCP Gateway's advertised scope set —
+    knowledge/retrieval access issued to first-party surfaces.
+  source: https://identity.airia.ai/auth/realms/airia/.well-known/openid-configuration
+- name: service_account
+  description: Client-credentials service-account scope on the realm, not offered through the gateway.
+  source: https://identity.airia.ai/auth/realms/airia/.well-known/openid-configuration
+rest_api_authorization:
+  model: roles-on-api-key
+  note: >-
+    Not OAuth scopes. A key is created with either no roles (a personal access token carrying the
+    creating user's permissions) or one or more roles (a service account). Permissions are resolved
+    fresh on every request from those roles, Platform Admin can never be assigned to a key, and a
+    key cannot be issued with more permission than its creator holds at creation time.
+  docs: https://airia.ai/docs/settings/developer/api-keys

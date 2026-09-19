@@ -1,0 +1,96 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancement overlay for the Airia Web APIs
+  version: 1.0.0
+extends: openapi/airia-openapi.yml
+x-generated: '2026-09-19'
+x-method: generated
+x-source: openapi/airia-openapi.yml + https://airia.ai/docs
+x-rationale: >-
+  The harvested spec (https://api.airia.ai/swagger/v1/swagger.yaml, NSwag-generated) is complete in
+  structure — 1,299 operations, unique operationIds, 2,188 schemas, declared responses — but carries
+  almost no prose: there is no info.description, no contact, no licence, no externalDocs, not one
+  operation summary, and the securitySchemes are defined but never applied by a root `security`
+  requirement even though every operation returns 401/403. This overlay adds the documentation
+  Airia publishes elsewhere WITHOUT mutating the original: apply it with any Overlay 1.0.0 processor
+  against openapi/airia-openapi.yml. It changes nothing about the API's behaviour and is not a
+  substitute for the provider adding these fields upstream.
+actions:
+  - target: $.info
+    description: Add the description, contact, licence and terms Airia publishes on its site and docs.
+    update:
+      description: >-
+        The platform REST API behind the Airia enterprise AI console: agents (called "pipelines" in
+        this contract) and their execution, projects, knowledge/data sources and retrieval, MCP
+        deployments and gateways, governance use cases, workflows and risk registry, security
+        posture management, shadow-AI discovery, red teaming, guardrails, model lifecycle and
+        routing, budgets, users/groups/roles, conversations and outbound webhooks.
+
+
+        Authentication is an `X-API-Key` header carrying either a personal access token (your own
+        permissions) or a service-account key (only the roles selected at creation). Keys are created
+        under Settings > Developer > API Keys, scoped to one project or all projects, and shown once.
+
+
+        Every operation accepts an `x-correlation-id` request header; send one and keep it — it is
+        the id support asks for. Errors use the ProblemDetails shape. There is no idempotency-key
+        mechanism: a retried write runs again.
+      contact:
+        name: Airia Support
+        url: https://airia.ai/docs/contact-us/support
+      termsOfService: https://airia.com/privacy-policy/
+  - target: $.externalDocs
+    description: Point at the public documentation site.
+    update:
+      description: Airia platform documentation
+      url: https://airia.ai/docs
+  - target: $.servers
+    description: Describe the production server, which the original leaves unlabelled.
+    update:
+      - url: https://api.airia.ai
+        description: >-
+          Production. Regional environments exist for data residency (Canada, Netherlands, UAE North,
+          Singapore, Australia East) and are surfaced as separate hosts on the status page; the
+          contract publishes only the primary host.
+  - target: $
+    description: >-
+      Apply the ApiKey scheme globally. The original defines ApiKey and Cookies in
+      components.securitySchemes but declares no root `security`, so a generated client would send no
+      credential while 797 operations declare a 401 response.
+    update:
+      security:
+        - ApiKey: []
+  - target: $.components.securitySchemes.ApiKey
+    description: Describe how an X-API-Key is obtained and what it carries.
+    update:
+      description: >-
+        API key created in the Airia console under Settings > Developer > API Keys. A key with no
+        roles is a personal access token bound to the creating user's permissions; a key with roles
+        is a service account carrying only those roles. Permissions are resolved live on every
+        request, so editing a role changes every key bound to it. Scope is all projects or exactly
+        one, plus an explicit opt-in for conversation endpoints.
+  - target: $.tags
+    description: >-
+      Document the top-level domains. The original has 187 tag values used on operations but no root
+      tags[] block describing any of them; these are the largest families.
+    update:
+      - name: PipelineExecution
+        description: Execute agents (pipelines), including streaming, multipart and batch execution.
+      - name: PipelinesConfig
+        description: Create, version, publish, export and delete agents.
+      - name: Spm
+        description: Security Posture Management — continuous AI risk evaluation across models, agents and integrations.
+      - name: UseCase
+        description: Governance use cases — the unit through which AI compliance is registered, assessed and monitored.
+      - name: McpDeployments
+        description: MCP deployments and gateways that front approved servers, tools and skills.
+      - name: SkillsRepositories
+        description: Agent Skills repositories served over MCP.
+      - name: AiAssets
+        description: The consolidated inventory of discovered AI agents, models and MCP servers.
+      - name: ShadowAi
+        description: Shadow-AI discovery policy and browser-extension rules.
+      - name: RiskRegistry
+        description: AI risk identification, treatment and monitoring.
+      - name: OutboundWebhookSubscription
+        description: Outbound event subscriptions with HMAC signing and a delivery log.

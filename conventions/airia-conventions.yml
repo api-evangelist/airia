@@ -1,0 +1,169 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml + https://airia.ai/docs/settings/developer/api-keys
+description: >-
+  Cross-cutting runtime semantics of the Airia Web APIs, derived from the published OpenAPI (1,299
+  operations, 2,188 schemas, NSwag-generated from an ASP.NET Core service) and the public
+  documentation for API keys, usage limits and model deprecation. Where the contract is silent, that
+  silence is recorded rather than filled.
+authentication:
+  style: api-key-header
+  header: X-API-Key
+  alternatives:
+  - Cookie (console session)
+  key_types:
+  - name: personal access token
+    note: Acts as the creating user; created by leaving Roles empty. Stops working if the user loses access.
+  - name: service account
+    note: Carries only the roles selected at creation; survives the creator leaving.
+  scoping: A key is bound to all projects or exactly one, and optionally to conversation endpoints.
+  permission_resolution: >-
+    Permissions are resolved live on every request from the roles the key is bound to — editing a
+    role changes every key bound to it. A key's type and roles are fixed at creation.
+  docs: https://airia.ai/docs/settings/developer/api-keys
+  artifact: authentication/airia-authentication.yml
+pagination:
+  style: page-number
+  params:
+  - name: PageNumber
+    in: query
+    operations: 130
+  - name: PageSize
+    in: query
+    operations: 136
+  - name: SortBy
+    in: query
+    operations: 112
+  - name: SortDirection
+    in: query
+    operations: 109
+  - name: filter
+    in: query
+    operations: 97
+  - name: IncludeTotalCount
+    in: query
+    operations: 22
+  response_fields: 'List DTOs (e.g. AgentCardModelList) carry the page of items; total count is returned only when IncludeTotalCount is set.'
+  inconsistency: >-
+    A minority of operations use lowercase pageNumber/pageSize (19 and 23 operations) or limit/offset
+    (11 operations) instead of the dominant PascalCase pair — a caller cannot assume one convention
+    across the surface.
+  cursor_support: false
+request_tracing:
+  header: x-correlation-id
+  direction: request and response
+  coverage: all 1299 operations declare it as an optional request header
+  note: >-
+    This is the single most consistent convention in the contract and is the id to quote to support;
+    the Python SDK generates one automatically.
+error_envelope:
+  shape: ProblemDetails (RFC 7807 members)
+  media_type: application/json
+  note: Declared as application/json rather than application/problem+json, so it is 7807-shaped, not 9457-registered.
+  artifact: errors/airia-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers: none documented
+  artifact: rate-limits/airia-rate-limits.yml
+versioning:
+  style: path segment (/v1/, a few /v2/)
+  spec_version: 1.0.0
+  policy: not published
+  artifact: lifecycle/airia-lifecycle.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  evidence: >-
+    No Idempotency-Key (or any /idempoten/i) header, parameter or schema appears anywhere in the
+    1,299-operation contract, and no replay-protection semantics are documented. 619 operations are
+    mutating (504 POST/PUT/PATCH plus 115 DELETE), including agent execution, which is the operation
+    an agent is most likely to retry after a timeout or a 499/502/504.
+  consequence: >-
+    A retried agent execution runs the agent again. Callers must build their own de-duplication
+    around x-correlation-id, which the API accepts but does not use for replay suppression.
+  note: >-
+    Some writes are naturally idempotent by shape (PUT /v1/McpDeployments/ensure is an upsert), but
+    that is per-operation design, not a platform mechanism.
+reversibility:
+  grade: documented
+  scope: partial
+  evidence: >-
+    The contract publishes real reversal operations for long-running and workflow-shaped work, but no
+    document states a window for any of them, and there is no undo for ordinary resource deletes.
+  reversal_operations:
+  - operation: JobOrchestration_CancelJob
+    path: POST /v1/JobOrchestration/{id}/cancel
+    reverses: a queued or running orchestration job
+    window: not stated
+  - operation: PipelineExecution_StopExecution
+    path: POST /v2/PipelineExecution/StopExecution
+    reverses: an in-flight agent execution
+    window: 'while executing (implied, not stated)'
+  - operation: PipelineExecution_StopAgentStream
+    path: POST /v2/PipelineExecution/StopStream
+    reverses: an in-flight streaming response
+    window: 'while streaming (implied, not stated)'
+  - operation: SmartScan_CancelSmartScan
+    path: POST /v1/SmartScan/{id}/cancel
+    reverses: a running discovery scan
+    window: not stated
+  - operation: RedTeamingCampaign_CancelScheduledCampaign
+    path: POST /v1/RedTeamingCampaign/{campaignId}/cancel-schedule
+    reverses: a scheduled red-teaming campaign
+    window: 'before the scheduled run (implied, not stated)'
+  - operation: GovernanceInstances_CancelWorkflow2
+    path: POST /v1/governance/instances/{id}/cancel
+    reverses: a running governance workflow instance
+    window: not stated
+  - operation: GovernanceInstances_RegressToPreviousStage2
+    path: POST /v1/governance/instances/{id}/regress
+    reverses: a stage transition, moving the use case back a stage
+    window: not stated
+  - operation: GovernanceWorkflows_RestoreWorkflowVersion2
+    path: POST /v1/governance/workflows/{id}/restore
+    reverses: a workflow edit, by restoring a previous version
+    window: not stated
+  - operation: SystemAgentSettings_RestoreOverrides
+    path: POST /v1/SystemAgentSettings/{systemAgentId}/restore-overrides
+    reverses: overridden system-agent settings
+    window: not stated
+  - operation: OutboundWebhookSubscription_RegenerateSecret
+    path: POST /v1/OutboundWebhookSubscription/{id}/regenerate-secret
+    reverses: a leaked signing secret (rotation, not undo)
+    window: n/a
+  versioned_rollback: >-
+    Agents (pipelines) are versioned with drafts and publishing — PipelinesConfig_PublishVersion2 and
+    PipelinesConfig_PostPipelineFromVersion2 let a previous version be republished, which is the
+    practical undo for an agent change.
+  not_reversible:
+  - '115 DELETE operations have no restore counterpart, including PipelineVersion_DeleteDraftVersion2 and Store_DeleteDataSource.'
+  - 'API keys cannot be edited or recovered — the docs state the key value is shown once and a lost key must be replaced.'
+  windows_stated: none
+  note: >-
+    No retention or restore window is published anywhere in the documentation, so the grade stops at
+    `documented`. Recording a window here would be an invention.
+dry_run_mode:
+  available: partial
+  evidence: >-
+    The platform ships a Prototyping Studio and agent evaluation/red-teaming surfaces (AgentEvaluation,
+    23 operations; RedTeamingCampaign, 14) that rehearse agent behaviour, but the REST contract has no
+    generic dry-run/validate-only flag on its mutating operations.
+expansion_and_sparse_fields:
+  supported: false
+  note: 'Selected list endpoints accept a `filter` string; there is no field-expansion or sparse-fieldset convention.'
+metadata:
+  supported: partial
+  note: >-
+    Tagging exists per domain (version tags, governance tags) rather than as a uniform customer
+    metadata bag on every resource.
+streaming:
+  supported: true
+  note: >-
+    PipelineExecution v2 exposes streaming execution with ResumeStream/{executionId} and StopStream;
+    499 (client closed request) is declared on three streaming operations. A WebSocket hub is
+    advertised at https://api.airia.ai/hubs by the platform service-configuration document.
+webhooks:
+  outbound: true
+  artifact: asyncapi/airia-webhooks.yml

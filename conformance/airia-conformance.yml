@@ -1,0 +1,141 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml + probed /.well-known/ documents + https://airia.ai/docs
+description: >-
+  Standards and cross-cutting conventions Airia's own published artifacts demonstrate. Every entry
+  below points at a document that was fetched or a location in the harvested contract; claims made
+  only on marketing pages are recorded as not-conforming or omitted. Airia's market is enterprise AI
+  governance, and the domain-standard signature for that market is visible in the contract itself:
+  the governance model is typed against the EU AI Act risk categories, NIST AI RMF tiers and ISO/IEC
+  42001 maturity levels as first-class enums, not as prose.
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: https://mcp-gateway.airia.ai/.well-known/oauth-authorization-server
+  detail: >-
+    RFC 8414 authorization-server metadata served anonymously on the MCP Gateway host; grants include
+    authorization_code, client_credentials, device_code, token-exchange, jwt-bearer and CIBA, with
+    S256 PKCE.
+- id: oidc
+  conforms: true
+  evidence: https://identity.airia.ai/auth/realms/airia/.well-known/openid-configuration
+  detail: >-
+    Keycloak realm `airia` publishes a complete OpenID Provider configuration (issuer, JWKS,
+    userinfo, end_session, backchannel logout, token introspection/revocation).
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: https://mcp-gateway.airia.ai/.well-known/oauth-protected-resource
+  detail: >-
+    Declares resource, authorization_servers, bearer_methods_supported and the mcp.read / mcp.write
+    scopes, with the MCP authorization spec as resource_documentation. Also served on the regional
+    host prodaus.mcp-gateway.airia.ai.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: https://mcp-gateway.airia.ai/.well-known/oauth-authorization-server
+  detail: registration_endpoint published at /.well-known/oauth-authorization-server/v1/register on the gateway host.
+- id: rfc7517-jwks
+  conforms: true
+  evidence: https://api.airia.ai/.well-known/jwks.json
+  detail: ES256 P-256 signing key published anonymously (kid, use, alg, feed=gateway).
+- id: mcp
+  conforms: true
+  evidence: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
+  detail: >-
+    Model Context Protocol implemented as a hosted gateway over Streamable HTTP, with OAuth per the
+    MCP 2025-06-18 authorization spec; the platform also consumes MCP (catalogue servers, custom
+    remote servers) and serves Agent Skills over MCP resources.
+- id: agent-skills
+  conforms: true
+  evidence: https://airia.ai/docs/mcp-servers/admin-controls/skills-over-mcp
+  detail: >-
+    Implements the SKILL.md folder format (frontmatter name/description + instructions, with
+    references and scripts) and serves skills from GitHub repositories or remote skills servers,
+    including progressive disclosure and injection scanning.
+- id: a2a-agent-card
+  conforms: partial
+  evidence: openapi/airia-openapi.yml (components.schemas.AgentCardModel, /v1/AgentCard)
+  detail: >-
+    The platform models A2A-shaped agent cards internally — AgentCardModel carries name, description,
+    version, provider, capabilities, skills[], securitySchemes, defaultInputModes/defaultOutputModes
+    and card signatures — and exposes CRUD over them at /v1/AgentCard. But no public agent card is
+    served: GET /.well-known/agent.json on api.airia.ai is a credentialed, tenant-scoped listing
+    operation and returned 401 anonymously, and /.well-known/agent-card.json 401s on every Airia
+    host. The shape is implemented; nothing is published.
+- id: rfc7807-problem-details
+  conforms: partial
+  evidence: openapi/airia-openapi.yml (components.schemas.ProblemDetails)
+  detail: >-
+    The RFC 7807 member set is used platform-wide on 4xx/5xx and default responses, but the declared
+    media type is application/json rather than application/problem+json, so the response is not
+    self-identifying as a problem document.
+- id: rfc9457
+  conforms: false
+  evidence: openapi/airia-openapi.yml
+  detail: No application/problem+json media type and no registered problem type URIs; `type` is unset in practice.
+- id: scim
+  conforms: partial
+  evidence: openapi/airia-openapi.yml (/v1/Scim/sync, /v1/Scim/token, /v1/Scim/test-token, /internal/scim/authorize/{path})
+  detail: >-
+    SCIM user provisioning is supported as an integration surface with token management and a sync
+    operation, but the contract does not publish SCIM 2.0 resource endpoints (/Users, /Groups) or the
+    urn:ietf:params:scim:schemas URNs, so this is SCIM consumption rather than a conformant SCIM
+    service provider.
+- id: pagination
+  conforms: true
+  evidence: conventions/airia-conventions.yml
+  detail: PageNumber/PageSize/SortBy/SortDirection/filter across ~130 list operations, with an inconsistent minority.
+- id: idempotency
+  conforms: false
+  evidence: conventions/airia-conventions.yml
+  detail: No Idempotency-Key mechanism anywhere in 619 mutating operations.
+- id: opentelemetry
+  conforms: true
+  evidence: openapi/airia-openapi.yml (ExternalOtelMonitoring, 12 operations)
+  detail: >-
+    Agent and session telemetry can be exported to an external OTEL collector; the third-party Airia
+    gateway guides document OTEL configuration for Claude Code activity monitoring.
+- id: asyncapi
+  conforms: false
+  evidence: asyncapi/airia-webhooks.yml
+  detail: A real outbound + inbound webhook surface exists, but no AsyncAPI document is published and no event vocabulary is documented.
+domain_standards:
+- id: eu-ai-act
+  conforms: true
+  role: implemented-as-domain-model
+  evidence: openapi/airia-openapi.yml (components.schemas.EuAiActCategory)
+  detail: >-
+    Risk registry and use-case governance require an `euAiAct` classification typed to the Act's own
+    categories — Prohibited, HighRisk, LimitedRisk, MinimalRisk, NotApplicable — with a stored
+    confidence field. A buyer who already classifies systems under the AI Act can map their register
+    onto Airia's without a bespoke connector.
+- id: nist-ai-rmf
+  conforms: true
+  role: implemented-as-domain-model
+  evidence: openapi/airia-openapi.yml (components.schemas.NistAiRmfTier)
+  detail: Governance records carry a required nistAiRmfTier (Tier1-Tier5 / NotApplicable) plus a confidence field.
+- id: iso-iec-42001
+  conforms: true
+  role: implemented-as-domain-model
+  evidence: openapi/airia-openapi.yml (components.schemas.Iso42001Level)
+  detail: >-
+    AI management-system maturity is typed as iso42001Level (Level1-Level5 / NotApplicable) and is a
+    required member of the governance classification alongside the EU AI Act category and NIST tier.
+- id: model-certifications
+  conforms: true
+  role: implemented-as-domain-model
+  evidence: openapi/airia-openapi.yml (components.schemas.ModelCertificationType)
+  detail: >-
+    Model records carry certification types drawn from a fixed vocabulary — SOC2, ISO 27001, ISO
+    27017, ISO 27018, ISO 27701, HIPAA — so the platform reasons about vendor compliance as data.
+- id: governance-frameworks-api
+  conforms: true
+  role: implemented-as-domain-model
+  evidence: openapi/airia-openapi.yml (/v1/governance/frameworks, GovernanceFrameworkReleaseState)
+  detail: Frameworks are enable/disable-able per tenant with a Draft/Preview/Ready/Retired release state.
+airia_own_compliance:
+  note: >-
+    Airia's OWN certifications could not be verified. trust.airia.com is a live Vanta trust center but
+    renders entirely client-side, and the certification list is not present in any anonymously
+    fetchable payload; airia.com names GDPR and HIPAA only as capabilities the platform helps
+    customers meet, not as Airia attestations. No `Compliance` pointer is therefore emitted — see
+    security/airia-trust-center.yml.

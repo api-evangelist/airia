@@ -1,0 +1,109 @@
+generated: '2026-09-19'
+method: probed
+source: live probes of airia.com legal/conventional paths + artifacts harvested this run
+description: >-
+  Harvest of the horizontal regulatory signals a company can publish (AI transparency, accessibility,
+  privacy operations, product security, support lifetime). Airia sells AI governance, so the
+  contrast is worth stating plainly: the product models the EU AI Act, NIST AI RMF and ISO/IEC 42001
+  as first-class data (see conformance/airia-conformance.yml), while Airia's own horizontal
+  disclosures are thin — one privacy policy with a named controller and a privacy contact, one
+  documented data-residency commitment, and nothing else reachable without a login. Conventional
+  paths were probed and returned 404; the docs pages that would carry data-management detail are
+  behind the platform login. An empty signal is a measurement, not a failure to look.
+signals:
+  data_residency:
+    published: true
+    pointer_type: DataResidency
+    url: https://airia.ai/docs/developers-hub/capabilities/data-residency
+    http_status: 200
+    substance: >-
+      Names six selectable storage regions (North America US East, Canada, Netherlands, UAE North,
+      Singapore, Australia East), states the default region (North America US East), and enumerates
+      which data categories stay in region (agent configurations, conversation histories, uploaded
+      files, vector embeddings, logs) versus which may leave it (user profiles, billing,
+      authentication tokens, usage metrics, support tickets). Explicitly states processing and model
+      inference may occur outside the selected region.
+    tier: Enterprise
+    checked: '2026-09-19'
+  data_subject_request:
+    published: partial
+    pointer_type: DataSubjectRequest
+    url: https://airia.com/privacy-policy/
+    http_status: 200
+    substance: >-
+      The privacy policy names the controller (Airia LLC, PO Box 190778, Miami Beach, FL 33119), a
+      privacy contact (privacy@airia.com), and states rights to access, update, delete and object.
+      There is no request portal, no dedicated /privacy/requests page (404) and no stated response
+      window, so this is a contact rather than a process.
+    checked: '2026-09-19'
+probes:
+- url: https://airia.com/accessibility/
+  status: 404
+- url: https://airia.com/accessibility/vpat
+  status: 404
+- url: https://airia.com/legal/subprocessors/
+  status: 404
+- url: https://airia.com/subprocessors/
+  status: 404
+- url: https://airia.com/transparency/
+  status: 404
+- url: https://airia.com/security/sbom
+  status: 404
+- url: https://airia.com/ai/transparency
+  status: 404
+- url: https://airia.com/legal/report-content
+  status: 404
+- url: https://airia.com/privacy/requests
+  status: 404
+- url: https://airia.com/do-not-sell
+  status: 404
+- url: https://airia.com/cookie-policy/
+  status: 404
+- url: https://airia.com/dsar
+  status: 404
+- url: https://airia.com/gdpr
+  status: 404
+- url: https://airia.com/.well-known/security.txt
+  status: 404
+- url: https://airia.ai/docs/settings/data-management
+  status: 307
+  note: redirects to the platform login
+- url: https://airia.ai/docs/release-notes/release-notes
+  status: 307
+  note: redirects to the platform login
+not_found:
+- signal: sbom
+  note: No SBOM published; never derived.
+- signal: accessibility_conformance
+  note: No VPAT or accessibility conformance report found on any probed path.
+- signal: subprocessors
+  note: >-
+    No subprocessor table is public. The privacy policy names categories of third-party service
+    providers but never lists them, and the Vanta trust center that would normally carry the list
+    renders client-side only.
+- signal: support_lifetime
+  note: >-
+    No support period is stated for the API. Model retirement dates come from the model providers,
+    not from Airia (see lifecycle/airia-lifecycle.yml).
+- signal: training_data_summary
+  note: No statement about training data for any Airia-operated model was found.
+- signal: ai_transparency
+  note: >-
+    No AI transparency report. The platform GENERATES governance evidence for customers; Airia
+    publishes none about itself.
+- signal: global_privacy_control
+  note: No published GPC statement. Not tested by sending a Sec-GPC header — one request is not a commitment.
+- signal: incident_notification
+  note: >-
+    Operational incidents are published on https://status.airia.com/ with an Atom feed, but no
+    security-incident notification commitment is published.
+- signal: age_assurance
+  note: Not applicable to an enterprise platform; nothing published.
+- signal: notice_and_action
+  note: No content-reporting path; not a hosting platform.
+- signal: transparency_report
+  note: None published.
+- signal: exit_assistance
+  note: >-
+    No documented export/exit path for a departing tenant. The API has agent export
+    (PipelineExport) and conversation export operations, but no published exit-assistance commitment.

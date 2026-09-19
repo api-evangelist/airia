@@ -1,0 +1,161 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml
+description: Error catalogue derived from the response objects of all 1,299 operations in the Airia Web APIs OpenAPI.
+  Airia returns the ASP.NET Core ProblemDetails shape (RFC 7807 members type/title/status/detail/instance plus free-form
+  extensions) on 4xx/5xx and on the `default` response; validation failures add an `errors` map (ValidationProblemDetails/HttpValidationProblemDetails).
+  The media type declared is application/json, not application/problem+json, so this is RFC 7807-shaped rather than
+  RFC 9457-registered. Titles and remediation are written from the published API-keys, usage-limits and model-deprecation
+  documentation; no error reference page is published, so per-code vendor text was not available to harvest.
+format: rfc7807-shaped
+media_type: application/json
+envelope:
+  schema: ProblemDetails
+  members:
+  - type
+  - title
+  - status
+  - detail
+  - instance
+  extensions: additionalProperties (nullable) — vendor extensions permitted
+  validation_variant: 'ValidationProblemDetails adds errors: { field: [messages] }'
+  correlation: every operation accepts an x-correlation-id request header; responses carry x-correlation-id
+domain_error_shapes:
+- schema: EditorLockConflictResponse
+  status: 423
+  note: Concurrent-edit lock conflict on agent/pipeline editing.
+- schema: GatewayApiKeyLimitReachedError
+  note: code/limit/message shape returned when a gateway API-key limit is hit.
+- schema: ThreatDetectionErrorResponse
+  note: errorCode/message/httpStatus/diagnostics returned by guardrail and threat-detection paths.
+- schema: PipelineExportError
+  note: errorMessage/errorDetails[]/errorCode on agent (pipeline) export.
+problem_types:
+- status: 400
+  title: Bad Request
+  type: about:blank
+  meaning: The request body or query failed model binding or validation. ValidationProblemDetails adds an errors
+    map keyed by member name.
+  remediation: Fix the named fields and resend; the errors map identifies each failing member.
+  operations: 599
+- status: 401
+  title: Unauthorized
+  type: about:blank
+  meaning: No valid credential was presented. The API expects an X-API-Key header (personal access token or service
+    account key) or a console session cookie.
+  remediation: Send a valid X-API-Key created under Settings > Developer > API Keys, scoped to the right project.
+  operations: 841
+- status: 402
+  title: Payment Required
+  type: about:blank
+  meaning: A billing or budget limit blocks the call (gateway budget, licence or spend cap).
+  remediation: Review budget/licence limits for the gateway or tenant before retrying.
+  operations: 12
+- status: 403
+  title: Forbidden
+  type: about:blank
+  meaning: The credential is valid but the roles bound to it do not grant the permission this operation requires;
+    permissions are resolved live on every request.
+  remediation: Grant the missing permission to a role the key is bound to, or use a key with the required roles.
+  operations: 767
+- status: 404
+  title: Not Found
+  type: about:blank
+  meaning: The addressed resource does not exist, or is outside the project scope of the key.
+  remediation: Confirm the id and that the key scope includes that project.
+  operations: 686
+- status: 405
+  title: Method Not Allowed
+  type: about:blank
+  meaning: The HTTP method is not supported on this path.
+  remediation: Use a method the path declares.
+  operations: 1
+- status: 408
+  title: Request Timeout
+  type: about:blank
+  meaning: The request exceeded the server time budget.
+  remediation: Retry with a smaller payload or narrower query.
+  operations: 2
+- status: 409
+  title: Conflict
+  type: about:blank
+  meaning: The write conflicts with current state (duplicate name, concurrent edit, already-existing entity).
+  remediation: Re-read the resource and reconcile before retrying.
+  operations: 156
+- status: 410
+  title: Gone
+  type: about:blank
+  meaning: The resource has been removed permanently.
+  remediation: Stop calling the endpoint or migrate to its replacement.
+  operations: 3
+- status: 413
+  title: Payload Too Large
+  type: about:blank
+  meaning: The uploaded file or body exceeds the accepted size.
+  remediation: Split the upload or stay under the documented ingestion limit.
+  operations: 3
+- status: 422
+  title: Unprocessable Entity
+  type: about:blank
+  meaning: The request was well-formed but semantically rejected by the domain (invalid configuration, unsupported
+    combination).
+  remediation: Read detail for the rule that rejected the request.
+  operations: 60
+- status: 423
+  title: Locked
+  type: about:blank
+  meaning: The entity is locked by another editor. EditorLockConflictResponse names the holder.
+  remediation: Wait for the lock to release or take over the editor session.
+  operations: 8
+- status: 428
+  title: Precondition Required
+  type: about:blank
+  meaning: A required precondition header or state was missing.
+  remediation: Supply the precondition the operation requires.
+  operations: 1
+- status: 429
+  title: Too Many Requests
+  type: about:blank
+  meaning: The tenant exceeded its agent-execution rate (3-5 executions/second depending on licence tier).
+  remediation: Back off and retry; see rate-limits/airia-rate-limits.yml.
+  operations: 10
+- status: 499
+  title: Client Closed Request
+  type: about:blank
+  meaning: The client disconnected before the response completed (streaming executions).
+  remediation: Reconnect and resume the stream; see PipelineExecution ResumeStream.
+  operations: 3
+- status: 500
+  title: Internal Server Error
+  type: about:blank
+  meaning: Unhandled server fault.
+  remediation: Retry with backoff; capture the x-correlation-id for support.
+  operations: 390
+- status: 501
+  title: Not Implemented
+  type: about:blank
+  meaning: The operation is not implemented in this deployment.
+  remediation: Not actionable by the caller.
+  operations: 1
+- status: 502
+  title: Bad Gateway
+  type: about:blank
+  meaning: An upstream model provider, connector or MCP server returned an invalid response.
+  remediation: Retry; check the upstream provider status.
+  operations: 12
+- status: 503
+  title: Service Unavailable
+  type: about:blank
+  meaning: The service or a dependency is temporarily unavailable.
+  remediation: Retry with backoff; check https://status.airia.com/.
+  operations: 29
+- status: 504
+  title: Gateway Timeout
+  type: about:blank
+  meaning: An upstream model provider or connector timed out.
+  remediation: Retry; consider a faster model or smaller context.
+  operations: 1
+coverage:
+  operations: 1299
+  operations_with_4xx: 1185
+  operations_with_default: 686

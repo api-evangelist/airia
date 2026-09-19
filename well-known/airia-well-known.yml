@@ -1,0 +1,173 @@
+generated: '2026-09-19'
+method: probed
+source: live probe of /.well-known/ on every host this record knows
+description: >-
+  Probe of the /.well-known/ discovery surface on every Airia host: the marketing domain (airia.com,
+  www.airia.com), the application/docs domain (airia.ai, www.airia.ai), the API host (api.airia.ai,
+  also the OpenAPI servers[] host), the docs alias explore.airia.com, the identity host named by
+  api.airia.ai/.well-known/service-configuration (identity.airia.ai), and the MCP Gateway hosts named
+  in the MCP setup documentation (mcp-gateway.airia.ai and the Australian regional host
+  prodaus.mcp-gateway.airia.ai). Status is the HTTP code observed at fetch time; only documents that
+  returned a real, correctly typed payload were saved verbatim. api.airia.ai answers 401 with
+  WWW-Authenticate: Bearer for every unrecognised /.well-known/ path, so the 401s below are a closed
+  door rather than an absence — two documents on that host (jwks.json and the vendor-specific
+  service-configuration) are served anonymously and are saved. airia.com/www.airia.com return a real
+  404 body on every path. The MCP Gateway hosts publish RFC 9728 protected-resource metadata and RFC
+  8414 authorization-server metadata anonymously, including a dynamic client registration endpoint.
+hosts:
+- host: https://airia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.airia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://airia.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+    note: 'WWW-Authenticate: Bearer — the platform edge refuses unknown /.well-known/ paths rather than 404ing.'
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+  - path: /.well-known/jwks.json
+    status: 200
+    type: application/json
+    file: airia-jwks.json
+  - path: /.well-known/service-configuration
+    status: 200
+    type: application/json
+    file: airia-service-configuration.json
+    note: Vendor-specific platform link index (identity provider, API, MCP gateway, chat, docs, community).
+- host: https://www.airia.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    note: 301 to https://airia.ai/.well-known/security.txt, which answers 401.
+- host: https://api.airia.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+    note: >-
+      The OpenAPI declares GET /.well-known/agent.json (operationId Agent_Get, tag Agent) — a
+      tenant-scoped listing, not a public A2A AgentCard — and it requires a credential.
+  - path: /.well-known/jwks.json
+    status: 200
+    type: application/json
+    file: airia-jwks.json
+  - path: /.well-known/service-configuration
+    status: 200
+    type: application/json
+    file: airia-service-configuration.json
+- host: https://explore.airia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    note: 301 to https://airia.ai/docs (the docs host moved); no /.well-known/ surface of its own.
+- host: https://identity.airia.ai
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: Keycloak serves discovery per realm, not at the host root.
+  - path: /auth/realms/airia/.well-known/openid-configuration
+    status: 200
+    type: application/json
+    file: airia-identity-openid-configuration.json
+    note: >-
+      Keycloak realm `airia`. Declares authorization_code / client_credentials / device_code /
+      token-exchange / CIBA grants, S256 PKCE, dynamic client registration, and the platform scopes
+      including airia-knowledge, service_account, mcp.read and mcp.write.
+  - path: /auth/realms/airia/.well-known/security.txt
+    status: 404
+- host: https://mcp-gateway.airia.ai
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    type: application/json
+    file: airia-mcp-gateway-oauth-protected-resource.json
+    note: RFC 9728 protected-resource metadata for the MCP Gateway; scopes mcp.read / mcp.write.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    type: application/json
+    file: airia-mcp-gateway-oauth-authorization-server.json
+    note: >-
+      RFC 8414 metadata proxied from the identity.airia.ai Keycloak realm, with a gateway-local
+      dynamic client registration endpoint.
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+- host: https://prodaus.mcp-gateway.airia.ai
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    type: application/json
+    file: airia-prodaus-mcp-gateway-oauth-protected-resource.json
+    note: Australian regional MCP Gateway; same shape, resource scoped to the regional host.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    type: application/json
+    file: airia-prodaus-mcp-gateway-oauth-authorization-server.json
+not_probed:
+- host: https://stormmcp.ai
+  reason: >-
+    api.airia.ai/.well-known/service-configuration names https://stormmcp.ai as the platform "MCP
+    Gateway" link, and that host does serve RFC 9728 + RFC 8414 metadata, but stormmcp.ai presents
+    itself as a separate product (Storm MCP) with its own Keycloak realm (identity.stormmcp.ai,
+    realm `storm`) and no published statement of Airia ownership. Under the ownership rule it is not
+    recorded as an Airia surface; the customer-facing Airia gateway documented to users is
+    mcp-gateway.airia.ai.

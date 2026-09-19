@@ -1,0 +1,23 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKey
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: API Key Authentication
+  sources:
+  - openapi/airia-openapi.yml
+- name: Cookies
+  type: apiKey
+  in: header
+  parameter: Cookie
+  description: Cookie based Authentication
+  sources:
+  - openapi/airia-openapi.yml

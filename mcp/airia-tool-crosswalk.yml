@@ -1,0 +1,99 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml + https://airia.ai/docs/build/knowledge/guides/mcp-retrieval
+description: >-
+  Crosswalk between the MCP surface Airia publishes and the REST operations of the Airia Web APIs.
+  Airia's MCP Gateway is an aggregator: the tools a client sees are chosen per gateway by an
+  administrator, and the live schemas sit behind OAuth (an anonymous tools/list against
+  https://mcp-gateway.airia.ai/mcp returns 401). The only tool list Airia publishes without a
+  credential is the Airia Datasource MCP Server table in the retrieval guide, so that is what is
+  mapped here — by name and semantics, not by fetched inputSchema, and confidence is recorded
+  accordingly. Nothing below asserts a binding the documentation does not support.
+surfaces:
+  openapi: openapi/airia-openapi.yml
+  openapi_url: https://api.airia.ai/swagger/v1/swagger.yaml
+  openapi_gated: false
+  mcp_url: https://mcp-gateway.airia.ai/gateway/{gateway-id}/mcp
+  mcp_gated: true
+  mcp_gate: OAuth 2.1 (RFC 9728 protected resource; scopes mcp.read / mcp.write)
+  graphql: none published
+crosswalk:
+- tool: Datastore Semantic and Keyword Search
+  category: retrieval
+  rest:
+  - DataVectorSearch_SearchWithParams
+  binding: semantic
+  confidence: medium
+  note: >-
+    Vector search scoped to one data store. GET /v1/DataVectorSearch/search/{dataStoreId} is the
+    published REST operation with the same shape; it was matched by name and path, not by comparing
+    a fetched MCP inputSchema.
+- tool: Multi Data Store Semantic and Keyword Search
+  category: retrieval
+  rest: []
+  binding: none
+  confidence: low
+  note: Multi-store retrieval has no counterpart operation in the published REST contract.
+- tool: Datastore Filename Search
+  category: retrieval
+  rest:
+  - DataVectorSearch_ListChunks
+  binding: semantic
+  confidence: low
+  note: >-
+    Filename lookup within a data source. No REST operation names filename search; the chunk listing
+    for a (dataStoreId, fileId) pair is the nearest published surface.
+- tool: File Content Retrieval
+  category: retrieval
+  rest:
+  - DataVectorSearch_GetFileParsedContent
+  binding: semantic
+  confidence: medium
+  note: >-
+    GET /v1/DataVectorSearch/file/{fileId}/content returns parsed file content — the same job the MCP
+    tool does. Matched by name and path, not by a fetched inputSchema.
+- tool: Graph Database Cypher Query
+  category: knowledge-graph
+  rest:
+  - Graphs_ExecuteCypherQuery
+  binding: semantic
+  confidence: medium
+  note: >-
+    The Graphs tag publishes an explicit Cypher execution operation, which is the REST twin of this
+    tool; parameters were not compared against a live MCP schema.
+- tool: Multi Data Store SQL Query
+  category: retrieval
+  rest:
+  - SqlDocuments_PostExecuteSqlQuery
+  binding: semantic
+  confidence: medium
+  note: >-
+    The REST SQL-query operation exists but is marked deprecated in the spec, so the MCP tool is
+    likely the supported path rather than a wrapper of it.
+mcp_only:
+- tool: Tools exposed by catalogue app servers (Jira, Confluence, Box, Snowflake, Microsoft Graph, Airtable, Brave Search, ...)
+  reason: >-
+    These are third-party MCP servers the gateway fronts. They are not Airia REST operations at all;
+    Airia governs, scans and proxies them.
+- tool: Tools published from an Airia agent via the Tool & MCP interface
+  reason: >-
+    Each deployed agent becomes its own tool with a customer-defined name, description and input
+    schema. There is no fixed REST operation behind it — the agent is the tool.
+- tool: Tools produced by SpecLink from a customer's OpenAPI
+  reason: Generated per tenant from a customer-supplied spec; not part of Airia's own contract.
+- tool: Agent Skills served over MCP resources
+  reason: Skills are MCP resources served from a GitHub repo or remote skills server, not REST operations.
+rest_only_note: >-
+  The overwhelming majority of the 1,299 REST operations have no MCP tool: the Airia Web APIs are the
+  platform control plane (governance, discovery, red teaming, users, budgets), while the MCP surface
+  is the runtime tool layer for agents. The one REST family that is explicitly about the MCP surface
+  is McpDeployments / McpLibraries / McpServers / GatewayConfiguration / SkillsRepositories — those
+  operations configure gateways rather than being exposed as tools.
+coverage:
+  mcp_tools_published: 6
+  mapped_high_confidence: 0
+  mapped_medium_confidence: 4
+  mapped_low_confidence: 1
+  unmapped: 1
+  rest_operations_total: 1299
+  rest_operations_mapped: 6

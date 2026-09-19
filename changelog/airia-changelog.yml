@@ -1,0 +1,25 @@
+generated: '2026-09-19'
+method: probed
+source: https://airia.ai/docs/release-notes/release-notes
+description: >-
+  Airia maintains release notes inside its documentation site, but the page is not public: a request
+  to https://airia.ai/docs/release-notes/release-notes 307s to
+  https://airia.ai/docs/api/auth/login?return_to=%2Fdocs%2Frelease-notes%2Frelease-notes. The
+  navigation of every public docs page lists "Release Notes" as a section, so the changelog exists
+  and is customer-visible; it is simply behind the platform login. No dated entries could be read,
+  so none are recorded here.
+scheme: unknown
+current_version: null
+public: false
+gate: login
+evidence:
+- url: https://airia.ai/docs/release-notes/release-notes
+  status: 307
+  redirect: https://airia.ai/docs/api/auth/login?return_to=%2Fdocs%2Frelease-notes%2Frelease-notes
+  checked: '2026-09-19'
+entries: []
+adjacent_public_history:
+  status_incidents: https://status.airia.com/history.atom
+  news: https://airia.com/category/airia-news/
+  note: >-
+    Incident history and company news are public and dated, but neither is an API changelog.

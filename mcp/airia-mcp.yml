@@ -1,0 +1,117 @@
+generated: '2026-09-19'
+method: searched
+status: published
+source: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
+description: >-
+  Airia operates a remote MCP Gateway as a first-class product surface, not a single fixed server.
+  An administrator composes a Gateway from approved MCP servers (a catalogue of app connectors),
+  SpecLink-converted OpenAPI specs, Agent Skills repositories and Airia-deployed agents; the Gateway
+  is then exposed to MCP clients at one Streamable HTTP endpoint per gateway:
+  https://mcp-gateway.airia.ai/gateway/{gateway-id}/mcp, with a tool-search ("Radar") variant at
+  /gateway/{gateway-id}/radar for large gateways. Regional hosts exist (prodaus.mcp-gateway.airia.ai
+  for Australia). Because the endpoint is tenant- and gateway-specific, no anonymous tools/list is
+  possible: an unauthenticated POST to https://mcp-gateway.airia.ai/mcp returns 401 with
+  WWW-Authenticate: Bearer. What IS anonymous, and was fetched, is the RFC 9728 protected-resource
+  metadata and RFC 8414 authorization-server metadata on the gateway host — including a dynamic
+  client registration endpoint, so an MCP client can register and complete OAuth without a human
+  provisioning a client id.
+server:
+  name: Airia MCP Gateway
+  transport: http
+  transport_note: Streamable HTTP (MCP protocol); the docs also show npx mcp-remote for clients without remote transport.
+  url_pattern: https://mcp-gateway.airia.ai/gateway/{gateway-id}/mcp
+  radar_url_pattern: https://mcp-gateway.airia.ai/gateway/{gateway-id}/radar
+  regional_hosts:
+  - https://mcp-gateway.airia.ai
+  - https://prodaus.mcp-gateway.airia.ai
+  auth: oauth2
+  protected_resource: well-known/airia-mcp-gateway-oauth-protected-resource.json
+  authorization_server: well-known/airia-mcp-gateway-oauth-authorization-server.json
+  authorization_server_url: https://identity.airia.ai/auth/realms/airia
+  dynamic_client_registration: https://mcp-gateway.airia.ai/.well-known/oauth-authorization-server/v1/register
+  scopes:
+  - mcp.read
+  - mcp.write
+  probe:
+    url: https://mcp-gateway.airia.ai/mcp
+    method: 'POST tools/list (jsonrpc 2.0)'
+    http_status: 401
+    result: gated
+    checked: '2026-09-19'
+client_configuration:
+  claude_code: claude mcp add --scope user --transport http <gateway-name> "https://mcp-gateway.airia.ai/gateway/{your-gateway-id}/mcp"
+  claude_desktop: npx -y mcp-remote https://mcp-gateway.airia.ai/gateway/{your-gateway-id}/mcp
+  cursor: one-click install from the Airia gateway page
+  source: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
+capabilities:
+- name: Tool aggregation
+  description: One endpoint fronts many approved MCP servers; each tool keeps the attribution of the server it came from.
+- name: SpecLink
+  description: Converts a hosted OpenAPI (Swagger) spec into MCP tools without writing a custom MCP server.
+  source: https://airia.ai/docs/mcp-servers/admin-controls/speclink
+- name: Skills over MCP
+  description: >-
+    Serves Agent Skills (SKILL.md folders) from a GitHub repository or a remote skills server over the
+    same MCP resources machinery, merged into one governed catalog for every connected client.
+  source: https://airia.ai/docs/mcp-servers/admin-controls/skills-over-mcp
+- name: Radar
+  description: Optional discovery mode where agents search for tools instead of loading every tool definition up front.
+  source: https://airia.ai/docs/mcp-servers/admin-controls/radar
+- name: Tool Scanning
+  description: Screens MCP tool definitions (and skills) for prompt injection before they are added to a gateway.
+  source: https://airia.ai/docs/mcp-servers/admin-controls/tool-scanning
+- name: Dynamic Gateway
+  description: A per-user gateway shaped by organization defaults, assigned toolkits and the user's own connections.
+  source: https://airia.ai/docs/mcp-servers/admin-controls/dynamic-gateway
+- name: Airia Deployed Agents
+  description: >-
+    Featured catalogue server that turns agents built in Airia Studio (with the Tool & MCP interface
+    enabled) into individual MCP tools any client can call, using passthrough identity or an API key.
+  source: https://airia.ai/docs/mcp-servers/popular-mcp-servers/airia-deployed-agents
+- name: Airia Datasource MCP Server
+  description: >-
+    Automatically deployed when a data source is attached to an AI Model step; exposes retrieval as
+    MCP tools for multi-hop retrieval.
+  source: https://airia.ai/docs/build/knowledge/guides/mcp-retrieval
+tools:
+- name: Datastore Semantic and Keyword Search
+  description: Searches a single data source using vector and/or keyword matching.
+  server: Airia Datasource MCP Server
+- name: Multi Data Store Semantic and Keyword Search
+  description: Searches across multiple data sources simultaneously.
+  server: Airia Datasource MCP Server
+- name: Datastore Filename Search
+  description: Finds files by name within a data source.
+  server: Airia Datasource MCP Server
+- name: File Content Retrieval
+  description: Retrieves the full content of a specific file.
+  server: Airia Datasource MCP Server
+- name: Graph Database Cypher Query
+  description: Queries a knowledge graph (when Graph RAG is enabled).
+  server: Airia Datasource MCP Server
+- name: Multi Data Store SQL Query
+  description: Runs natural language-to-SQL queries on structured data.
+  server: Airia Datasource MCP Server
+tools_note: >-
+  The tool list above is the published Airia Datasource MCP Server tool table, captured verbatim from
+  the retrieval guide; names and descriptions only, because the live schemas are behind the gateway's
+  OAuth. Every other tool a gateway exposes comes from the apps and agents an administrator selected,
+  so there is no fixed catalogue to record.
+management_api:
+  description: >-
+    The platform API manages the MCP surface itself — McpDeployments (9 operations, including
+    GET /v1/McpDeployments/{deploymentId}/tools which returns the cached tool list for a deployment),
+    McpLibraries, McpServers, GatewayConfiguration (21 operations) and SkillsRepositories (16
+    operations).
+  source: openapi/airia-openapi.yml
+deployment:
+  mode: remote
+  endpoint: https://mcp-gateway.airia.ai/gateway/{gateway-id}/mcp
+  endpoint_note: >-
+    Tenant- and gateway-specific path. The host is fixed and serves RFC 9728 metadata; the
+    {gateway-id} segment is issued when an administrator creates a gateway.
+  auth: oauth
+  verified: probed
+  probe: gated
+  checked: '2026-09-19'
+  source: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway

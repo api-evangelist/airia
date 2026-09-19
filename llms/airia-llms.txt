@@ -1,0 +1,220 @@
+# Documentation
+
+- [Build, Secure, and Orchestrate AI Agents at Scale](/): One platform. Complete enterprise AI management — from prototyping to production to governance.
+- [Contributing to the Community](/community/contributing-agents): Join the ranks of Airia’s contributors and turn your deep expertise into powerful, globally recognized AI Agents.
+- [Community Overview](/community/overview): Welcome to the Airia Community! This is your gateway to discovering agents created by Airia and other talented creators in our community. Whether you're looking for ready-to-use solutions or customizable templates, the Community has something for everyone.
+- [Using Community Agents](/community/using-community-agents): Discover and import agents from the Airia Community
+- [In App Support](/contact-us/in-app-support): undefined
+- [Get in Touch](/contact-us/support): undefined
+- [Getting Started with Airia Chat](/airia-chat/airia-chat): undefined
+- [Explore Agents](/airia-chat/explore-agents): undefined
+- [End-User Privacy](/airia-chat/privacy): What it means when an agent has End-User Privacy enabled.
+- [Spaces](/airia-chat/spaces): undefined
+- [Getting Started with Governance](/governance/overview): Use cases are the central unit of AI governance in Airia through which organizational compliance and actions needed are monitored through active governance.
+- [Risks](/governance/risks): How Airia evaluates, treats, and tracks AI risks across a use case — from initial identification through ongoing monitoring.
+- [Advanced Usage](/home/advanced-usage): undefined
+- [Basic Usage](/home/basic-usage): undefined
+- [Quick Start Guide](/home/quick-start-guide): undefined
+- [ADD A Data Source](/build/Add%20a%20Data%20Source): undefined
+- [Agents](/build/overview): undefined
+- [Airia Code Scanner](/discovery/airia-code-scanner): Discover the AI inside a codebase — SDK imports, model calls, and agents defined in code — from your CI pipeline.
+- [Atlan](/discovery/atlan): Discover the AI agent assets catalogued in your Atlan tenant.
+- [AWS Bedrock](/discovery/aws-bedrock): Discover AWS Bedrock Agents and Flows, with the IAM policies to provision on your side.
+- [Azure AI Foundry](/discovery/azure-ai-foundry): Discover Azure AI Foundry agents with an Entra service principal and the Azure AI User role.
+- [Azure DevOps](/discovery/azure-devops): Bring AI assets from Azure DevOps repositories into the inventory via the supported export path.
+- [Browser Extension](/discovery/browser-extension): See and control AI-site usage right in your users' browsers — monitor, warn, block, or redirect any AI site.
+- [Claude](/discovery/claude): Connect your organization's Claude surfaces to Airia — telemetry from Claude Code and Cowork, browser coverage for claude.ai, and optional Anthropic usage and compliance data.
+- [Cloudflare](/discovery/cloudflare): Discover Shadow AI on your network by analyzing Cloudflare Zero Trust Gateway logs.
+- [Databricks](/discovery/databricks): Discover registered models and serving endpoints in a Databricks workspace.
+- [External Agent](/discovery/external-agent): Add a single AI agent to your inventory by hand — the catch-all for agents no connector picks up.
+- [Gemini Enterprise](/discovery/gemini-enterprise): Discover Gemini Enterprise engines and assistants in a GCP project.
+- [GitHub](/discovery/github): Discover AI assets in your GitHub repositories with the Airia Code Scanner.
+- [GitLab](/discovery/gitlab): Discover AI assets in your GitLab projects with the Airia Code Scanner.
+- [Glean](/discovery/glean): Discover the agents configured in your Glean instance.
+- [Google Agent Platform](/discovery/google-agent-platform): Discover Vertex AI Agent Engine and Dialogflow CX agents with one GCP connection.
+- [Google Workspace](/discovery/google-workspace): Discover domain AI deployments and per-user OAuth grants to AI apps in Google Workspace.
+- [LangGraph](/discovery/langgraph): Discover the agents deployed on a LangGraph server.
+- [Microsoft Copilot Studio](/discovery/microsoft-copilot-studio): Discover Copilot Studio bots, flows, and topics in your Power Platform environment.
+- [Microsoft Entra ID (M365)](/discovery/microsoft-entra-id): Discover which AI apps your Microsoft 365 users have consented to, via Microsoft Graph.
+- [Microsoft Power Apps](/discovery/microsoft-power-apps): Discover the low-code apps across your Power Platform environments and bring them into your Airia inventory.
+- [n8n](/discovery/n8n): Discover all workflows in an n8n instance, including the model each workflow uses.
+- [Okta](/discovery/okta): Discover which AI apps your users have authorized through Okta, with automatic AI classification.
+- [Discover](/discovery/overview): Connect the platforms where your organization builds and runs AI, and bring every agent into one governed inventory.
+- [Microsoft Purview](/discovery/purview): Discover AI-related assets in your Microsoft Purview data catalog.
+- [Salesforce Agentforce](/discovery/salesforce-agentforce): Discover Agentforce agents in your Salesforce org via a client-credentials connected app.
+- [SASE Integration](/discovery/sase): Discover the AI apps and data sources in use across your network from SASE traffic.
+- [ServiceNow](/discovery/servicenow): Discover AI systems, AI content, and MCP servers registered in your ServiceNow instance.
+- [MCP servers](/mcp-servers/overview): Connect any app, data source, or custom API to your agents and to external AI tools like Cursor and Claude, through a single governed layer.
+- [Airia Cloud Connector Pre-Installation Checklist](/settings/cloud-connector): undefined
+- [Securing Claude with Airia](/secure/securing-claude): Route, govern, and audit every way Claude reaches enterprise data — browser, native apps, developer tools, and Cowork/agents — through one set of Airia policies.
+- [Data Residency](/developers-hub/capabilities/data-residency): Choose where your AI agent data is stored to meet compliance and governance requirements
+- [Accessing the Airia Mobile SDK](/developers-hub/capabilities/download-sdk): undefined
+- [Getting Started with the Airia Mobile SDK](/developers-hub/capabilities/integrate-sdk): undefined
+- [Developer Overview](/developers-hub/capabilities/intro): undefined
+- [Airia Mobile Ecosytem](/developers-hub/capabilities/mobile): undefined
+- [Airia Browser Extension](/airia-chat/browser-extension/getting-started): Access AI agents directly from your web browser with intelligent page context integration.
+- [Chat with Your Agent](/airia-chat/capabilities/chatting-with-your-agent): Interact with your Airia agents via text chat to get instant answers, leveraging knowledge files and tool calls.
+- [Export Agent Content](/airia-chat/capabilities/exports): Export agent-generated responses, summaries, and other artifacts from Chat.
+- [Upload Documents for Chat & Analysis](/airia-chat/capabilities/knowledge): Upload your own documents to chat with them and perform analysis.
+- [Meetings](/airia-chat/capabilities/meetings): Record, transcribe, and analyze your meetings with AI
+- [Scheduling Agents from Catalog](/airia-chat/capabilities/scheduling): undefined
+- [Provide Agent Feedback](/airia-chat/capabilities/submitting-feedback): Submit feedback on your personal experience with agents to give agent administrators clear direction to improve the user experience.
+- [Enable and Customize Airia Voice Mode](/airia-chat/capabilities/voice): undefined
+- [Creating a Use Case](/governance/usecases/creating-a-use-case): Register an AI agent for governing based on its intended use in the orgnization.
+- [The Governance Flow](/governance/usecases/flow): How a use case moves through the governance lifecycle, from registration to active monitoring.
+- [Use Cases](/governance/usecases): Register and track AI use cases through intake, assessment, and approval.
+- [Stage Transitions](/governance/usecases/stage-transitions): How a use case moves through the governance lifecycle.
+- [Amazon S3](/integrations/Data-Source-Connectors/Amazon%20S3): undefined
+- [Set Up the Azure Blob Connector](/integrations/Data-Source-Connectors/Azure%20Blob): undefined
+- [Set Up the Box Connector](/integrations/Data-Source-Connectors/Box): undefined
+- [Set Up the Brightspace Connector](/integrations/Data-Source-Connectors/Brightspace): undefined
+- [Set Up the Causeway Connector](/integrations/Data-Source-Connectors/Causeway): undefined
+- [CloudKit](/integrations/Data-Source-Connectors/Cloud%20Kit): undefined
+- [Confluence](/integrations/Data-Source-Connectors/Confluence): undefined
+- [Set Up the Dropbox Connector](/integrations/Data-Source-Connectors/DropBox): undefined
+- [EWS Outlook IN Place Archive](/integrations/Data-Source-Connectors/EWS%20Outlook%20In%20place%20Archive): undefined
+- [EWS Outlook ON Premises](/integrations/Data-Source-Connectors/EWS%20Outlook%20On-Premises): undefined
+- [Set Up the Email Connector](/integrations/Data-Source-Connectors/Email): undefined
+- [Set Up the File Upload Connector](/integrations/Data-Source-Connectors/File%20Upload): undefined
+- [Google Drive (Service Account)](/integrations/Data-Source-Connectors/Google%20Drive%20(Service%20account)): undefined
+- [Set Up the Google Drive Connector](/integrations/Data-Source-Connectors/Google%20Drive): undefined
+- [Ingestion Settings](/integrations/Data-Source-Connectors/Ingestion%20settings): undefined
+- [Set Up the MinIO Connector](/integrations/Data-Source-Connectors/MinIO): undefined
+- [Set Up the Notion Connector](/integrations/Data-Source-Connectors/Notion): undefined
+- [Set Up the OneDrive/SharePoint Connector](/integrations/Data-Source-Connectors/OneDrive%20and%20SharePoint): undefined
+- [Set Up the OneNote Connector](/integrations/Data-Source-Connectors/OneNote): undefined
+- [Set Up the Outlook (Service Account) Connector](/integrations/Data-Source-Connectors/Outlook%20(Service%20Account)): undefined
+- [Set Up the Outlook Connector](/integrations/Data-Source-Connectors/Outlook): undefined
+- [Permissions Enforcement](/integrations/Data-Source-Connectors/Permissions%20Enforcement): undefined
+- [Set Up the ServiceNow Connector](/integrations/Data-Source-Connectors/ServiceNow): undefined
+- [SharePoint ON Premises](/integrations/Data-Source-Connectors/SharePoint%20On-Premises): undefined
+- [View Ingested File Content](/integrations/Data-Source-Connectors/View%20ingested%20file%20content): undefined
+- [Website Connector](/integrations/Data-Source-Connectors/Website): undefined
+- [Airia Agent Trigger](/integrations/Data-Source-Connectors/agent-trigger): undefined
+- [Data Sources](/integrations/Data-Source-Connectors/data-sources): undefined
+- [Schedule A Sync](/integrations/Data-Source-Connectors/schedule-a-sync): undefined
+- [Claude Observability](/integrations/Tools/anthropic-compliance-api): Monitor Claude Code, Claude Cowork, and Claude.ai conversations from one consolidated Airia feed.
+- [AWS Bedrock](/integrations/Tools/aws-bedrock): undefined
+- [[DRAFT] Chat Interface Types](/build/deployment-options/chat-deployment): [DRAFT - NOT IN USE] Choose the right chat interface type for your needs
+- [Airia Catalog Interface](/build/interface-options/airia-agent): Set up your agent interface for the Airia platform for public discovery and interaction
+- [API Interface Configuration](/build/interface-options/api-deployment): Configure and manage your agent's API interface for programmatic access
+- [Browser Extension Configuration](/build/interface-options/browser-extension): Configure and manage browser extension capabilities for your organization.
+- [Chat Widget Interface](/build/interface-options/chat-widget): Embed your agent as a chat widget in websites and applications
+- [[DRAFT] Email Inbox Interface](/build/interface-options/email-inbox-interface): [DRAFT - NOT IN USE] Configure email-based agent interactions
+- [Managing Agent Interfaces](/build/interface-options/managing-interfaces): Manage all agent interfaces as a builder or adminstrator.
+- [[DRAFT] Schedule Interface](/build/interface-options/schedule-interface): [DRAFT - NOT IN USE] Configure automated agent execution schedules
+- [Slack Bot Deployment](/build/interface-options/slack-bot): Deploy your Airia agents as Slack bots to enable conversational AI within your workspace.
+- [Teams Bot Deployment](/build/interface-options/teams-bot): Deploy your Airia agents as Microsoft Teams bots to enable conversational AI within your workspace.
+- [Tool & MCP Interface](/build/interface-options/tool-interface): Expose your agent as a callable tool that can be used by other agents through the Airia MCP server
+- [Usage Limits](/build/interface-options/usage_limits): undefined
+- [WhatsApp Bot Deployment](/build/interface-options/whatsapp-bot): Deploy your Airia agents as WhatsApp bots to enable conversational AI via WhatsApp messaging.
+- [Custom Knowledge Graphs](/build/knowledge/custom-knowledge-graphs): Build and query runtime knowledge graphs using the Graph Query Tool and Cypher — for agent-driven graph population and retrieval.
+- [Graph-Enhanced Retrieval](/build/knowledge/graph-enhanced-retrieval): How knowledge graphs improve retrieval quality by adding entity-relationship traversal to vector search.
+- [Hybrid Search and Reranking](/build/knowledge/hybrid-search-reranking): Configure semantic search, keyword search, hybrid combinations, fusion algorithms, and reranking to optimize retrieval quality.
+- [Knowledge Graph Extraction](/build/knowledge/knowledge-graph-extraction): Extract entities and relationships from your documents to build a knowledge graph that powers Graph RAG retrieval.
+- [Knowledge](/build/knowledge/overview): Design and optimize the information pipeline that feeds your AI agents — from ingestion to enrichment to retrieval.
+- [Retrieval Methods](/build/knowledge/retrieval-methods): Choose between single-hop search, agentic multi-hop retrieval via MCP, and Text-to-SQL to bring knowledge into your agents.
+- [Vocabulary Grounding](/build/knowledge/vocabulary-grounding): Teach Airia your internal terminology — acronyms, codenames, product codes, role titles — so retrieval interprets queries the way your team does.
+- [Share Your Agent Publicly](/build/sharing-agents/community-sharing): Submit agents to the Airia Community for public access
+- [Share Your Agent Directly](/build/sharing-agents/direct-sharing): Export agents using private URLs or files for controlled distribution
+- [Use an Agent Shared with You](/build/sharing-agents/import-agent): Import agents from private links, files, or the Community
+- [Overview](/build/sharing-agents/overview): Learn how to share agent templates across tenants and users
+- [Security Event Triggers](/build/triggers/security-event-triggers): Start an agent automatically the moment a security event fires in Airia.
+- [Pause Workflow Execution](/build/components/Delay-step): undefined
+- [Loop Over Datasource Files](/build/components/Loop%20Over%20Datasource%20Files): undefined
+- [Manage Agent Versions with Drafts and Publishing](/build/components/Manage%20Agent%20Versions): undefined
+- [Message Formatter](/build/components/Message-Formatter): undefined
+- [Agent Flow Logic](/build/components/agent-flow-logic): undefined
+- [Variables](/build/components/agent-variables): Pass data between steps, reference user inputs, and access execution context — all using the {{ }} expression syntax.
+- [Building and Testing Agents](/build/components/agents): undefined
+- [AI Model Context Settings](/build/components/ai-model-context): Control what the model knows at runtime — date/time, user identity, conversation history, attachments, and user input.
+- [Agent Development Through Natural Language](/build/components/build%20agents%20with%20AI): undefined
+- [Compare](/build/components/compare-step): Evaluate two values with operators like equals, contains, and starts with — supports automatic type detection and case sensitivity.
+- [Evaluate Agent Performance with Airia](/build/components/evaluate-agent-performance): undefined
+- [Filter](/build/components/filter-step): Narrow down collections using multiple AND/OR conditions on any field — supports nested paths, existence checks, and case sensitivity.
+- [What is the Form Review Step?](/build/components/form-review): undefined
+- [HTTP Request Step](/build/components/https-step): undefined
+- [Adding Human Approvals in Agent Workflows](/build/components/human-approval): undefined
+- [Image Generation](/build/components/image-generation): undefined
+- [JSON Formatter](/build/components/json-formatter): undefined
+- [Loop over CSV](/build/components/loop-over-csv): undefined
+- [Loop over File Uploads](/build/components/loop-over-files): undefined
+- [Loop Step](/build/components/loop-step): Repeat a set of steps for every item in a list, automating repetitive tasks inside a single agent run.
+- [MarkItDown Step](/build/components/markitdown-step): Convert documents to markdown mid-workflow using the MarkItDown step.
+- [Memory](/build/components/memory): Persist information across agent executions using Memory Objects
+- [Merge](/build/components/merge-step): Combine two lists via append, zip by position, join by field, or cartesian product.
+- [Model Deprecation](/build/components/model-deprecation): Understand the warnings Airia shows before a model is retired, when they can no longer be dismissed, and how to move your agents to a supported model.
+- [Model Lifecycle Management](/build/components/models): undefined
+- [Native Web Search](/build/components/native-web-search): Let supported models search the web for real-time information — no integration required.
+- [Add Worksheet](/build/components/onedrive-excel-add-worksheet): Add a new worksheet to a OneDrive-hosted Excel file.
+- [List Worksheets](/build/components/onedrive-excel-list-worksheets): List all worksheets in a OneDrive-hosted Excel file.
+- [Read File](/build/components/onedrive-excel-read-file): Read worksheet data from an Excel file stored in OneDrive or SharePoint.
+- [Write Row](/build/components/onedrive-excel-write-row): Append one or many rows to a worksheet in a OneDrive-hosted Excel file.
+- [Prompts](/build/components/prompts): Master the segment-based prompt system — versioning, reuse, PromptVariables, and the full Scriban expression language.
+- [Python Code Block](/build/components/python-code-blocks): undefined
+- [Python Code Builder](/build/components/python-code-builder): undefined
+- [Sort](/build/components/sort-step): Order results by one or more fields with null handling and numeric vs. lexicographic modes.
+- [Starting and Managing Projects](/build/components/starting-a-project): undefined
+- [Structured Output for AI Models](/build/components/structured-output): Define JSON schemas for AI Model steps so responses are predictable, machine-readable, and easier to validate.
+- [Suggested Messages](/build/components/suggested-messages): Render clickable follow-up suggestions inside assistant replies using airiaMessageButton, airiaMessageDropdown, airiaMessageRadios, and airiaMessageCheckboxes.
+- [What is the Webhook Approval Step?](/build/components/webhook-approval): undefined
+- [Credential Recovery](/mcp-servers/end-user-usage/credential-recovery): Reconnect a broken app credential in one click, wherever Airia notices the problem.
+- [How to Add a Deployment to an Agent](/mcp-servers/end-user-usage/how-to-add-a-deployment-to-a-gateway): Attach a Deployment to an AI Model step so the agent can call its tools.
+- [How to Set Up a Gateway](/mcp-servers/end-user-usage/how-to-set-up-a-gateway): Connect a Gateway you've already created to Cursor, Claude, Claude Code, or any other MCP-compatible client.
+- [MCP Self-Service](/mcp-servers/end-user-usage/mcp-self-service): Connect apps, organize personal toolkits, set up clients, and manage your Dynamic Gateway.
+- [Airia Deployed Agents](/mcp-servers/popular-mcp-servers/airia-deployed-agents): Turn agents built in Airia Studio into MCP tools any Airia agent or external client can call.
+- [Airtable](/mcp-servers/popular-mcp-servers/airtable): undefined
+- [Box](/mcp-servers/popular-mcp-servers/box): undefined
+- [Brave Search](/mcp-servers/popular-mcp-servers/brave-search): undefined
+- [Confluence Cloud](/mcp-servers/popular-mcp-servers/confluence-cloud): Connect Confluence Cloud pages, spaces, and content to Airia agents over OAuth or an API token.
+- [Jira Cloud](/mcp-servers/popular-mcp-servers/jira-cloud): Connect Jira Cloud issues, projects, and sprints to Airia agents over OAuth or an API token.
+- [Microsoft Graph](/mcp-servers/popular-mcp-servers/microsoft-graph): undefined
+- [Snowflake](/mcp-servers/popular-mcp-servers/snowflake): Connect Snowflake's managed MCP server for governed access to Cortex AI tools and SQL execution.
+- [API Keys](/settings/developer/api-keys): Create API keys that act as you, or as a standalone service account with its own roles.
+- [Credential Management](/settings/developer/credential-management): undefined
+- [Setting Up Atlassian OAuth App](/settings/ecosystem/atlassian): undefined
+- [Setting Up AWS STS Connector for Airia](/settings/ecosystem/aws-sts): undefined
+- [Setting Up Google Cloud Console OAuth App](/settings/ecosystem/google-cloud-console): undefined
+- [Setting Up Microsoft Entra Service Account with a service mailbox](/settings/ecosystem/microsoft-entra-service-account): undefined
+- [Setting Up Microsoft Entra ID OAuth App](/settings/ecosystem/microsoft-entra): undefined
+- [OAuth App Registration - Overview](/settings/ecosystem/overview): undefined
+- [Setting Up Salesforce OAuth App](/settings/ecosystem/salesforce): undefined
+- [AI Gateway](/secure/gateway/ai-gateway): Route every model request through one policy-aware endpoint — with providers, routing rules, resilience, budgets, guardrails, and constraints.
+- [MCP Gateway](/secure/gateway/mcp-gateway): undefined
+- [Airia Guardrails: Secure AI Made Simple](/secure/runtime-security/managing-policies): undefined
+- [Custom MCP Servers](/mcp-servers/admin-controls/custom-mcp-servers): Add an MCP server that isn't in Airia's catalogue, and configure how it connects and authenticates.
+- [Deployments vs. Gateways](/mcp-servers/admin-controls/deployments-vs-gateways): Choose between a Deployment and a Gateway to connect an app to Airia.
+- [Dynamic Gateway](/mcp-servers/admin-controls/dynamic-gateway): Give every user one personalized MCP Gateway shaped by organization defaults, assigned toolkits, and their own connections.
+- [Editing a Gateway](/mcp-servers/admin-controls/editing-a-gateway): Rename, re-scope, or delete an existing Gateway, and know when changes reach connected clients.
+- [Gateway/Deployment Creation](/mcp-servers/admin-controls/gateway-deployment-creation): Build a Gateway or Deployment: pick apps, connect credentials, and choose which tools to expose.
+- [Instructions Tool](/mcp-servers/admin-controls/instructions-tool): Attach your team's operating guidance to a Gateway or Deployment so any connecting agent uses your tools the way your organization actually works.
+- [Radar](/mcp-servers/admin-controls/radar): An optional discovery mode that keeps large Gateways context-efficient by letting agents search for tools instead of loading them all up front.
+- [Server Management](/mcp-servers/admin-controls/server-management): Approve which MCP servers your organization can use in Gateways and Deployments.
+- [Skills over MCP](/mcp-servers/admin-controls/skills-over-mcp): Serve Agent Skills from a GitHub repository or a remote skills server, merged into one governed catalog for every connected MCP client.
+- [SpecLink](/mcp-servers/admin-controls/speclink): Turn a hosted OpenAPI (Swagger) spec into MCP tools without building a custom MCP server.
+- [Supported Credential Types](/mcp-servers/admin-controls/supported-credential-types): The six ways an app authenticates to a Gateway or Deployment, and who sets each one up.
+- [Tenant vs. Personal Level App Credentials](/mcp-servers/admin-controls/tenant-vs-personal-app-credentials): How the Personal and Tenant access levels decide who owns each app credential and who can use it.
+- [Tenant vs. Personal Level Gateway Configs](/mcp-servers/admin-controls/tenant-vs-personal-gateway-configs): Choose Personal or Tenant visibility for an MCP Gateway, and control who can see, use, and edit it.
+- [Tool Scanning](/mcp-servers/admin-controls/tool-scanning): Screen MCP tool definitions for hidden prompt injection before you add them to a Gateway or Deployment.
+- [Set Up Graph RAG for Your Industry](/build/knowledge/guides/graph-rag): End-to-end guide for enabling Knowledge Graph Extraction, choosing an ontology, reviewing the graph, and using graph-enhanced retrieval.
+- [Connect Airia Retrieval to External Agents via MCP](/build/knowledge/guides/mcp-retrieval): Expose your Airia knowledge base to Claude Desktop, Cursor, and other MCP-compatible agents.
+- [Quick Start: Ingest and Search](/build/knowledge/guides/quick-start): Connect a data source, ingest documents, and search them from an agent in about 10 minutes.
+- [Asana](/build/components/actions/asana): Create and manage Asana tasks, subtasks, comments, project membership, and tags from inside an agent workflow.
+- [Dynamics 365](/build/components/actions/dynamics-365): Read and manage Dynamics 365 account records from inside an agent workflow.
+- [Gmail](/build/components/actions/gmail): Send and manage Gmail messages, drafts, threads, and labels from inside an agent workflow.
+- [Google Calendar](/build/components/actions/google-calendar): Create, update, read, and list Google Calendar events from inside an agent workflow.
+- [Google Drive](/build/components/actions/google-drive): Upload, download, share, and organize Google Drive files and folders from inside an agent workflow.
+- [HubSpot](/build/components/actions/hubspot): Manage HubSpot companies, contacts, and deals from inside an agent workflow.
+- [Intercom](/build/components/actions/intercom): Create, update, and look up Intercom contacts from inside an agent workflow.
+- [Linear](/build/components/actions/linear): Create, update, read, and list Linear issues from inside an agent workflow.
+- [Microsoft Outlook](/build/components/actions/microsoft-outlook): Send and manage Outlook messages, drafts, folders, and attachments from inside an agent workflow.
+- [Notion](/build/components/actions/notion): Create and read Notion pages, read databases, and search your workspace from inside an agent workflow.
+- [Okta](/build/components/actions/okta): Manage Okta user accounts from inside an agent workflow.
+- [Actions](/build/components/actions/overview): Add prebuilt integration steps to an agent so it can read and write data in third party applications like Salesforce, Slack, Gmail, and Stripe.
+- [Salesforce](/build/components/actions/salesforce): Create, read, update, and delete Salesforce leads, accounts, contacts, and opportunities from inside an agent workflow.
+- [SAP](/build/components/actions/sap): Manage SAP S/4HANA business partners, materials, purchase orders, and sales orders from inside an agent workflow.
+- [SendGrid](/build/components/actions/sendgrid): Send transactional email and manage contacts in SendGrid from inside an agent workflow.
+- [Slack](/build/components/actions/slack): Post and manage Slack messages, channels, reactions, and users from inside an agent workflow.
+- [Stripe](/build/components/actions/stripe): Read your Stripe account balance and manage charges and customers from inside an agent workflow.
+- [Zendesk](/build/components/actions/zendesk): Manage Zendesk tickets, users, organizations, and ticket fields from inside an agent workflow.
+- [Zoom](/build/components/actions/zoom): Schedule and manage Zoom meetings and look up users from inside an agent workflow.

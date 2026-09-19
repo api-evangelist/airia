@@ -1,0 +1,45 @@
+generated: '2026-09-19'
+method: probed
+source: https://trust.airia.com/
+description: >-
+  Airia publishes a trust center at https://trust.airia.com/ (HTTP 200), hosted on Vanta — the page
+  declares a canonical of https://trust.airia.com, loads assets.vanta.com bundles and links a Vanta
+  document share (app.vanta.com/doc?s=...). The page is rendered entirely client-side: the HTML
+  payload contains no certification names, no report list and no subprocessor table, and the Vanta
+  trust-report API returns 401 to an anonymous caller. So the PORTAL is verified and the CONTENTS
+  are not. No certification is recorded here, because none could be read without executing the
+  page's JavaScript, and an assumed SOC 2 would be an invention.
+trust_center:
+  url: https://trust.airia.com/
+  platform: Vanta
+  http_status: 200
+  content_readable: false
+  reason: js-rendered
+  document_share: https://app.vanta.com/doc?s=61f32r7tmxevtmh7apswt
+  certifications_named: []
+  subprocessors_published: unknown
+  checked: '2026-09-19'
+related_public_signals:
+- claim: GDPR and HIPAA
+  where: https://airia.com/ai-platform/security/
+  note: >-
+    Stated as regulatory standards the PLATFORM helps a customer meet ("built-in policy enforcement
+    and automated reporting"), not as an Airia attestation. Not counted as a compliance claim.
+- claim: 'SOC 2, ISO 27001, EU AI Act'
+  where: https://airia.com/llms.txt (Compliance Reporting page description)
+  note: Describes audit-ready reports the product generates for the customer, again not Airia's own certificates.
+vulnerability_disclosure:
+  published: false
+  probes:
+  - url: https://airia.com/.well-known/security.txt
+    status: 404
+  - url: https://airia.ai/.well-known/security.txt
+    status: 401
+  - url: https://api.airia.ai/.well-known/security.txt
+    status: 401
+  - url: https://airia.com/security
+    status: 404
+  note: >-
+    No security.txt, no published disclosure policy page and no bug-bounty programme (HackerOne,
+    Bugcrowd, Intigriti) was found. A security researcher's only documented route is the general
+    contact form. No `Security` pointer is emitted.

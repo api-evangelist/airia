@@ -1,0 +1,47 @@
+generated: '2026-09-19'
+method: searched
+source: https://airia.ai/docs/build/interface-options/usage_limits
+description: >-
+  Airia publishes named licence tiers but no prices. https://airia.com/pricing 301s to the docs Usage
+  Limits page, which names three tiers — Professional, Teams and Enterprise — and states the agent
+  execution rate and document-ingestion ceiling each carries, without a figure, currency or billing
+  period. Every commercial path on airia.com leads to "Request a demo"; there is no self-serve
+  checkout and no published price list. Enterprise limits are explicitly negotiable per contract.
+plan_count: 3
+currency: null
+billing_period: null
+public_prices: false
+plans:
+- name: Professional
+  price: null
+  currency: null
+  period: null
+  included:
+    agent_executions_per_second: 3
+    document_ingestion_gb: 25
+  note: Price not published; obtained through sales.
+- name: Teams
+  price: null
+  currency: null
+  period: null
+  included:
+    agent_executions_per_second: 4
+    document_ingestion_gb: 50
+  note: Price not published; obtained through sales.
+- name: Enterprise
+  price: null
+  currency: null
+  period: null
+  included:
+    agent_executions_per_second: 5
+    document_ingestion_gb: 100
+  note: >-
+    Listed defaults "may be amended based on the Customer's agreement with Airia" — the tier is a
+    negotiated contract, not a published plan.
+sales_gate:
+  request_demo: https://airia.com/request-demo
+  marketplace: https://marketplace.microsoft.com/en-us/product/saas/30033.452bbc1a-1505-453c-b495-c67a05948534
+  note: >-
+    Also transactable through the Microsoft Marketplace listing, where private-offer pricing is set
+    per customer rather than published.
+fulfillment_policy: https://airia.app.box.com/file/1856364321327?v=Airia-Legal-Fulfillment-Policy

@@ -1,0 +1,93 @@
+generated: '2026-09-19'
+method: searched
+source: https://airia.ai/docs/build/components/model-deprecation
+description: >-
+  Airia's published lifecycle commitments. The platform has an Atlassian-hosted status page covering
+  seven regional environments, and a documented model-deprecation policy with a dated, escalating
+  warning ladder. It does NOT publish an API versioning or API deprecation policy: the release-notes
+  page requires a login, the OpenAPI carries a flat info.version of 1.0.0 with v1/v2 path segments
+  and no Sunset/Deprecation header contract, and seven operations are flagged deprecated in the spec
+  with no stated removal date.
+status_page:
+  url: https://status.airia.com/
+  platform: Atlassian Statuspage
+  http_status: 200
+  components:
+  - airia.ai
+  - ca01.airia.ai
+  - eu1.airia.ai
+  - mena.airia.ai
+  - prodaus.airia.ai
+  - sg01.airia.ai
+  - uk01.airia.ai
+  feeds:
+  - https://status.airia.com/history.atom
+  - https://status.airia.com/api/v2/status.json
+  - https://status.airia.com/api/v2/incidents.json
+  subscriptions:
+  - email
+  - slack
+  - microsoft teams
+  - atom/rss
+  recent_incidents:
+  - date: '2026-08-26'
+    impact: minor
+    name: Issues accessing airia.ai Platform
+  - date: '2026-04-03'
+    impact: critical
+    name: EU1 Outage
+  observed: '2026-09-19'
+deprecation_policy:
+  scope: AI models, not the API
+  url: https://airia.ai/docs/build/components/model-deprecation
+  summary: >-
+    Deprecation dates come from the model provider; Airia checks daily and surfaces a banner starting
+    90 days before retirement to administrators and anyone with model-management permission, but only
+    when the model is in use by at least one agent.
+  ladder:
+  - window: '>90 days'
+    warning: none
+  - window: 90 / 60 / 30 days
+    warning: dismissible for the session
+  - window: <=15 days
+    warning: non-dismissible critical banner
+  - window: past retirement
+    warning: 'non-dismissible "already deprecated" banner; the model may stop responding'
+  enforcement: >-
+    A model past its deprecation date cannot be added to an agent at all; one within 90 days warns
+    and offers a replacement.
+api_versioning:
+  scheme: path segment
+  versions:
+  - v1
+  - v2
+  spec_version: 1.0.0
+  policy_published: false
+  sunset_header: not documented
+  note: >-
+    v2 exists only for a handful of families (PipelineExecution, docgen); the contract is
+    overwhelmingly /v1/. No written policy states how long a version is supported.
+deprecated_operations:
+- operationId: RedTeamingEvaluation_GetRedTeamingDashboard
+  path: /v1/RedTeamingEvaluation/dashboard
+- operationId: SqlDocuments_Get
+  path: /v1/SqlDocuments/{dataStoreId}/{dataStoreConnectorId}
+- operationId: SqlDocuments_Get2
+  path: /v1/SqlDocuments/{dataStoreId}/{dataStoreConnectorId}/{tableName}
+- operationId: SqlDocuments_PostExecuteSqlQuery
+  path: /v1/SqlDocuments/{dataStoreId}/{dataStoreConnectorId}/query
+- operationId: GovernanceWorkflows_SetStageApprovers2
+  path: /v1/governance/workflows/{workflowId}/stages/{stageId}/approvers
+- operationId: AuditLog_SearchAuditEntries
+  path: /v1/AuditLog/search
+- operationId: Guardrail_GetAssignedGuardrailsByEntityIds
+  path: /v1/Guardrail/assigned
+deprecated_operations_note: >-
+  Derived from `deprecated: true` in openapi/airia-openapi.yml. None carries a removal date, a
+  successor pointer or a Sunset header.
+sla:
+  published: false
+  note: No public SLA document; uptime commitments appear to live in the customer agreement.
+support:
+  url: https://airia.ai/docs/contact-us/support
+  in_app: https://airia.ai/docs/contact-us/in-app-support

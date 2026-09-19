@@ -1,0 +1,119 @@
+generated: '2026-09-19'
+method: derived
+source: openapi/airia-openapi.yml
+description: >-
+  Airia has a real event surface but publishes no AsyncAPI document. Two distinct webhook
+  mechanisms are described in the REST contract, and they point in opposite directions: OUTBOUND
+  subscriptions, where Airia posts platform events to a customer endpoint with an HMAC signing
+  secret and a delivery log; and INBOUND webhooks, where a customer registers an endpoint on Airia
+  that a third-party system (GitHub, Slack, Teams, WhatsApp, Dropbox, OneDrive, SharePoint, Asana)
+  or a manual caller posts to in order to trigger an agent. /asyncapi.yaml, /asyncapi.json and the
+  GitHub org were searched and carry no event specification. The event-type vocabulary is not
+  published: eventTypes is an untyped string array in the contract, with no enum and no documented
+  catalogue, so an integrator cannot know what to subscribe to without the console.
+asyncapi_spec: none published
+webhooks:
+  outbound:
+    management_operations:
+    - operationId: OutboundWebhookSubscription_GetAll
+      path: GET /v1/OutboundWebhookSubscription
+    - operationId: OutboundWebhookSubscription_Create
+      path: POST /v1/OutboundWebhookSubscription
+    - operationId: OutboundWebhookSubscription_GetById
+      path: GET /v1/OutboundWebhookSubscription/{id}
+    - operationId: OutboundWebhookSubscription_Update
+      path: PUT /v1/OutboundWebhookSubscription/{id}
+    - operationId: OutboundWebhookSubscription_Delete
+      path: DELETE /v1/OutboundWebhookSubscription/{id}
+    - operationId: OutboundWebhookSubscription_RegenerateSecret
+      path: POST /v1/OutboundWebhookSubscription/{id}/regenerate-secret
+    - operationId: OutboundWebhookSubscription_GetDeliveryLog
+      path: GET /v1/OutboundWebhookSubscription/{id}/delivery-log
+    subscription_shape:
+      schema: OutboundWebhookSubscriptionDto
+      fields:
+      - url
+      - eventTypes (string[], no enum published)
+      - authMethod
+      - bearerToken
+      - signingSecret
+      - enabled
+      - consecutiveFailures
+      - lastDeliveryAt
+      - disabledReason
+    delivery_semantics:
+      retries: >-
+        Attempts are numbered (attemptNumber) and logged with httpStatusCode, latencyMs and
+        errorMessage; consecutiveFailures and disabledReason on the subscription show that Airia
+        auto-disables an endpoint that keeps failing. The retry schedule itself is not published.
+      log_schema: OutboundWebhookDeliveryLogDto
+      signature: signingSecret on the subscription, rotatable via regenerate-secret
+    event_catalogue: not published
+  inbound:
+    management_operations:
+    - operationId: WebhookConfiguration_GetWebhooks
+      path: GET /v1/WebhookConfiguration
+    - operationId: WebhookConfiguration_CreateWebhook
+      path: POST /v1/WebhookConfiguration
+    - operationId: WebhookConfiguration_GetWebhook
+      path: GET /v1/WebhookConfiguration/{id}
+    - operationId: WebhookConfiguration_UpdateWebhook
+      path: PUT /v1/WebhookConfiguration/{id}
+    - operationId: WebhookConfiguration_DeleteWebhook
+      path: DELETE /v1/WebhookConfiguration/{id}
+    - operationId: WebhookConfiguration_CreateSecret
+      path: GET /v1/WebhookConfiguration/secret
+    receive_operations:
+    - operationId: Webhook_Get
+      path: GET /v1/Webhook/{tenantId}/{webhookId}
+    - operationId: Webhook_Post
+      path: POST /v1/Webhook/{tenantId}/{webhookId}
+    - operationId: CodeScanner_ReceiveScanResults2
+      path: POST /v1/CodeScanner/webhook
+    - operationId: RecallWebhook_ProcessWebhook
+      path: POST /v1/RecallWebhook
+    - operationId: KeycloakWebhook_ReceiveEvent
+      path: POST /v1/keycloak-webhook
+    source_types:
+      schema: WebhookType
+      values:
+      - Manual
+      - GitHub
+      - SlackEventSubscriptions
+      - TeamsBotFramework
+      - WhatsAppCloudApi
+      - DropBox
+      - OneDrive
+      - SharePoint
+      - Asana
+    action_types:
+      schema: WebhookActionType
+      values:
+      - None
+      - Agent
+      - SlackBot
+      - TeamsBot
+      - WhatsAppBot
+      - MicrosoftGraphFileTrigger
+    authorization:
+      schema: WebhookAuthorizationType
+      values:
+      - None
+      - Hmac
+related_event_surfaces:
+- name: Security Event Triggers
+  description: Start an agent automatically when a security event fires inside Airia.
+  docs: https://airia.ai/docs/build/triggers/security-event-triggers
+- name: Agent Event Trigger
+  description: 8 REST operations (AgentEventTrigger) configuring event-driven agent starts, with modes FirstOccurrenceOnly / EveryOccurrence / OnDemand.
+  source: openapi/airia-openapi.yml
+- name: Webhook Approval Step
+  description: A human-in-the-loop agent step that pauses a workflow until an external webhook responds.
+  docs: https://airia.ai/docs/build/components/webhook-approval
+- name: External OTEL monitoring
+  description: 12 operations streaming agent/session telemetry to an external OpenTelemetry collector.
+  source: openapi/airia-openapi.yml
+gaps:
+- No AsyncAPI document is published for either direction.
+- The outbound event-type vocabulary is undocumented, so a subscription cannot be written from the public contract alone.
+- No payload schema is published for an outbound event body.
