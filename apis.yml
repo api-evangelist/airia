@@ -55,6 +55,14 @@ apis:
   - AI Security
   - Agent Orchestration
   - Knowledge Retrieval
+  - Webhook
+  tags_raw:
+  - Enterprise AI
+  - AI Agents
+  - AI Governance
+  - AI Security
+  - Agent Orchestration
+  - Knowledge Retrieval
   - Webhooks
   properties:
   - type: OpenAPI
@@ -90,6 +98,12 @@ apis:
   baseURL: https://mcp-gateway.airia.ai
   image: https://airia.com/images/wp-content/uploads/2026/02/home-header-bg.jpg
   tags:
+  - MCP
+  - MCP Gateway
+  - AI Agents
+  - agent-native
+  - Authentication
+  tags_raw:
   - MCP
   - MCP Gateway
   - AI Agents
