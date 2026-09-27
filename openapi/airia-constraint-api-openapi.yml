@@ -1,0 +1,805 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Constraint API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Constraint
+paths:
+  /v1/Constraint:
+    get:
+      tags:
+      - Constraint
+      operationId: Constraint_GetConstraintRules
+      parameters:
+      - name: projectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 1
+      - name: includeGlobal
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 2
+      - name: isActive
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 3
+      - name: scope
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ConstraintRuleScope'
+        x-position: 4
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 5
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 6
+      - name: name
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfConstraintRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint get constraint rules
+      x-summary-source: derived
+    post:
+      tags:
+      - Constraint
+      operationId: Constraint_AddConstraintRule
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddConstraintRuleRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint add constraint rule
+      x-summary-source: derived
+  /v1/Constraint/{ruleId}:
+    get:
+      tags:
+      - Constraint
+      operationId: Constraint_GetConstraintRule
+      parameters:
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint get constraint rule
+      x-summary-source: derived
+    put:
+      tags:
+      - Constraint
+      operationId: Constraint_UpdateConstraintRule
+      parameters:
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConstraintRuleRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint update constraint rule
+      x-summary-source: derived
+    delete:
+      tags:
+      - Constraint
+      operationId: Constraint_DeleteConstraintRule
+      parameters:
+      - name: ruleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint delete constraint rule
+      x-summary-source: derived
+  /v1/Constraint/active:
+    get:
+      tags:
+      - Constraint
+      operationId: Constraint_GetActiveConstraintRules
+      parameters:
+      - name: projectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 1
+      - name: includeGlobal
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 2
+      - name: scope
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ConstraintRuleScope'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConstraintRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Constraint get active constraint rules
+      x-summary-source: derived
+components:
+  schemas:
+    AddConstraintRuleCriteriaRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - fieldPath
+      - operator
+      - value
+      properties:
+        fieldPath:
+          type: string
+          maxLength: 256
+          minLength: 1
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+          maxLength: 1024
+          minLength: 1
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+    ConstraintLogicalOperator:
+      type: string
+      description: ''
+      x-enumNames:
+      - And
+      - Or
+      enum:
+      - And
+      - Or
+    ConstraintRuleScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gateway
+      - Agents
+      - Projects
+      - ExternalAgents
+      enum:
+      - Gateway
+      - Agents
+      - Projects
+      - ExternalAgents
+    UpdateConstraintRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - action
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type: string
+          maxLength: 1024
+          minLength: 0
+        action:
+          $ref: '#/components/schemas/ConstraintRuleAction'
+        priority:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        isActive:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        gatewayIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        expressionJson:
+          type:
+          - string
+          - 'null'
+        expressionVersion:
+          type: integer
+          format: int32
+        scope:
+          $ref: '#/components/schemas/ConstraintRuleScope'
+        ruleType:
+          $ref: '#/components/schemas/ConstraintRuleType'
+        actionMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+          minLength: 0
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateConstraintRuleCriteriaRequest'
+        runbookId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        clearRunbook:
+          type:
+          - boolean
+          - 'null'
+        runbookTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 60
+          minimum: 1
+        runbookOnFailure:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
+    ConstraintRuleResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConstraintRuleAction'
+        priority:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        gatewayIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        expressionJson:
+          type:
+          - string
+          - 'null'
+        expressionVersion:
+          type: integer
+          format: int32
+        scope:
+          $ref: '#/components/schemas/ConstraintRuleScope'
+        ruleType:
+          $ref: '#/components/schemas/ConstraintRuleType'
+        actionMessage:
+          type:
+          - string
+          - 'null'
+        runbookId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        runbookTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        runbookOnFailure:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstraintRuleCriteriaResponseV1'
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    ConstraintRuleCriteriaResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        fieldPath:
+          type: string
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfConstraintRuleResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstraintRuleResponseV1'
+    ConstraintRuleRunbookOnFailure:
+      type: string
+      description: ''
+      x-enumNames:
+      - Block
+      - Proceed
+      enum:
+      - Block
+      - Proceed
+    ConstraintRuleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Constraint
+      - AlignmentCheck
+      enum:
+      - Constraint
+      - AlignmentCheck
+    UpdateConstraintRuleCriteriaRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - fieldPath
+      - operator
+      - value
+      properties:
+        id:
+          type: string
+          format: guid
+        fieldPath:
+          type: string
+          maxLength: 256
+          minLength: 1
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+          maxLength: 1024
+          minLength: 1
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+    ConstraintRuleAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Block
+      - Audit
+      - Warn
+      - StepUp
+      - Defer
+      enum:
+      - Block
+      - Audit
+      - Warn
+      - StepUp
+      - Defer
+    AddConstraintRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - action
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type: string
+          maxLength: 1024
+          minLength: 0
+        action:
+          $ref: '#/components/schemas/ConstraintRuleAction'
+        priority:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        isActive:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        gatewayIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        expressionJson:
+          type:
+          - string
+          - 'null'
+        expressionVersion:
+          type: integer
+          format: int32
+        scope:
+          $ref: '#/components/schemas/ConstraintRuleScope'
+        ruleType:
+          $ref: '#/components/schemas/ConstraintRuleType'
+        actionMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+          minLength: 0
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddConstraintRuleCriteriaRequest'
+        runbookId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        runbookTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 60
+          minimum: 1
+        runbookOnFailure:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
+    ConstraintCriteriaOperator:
+      type: string
+      description: ''
+      x-enumNames:
+      - Equals
+      - NotEquals
+      - Contains
+      - NotContains
+      - StartsWith
+      - EndsWith
+      - Regex
+      - In
+      - NotIn
+      - GreaterThan
+      - LessThan
+      enum:
+      - Equals
+      - NotEquals
+      - Contains
+      - NotContains
+      - StartsWith
+      - EndsWith
+      - Regex
+      - In
+      - NotIn
+      - GreaterThan
+      - LessThan
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

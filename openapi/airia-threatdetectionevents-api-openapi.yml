@@ -1,0 +1,229 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Threat Detection Events API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ThreatDetectionEvents
+paths:
+  /v1/spm/threat-detection/events:
+    get:
+      tags:
+      - ThreatDetectionEvents
+      operationId: ThreatDetectionEvents_GetEvents
+      parameters:
+      - name: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 1
+      - name: pageNumber
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: includeTotalCount
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 3
+      - name: spmAgentId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 4
+      - name: verdict
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/SpmThreatDetectionVerdict'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfThreatDetectionEventResponse'
+      summary: Threat detection events get events
+      x-summary-source: derived
+  /v1/spm/threat-detection/events/{id}:
+    get:
+      tags:
+      - ThreatDetectionEvents
+      operationId: ThreatDetectionEvents_GetEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionEventResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Threat detection events get event
+      x-summary-source: derived
+components:
+  schemas:
+    SpmThreatDetectionVerdict:
+      type: string
+      description: ''
+      x-enumNames:
+      - Allowed
+      - Blocked
+      - Error
+      enum:
+      - Allowed
+      - Blocked
+      - Error
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        spmConnectionId:
+          type: string
+          format: guid
+        spmAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        externalAgentId:
+          type:
+          - string
+          - 'null'
+        environmentId:
+          type:
+          - string
+          - 'null'
+        conversationId:
+          type:
+          - string
+          - 'null'
+        planId:
+          type:
+          - string
+          - 'null'
+        planStepId:
+          type:
+          - string
+          - 'null'
+        toolName:
+          type: string
+        toolType:
+          type:
+          - string
+          - 'null'
+        verdict:
+          type: string
+        reason:
+          type:
+          - string
+          - 'null'
+        unrecognizedAgent:
+          type: boolean
+        latencyMs:
+          type: integer
+          format: int64
+        correlationId:
+          type:
+          - string
+          - 'null'
+        payloadJson:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfThreatDetectionEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThreatDetectionEventResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

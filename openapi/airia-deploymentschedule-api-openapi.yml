@@ -1,0 +1,715 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Deployment Schedule API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DeploymentSchedule
+paths:
+  /v1/DeploymentSchedule:
+    get:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_GetAll
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentScheduleModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule get all
+      x-summary-source: derived
+    post:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentScheduleModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentScheduleModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule create
+      x-summary-source: derived
+  /v1/DeploymentSchedule/schedule/{scheduleId}:
+    get:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_GetById
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentScheduleModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule get by id
+      x-summary-source: derived
+    put:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_Update
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentScheduleModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentScheduleModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule update
+      x-summary-source: derived
+    delete:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_Delete
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule delete
+      x-summary-source: derived
+  /v1/DeploymentSchedule/deployment/{deploymentId}:
+    get:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_GetByDeployment
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentScheduleModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule get by deployment
+      x-summary-source: derived
+  /v1/DeploymentSchedule/admin/pipeline/{pipelineId}:
+    get:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_GetByPipelineAdmin
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentScheduleAdminModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule get by pipeline admin
+      x-summary-source: derived
+  /v1/DeploymentSchedule/admin/schedule/{scheduleId}/pause:
+    post:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_PauseScheduleAdmin
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule pause schedule admin
+      x-summary-source: derived
+  /v1/DeploymentSchedule/admin/schedule/{scheduleId}/resume:
+    post:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_ResumeScheduleAdmin
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule resume schedule admin
+      x-summary-source: derived
+  /v1/DeploymentSchedule/admin/schedule/{scheduleId}:
+    delete:
+      tags:
+      - DeploymentSchedule
+      operationId: DeploymentSchedule_DeleteScheduleAdmin
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployment schedule delete schedule admin
+      x-summary-source: derived
+components:
+  schemas:
+    ScheduleThreadingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - NewThread
+      - SameThread
+      enum:
+      - NewThread
+      - SameThread
+    DeploymentScheduleAdminModel:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentScheduleModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          ownerUserId:
+            type: string
+            format: guid
+          ownerUserName:
+            type:
+            - string
+            - 'null'
+          ownerUserEmail:
+            type:
+            - string
+            - 'null'
+          userInput:
+            type:
+            - string
+            - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    ScheduleModel:
+      type: object
+      additionalProperties: false
+      properties:
+        second:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DeploymentScheduleModel:
+      allOf:
+      - $ref: '#/components/schemas/ScheduleModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - deploymentId
+        properties:
+          id:
+            type:
+            - string
+            - 'null'
+            format: guid
+          deploymentId:
+            type: string
+            format: guid
+            minLength: 1
+          name:
+            type:
+            - string
+            - 'null'
+            maxLength: 200
+            minLength: 0
+          userInput:
+            type:
+            - string
+            - 'null'
+          isPaused:
+            type: boolean
+          threadingMode:
+            $ref: '#/components/schemas/ScheduleThreadingMode'
+          conversationId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          notifyOnCompletion:
+            type: boolean
+          userTaskId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

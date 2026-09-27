@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Governance Agents API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GovernanceAgents
+paths:
+  /v1/GovernanceAgents:
+    post:
+      tags:
+      - GovernanceAgents
+      operationId: GovernanceAgents_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGovernanceAgentRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance agents create
+      x-summary-source: derived
+  /v1/GovernanceAgents/bulk-import:
+    post:
+      tags:
+      - GovernanceAgents
+      operationId: GovernanceAgents_BulkImport
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkImportResult'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkImportResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance agents bulk import
+      x-summary-source: derived
+components:
+  schemas:
+    BulkImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        createdCount:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            type: string
+        hasErrors:
+          type: boolean
+    CreateGovernanceAgentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+          minLength: 0
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        approverId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        dataSourceIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        toolAndMcpIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

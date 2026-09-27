@@ -1,0 +1,456 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Budget Evaluation Feed API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: BudgetEvaluationFeed
+paths:
+  /marketplace/v1/BudgetEvaluationFeed/by-transaction:
+    get:
+      tags:
+      - BudgetEvaluationFeed
+      operationId: BudgetEvaluationFeed_GetByTransaction2
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: messageSource
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: budgetLevel
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: period
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: result
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: threshold
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: sortDirection
+        in: query
+        schema:
+          type: string
+          default: DESC
+        x-position: 10
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedFeedResultDtoOfBudgetEvaluationTransactionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Budget evaluation feed get by transaction2
+      x-summary-source: derived
+  /marketplace/v1/BudgetEvaluationFeed/by-evaluation:
+    get:
+      tags:
+      - BudgetEvaluationFeed
+      operationId: BudgetEvaluationFeed_GetByEvaluation2
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: messageSource
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: budgetLevel
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: period
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: result
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: threshold
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: sortDirection
+        in: query
+        schema:
+          type: string
+          default: DESC
+        x-position: 10
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedFeedResultDtoOfBudgetEvaluationRecordDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Budget evaluation feed get by evaluation2
+      x-summary-source: derived
+  /marketplace/v1/BudgetEvaluationFeed/spend-chart:
+    get:
+      tags:
+      - BudgetEvaluationFeed
+      operationId: BudgetEvaluationFeed_GetSpendChart2
+      parameters:
+      - name: granularity
+        in: query
+        schema:
+          type: string
+          default: day
+        x-position: 1
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendDataDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Budget evaluation feed get spend chart2
+      x-summary-source: derived
+components:
+  schemas:
+    SpendBucketDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        counted:
+          type: number
+          format: double
+        warning:
+          type: number
+          format: double
+        blocked:
+          type: number
+          format: double
+    BudgetEvaluationTransactionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+        userName:
+          type: string
+        messageSource:
+          $ref: '#/components/schemas/MessageSourceDto'
+        amount:
+          type: number
+          format: double
+        budgetsEvaluated:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatedBudgetDto'
+        nearestReset:
+          type: string
+        executionId:
+          type: string
+        result:
+          type: string
+    PagedFeedResultDtoOfBudgetEvaluationRecordDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetEvaluationRecordDto'
+        totalCount:
+          type: integer
+          format: int32
+    SpendDataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpendBucketDto'
+        summary:
+          $ref: '#/components/schemas/SpendSummaryDto'
+    MessageSourceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedFeedResultDtoOfBudgetEvaluationTransactionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetEvaluationTransactionDto'
+        totalCount:
+          type: integer
+          format: int32
+    EvaluatedBudgetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        level:
+          type: string
+        result:
+          type: string
+        budgetName:
+          type: string
+        period:
+          type: string
+        percentUsed:
+          type: number
+          format: double
+        spent:
+          type: number
+          format: double
+        limit:
+          type: number
+          format: double
+        thresholdPercent:
+          type: integer
+          format: int32
+        resetsAt:
+          type: string
+        budgetType:
+          type: string
+        resourceName:
+          type: string
+    BudgetEvaluationRecordDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        budgetName:
+          type: string
+        level:
+          type: string
+        period:
+          type: string
+        percentUsed:
+          type: number
+          format: double
+        spent:
+          type: number
+          format: double
+        limit:
+          type: number
+          format: double
+        thresholdPercent:
+          type: integer
+          format: int32
+        result:
+          type: string
+        resetsAt:
+          type: string
+        executionId:
+          type: string
+        budgetType:
+          type: string
+        resourceName:
+          type: string
+    SpendSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        spendCharged:
+          type: number
+          format: double
+        inWarning:
+          type: number
+          format: double
+        blockedAttempted:
+          type: number
+          format: double
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

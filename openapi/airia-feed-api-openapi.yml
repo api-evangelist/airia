@@ -1,0 +1,457 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Feed API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Feed
+paths:
+  /v1/Feed/policy-violations:
+    get:
+      tags:
+      - Feed
+      operationId: Feed_GetPolicyViolationFeed2
+      parameters:
+      - name: ProjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: SourceId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: ExecutionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: StartTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 4
+      - name: EndTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 5
+      - name: Descending
+        in: query
+        schema:
+          type: boolean
+        x-position: 6
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: PCIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 8
+      - name: PHIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 9
+      - name: PIIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 10
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 11
+      - name: ViolationItemTypeFlags
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ViolationItemTypes'
+        x-position: 12
+      - name: Limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 13
+      - name: Offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 14
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyViolationsWithDataPrivacyResponseV1'
+      summary: Feed get policy violation feed2
+      x-summary-source: derived
+  /v1/Feed/policy-violations/export/csv:
+    get:
+      tags:
+      - Feed
+      operationId: Feed_ExportPolicyViolationItemsToCsv2
+      parameters:
+      - name: ProjectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: SourceId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: ExecutionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: StartTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 4
+      - name: EndTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 5
+      - name: Descending
+        in: query
+        schema:
+          type: boolean
+        x-position: 6
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: PCIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 8
+      - name: PHIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 9
+      - name: PIIFilter
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 10
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 11
+      - name: ViolationItemTypeFlags
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ViolationItemTypes'
+        x-position: 12
+      - name: Limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 13
+      - name: Offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 14
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Feed export policy violation items to csv2
+      x-summary-source: derived
+components:
+  schemas:
+    ViolationSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pipeline
+      - Gateway
+      - Playground
+      - Claude
+      - ShadowAi
+      - BrowserExtension
+      - CopilotStudio
+      - LiteLlm
+      - McpGateway
+      - InferenceHooks
+      enum:
+      - Pipeline
+      - Gateway
+      - Playground
+      - Claude
+      - ShadowAi
+      - BrowserExtension
+      - CopilotStudio
+      - LiteLlm
+      - McpGateway
+      - InferenceHooks
+    PolicyViolationsWithDataPrivacyItemResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        conversationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        violationId:
+          type: string
+          format: guid
+        violationItemId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        timestamp:
+          type: string
+          format: date-time
+        violationType:
+          type: string
+        violationTypeId:
+          type: integer
+          format: int64
+        violationAttributeName:
+          type: string
+        violationAttributeFlag:
+          type: integer
+          format: int64
+        sourceType:
+          $ref: '#/components/schemas/ViolationSourceType'
+        sourceTypeId:
+          type: integer
+          format: int64
+        score:
+          type: number
+          format: double
+        violatingText:
+          type: string
+        contentType:
+          type:
+          - string
+          - 'null'
+        policyId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customAttributeName:
+          type:
+          - string
+          - 'null'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sessionId:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ViolationItemTypes:
+      type: string
+      description: ''
+      x-enumFlags: true
+      x-enumNames:
+      - None
+      - PCI
+      - PHI
+      - PII
+      - PromptSecurity
+      - Secrets
+      - CustomRecognizer
+      - KeywordDetector
+      - HtmlSanitization
+      - Moderation
+      - UrlSanitization
+      - AgentMisalignment
+      - PythonFilter
+      - SystemPromptAdherence
+      enum:
+      - None
+      - PCI
+      - PHI
+      - PII
+      - PromptSecurity
+      - Secrets
+      - CustomRecognizer
+      - KeywordDetector
+      - HtmlSanitization
+      - Moderation
+      - UrlSanitization
+      - AgentMisalignment
+      - PythonFilter
+      - SystemPromptAdherence
+    PolicyViolationsWithDataPrivacyResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        totalCount:
+          type: integer
+          format: int64
+        offset:
+          type: integer
+          format: int64
+        violationItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyViolationsWithDataPrivacyItemResponseV1'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

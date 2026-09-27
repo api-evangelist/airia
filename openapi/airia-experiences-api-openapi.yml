@@ -1,0 +1,859 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Experiences API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Experiences
+paths:
+  /v1/Experiences:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_GetExperiencesApps2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: status
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ExperiencesAppStatus'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfExperiencesApp'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences get experiences apps2
+      x-summary-source: derived
+    post:
+      tags:
+      - Experiences
+      operationId: Experiences_CreateExperiencesApp2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: experiencesApp
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperiencesApp'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesApp'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences create experiences app2
+      x-summary-source: derived
+  /v1/Experiences/{id}:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_GetExperiencesAppById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesApp'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences get experiences app by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - Experiences
+      operationId: Experiences_UpdateExperiencesApp2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: experiencesApp
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperiencesApp'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesApp'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences update experiences app2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Experiences
+      operationId: Experiences_DeleteExperiencesApp2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences delete experiences app2
+      x-summary-source: derived
+  /v1/Experiences/generate:
+    post:
+      tags:
+      - Experiences
+      operationId: Experiences_GenerateExperiencesApp2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateExperiencesAppRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesApp'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences generate experiences app2
+      x-summary-source: derived
+  /v1/Experiences/generate-async:
+    post:
+      tags:
+      - Experiences
+      operationId: Experiences_GenerateExperiencesApp4
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateExperiencesAppRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: guid
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences generate experiences app4
+      x-summary-source: derived
+  /v1/Experiences/seed:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_SeedExperiences2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesSeedResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences seed experiences2
+      x-summary-source: derived
+  /v1/Experiences/examples:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_GetExamples2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExperiencesAppSummary'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences get examples2
+      x-summary-source: derived
+  /v1/Experiences/templates:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_GetTemplates2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExperiencesAppSummary'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences get templates2
+      x-summary-source: derived
+  /v1/Experiences/example/{id}:
+    get:
+      tags:
+      - Experiences
+      operationId: Experiences_GetExampleOrTemplateById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExperiencesAppDetail'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Experiences get example or template by id2
+      x-summary-source: derived
+components:
+  schemas:
+    GenerateExperiencesAppRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        prompt:
+          type: string
+        experiencesAppId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inMemoryMessages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+    ExperiencesApp:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          description:
+            type:
+            - string
+            - 'null'
+            maxLength: 1000
+          reactCode:
+            type:
+            - string
+            - 'null'
+          reactContext:
+            type:
+            - string
+            - 'null'
+          status:
+            $ref: '#/components/schemas/ExperiencesAppStatus'
+    ExperiencesSeedResult:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+    ToolRequest:
+      allOf:
+      - $ref: '#/components/schemas/BaseAssistantMessagePart'
+      - type: object
+        additionalProperties: false
+        properties:
+          toolCallId:
+            type: string
+          toolName:
+            type: string
+          parameters:
+            type: array
+            items:
+              $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+          thoughtSignature:
+            type:
+            - string
+            - 'null'
+    ExperiencesAppStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - InGeneration
+      - Finished
+      - Fail
+      - Example
+      - Template
+      enum:
+      - InProgress
+      - InGeneration
+      - Finished
+      - Fail
+      - Example
+      - Template
+    PagedResultOfExperiencesApp:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperiencesApp'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ExperiencesAppDetail:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        reactCode:
+          type:
+          - string
+          - 'null'
+    ExperiencesAppSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ToolResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        response:
+          type:
+          - string
+          - 'null'
+    BaseAssistantMessagePart:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        index:
+          type: integer
+          format: int32
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+        role:
+          type: string
+        responseTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toolResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolResponse'
+        toolRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolRequest'
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

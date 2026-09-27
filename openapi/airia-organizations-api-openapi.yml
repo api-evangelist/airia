@@ -1,0 +1,221 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Organizations API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Organizations
+paths:
+  /v1/Organizations/Active:
+    get:
+      tags:
+      - Organizations
+      operationId: Organizations_GetActiveOrganization2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Organizations get active organization2
+      x-summary-source: derived
+  /v1/Organizations:
+    get:
+      tags:
+      - Organizations
+      operationId: Organizations_GetOrganizations2
+      parameters:
+      - name: roleFilter
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Organizations get organizations2
+      x-summary-source: derived
+components:
+  schemas:
+    TenantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        identifier:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        accessControlGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TenantPermissionsDto'
+    TenantPermissionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    OrganizationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        externalId:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        createTenantsEnabled:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        tenants:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantDto'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

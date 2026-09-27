@@ -1,0 +1,760 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Webhook Configuration API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Webhook Configuration
+paths:
+  /v1/WebhookConfiguration/{id}:
+    get:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_GetWebhook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponseModel'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration get webhook
+      x-summary-source: derived
+    put:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_UpdateWebhook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhookRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration update webhook
+      x-summary-source: derived
+    delete:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_DeleteWebhook
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration delete webhook
+      x-summary-source: derived
+  /v1/WebhookConfiguration:
+    get:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_GetWebhooks
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: sortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: sortDirection
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: actionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfWebhookResponseModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration get webhooks
+      x-summary-source: derived
+    post:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_CreateWebhook
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookRequestModel'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration create webhook
+      x-summary-source: derived
+  /v1/WebhookConfiguration/secret:
+    get:
+      tags:
+      - Webhook Configuration
+      operationId: WebhookConfiguration_CreateSecret
+      parameters:
+      - name: keySize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 32
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSecretResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Webhook configuration create secret
+      x-summary-source: derived
+components:
+  schemas:
+    CreateWebhookRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - friendlyName
+      - type
+      - actionType
+      - authorizationType
+      - configuration
+      - enabled
+      properties:
+        friendlyName:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+          minLength: 0
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        actionType:
+          $ref: '#/components/schemas/WebhookActionType'
+        actionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authorizationType:
+          $ref: '#/components/schemas/WebhookAuthorizationType'
+        authorization:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookAuthorizationBase'
+        configuration:
+          $ref: '#/components/schemas/WebhookConfiguration'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        enabled:
+          type: boolean
+    BaseWebhookModel:
+      type: object
+      additionalProperties: false
+      required:
+      - friendlyName
+      - webhookUrl
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userId:
+          type: string
+          format: guid
+        friendlyName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        actionType:
+          $ref: '#/components/schemas/WebhookActionType'
+        actionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authorizationType:
+          $ref: '#/components/schemas/WebhookAuthorizationType'
+        webhookUrl:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+        enabled:
+          type: boolean
+    WebhookConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        impersonateUser:
+          type: boolean
+        successfulResponseCode:
+          type: integer
+          format: int32
+        failedResponseCode:
+          type: integer
+          format: int32
+        useExternalUserMapping:
+          type:
+          - boolean
+          - 'null'
+        requireUserMapping:
+          type:
+          - boolean
+          - 'null'
+        autoProvisionUsers:
+          type:
+          - boolean
+          - 'null'
+        provisionedUserRole:
+          type:
+          - string
+          - 'null'
+        sendTypingIndicator:
+          type:
+          - boolean
+          - 'null'
+        teamsAppId:
+          type:
+          - string
+          - 'null'
+        oneDriveDriveId:
+          type:
+          - string
+          - 'null'
+        oneDriveFolderId:
+          type:
+          - string
+          - 'null'
+        oneDriveCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        oneDriveProviderConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        oneDriveAllowedExtensions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        oneDriveIncludeSubfolders:
+          type:
+          - boolean
+          - 'null'
+        oneDriveGraphSubscriptionId:
+          type:
+          - string
+          - 'null'
+        oneDriveClientState:
+          type:
+          - string
+          - 'null'
+        oneDriveSubscriptionExpiration:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        oneDriveDeltaLink:
+          type:
+          - string
+          - 'null'
+        sharePointSiteId:
+          type:
+          - string
+          - 'null'
+        sharePointDriveId:
+          type:
+          - string
+          - 'null'
+        sharePointFolderId:
+          type:
+          - string
+          - 'null'
+        sharePointListId:
+          type:
+          - string
+          - 'null'
+        sharePointCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharePointProviderConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharePointAllowedExtensions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        sharePointIncludeSubfolders:
+          type:
+          - boolean
+          - 'null'
+        sharePointGraphSubscriptionId:
+          type:
+          - string
+          - 'null'
+        sharePointClientState:
+          type:
+          - string
+          - 'null'
+        sharePointSubscriptionExpiration:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        sharePointDeltaLink:
+          type:
+          - string
+          - 'null'
+        fetchChannelContext:
+          type:
+          - boolean
+          - 'null'
+        channelContextMessageCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        asanaHookSecret:
+          type:
+          - string
+          - 'null'
+    WebhookAuthorizationBase:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          WebhookHmacAuthorization: '#/components/schemas/WebhookHmacAuthorization'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        $type:
+          type: string
+    WebhookAuthorizationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Hmac
+      enum:
+      - None
+      - Hmac
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    WebhookSecretResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        secret:
+          type: string
+    WebhookResponseModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseWebhookModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - configuration
+        properties:
+          authorization:
+            oneOf:
+            - $ref: '#/components/schemas/WebhookAuthorizationBase'
+          configuration:
+            $ref: '#/components/schemas/WebhookConfiguration'
+    WebhookActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Agent
+      - SlackBot
+      - TeamsBot
+      - WhatsAppBot
+      - MicrosoftGraphFileTrigger
+      enum:
+      - None
+      - Agent
+      - SlackBot
+      - TeamsBot
+      - WhatsAppBot
+      - MicrosoftGraphFileTrigger
+    WebhookType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Manual
+      - GitHub
+      - SlackEventSubscriptions
+      - TeamsBotFramework
+      - WhatsAppCloudApi
+      - DropBox
+      - OneDrive
+      - SharePoint
+      - Asana
+      enum:
+      - Manual
+      - GitHub
+      - SlackEventSubscriptions
+      - TeamsBotFramework
+      - WhatsAppCloudApi
+      - DropBox
+      - OneDrive
+      - SharePoint
+      - Asana
+    UpdateWebhookRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - friendlyName
+      - type
+      - actionType
+      - authorizationType
+      - configuration
+      - enabled
+      properties:
+        friendlyName:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+          minLength: 0
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        actionType:
+          $ref: '#/components/schemas/WebhookActionType'
+        actionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authorizationType:
+          $ref: '#/components/schemas/WebhookAuthorizationType'
+        authorization:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookAuthorizationBase'
+        configuration:
+          $ref: '#/components/schemas/WebhookConfiguration'
+        enabled:
+          type: boolean
+    PagedResultOfWebhookResponseModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookResponseModel'
+        totalCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

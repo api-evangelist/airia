@@ -1,0 +1,633 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent Event Trigger API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AgentEventTrigger
+paths:
+  /v1/AgentEventTrigger/pipeline/{pipelineId}:
+    get:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_GetAgentEventTriggers
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentEventTriggerModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger get agent event triggers
+      x-summary-source: derived
+  /v1/AgentEventTrigger/sample-payload:
+    get:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_GetAgentEventTriggerSamplePayload
+      parameters:
+      - name: eventTypeName
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEventTriggerSamplePayloadResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger get agent event trigger sample payload
+      x-summary-source: derived
+  /v1/AgentEventTrigger:
+    post:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_CreateAgentEventTrigger
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentEventTriggerModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEventTriggerModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger create agent event trigger
+      x-summary-source: derived
+  /v1/AgentEventTrigger/{id}:
+    put:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_UpdateAgentEventTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentEventTriggerModel'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger update agent event trigger
+      x-summary-source: derived
+    delete:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_DeleteAgentEventTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger delete agent event trigger
+      x-summary-source: derived
+  /v1/AgentEventTrigger/{id}/test-fire:
+    post:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_TestFireAgentEventTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestFireAgentEventTriggerRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestFireAgentEventTriggerResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        428:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger test fire agent event trigger
+      x-summary-source: derived
+  /v1/AgentEventTrigger/on-demand-catalog:
+    get:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_GetOnDemandCatalog
+      parameters:
+      - name: eventTypeName
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentEventTriggerCatalogItemModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger get on demand catalog
+      x-summary-source: derived
+  /v1/AgentEventTrigger/{id}/execute:
+    post:
+      tags:
+      - AgentEventTrigger
+      operationId: AgentEventTrigger_ExecuteAgentEventTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteAgentEventTriggerRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteAgentEventTriggerResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent event trigger execute agent event trigger
+      x-summary-source: derived
+components:
+  schemas:
+    AgentEventTriggerModel:
+      type: object
+      additionalProperties: false
+      required:
+      - pipelineId
+      - pipelineVersionId
+      - eventTypeName
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        eventTypeName:
+          type: string
+          maxLength: 128
+          minLength: 0
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          $ref: '#/components/schemas/AgentEventTriggerMode'
+        enabled:
+          type: boolean
+    ExecuteAgentEventTriggerResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+    AgentEventTriggerSamplePayloadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        payload:
+          type: object
+          additionalProperties: {}
+        optionalKeys:
+          type: array
+          items:
+            type: string
+        allowedValues:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    TestFireAgentEventTriggerRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - payload
+      properties:
+        payload:
+          type: object
+          additionalProperties: {}
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentEventTriggerCatalogItemModel:
+      type: object
+      additionalProperties: false
+      properties:
+        triggerId:
+          type: string
+          format: guid
+        agentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        eventTypeName:
+          type: string
+    AgentEventTriggerMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
+      enum:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
+    ExecuteAgentEventTriggerRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - context
+      properties:
+        context:
+          type: object
+          additionalProperties: {}
+    TestFireAgentEventTriggerResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

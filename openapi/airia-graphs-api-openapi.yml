@@ -1,0 +1,447 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Graphs API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Graphs
+paths:
+  /v1/Graphs:
+    post:
+      tags:
+      - Graphs
+      operationId: Graphs_CreateGraph
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: graph
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphDto'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs create graph
+      x-summary-source: derived
+    get:
+      tags:
+      - Graphs
+      operationId: Graphs_GetGraphs
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs get graphs
+      x-summary-source: derived
+  /v1/Graphs/{graphName}:
+    get:
+      tags:
+      - Graphs
+      operationId: Graphs_GetGraph
+      parameters:
+      - name: graphName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs get graph
+      x-summary-source: derived
+    delete:
+      tags:
+      - Graphs
+      operationId: Graphs_DeleteGraph
+      parameters:
+      - name: graphName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs delete graph
+      x-summary-source: derived
+  /v1/Graphs/{graphName}/nodes/count:
+    get:
+      tags:
+      - Graphs
+      operationId: Graphs_GetGraphNodesCount
+      parameters:
+      - name: graphName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphNodeRecordsInfoDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs get graph nodes count
+      x-summary-source: derived
+  /v1/Graphs/{graphName}/relationships/count:
+    get:
+      tags:
+      - Graphs
+      operationId: Graphs_GetGraphRelationshipsCount
+      parameters:
+      - name: graphName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphRelationshipRecordsInfoDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs get graph relationships count
+      x-summary-source: derived
+  /v1/Graphs/{graphName}/cypher:
+    post:
+      tags:
+      - Graphs
+      operationId: Graphs_ExecuteCypherQuery
+      parameters:
+      - name: graphName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CypherQueryDto'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonDocument'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        503:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Graphs execute cypher query
+      x-summary-source: derived
+components:
+  schemas:
+    CypherQueryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        query:
+          type: string
+        readonly:
+          type: boolean
+    GraphDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GraphRelationshipRecordsInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    GraphNodeRecordsInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

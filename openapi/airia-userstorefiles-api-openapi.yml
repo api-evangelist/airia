@@ -1,0 +1,241 @@
+openapi: 3.2.0
+info:
+  title: Airia Web User Store Files API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UserStoreFiles
+paths:
+  /v1/user-store/list:
+    get:
+      tags:
+      - UserStoreFiles
+      operationId: UserStoreFiles_ListDirectory
+      parameters:
+      - name: path
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserStoreFileItemDto'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User store files list directory
+      x-summary-source: derived
+  /v1/user-store/files/download:
+    get:
+      tags:
+      - UserStoreFiles
+      operationId: UserStoreFiles_DownloadFile
+      parameters:
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User store files download file
+      x-summary-source: derived
+  /v1/user-store/files:
+    delete:
+      tags:
+      - UserStoreFiles
+      operationId: UserStoreFiles_DeletePath
+      parameters:
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User store files delete path
+      x-summary-source: derived
+  /v1/user-store/files/rename:
+    post:
+      tags:
+      - UserStoreFiles
+      operationId: UserStoreFiles_Rename
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameUserStoreEntryRequest'
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User store files rename
+      x-summary-source: derived
+  /v1/user-store/folders:
+    post:
+      tags:
+      - UserStoreFiles
+      operationId: UserStoreFiles_CreateFolder
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserStoreFolderRequest'
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User store files create folder
+      x-summary-source: derived
+components:
+  schemas:
+    CreateUserStoreFolderRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          maxLength: 1024
+          minLength: 1
+    RenameUserStoreEntryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          minLength: 1
+        newPath:
+          type: string
+          minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserStoreFileItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        isDirectory:
+          type: boolean
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastModified:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

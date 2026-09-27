@@ -1,0 +1,760 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Red Teaming Cost Estimation API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RedTeamingCostEstimation
+paths:
+  /v1/red-teaming/cost-estimation/targeted:
+    post:
+      tags:
+      - RedTeamingCostEstimation
+      operationId: RedTeamingCostEstimation_EstimateTargetedCampaignCost
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                CampaignName:
+                  type: string
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                AgentVersionIds:
+                  type: array
+                  items:
+                    type: string
+                    format: guid
+                HttpEndpointConfig.EndpointUrl:
+                  type: string
+                HttpEndpointConfig.HttpMethod:
+                  type: string
+                HttpEndpointConfig.Headers:
+                  type:
+                  - object
+                  - 'null'
+                  additionalProperties:
+                    type: string
+                HttpEndpointConfig.HeadersJson:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.BodyTemplate:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.ResponseJsonPath:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.TimeoutMs:
+                  type: integer
+                  format: int32
+                HttpEndpointConfig.QueryStringsJson:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.IgnoreSslErrors:
+                  type: boolean
+                HttpEndpointConfig.BodyType:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.CredentialId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                AttackLibraryIds:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                    format: guid
+                DatasetFile:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                DatasetTitle:
+                  type:
+                  - string
+                  - 'null'
+                ModelId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                ModelIdentifierType:
+                  $ref: '#/components/schemas/ModelIdentifierType'
+                Schedule.Second:
+                  type: integer
+                  format: int32
+                Schedule.Minute:
+                  type: integer
+                  format: int32
+                Schedule.Hour:
+                  type: integer
+                  format: int32
+                Schedule.ExecutionHour:
+                  type:
+                  - integer
+                  - 'null'
+                  format: int32
+                Schedule.Day:
+                  type: integer
+                  format: int32
+                Schedule.Month:
+                  type: integer
+                  format: int32
+                Schedule.ScheduleType:
+                  $ref: '#/components/schemas/ScheduleType'
+                Schedule.DaysOfWeek:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/DayOfWeek'
+                Schedule.MonthlyWeekOccurrence:
+                  oneOf:
+                  - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+                Schedule.TimeZoneId:
+                  type:
+                  - string
+                  - 'null'
+                Schedule.Year:
+                  type:
+                  - integer
+                  - 'null'
+                  format: int32
+                Schedule.StartDate:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                Schedule.EndDate:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                ExecutionStrategyId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                SecurityStandardId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                OriginId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                OriginSource:
+                  type:
+                  - string
+                  - 'null'
+                OriginContext:
+                  type:
+                  - object
+                  - 'null'
+                  additionalProperties:
+                    type: string
+                CampaignType:
+                  $ref: '#/components/schemas/RedTeamingCampaignType'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedTeamingCampaignCostEstimate'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming cost estimation estimate targeted campaign cost
+      x-summary-source: derived
+  /v1/red-teaming/cost-estimation/goal-based:
+    post:
+      tags:
+      - RedTeamingCostEstimation
+      operationId: RedTeamingCostEstimation_EstimateGoalBasedCampaignCost
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgenticAiRedTeamingCampaignRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedTeamingCampaignCostEstimate'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming cost estimation estimate goal based campaign cost
+      x-summary-source: derived
+components:
+  schemas:
+    ModelCostBreakdown:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelName:
+          type: string
+        provider:
+          $ref: '#/components/schemas/ProviderType'
+        inputTokens:
+          type: integer
+          format: int32
+        outputTokens:
+          type: integer
+          format: int32
+        inputTokenCost:
+          type: number
+          format: decimal
+        outputTokenCost:
+          type: number
+          format: decimal
+        totalCost:
+          type: number
+          format: decimal
+        modelInputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelOutputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelTokenUnits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    RedTeamingCampaignCostEstimate:
+      type: object
+      additionalProperties: false
+      properties:
+        totalAttacks:
+          type: integer
+          format: int32
+        agentCount:
+          type: integer
+          format: int32
+        datasetSize:
+          type: integer
+          format: int32
+        estimatedTotalInputTokens:
+          type: integer
+          format: int32
+        estimatedTotalOutputTokens:
+          type: integer
+          format: int32
+        averageTokensPerAttack:
+          type: integer
+          format: int32
+        totalEstimatedCost:
+          type: number
+          format: decimal
+        costPerAttack:
+          type: number
+          format: decimal
+        inputTokenCost:
+          type: number
+          format: decimal
+        outputTokenCost:
+          type: number
+          format: decimal
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelName:
+          type: string
+        provider:
+          $ref: '#/components/schemas/ProviderType'
+        modelInputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelOutputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelTokenUnits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        accuracy:
+          $ref: '#/components/schemas/TokenCountAccuracy'
+        agentModelCosts:
+          oneOf:
+          - $ref: '#/components/schemas/ModelCostBreakdown'
+        campaignModelCosts:
+          oneOf:
+          - $ref: '#/components/schemas/ModelCostBreakdown'
+    RedTeamingCampaignType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DatasetBased
+      - AgenticAI
+      enum:
+      - DatasetBased
+      - AgenticAI
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProviderType:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAI
+      - Ollama
+      - Azure
+      - HuggingFace
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - Ai21
+      - Cohere
+      - Google
+      - TogetherAI
+      - XAI
+      - Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - GoogleVertex
+      enum:
+      - OpenAI
+      - Ollama
+      - Azure
+      - Hugging Face
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - AI21
+      - Cohere
+      - Google
+      - Together AI
+      - xAI
+      - Amazon Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - Google Vertex AI
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    CreateAgenticAiRedTeamingCampaignRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - campaignName
+      - attackObjective
+      - orchestratorType
+      properties:
+        campaignName:
+          type: string
+          maxLength: 255
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        attackObjective:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        orchestratorType:
+          type: string
+          minLength: 1
+        converterType:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        targetAgentId:
+          type: string
+          format: guid
+        httpEndpointConfig:
+          oneOf:
+          - $ref: '#/components/schemas/ExternalAgentHttpConfigurationDto'
+        spmAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        spmAliasId:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+        startTime:
+          type:
+          - string
+          - 'null'
+        parameters: {}
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelIdentifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        campaignType:
+          $ref: '#/components/schemas/RedTeamingCampaignType'
+    ScheduleModel:
+      type: object
+      additionalProperties: false
+      properties:
+        second:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    TokenCountAccuracy:
+      type: string
+      description: ''
+      x-enumNames:
+      - High
+      - Low
+      - NotAvailable
+      enum:
+      - High
+      - Low
+      - NotAvailable
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    ExternalAgentHttpConfigurationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointUrl
+      - httpMethod
+      properties:
+        endpointUrl:
+          type: string
+          format: uri
+          maxLength: 2000
+          minLength: 1
+        httpMethod:
+          type: string
+          maxLength: 10
+          minLength: 1
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        headersJson:
+          type:
+          - string
+          - 'null'
+        bodyTemplate:
+          type:
+          - string
+          - 'null'
+        responseJsonPath:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+        timeoutMs:
+          type: integer
+          format: int32
+          maximum: 60000
+          minimum: 1000
+        queryStringsJson:
+          type:
+          - string
+          - 'null'
+        ignoreSslErrors:
+          type: boolean
+        bodyType:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,259 @@
+openapi: 3.2.0
+info:
+  title: Airia Web SCIM Authorization API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ScimAuthorization
+paths:
+  /internal/scim/authorize/{path}:
+    get:
+      tags:
+      - ScimAuthorization
+      operationId: ScimAuthorization_AuthorizeGET
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: X-Airia-ExtAuthz-Key
+        x-originalName: presentedSecret
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Scim authorization authorize GET
+      x-summary-source: derived
+    post:
+      tags:
+      - ScimAuthorization
+      operationId: ScimAuthorization_AuthorizePOST
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: X-Airia-ExtAuthz-Key
+        x-originalName: presentedSecret
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Scim authorization authorize POST
+      x-summary-source: derived
+    put:
+      tags:
+      - ScimAuthorization
+      operationId: ScimAuthorization_AuthorizePUT
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: X-Airia-ExtAuthz-Key
+        x-originalName: presentedSecret
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Scim authorization authorize PUT
+      x-summary-source: derived
+    patch:
+      tags:
+      - ScimAuthorization
+      operationId: ScimAuthorization_AuthorizePATCH
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: X-Airia-ExtAuthz-Key
+        x-originalName: presentedSecret
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Scim authorization authorize PATCH
+      x-summary-source: derived
+    delete:
+      tags:
+      - ScimAuthorization
+      operationId: ScimAuthorization_AuthorizeDELETE
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: X-Airia-ExtAuthz-Key
+        x-originalName: presentedSecret
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Scim authorization authorize DELETE
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1695 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Pipeline Version API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PipelineVersion
+paths:
+  /v1/PipelineVersion:
+    post:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_PostPipelineVersion2
+      parameters:
+      - name: X-API-Key
+        x-originalName: apiKey
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: createPipelineVersionRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipelineVersionRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionEditorDto'
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishValidationResponse'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishValidationResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version post pipeline version2
+      x-summary-source: derived
+  /v1/PipelineVersion/{pipelineId}/{versionNumber}:
+    get:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_GetPipelineVersion2
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionNumber
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionEditorDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version get pipeline version2
+      x-summary-source: derived
+  /v1/PipelineVersion/{pipelineId}/other-drafts:
+    get:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_GetOtherUsersDraftVersions2
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 2
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 3
+      - name: userId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPipelineEditorVersionDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version get other users draft versions2
+      x-summary-source: derived
+  /v1/PipelineVersion/{pipelineId}/other-drafts/authors:
+    get:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_GetOtherUsersDraftAuthors2
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: guid
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version get other users draft authors2
+      x-summary-source: derived
+  /v1/PipelineVersion/draft/{versionId}:
+    get:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_GetDraftVersionById2
+      parameters:
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionEditorDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version get draft version by id2
+      x-summary-source: derived
+  /v1/PipelineVersion/{id}:
+    put:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_UpdatePipelineVersion2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: updatePipelineVersionRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePipelineVersionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVersionEditorDto'
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+      summary: Pipeline version update pipeline version2
+      x-summary-source: derived
+    delete:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_DeleteDraftVersion2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+      summary: Pipeline version delete draft version2
+      x-summary-source: derived
+  /v1/PipelineVersion/{id}/metadata:
+    patch:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_UpdatePipelineVersionMetadata2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePipelineVersionMetadataRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineEditorVersionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+      summary: Pipeline version update pipeline version metadata2
+      x-summary-source: derived
+  /v1/PipelineVersion/{id}/editor-lock:
+    post:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_AcquireEditorLock2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version acquire editor lock2
+      x-summary-source: derived
+    get:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_GetEditorLock2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version get editor lock2
+      x-summary-source: derived
+    delete:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_ReleaseEditorLock2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version release editor lock2
+      x-summary-source: derived
+  /v1/PipelineVersion/{id}/editor-lock/renew:
+    post:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_RenewEditorLock2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: X-Airia-Editor-Lock
+        x-originalName: editorLock
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version renew editor lock2
+      x-summary-source: derived
+  /v1/PipelineVersion/{pipelineId}/steps/{stepId}/prompt-segments/agent-specific:
+    post:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_CreateAgentSpecificPromptSegment2
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentSpecificPromptRequest'
+        required: true
+        x-position: 3
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepPromptSegment'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version create agent specific prompt segment2
+      x-summary-source: derived
+  /v1/PipelineVersion/{pipelineId}/steps/{stepId}/prompt-segments/{segmentId}/unlink:
+    post:
+      tags:
+      - PipelineVersion
+      operationId: PipelineVersion_UnlinkPromptSegment2
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: segmentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepPromptSegment'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        423:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorLockConflictResponse'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline version unlink prompt segment2
+      x-summary-source: derived
+components:
+  schemas:
+    EditorLockConflictResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activeEditorDisplayName:
+          type:
+          - string
+          - 'null'
+        isHeldByCaller:
+          type: boolean
+    ModelDeprecationValidationLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Warning
+      - Block
+      enum:
+      - None
+      - Warning
+      - Block
+    CreatePipelineVersionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        isDraftVersion:
+          type: boolean
+        alignment:
+          oneOf:
+          - $ref: '#/components/schemas/PipelineAlignment'
+        steps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStep'
+        description:
+          type:
+          - string
+          - 'null'
+        versionName:
+          type:
+          - string
+          - 'null'
+        setAsActive:
+          type: boolean
+        sourceVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        acknowledgeDeprecationWarnings:
+          type: boolean
+    EditorLockDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isLocked:
+          type: boolean
+        isHeldByCaller:
+          type: boolean
+        activeEditorDisplayName:
+          type:
+          - string
+          - 'null'
+        acquiredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        leaseToken:
+          type:
+          - string
+          - 'null'
+        heartbeatIntervalSeconds:
+          type: integer
+          format: int32
+    StepPromptSegment:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          stepId:
+            type: string
+            format: guid
+          promptId:
+            type: string
+            format: guid
+          selectedPromptVersionId:
+            type: string
+            format: guid
+          order:
+            type: integer
+            format: int32
+          isVersionPinned:
+            type: boolean
+          prompt:
+            $ref: '#/components/schemas/Prompt'
+          selectedPromptVersion:
+            $ref: '#/components/schemas/PromptVersion'
+          isAgentSpecific:
+            type: boolean
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    PipelineEditorVersionDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - pipelineId
+      - versionNumber
+      - majorVersion
+      - minorVersion
+      - isDraftVersion
+      - isLatest
+      - isDeprecated
+      - alignment
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: integer
+          format: int32
+        isDraftVersion:
+          type: boolean
+        isLatest:
+          type: boolean
+        isDeprecated:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        versionName:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+        alignment:
+          $ref: '#/components/schemas/PipelineAlignment'
+    CreateAgentSpecificPromptRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - promptMessage
+      - order
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 0
+        promptMessage:
+          type: string
+          minLength: 1
+        order:
+          type: integer
+          format: int32
+    PublishValidationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelDeprecationValidationResult'
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    RetryConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetries:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        delay:
+          type: integer
+          format: int32
+          maximum: 300000
+          minimum: 1
+        maxDelay:
+          type: integer
+          format: int32
+          maximum: 600000
+          minimum: 1
+        backoffMultiplier:
+          type: number
+          format: double
+          maximum: 10
+          minimum: 1
+        useJitter:
+          type: boolean
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UpdatePipelineVersionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - alignment
+      - steps
+      - description
+      - versionName
+      - isDeprecated
+      - modifiedStepIds
+      - positionOnlyStepIds
+      properties:
+        isDraftVersion:
+          type: boolean
+        alignment:
+          oneOf:
+          - $ref: '#/components/schemas/PipelineAlignment'
+        steps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStep'
+        description:
+          type:
+          - string
+          - 'null'
+        versionName:
+          type:
+          - string
+          - 'null'
+        isDeprecated:
+          type: boolean
+        modifiedStepIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        positionOnlyStepIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    PipelineVersionEditorDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - pipelineId
+      - majorVersion
+      - minorVersion
+      - versionNumber
+      - isDraftVersion
+      - isLatest
+      - isDeprecated
+      - alignment
+      - steps
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: integer
+          format: int32
+        versionNumber:
+          type: string
+        isDraftVersion:
+          type: boolean
+        isLatest:
+          type: boolean
+        isDeprecated:
+          type: boolean
+        alignment:
+          $ref: '#/components/schemas/PipelineAlignment'
+        description:
+          type:
+          - string
+          - 'null'
+        versionName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        steps:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+    PagedResultOfPipelineEditorVersionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineEditorVersionDto'
+        totalCount:
+          type: integer
+          format: int32
+    PipelineStepDependency:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineStepId:
+            type: string
+            format: guid
+          parentId:
+            type: string
+            format: guid
+          parentHandleId:
+            type: string
+            format: guid
+          handleId:
+            type: string
+            format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PromptVersion:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          promptId:
+            type: string
+            format: guid
+          versionNumber:
+            type: integer
+            format: int32
+          isLatest:
+            type: boolean
+          versionChangeDescription:
+            type: string
+            maxLength: 256
+            minLength: 0
+          promptMessage:
+            type: string
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    PipelineStep:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          position:
+            oneOf:
+            - $ref: '#/components/schemas/PipelineStepPosition'
+          handles:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepHandle'
+          dependenciesObject:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepDependency'
+          stepType:
+            $ref: '#/components/schemas/StepType'
+          pipelineVersionId:
+            type: string
+            format: guid
+          stepTitle:
+            type: string
+            maxLength: 100
+            minLength: 0
+          parentId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          width:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          height:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          retryConfiguration:
+            oneOf:
+            - $ref: '#/components/schemas/RetryConfiguration'
+    StepType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AIOperation
+      - DataSearch
+      - ExecutePipelineStep
+      - InputStep
+      - MachineLearningOperationStep
+      - MemoryLoadStep
+      - MemoryStoreStep
+      - OutputStep
+      - PythonStep
+      - Exception
+      - RouterStep
+      - AnnotationStep
+      - ApprovalStep
+      - WebhookApprovalStep
+      - ToolActionStep
+      - AgentCardStep
+      - ConditionalBranchStep
+      - LoopContainerStep
+      - LoopStartStep
+      - LoopEndStep
+      - JsonFormatterStep
+      - SdkStep
+      - CustomFormHumanApprovalStep
+      - ImageGenerationStep
+      - DocumentSplitterStep
+      enum:
+      - AIOperation
+      - dataSearch
+      - executePipelineStep
+      - inputStep
+      - machineLearningOperationStep
+      - memoryLoadStep
+      - memoryStoreStep
+      - outputStep
+      - pythonStep
+      - exception
+      - routerStep
+      - annotationStep
+      - approvalStep
+      - webhookApprovalStep
+      - toolActionStep
+      - agentCardStep
+      - conditionalBranchStep
+      - loopContainerStep
+      - loopStartStep
+      - loopEndStep
+      - jsonFormatterStep
+      - sdkStep
+      - customFormHumanApprovalStep
+      - imageGenerationStep
+      - documentSplitterStep
+    Prompt:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          activeVersionId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          name:
+            type:
+            - string
+            - 'null'
+            maxLength: 256
+            minLength: 0
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/PromptVersion'
+          activeVersion:
+            oneOf:
+            - $ref: '#/components/schemas/PromptVersion'
+          isAgentSpecific:
+            type: boolean
+          isDeleted:
+            type:
+            - boolean
+            - 'null'
+    ModelDeprecationValidationResult:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+          format: guid
+        modelName:
+          type: string
+        isDeprecated:
+          type: boolean
+        deprecationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        daysUntilDeprecation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        level:
+          $ref: '#/components/schemas/ModelDeprecationValidationLevel'
+        replacementModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        replacementModelName:
+          type:
+          - string
+          - 'null'
+        libraryModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PipelineStepPosition:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          x:
+            type: number
+            format: float
+          y:
+            type: number
+            format: float
+          pipelineStepId:
+            type: string
+            format: guid
+    PipelineAlignment:
+      type: string
+      description: ''
+      x-enumNames:
+      - Horizontal
+      - Vertical
+      enum:
+      - Horizontal
+      - Vertical
+    UpdatePipelineVersionMetadataRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - versionName
+      - description
+      - isDeprecated
+      properties:
+        versionName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isDeprecated:
+          type: boolean
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    PipelineStepHandle:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineStepId:
+            type: string
+            format: guid
+          uuid:
+            type: string
+            format: guid
+          type:
+            type: string
+            maxLength: 6
+          label:
+            type:
+            - string
+            - 'null'
+            maxLength: 100
+          tooltip:
+            type:
+            - string
+            - 'null'
+          x:
+            type:
+            - number
+            - 'null'
+            format: float
+          y:
+            type:
+            - number
+            - 'null'
+            format: float
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

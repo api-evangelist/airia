@@ -1,0 +1,557 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Branding API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Branding
+paths:
+  /v1/Branding/{appType}:
+    get:
+      tags:
+      - Branding
+      operationId: Branding_Get
+      parameters:
+      - name: appType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/BrandingAppType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandingDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Branding get
+      x-summary-source: derived
+    post:
+      tags:
+      - Branding
+      operationId: Branding_Create
+      parameters:
+      - name: appType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/BrandingAppType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: brandingInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBrandingInformation'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandingDto'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Branding create
+      x-summary-source: derived
+    put:
+      tags:
+      - Branding
+      operationId: Branding_Update
+      parameters:
+      - name: appType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/BrandingAppType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: brandingInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBrandingInformation'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandingDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Branding update
+      x-summary-source: derived
+    delete:
+      tags:
+      - Branding
+      operationId: Branding_Delete
+      parameters:
+      - name: appType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/BrandingAppType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Branding delete
+      x-summary-source: derived
+components:
+  schemas:
+    BrandingAppType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AiriaChatApp
+      enum:
+      - AiriaChatApp
+    BrandingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        logoUrl:
+          type: string
+        logoId:
+          type: string
+        darkModeLogoUrl:
+          type: string
+        darkModeLogoId:
+          type: string
+        logoMarkUrl:
+          type: string
+        logoMarkId:
+          type: string
+        darkModeLogoMarkUrl:
+          type: string
+        darkModeLogoMarkId:
+          type: string
+        faviconUrl:
+          type: string
+        faviconId:
+          type: string
+        companyName:
+          type: string
+        primaryColor:
+          $ref: '#/components/schemas/ColorVariants'
+        secondaryColor:
+          $ref: '#/components/schemas/ColorVariants'
+        accentColor:
+          $ref: '#/components/schemas/ColorVariants'
+        heroTitle:
+          type: string
+        heroDescription:
+          type: string
+        powerPointTemplate:
+          $ref: '#/components/schemas/FileTemplate'
+        wordTemplate:
+          $ref: '#/components/schemas/FileTemplate'
+        watermark:
+          type:
+          - string
+          - 'null'
+        chatHeadline:
+          type:
+          - string
+          - 'null'
+        chatSubheadings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatSubheading'
+        headerBackgroundId:
+          type: string
+        headerBackgroundUrl:
+          type: string
+        headerBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        searchBackgroundId:
+          type: string
+        searchBackgroundUrl:
+          type: string
+        searchBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        backgroundType:
+          type:
+          - string
+          - 'null'
+    UpdateBrandingInformation:
+      type: object
+      additionalProperties: false
+      properties:
+        logoId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoId:
+          type:
+          - string
+          - 'null'
+        logoMarkId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoMarkId:
+          type:
+          - string
+          - 'null'
+        faviconId:
+          type:
+          - string
+          - 'null'
+        companyName:
+          type:
+          - string
+          - 'null'
+        primaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        secondaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        accentColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        heroTitle:
+          type:
+          - string
+          - 'null'
+        heroDescription:
+          type:
+          - string
+          - 'null'
+        powerPointTemplate:
+          type:
+          - string
+          - 'null'
+        powerPointTemplateFileName:
+          type:
+          - string
+          - 'null'
+        powerPointTemplateId:
+          type:
+          - string
+          - 'null'
+        wordTemplate:
+          type:
+          - string
+          - 'null'
+        wordTemplateFileName:
+          type:
+          - string
+          - 'null'
+        wordTemplateId:
+          type:
+          - string
+          - 'null'
+        watermark:
+          type:
+          - string
+          - 'null'
+        chatHeadline:
+          type:
+          - string
+          - 'null'
+        chatSubheadings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatSubheading'
+        headerBackgroundId:
+          type:
+          - string
+          - 'null'
+        headerBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        searchBackgroundId:
+          type:
+          - string
+          - 'null'
+        searchBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        backgroundType:
+          type:
+          - string
+          - 'null'
+    ColorVariants:
+      type: object
+      additionalProperties: false
+      properties:
+        darkMode:
+          type: string
+        lightMode:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CreateBrandingInformation:
+      type: object
+      additionalProperties: false
+      properties:
+        logoId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoId:
+          type:
+          - string
+          - 'null'
+        logoMarkId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoMarkId:
+          type:
+          - string
+          - 'null'
+        faviconId:
+          type:
+          - string
+          - 'null'
+        companyName:
+          type:
+          - string
+          - 'null'
+        primaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        secondaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        accentColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        heroTitle:
+          type:
+          - string
+          - 'null'
+        heroDescription:
+          type:
+          - string
+          - 'null'
+        powerPointTemplate:
+          type:
+          - string
+          - 'null'
+        powerPointTemplateFileName:
+          type:
+          - string
+          - 'null'
+        wordTemplate:
+          type:
+          - string
+          - 'null'
+        wordTemplateFileName:
+          type:
+          - string
+          - 'null'
+        watermark:
+          type:
+          - string
+          - 'null'
+        chatHeadline:
+          type:
+          - string
+          - 'null'
+        chatSubheadings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatSubheading'
+        headerBackgroundId:
+          type:
+          - string
+          - 'null'
+        headerBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        searchBackgroundId:
+          type:
+          - string
+          - 'null'
+        searchBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        backgroundType:
+          type:
+          - string
+          - 'null'
+    FileTemplate:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+    ChatSubheading:
+      type: object
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

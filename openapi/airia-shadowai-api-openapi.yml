@@ -1,0 +1,1122 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Shadow AI API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ShadowAi
+paths:
+  /v1/ShadowAi:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetShadowAiBrowserExtensionRule
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiBrowserExtensionRuleResponseV1'
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get shadow ai browser extension rule
+      x-summary-source: derived
+    post:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_UpsertShadowAiBrowserExtensionRule
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertShadowAiBrowserExtensionRuleRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiBrowserExtensionRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai upsert shadow ai browser extension rule
+      x-summary-source: derived
+    delete:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_DeleteShadowAiBrowserExtensionRule
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai delete shadow ai browser extension rule
+      x-summary-source: derived
+  /v1/ShadowAi/policy:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetEffectiveShadowAiPolicy
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EffectiveShadowAiPolicyResponseV1'
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get effective shadow ai policy
+      x-summary-source: derived
+  /v2/ShadowAi/policy:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetEffectiveShadowAiUnifiedPolicy
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EffectiveShadowAiUnifiedPolicyResponseV1'
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get effective shadow ai unified policy
+      x-summary-source: derived
+  /v1/ShadowAi/policies:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetShadowAiBrowserExtensionRules
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShadowAiBrowserExtensionRuleResponseV1'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get shadow ai browser extension rules
+      x-summary-source: derived
+    post:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_UpsertShadowAiBrowserExtensionPolicy
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertShadowAiBrowserExtensionRuleRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiBrowserExtensionRuleResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai upsert shadow ai browser extension policy
+      x-summary-source: derived
+  /v1/ShadowAi/policies/{id}:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetShadowAiBrowserExtensionRuleById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiBrowserExtensionRuleResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get shadow ai browser extension rule by id
+      x-summary-source: derived
+    delete:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_DeleteShadowAiBrowserExtensionPolicy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai delete shadow ai browser extension policy
+      x-summary-source: derived
+  /v1/ShadowAi/configurations:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetShadowAiConfigurations
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShadowAiConfigurationResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get shadow ai configurations
+      x-summary-source: derived
+    post:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_CreateShadowAiConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateShadowAiConfigurationRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiConfigurationResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai create shadow ai configuration
+      x-summary-source: derived
+  /v1/ShadowAi/configurations/{id}:
+    get:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_GetShadowAiConfigurationById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiConfigurationResponseV1'
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai get shadow ai configuration by id
+      x-summary-source: derived
+    put:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_UpdateShadowAiConfiguration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateShadowAiConfigurationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiConfigurationResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai update shadow ai configuration
+      x-summary-source: derived
+    delete:
+      tags:
+      - ShadowAi
+      operationId: ShadowAi_DeleteShadowAiConfiguration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Shadow ai delete shadow ai configuration
+      x-summary-source: derived
+components:
+  schemas:
+    CreateShadowAiConfigurationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - isEnabled
+      - gatewayConfigurationId
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        isEnabled:
+          type: boolean
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        customSettings:
+          type:
+          - string
+          - 'null'
+          maxLength: 4096
+    ShadowAiPromptScanRuleModelV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        endpointPatterns:
+          type: array
+          items:
+            type: string
+        methods:
+          type: array
+          items:
+            type: string
+        encoding:
+          type: string
+        bodyPaths:
+          type: array
+          items:
+            type: string
+        requireBodyContains:
+          type: array
+          items:
+            type: string
+    EffectiveShadowAiPolicyResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        isEnabled:
+          type: boolean
+        blockedDomains:
+          type: array
+          items:
+            type: string
+        warnDomains:
+          type: array
+          items:
+            type: string
+        monitorDomains:
+          type: array
+          items:
+            type: string
+        redirectMappings:
+          type: object
+          additionalProperties:
+            type: string
+        warningMessage:
+          type:
+          - string
+          - 'null'
+        blockMessage:
+          type:
+          - string
+          - 'null'
+        captureRequestBody:
+          type: boolean
+        maxBodySize:
+          type: integer
+          format: int32
+        pollingIntervalMinutes:
+          type: integer
+          format: int32
+        configVersion:
+          type: integer
+          format: int32
+        disableFloatingChatPanel:
+          type: boolean
+        promptScanEnabled:
+          type: boolean
+        enterpriseIdentityEnabled:
+          type: boolean
+        enterpriseIdentityApprovedDomains:
+          type: array
+          items:
+            type: string
+        enterpriseIdentityEnforcedSiteIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enterpriseIdentityFailMode:
+          type: string
+        enterpriseIdentityBlockMessage:
+          type:
+          - string
+          - 'null'
+        enterpriseIdentityApprovedAnthropicOrgIds:
+          type: array
+          items:
+            type: string
+    ShadowAiDomainRuleModelV1:
+      type: object
+      additionalProperties: false
+      required:
+      - domainPatterns
+      - action
+      properties:
+        domainPatterns:
+          type: array
+          items:
+            type: string
+        categoryPatterns:
+          type: array
+          items:
+            type: string
+        action:
+          $ref: '#/components/schemas/ShadowAiRuleAction'
+        message:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+    UpdateShadowAiConfigurationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - isEnabled
+      - gatewayConfigurationId
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        isEnabled:
+          type: boolean
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        customSettings:
+          type:
+          - string
+          - 'null'
+          maxLength: 4096
+    ShadowAiRuleAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Monitor
+      - Warn
+      - Block
+      - Redirect
+      enum:
+      - Monitor
+      - Warn
+      - Block
+      - Redirect
+    UpsertShadowAiBrowserExtensionRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - userIds
+      - groupIds
+      - blockedDomains
+      - warnDomains
+      - monitorDomains
+      - redirectMappings
+      - isEnabled
+      - captureRequestBody
+      - maxBodySize
+      - pollingIntervalMinutes
+      - disableFloatingChatPanel
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        blockedDomains:
+          type: array
+          items:
+            type: string
+        warnDomains:
+          type: array
+          items:
+            type: string
+        monitorDomains:
+          type: array
+          items:
+            type: string
+        redirectMappings:
+          type: object
+          additionalProperties:
+            type: string
+        isEnabled:
+          type: boolean
+        warningMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+        blockMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+        captureRequestBody:
+          type: boolean
+        maxBodySize:
+          type: integer
+          format: int32
+          maximum: 1048576
+          minimum: 0
+        pollingIntervalMinutes:
+          type: integer
+          format: int32
+          maximum: 60
+          minimum: 1
+        disableFloatingChatPanel:
+          type: boolean
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShadowAiDomainRuleModelV1'
+        enterpriseIdentityEnabled:
+          type: boolean
+        enterpriseIdentityApprovedDomains:
+          type: array
+          items:
+            type: string
+        enterpriseIdentityEnforcedSiteIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enterpriseIdentityFailMode:
+          type:
+          - string
+          - 'null'
+          maxLength: 16
+        enterpriseIdentityBlockMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+        enterpriseIdentityApprovedAnthropicOrgIds:
+          type: array
+          items:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ShadowAiBrowserExtensionRuleResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        blockedDomains:
+          type: array
+          items:
+            type: string
+        warnDomains:
+          type: array
+          items:
+            type: string
+        monitorDomains:
+          type: array
+          items:
+            type: string
+        redirectMappings:
+          type: object
+          additionalProperties:
+            type: string
+        isEnabled:
+          type: boolean
+        warningMessage:
+          type:
+          - string
+          - 'null'
+        blockMessage:
+          type:
+          - string
+          - 'null'
+        captureRequestBody:
+          type: boolean
+        maxBodySize:
+          type: integer
+          format: int32
+        pollingIntervalMinutes:
+          type: integer
+          format: int32
+        configVersion:
+          type: integer
+          format: int32
+        disableFloatingChatPanel:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShadowAiDomainRuleModelV1'
+        enterpriseIdentityEnabled:
+          type: boolean
+        enterpriseIdentityApprovedDomains:
+          type: array
+          items:
+            type: string
+        enterpriseIdentityEnforcedSiteIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enterpriseIdentityFailMode:
+          type: string
+        enterpriseIdentityBlockMessage:
+          type:
+          - string
+          - 'null'
+        enterpriseIdentityApprovedAnthropicOrgIds:
+          type: array
+          items:
+            type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    EffectiveShadowAiUnifiedPolicyResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        isEnabled:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShadowAiDomainRuleModelV1'
+        captureRequestBody:
+          type: boolean
+        maxBodySize:
+          type: integer
+          format: int32
+        pollingIntervalMinutes:
+          type: integer
+          format: int32
+        configVersion:
+          type: integer
+          format: int32
+        disableFloatingChatPanel:
+          type: boolean
+        promptScanEnabled:
+          type: boolean
+        promptScanRules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShadowAiPromptScanRuleModelV1'
+        enterpriseIdentityEnabled:
+          type: boolean
+        enterpriseIdentityApprovedDomains:
+          type: array
+          items:
+            type: string
+        enterpriseIdentityEnforcedSiteIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enterpriseIdentityFailMode:
+          type: string
+        enterpriseIdentityBlockMessage:
+          type:
+          - string
+          - 'null'
+        enterpriseIdentityApprovedAnthropicOrgIds:
+          type: array
+          items:
+            type: string
+    ShadowAiConfigurationResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        secretToken:
+          type: string
+        isEnabled:
+          type: boolean
+        gatewayConfigurationId:
+          type: string
+          format: guid
+        enabledAt:
+          type: string
+          format: date-time
+        disabledAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        customSettings:
+          type:
+          - string
+          - 'null'
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  title: Airia Web User O Auth Provider API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UserOAuthProvider
+paths:
+  /v1/UserOAuthProvider/status:
+    get:
+      tags:
+      - UserOAuthProvider
+      operationId: UserOAuthProvider_GetStatus
+      parameters:
+      - name: Provider
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: Status
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/OAuthProviderStatus'
+        x-position: 2
+      - name: Search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 4
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 5
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfUserOAuthProvider'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User OAuth provider get status
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProviderAuthenticationTypeV1:
+      type: string
+      description: ''
+      x-enumNames:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+      enum:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+    PagedResultV2OfUserOAuthProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOAuthProvider'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    UserOAuthProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        providerId:
+          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/OAuthProviderStatus'
+        providerScopes:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        authenticationType:
+          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
+    OAuthProviderStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Connected
+      - Error
+      - NotConnected
+      enum:
+      - Connected
+      - Error
+      - NotConnected
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

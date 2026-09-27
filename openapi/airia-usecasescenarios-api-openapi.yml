@@ -1,0 +1,761 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Use Case Scenarios API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UseCaseScenarios
+paths:
+  /v1/governance/usecases/{useCaseId}/scenarios:
+    get:
+      tags:
+      - UseCaseScenarios
+      operationId: UseCaseScenarios_ListByUseCase2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChangeScenarioDto'
+      summary: Use case scenarios list by use case2
+      x-summary-source: derived
+components:
+  schemas:
+    AutomationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        automationId:
+          type: string
+          format: guid
+        automationType:
+          type: string
+        timing:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        error:
+          type:
+          - string
+          - 'null'
+        sequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ConfigChange:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        from:
+          type:
+          - string
+          - 'null'
+        to:
+          type:
+          - string
+          - 'null'
+    ChangeScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        changeRequestGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetAggregateId:
+          type: string
+          format: guid
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        status:
+          $ref: '#/components/schemas/ScenarioStatus'
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activityNotes:
+          type:
+          - string
+          - 'null'
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioDetails'
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          $ref: '#/components/schemas/ChangeScenarioSource'
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
+        workflowInstanceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        workflowBranchActivationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioStepDto'
+        currentStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        progressCurrent:
+          type: integer
+          format: int32
+        progressTotal:
+          type: integer
+          format: int32
+        pendingActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPendingActionDto'
+    ScenarioOverrides:
+      type: object
+      discriminator:
+        propertyName: kind
+        mapping:
+          Internal: '#/components/schemas/InternalScenarioOverrides'
+          External: '#/components/schemas/ExternalScenarioOverrides'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        modelOverride:
+          oneOf:
+          - $ref: '#/components/schemas/ModelOverride'
+        toolOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/ToolPatch'
+        kind:
+          type: string
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    DisplaySectionV2Dto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionable:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+        representational:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+    ToolPatchEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        toolInstanceId:
+          type:
+          - string
+          - 'null'
+        toolAggregateId:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    PagedResultOfChangeScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeScenarioDto'
+        totalCount:
+          type: integer
+          format: int32
+    StageOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+      enum:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+    ChangeScenarioDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        modelFrom:
+          type:
+          - string
+          - 'null'
+        modelTo:
+          type:
+          - string
+          - 'null'
+        promptDiff:
+          type:
+          - string
+          - 'null'
+        guardrailThreshold:
+          type:
+          - number
+          - 'null'
+          format: double
+        dataSourceFrom:
+          type:
+          - string
+          - 'null'
+        dataSourceTo:
+          type:
+          - string
+          - 'null'
+        configChanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigChange'
+    AutomationExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+    StageDisplayMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Requirement
+      - Summary
+      - Informational
+      enum:
+      - Requirement
+      - Summary
+      - Informational
+    AttestationRecord:
+      type: object
+      additionalProperties: false
+      properties:
+        attested:
+          type: boolean
+        attestedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ScenarioStepDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+        title:
+          type: string
+        branchGroup:
+          type: string
+        status:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/StageOutcome'
+        requirementStatus:
+          oneOf:
+          - $ref: '#/components/schemas/StageRequirementStatus'
+        dependsOn:
+          type: array
+          items:
+            type: string
+            format: guid
+        enteredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        gateSlaDeadline:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        requiresApproval:
+          type: boolean
+        genericApproval:
+          type: boolean
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationSummaryDto'
+        displaySection:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionDto'
+        displaySectionV2:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionV2Dto'
+    ModelOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    StageRequirementStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        approvalResolution:
+          type:
+          - string
+          - 'null'
+        approvalsReceived:
+          type: integer
+          format: int32
+        approvalsRequired:
+          type: integer
+          format: int32
+        evaluationResults:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ThresholdResult'
+        artifactStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        documentSlotStatus:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        artifactRequirementReasons:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        attestationStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttestationRecord'
+        approvalNotificationSentAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        defaultApprovalResolution:
+          type:
+          - string
+          - 'null'
+        defaultApprovalsReceived:
+          type: integer
+          format: int32
+        defaultApprovalsRequired:
+          type: integer
+          format: int32
+        requiresApprovalOverride:
+          type:
+          - boolean
+          - 'null'
+    ThresholdResult:
+      type: object
+      additionalProperties: false
+      properties:
+        actualValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        requiredValue:
+          type: number
+          format: double
+        passed:
+          type: boolean
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DisplaySectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        requiredComponents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredComponentDto'
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetDto'
+    RiskImpact:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    ConditionNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    DisplaySectionItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        systemRequirement:
+          type: boolean
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        isRequired:
+          type: boolean
+        requirementReason:
+          type:
+          - string
+          - 'null'
+    StageInstanceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+      enum:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    ChangeCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
+      enum:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
+    ScenarioPendingActionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    ScenarioStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+      enum:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+    WidgetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/StageDisplayMode'
+        order:
+          type: integer
+          format: int32
+        visibleWhen:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ChangeScenarioSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProposed
+      - AutoMonitorObserved
+      enum:
+      - UserProposed
+      - AutoMonitorObserved
+    RequiredComponentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        visibleWhen:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

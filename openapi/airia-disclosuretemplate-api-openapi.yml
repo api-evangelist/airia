@@ -1,0 +1,461 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Disclosure Template API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DisclosureTemplate
+paths:
+  /v1/governance/disclosure-templates:
+    get:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_GetAll2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DisclosureTemplateDto'
+      summary: Disclosure template get all2
+      x-summary-source: derived
+    post:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_Create2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDisclosureTemplateRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosureTemplateDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Disclosure template create2
+      x-summary-source: derived
+  /v1/governance/disclosure-templates/{id}:
+    get:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_GetById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosureTemplateDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Disclosure template get by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_Update2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDisclosureTemplateRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosureTemplateDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Disclosure template update2
+      x-summary-source: derived
+    delete:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_Delete2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Disclosure template delete2
+      x-summary-source: derived
+  /v1/governance/disclosure-templates/{id}/default:
+    post:
+      tags:
+      - DisclosureTemplate
+      operationId: DisclosureTemplate_SetDefault2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosureTemplateDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Disclosure template set default2
+      x-summary-source: derived
+components:
+  schemas:
+    UpdateDisclosureTemplateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - enableApiDisclosure
+      - enableSseDisclosureEvent
+      - includeAssetIdentity
+      - includeModelDetails
+      - includeModelNames
+      - includeGuardrails
+      - includeGuardrailNames
+      - includeRiskClassification
+      - includeUseCaseDetails
+      - includeHumanReview
+      - includeDisclaimer
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          minLength: 1
+        lockedAttributes:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureLockedAttributes'
+        enableApiDisclosure:
+          type: boolean
+        enableSseDisclosureEvent:
+          type: boolean
+        includeAssetIdentity:
+          type: boolean
+        includeModelDetails:
+          type: boolean
+        includeModelNames:
+          type: boolean
+        includeGuardrails:
+          type: boolean
+        includeGuardrailNames:
+          type: boolean
+        includeRiskClassification:
+          type: boolean
+        includeUseCaseDetails:
+          type: boolean
+        includeHumanReview:
+          type: boolean
+        includeDisclaimer:
+          type: boolean
+        customReviewedBy:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DisclosureAudience:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
+    DisclosureLockedAttributes:
+      type: object
+      additionalProperties: false
+      properties:
+        includeAssetIdentity:
+          type: boolean
+        includeModelDetails:
+          type: boolean
+        includeModelNames:
+          type: boolean
+        includeGuardrails:
+          type: boolean
+        includeGuardrailNames:
+          type: boolean
+        includeRiskClassification:
+          type: boolean
+        includeUseCaseDetails:
+          type: boolean
+        includeHumanReview:
+          type: boolean
+        includeDisclaimer:
+          type: boolean
+    CreateDisclosureTemplateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          minLength: 1
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+          maxLength: 128
+        audience:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAudience'
+        lockedAttributes:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureLockedAttributes'
+        enableApiDisclosure:
+          type:
+          - boolean
+          - 'null'
+        enableSseDisclosureEvent:
+          type:
+          - boolean
+          - 'null'
+        includeAssetIdentity:
+          type:
+          - boolean
+          - 'null'
+        includeModelDetails:
+          type:
+          - boolean
+          - 'null'
+        includeModelNames:
+          type:
+          - boolean
+          - 'null'
+        includeGuardrails:
+          type:
+          - boolean
+          - 'null'
+        includeGuardrailNames:
+          type:
+          - boolean
+          - 'null'
+        includeRiskClassification:
+          type:
+          - boolean
+          - 'null'
+        includeUseCaseDetails:
+          type:
+          - boolean
+          - 'null'
+        includeHumanReview:
+          type:
+          - boolean
+          - 'null'
+        includeDisclaimer:
+          type:
+          - boolean
+          - 'null'
+        customReviewedBy:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+    DisclosureTemplateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        audience:
+          $ref: '#/components/schemas/DisclosureAudience'
+        isDefault:
+          type: boolean
+        lockedAttributes:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureLockedAttributes'
+        isSystem:
+          type: boolean
+        enableApiDisclosure:
+          type: boolean
+        enableSseDisclosureEvent:
+          type: boolean
+        includeAssetIdentity:
+          type: boolean
+        includeModelDetails:
+          type: boolean
+        includeModelNames:
+          type: boolean
+        includeGuardrails:
+          type: boolean
+        includeGuardrailNames:
+          type: boolean
+        includeRiskClassification:
+          type: boolean
+        includeUseCaseDetails:
+          type: boolean
+        includeHumanReview:
+          type: boolean
+        includeDisclaimer:
+          type: boolean
+        customReviewedBy:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

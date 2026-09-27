@@ -1,0 +1,506 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Attachments API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Attachments
+paths:
+  /v1/upload:
+    post:
+      tags:
+      - Attachments
+      operationId: Attachments_UploadFile2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+      summary: Attachments upload file2
+      x-summary-source: derived
+  /v1/upload/onDemandProcessing:
+    post:
+      tags:
+      - Attachments
+      operationId: Attachments_UploadFileForOnDemandProcessing2
+      parameters:
+      - name: preferredPdfParser
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+          application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+            schema:
+              type: string
+              format: binary
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
+              format: binary
+          application/vnd.openxmlformats-officedocument.presentationml.presentation:
+            schema:
+              type: string
+              format: binary
+          application/vnd.ms-powerpoint:
+            schema:
+              type: string
+              format: binary
+          application/msword:
+            schema:
+              type: string
+              format: binary
+          application/json:
+            schema: {}
+          application/x-yaml:
+            schema:
+              type: string
+              format: binary
+          application/yaml:
+            schema:
+              type: string
+              format: binary
+          application/xml:
+            schema:
+              type: string
+              format: binary
+          text/plain:
+            schema:
+              type: string
+              format: binary
+          text/html:
+            schema:
+              type: string
+              format: binary
+          text/csv:
+            schema:
+              type: string
+              format: binary
+          text/markdown:
+            schema:
+              type: string
+              format: binary
+          text/x-markdown:
+            schema:
+              type: string
+              format: binary
+          text/xml:
+            schema:
+              type: string
+              format: binary
+          audio/wav:
+            schema:
+              type: string
+              format: binary
+          audio/wave:
+            schema:
+              type: string
+              format: binary
+          audio/x-wav:
+            schema:
+              type: string
+              format: binary
+          audio/x-wave:
+            schema:
+              type: string
+              format: binary
+          audio/flac:
+            schema:
+              type: string
+              format: binary
+          audio/x-flac:
+            schema:
+              type: string
+              format: binary
+          audio/mpeg:
+            schema:
+              type: string
+              format: binary
+          audio/mp3:
+            schema:
+              type: string
+              format: binary
+          audio/mp4:
+            schema:
+              type: string
+              format: binary
+          audio/m4a:
+            schema:
+              type: string
+              format: binary
+          audio/x-m4a:
+            schema:
+              type: string
+              format: binary
+          audio/opus:
+            schema:
+              type: string
+              format: binary
+          audio/aac:
+            schema:
+              type: string
+              format: binary
+          audio/x-aac:
+            schema:
+              type: string
+              format: binary
+          audio/x-hx-aac-adts:
+            schema:
+              type: string
+              format: binary
+          audio/webm:
+            schema:
+              type: string
+              format: binary
+          audio/x-ms-wma:
+            schema:
+              type: string
+              format: binary
+          audio/ogg:
+            schema:
+              type: string
+              format: binary
+          application/ogg:
+            schema:
+              type: string
+              format: binary
+          video/webm:
+            schema:
+              type: string
+              format: binary
+          video/mp4:
+            schema:
+              type: string
+              format: binary
+          video/x-m4v:
+            schema:
+              type: string
+              format: binary
+          video/quicktime:
+            schema:
+              type: string
+              format: binary
+          video/x-matroska:
+            schema:
+              type: string
+              format: binary
+          application/mxf:
+            schema:
+              type: string
+              format: binary
+          video/mp2t:
+            schema:
+              type: string
+              format: binary
+          video/avi:
+            schema:
+              type: string
+              format: binary
+          video/msvideo:
+            schema:
+              type: string
+              format: binary
+          video/x-msvideo:
+            schema:
+              type: string
+              format: binary
+          video/x-ms-wma:
+            schema:
+              type: string
+              format: binary
+          video/x-ms-wmv:
+            schema:
+              type: string
+              format: binary
+          video/x-ms-asf:
+            schema:
+              type: string
+              format: binary
+          video/ogg:
+            schema:
+              type: string
+              format: binary
+          video/vnd.dlna.mpeg-tts:
+            schema:
+              type: string
+              format: binary
+          text/x-python:
+            schema:
+              type: string
+              format: binary
+          application/x-python:
+            schema:
+              type: string
+              format: binary
+          application/sql:
+            schema:
+              type: string
+              format: binary
+          text/x-sql:
+            schema:
+              type: string
+              format: binary
+          image/png:
+            schema:
+              type: string
+              format: binary
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+          image/jpg:
+            schema:
+              type: string
+              format: binary
+          image/tiff:
+            schema:
+              type: string
+              format: binary
+          image/bmp:
+            schema:
+              type: string
+              format: binary
+          image/heif:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnDemandProcessingResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+      summary: Attachments upload file for on demand processing2
+      x-summary-source: derived
+  /v1/upload/{fileId}:
+    delete:
+      tags:
+      - Attachments
+      operationId: Attachments_DeleteFile2
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Attachments delete file2
+      x-summary-source: derived
+  /v1/upload/refresh/{fileId}:
+    get:
+      tags:
+      - Attachments
+      operationId: Attachments_RefreshSignedUrl2
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUrlResponse'
+        401:
+          description: ''
+        404:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Attachments refresh signed url2
+      x-summary-source: derived
+  /v1/upload/file-link/{fileId}:
+    get:
+      tags:
+      - Attachments
+      operationId: Attachments_GetFileLink2
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUrlResponse'
+        401:
+          description: ''
+        404:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Attachments get file link2
+      x-summary-source: derived
+components:
+  schemas:
+    AttachmentUrlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        signedUrl:
+          type: string
+    OnDemandProcessingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        signedURL:
+          type: string
+    AttachmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        imageUrl:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

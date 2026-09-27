@@ -1,0 +1,136 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Mitigation Definition API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: MitigationDefinition
+paths:
+  /v1/risk-registry/mitigation-definitions:
+    get:
+      tags:
+      - MitigationDefinition
+      operationId: MitigationDefinition_GetMitigationDefinitions
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MitigationDefinitionResponse'
+      summary: Mitigation definition get mitigation definitions
+      x-summary-source: derived
+components:
+  schemas:
+    MitigationCapability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+      enum:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+    MitigationDefinitionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        whyValidMitigation:
+          type: string
+        minimumRequirement:
+          type: string
+        requiredCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationCapability'
+        controlFunction:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationControlFunction'
+        isWithheld:
+          type: boolean
+        withheldReasonCode:
+          type:
+          - string
+          - 'null'
+        hasAutomaticVerification:
+          type: boolean
+        prerequisites:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationDefinitionPrerequisiteResponse'
+    MitigationDefinitionPrerequisiteResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        prerequisiteDefinitionId:
+          type: string
+          format: guid
+        prerequisiteName:
+          type: string
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+    MitigationControlFunction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prevent
+      - Detect
+      - Respond
+      enum:
+      - Prevent
+      - Detect
+      - Respond
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

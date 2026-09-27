@@ -1,0 +1,922 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent Steps API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AgentSteps
+paths:
+  /v1/AgentSteps:
+    get:
+      tags:
+      - AgentSteps
+      operationId: AgentSteps_GetSdkSteps
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SdkStepDefinitionModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent steps get sdk steps
+      x-summary-source: derived
+  /v1/AgentSteps/validate:
+    post:
+      tags:
+      - AgentSteps
+      operationId: AgentSteps_ValidateStepParameters
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkStepValidationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkStepValidationResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent steps validate step parameters
+      x-summary-source: derived
+  /v1/AgentSteps/options:
+    post:
+      tags:
+      - AgentSteps
+      operationId: AgentSteps_LoadOptions
+      parameters:
+      - name: methodName
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SdkStepValidationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SdkOptionsLoadResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent steps load options
+      x-summary-source: derived
+  /v1/AgentSteps/options/requirements:
+    get:
+      tags:
+      - AgentSteps
+      operationId: AgentSteps_GetOptionsRequirements
+      parameters:
+      - name: stepType
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent steps get options requirements
+      x-summary-source: derived
+components:
+  schemas:
+    SdkStepCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - FlowControl
+      - Actions
+      - AIModels
+      - DataSources
+      - Tools
+      - Memory
+      - Agents
+      - CodeBlocks
+      - DataFormatter
+      - Experimental
+      enum:
+      - FlowControl
+      - Actions
+      - AIModels
+      - DataSources
+      - Tools
+      - Memory
+      - Agents
+      - CodeBlocks
+      - DataFormatter
+      - Experimental
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SdkStepValidationResult:
+      type: object
+      additionalProperties: false
+      properties:
+        isValid:
+          type: boolean
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    SdkOptionsLoadResult:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/SdkStepOption'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        missingFields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    SdkStepOption:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    SdkStepDefinitionModel:
+      type: object
+      additionalProperties: false
+      properties:
+        stepType:
+          type: string
+        category:
+          $ref: '#/components/schemas/SdkStepCategory'
+        group:
+          oneOf:
+          - $ref: '#/components/schemas/SdkStepGroup'
+        subGroup:
+          type:
+          - string
+          - 'null'
+        inputHandles:
+          type: integer
+          format: int32
+        outputHandles:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+        featureFlag:
+          type:
+          - string
+          - 'null'
+        version:
+          type: string
+        icon:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isBranching:
+          type: boolean
+        parametersSchema:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+        outputSchema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    ValidationError:
+      type: object
+      additionalProperties: false
+      properties:
+        memberNames:
+          type: array
+          items:
+            type: string
+        errorMessage:
+          type: string
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    SdkStepValidationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - stepType
+      - parameters
+      properties:
+        stepType:
+          type: string
+          minLength: 1
+        parameters:
+          $ref: '#/components/schemas/JsonDocument'
+    SdkStepGroup:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Arrays
+      - LaunchDarkly
+      - Http
+      - OneDrive
+      - SharePoint
+      - Excel
+      - PowerPoint
+      - ImageModels
+      - Jira
+      - TextToSpeech
+      - Airtable
+      - Asana
+      - AwsS3
+      - Bitly
+      - Box
+      - Calendly
+      - ClickUp
+      - Discord
+      - Dropbox
+      - Freshdesk
+      - Github
+      - Gmail
+      - GoogleDrive
+      - GoogleSheets
+      - HubSpot
+      - Intercom
+      - Linear
+      - Mailchimp
+      - MicrosoftOutlook
+      - MicrosoftTeams
+      - MondayCom
+      - Notion
+      - Pipedrive
+      - QuickBooks
+      - Salesforce
+      - SendGrid
+      - ServiceNow
+      - Shopify
+      - Slack
+      - Stripe
+      - SurveyMonkey
+      - Telegram
+      - Todoist
+      - Trello
+      - Twilio
+      - Typeform
+      - Zendesk
+      - Zoom
+      - BigQuery
+      - GoogleCloudStorage
+      - Firestore
+      - ActiveCampaign
+      - Affinity
+      - AgileCrm
+      - Baserow
+      - Brandfetch
+      - Brevo
+      - Cloudflare
+      - Gitlab
+      - Gong
+      - Jenkins
+      - LinkedIn
+      - Okta
+      - Spotify
+      - ActionNetwork
+      - Adalo
+      - Airtop
+      - AmazonSES
+      - ApiTemplateIo
+      - Autopilot
+      - AwsCloudWatch
+      - AwsLambda
+      - AzureBlobStorage
+      - AzureDevOps
+      - Bannerbear
+      - Beeminder
+      - Bitbucket
+      - Bitwarden
+      - Bubble
+      - Chargebee
+      - CircleCi
+      - Clearbit
+      - Clockify
+      - Cockpit
+      - Coda
+      - CoinGecko
+      - Confluence
+      - Contentful
+      - ConvertKit
+      - Copper
+      - Cortex
+      - CustomerIo
+      - Datadog
+      - DeepL
+      - Demio
+      - Dhl
+      - Discourse
+      - Disqus
+      - DocuSign
+      - Drift
+      - Dropcontact
+      - Dynamics365
+      - Egoi
+      - Emelia
+      - ErpNext
+      - Figma
+      - Flow
+      - Freshservice
+      - FreshworksCrm
+      - GetResponse
+      - Ghost
+      - GoToWebinar
+      - GoogleAnalytics
+      - GoogleCalendar
+      - GoogleFirebaseFirestore
+      - GoogleFirebaseRtdb
+      - Gotify
+      - GrafanaApi
+      - Grist
+      - HackerNews
+      - HaloPsa
+      - Harvest
+      - HelpScout
+      - HighLevel
+      - HomeAssistant
+      - HumanticAi
+      - Hunter
+      - InvoiceNinja
+      - Iterable
+      - JinaAi
+      - Keap
+      - KoBoToolbox
+      - Lemlist
+      - LingvaNex
+      - LoneScale
+      - Magento
+      - Mailcheck
+      - MailerLite
+      - Mailgun
+      - Mailjet
+      - Mandrill
+      - Marketstack
+      - Matrix
+      - Mattermost
+      - Mautic
+      - Medium
+      - MessageBird
+      - Metabase
+      - MicrosoftExcel
+      - Mindee
+      - Misp
+      - MistralAi
+      - Mocean
+      - MonicaCrm
+      - Msg91
+      - Nasa
+      - Netlify
+      - NextCloud
+      - NocoDB
+      - Npm
+      - Odoo
+      - OneLogin
+      - OneSimpleApi
+      - Onfleet
+      - OpenThesaurus
+      - OpenWeatherMap
+      - Orbit
+      - Oura
+      - Paddle
+      - PagerDuty
+      - PayPal
+      - Peekalink
+      - Perplexity
+      - Phantombuster
+      - PhilipsHue
+      - Plivo
+      - PostHog
+      - PowerBI
+      - ProfitWell
+      - Pushbullet
+      - Pushcut
+      - Pushover
+      - QuickBase
+      - QuickChart
+      - Raindrop
+      - RedditApi
+      - RocketChat
+      - Rundeck
+      - SAP
+      - Salesmate
+      - SeaTable
+      - SecurityScorecard
+      - Segment
+      - Sendy
+      - SentryIo
+      - Signl4
+      - Sms77
+      - Snowflake
+      - Splunk
+      - Stackby
+      - Storyblok
+      - Strapi
+      - Strava
+      - Supabase
+      - SyncroMsp
+      - Taiga
+      - Tapfiliate
+      - TheHive
+      - TravisCi
+      - Twake
+      - Twist
+      - Twitch
+      - Twitter
+      - UProc
+      - UnleashedSoftware
+      - Uplead
+      - UptimeRobot
+      - UrlScanIo
+      - Vero
+      - Vonage
+      - Webflow
+      - Wekan
+      - WhatsApp
+      - Wise
+      - WooCommerce
+      - Wordpress
+      - Workday
+      - Xero
+      - Yourls
+      - Zammad
+      - ZohoCrm
+      - Zulip
+      - DateAndTime
+      - SmtpRelay
+      - ClaudeCompliance
+      - Cohesity
+      - MicrosoftSentinel
+      enum:
+      - None
+      - Arrays
+      - LaunchDarkly
+      - Http
+      - OneDrive
+      - SharePoint
+      - Excel
+      - PowerPoint
+      - ImageModels
+      - Jira
+      - TextToSpeech
+      - Airtable
+      - Asana
+      - AwsS3
+      - Bitly
+      - Box
+      - Calendly
+      - ClickUp
+      - Discord
+      - Dropbox
+      - Freshdesk
+      - Github
+      - Gmail
+      - GoogleDrive
+      - GoogleSheets
+      - HubSpot
+      - Intercom
+      - Linear
+      - Mailchimp
+      - MicrosoftOutlook
+      - MicrosoftTeams
+      - MondayCom
+      - Notion
+      - Pipedrive
+      - QuickBooks
+      - Salesforce
+      - SendGrid
+      - ServiceNow
+      - Shopify
+      - Slack
+      - Stripe
+      - SurveyMonkey
+      - Telegram
+      - Todoist
+      - Trello
+      - Twilio
+      - Typeform
+      - Zendesk
+      - Zoom
+      - BigQuery
+      - GoogleCloudStorage
+      - Firestore
+      - ActiveCampaign
+      - Affinity
+      - AgileCrm
+      - Baserow
+      - Brandfetch
+      - Brevo
+      - Cloudflare
+      - Gitlab
+      - Gong
+      - Jenkins
+      - LinkedIn
+      - Okta
+      - Spotify
+      - ActionNetwork
+      - Adalo
+      - Airtop
+      - AmazonSES
+      - ApiTemplateIo
+      - Autopilot
+      - AwsCloudWatch
+      - AwsLambda
+      - AzureBlobStorage
+      - AzureDevOps
+      - Bannerbear
+      - Beeminder
+      - Bitbucket
+      - Bitwarden
+      - Bubble
+      - Chargebee
+      - CircleCi
+      - Clearbit
+      - Clockify
+      - Cockpit
+      - Coda
+      - CoinGecko
+      - Confluence
+      - Contentful
+      - ConvertKit
+      - Copper
+      - Cortex
+      - CustomerIo
+      - Datadog
+      - DeepL
+      - Demio
+      - Dhl
+      - Discourse
+      - Disqus
+      - DocuSign
+      - Drift
+      - Dropcontact
+      - Dynamics365
+      - Egoi
+      - Emelia
+      - ErpNext
+      - Figma
+      - Flow
+      - Freshservice
+      - FreshworksCrm
+      - GetResponse
+      - Ghost
+      - GoToWebinar
+      - GoogleAnalytics
+      - GoogleCalendar
+      - GoogleFirebaseFirestore
+      - GoogleFirebaseRtdb
+      - Gotify
+      - GrafanaApi
+      - Grist
+      - HackerNews
+      - HaloPsa
+      - Harvest
+      - HelpScout
+      - HighLevel
+      - HomeAssistant
+      - HumanticAi
+      - Hunter
+      - InvoiceNinja
+      - Iterable
+      - JinaAi
+      - Keap
+      - KoBoToolbox
+      - Lemlist
+      - LingvaNex
+      - LoneScale
+      - Magento
+      - Mailcheck
+      - MailerLite
+      - Mailgun
+      - Mailjet
+      - Mandrill
+      - Marketstack
+      - Matrix
+      - Mattermost
+      - Mautic
+      - Medium
+      - MessageBird
+      - Metabase
+      - MicrosoftExcel
+      - Mindee
+      - Misp
+      - MistralAi
+      - Mocean
+      - MonicaCrm
+      - Msg91
+      - Nasa
+      - Netlify
+      - NextCloud
+      - NocoDB
+      - Npm
+      - Odoo
+      - OneLogin
+      - OneSimpleApi
+      - Onfleet
+      - OpenThesaurus
+      - OpenWeatherMap
+      - Orbit
+      - Oura
+      - Paddle
+      - PagerDuty
+      - PayPal
+      - Peekalink
+      - Perplexity
+      - Phantombuster
+      - PhilipsHue
+      - Plivo
+      - PostHog
+      - PowerBI
+      - ProfitWell
+      - Pushbullet
+      - Pushcut
+      - Pushover
+      - QuickBase
+      - QuickChart
+      - Raindrop
+      - RedditApi
+      - RocketChat
+      - Rundeck
+      - SAP
+      - Salesmate
+      - SeaTable
+      - SecurityScorecard
+      - Segment
+      - Sendy
+      - SentryIo
+      - Signl4
+      - Sms77
+      - Snowflake
+      - Splunk
+      - Stackby
+      - Storyblok
+      - Strapi
+      - Strava
+      - Supabase
+      - SyncroMsp
+      - Taiga
+      - Tapfiliate
+      - TheHive
+      - TravisCi
+      - Twake
+      - Twist
+      - Twitch
+      - Twitter
+      - UProc
+      - UnleashedSoftware
+      - Uplead
+      - UptimeRobot
+      - UrlScanIo
+      - Vero
+      - Vonage
+      - Webflow
+      - Wekan
+      - WhatsApp
+      - Wise
+      - WooCommerce
+      - Wordpress
+      - Workday
+      - Xero
+      - Yourls
+      - Zammad
+      - ZohoCrm
+      - Zulip
+      - DateAndTime
+      - SmtpRelay
+      - ClaudeCompliance
+      - Cohesity
+      - MicrosoftSentinel
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

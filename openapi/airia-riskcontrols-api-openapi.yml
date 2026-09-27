@@ -1,0 +1,202 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Risk Controls API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RiskControls
+paths:
+  /v1/risk-registry/control-groups:
+    get:
+      tags:
+      - RiskControls
+      operationId: RiskControls_GetControlGroups
+      parameters:
+      - name: isEnabled
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskControlGroupResponse'
+      summary: Risk controls get control groups
+      x-summary-source: derived
+  /v1/risk-registry/control-groups/{controlGroupId}:
+    put:
+      tags:
+      - RiskControls
+      operationId: RiskControls_UpdateControlGroupSetting
+      parameters:
+      - name: controlGroupId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRiskControlGroupSettingRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk controls update control group setting
+      x-summary-source: derived
+  /v1/risk-registry/control-groups/controls/lookup:
+    get:
+      tags:
+      - RiskControls
+      operationId: RiskControls_GetByControlIds
+      parameters:
+      - name: controlIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskControlDetailResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk controls get by control ids
+      x-summary-source: derived
+components:
+  schemas:
+    RiskTreatmentStepInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type: string
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RiskControlDetailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        controlId:
+          type: string
+        name:
+          type: string
+        treatmentSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskTreatmentStepInfo'
+    RiskControlGroupResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        isEnabled:
+          type: boolean
+        controls:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskControlResponse'
+    UpdateRiskControlGroupSettingRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        isEnabled:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1503 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Non Airia AI Asset API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: NonAiriaAiAsset
+paths:
+  /v1/NonAiriaAiAsset/azure-openai:
+    post:
+      tags:
+      - NonAiriaAiAsset
+      operationId: NonAiriaAiAsset_AddAzureOpenAiSource
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureOpenAiSourceRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Non airia ai asset add azure open ai source
+      x-summary-source: derived
+  /v1/NonAiriaAiAsset/aws-bedrock:
+    post:
+      tags:
+      - NonAiriaAiAsset
+      operationId: NonAiriaAiAsset_AddAwsBedrockSource
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsBedrockSourceRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Non airia ai asset add aws bedrock source
+      x-summary-source: derived
+  /v1/NonAiriaAiAsset/google-vertex:
+    post:
+      tags:
+      - NonAiriaAiAsset
+      operationId: NonAiriaAiAsset_AddGoogleVertexSource
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleVertexSourceRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Non airia ai asset add google vertex source
+      x-summary-source: derived
+  /v1/NonAiriaAiAsset/{connectionId}:
+    delete:
+      tags:
+      - NonAiriaAiAsset
+      operationId: NonAiriaAiAsset_DeleteSource
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Non airia ai asset delete source
+      x-summary-source: derived
+  /v1/NonAiriaAiAsset/connections:
+    get:
+      tags:
+      - NonAiriaAiAsset
+      operationId: NonAiriaAiAsset_GetNonAiriaAiSources
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NonAiriaAssetConnectionsResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Non airia ai asset get non airia ai sources
+      x-summary-source: derived
+components:
+  schemas:
+    GoogleVertexSourceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - configurationName
+      - location
+      properties:
+        configurationName:
+          type: string
+          minLength: 1
+        location:
+          type: string
+          minLength: 1
+        authMethod:
+          $ref: '#/components/schemas/GoogleVertexAuthMethod'
+        projectId:
+          type:
+          - string
+          - 'null'
+        serviceAccountJson:
+          type:
+          - string
+          - 'null'
+        apiKey:
+          type:
+          - string
+          - 'null'
+    CredentialType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ai21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - CustomOpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - HuggingFace
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - TogetherAI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - XKey
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+      enum:
+      - None
+      - AI21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - Custom OpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - Hugging Face
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - Together AI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - X
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+    CredentialEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          $ref: '#/components/schemas/CredentialKeyField'
+        value:
+          type: string
+    AiAssetSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - Aws
+      - Azure
+      - Global
+      - N8n
+      - LangGraph
+      - CopilotStudio
+      - GitHub
+      - Governance
+      - GoogleWorkspace
+      - MicrosoftGraph
+      - EndpointAgent
+      - Browser
+      - CrowdStrike
+      - Okta
+      - CrowdStrikeEndpoint
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
+      - Gateway
+      - AzureDevOps
+      - Gcp
+      - Databricks
+      - Snowflake
+      - Glean
+      - Atlan
+      - ServiceNow
+      - SalesforceAgentforce
+      - CrewAi
+      - AzurePowerApps
+      - GeminiEnterprise
+      - GoogleAgentPlatform
+      - Purview
+      - AzureFunctionApps
+      - GitLab
+      enum:
+      - Airia
+      - Aws
+      - Azure
+      - Global
+      - N8n
+      - LangGraph
+      - CopilotStudio
+      - GitHub
+      - Governance
+      - GoogleWorkspace
+      - MicrosoftGraph
+      - EndpointAgent
+      - Browser
+      - CrowdStrike
+      - Okta
+      - CrowdStrikeEndpoint
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
+      - Gateway
+      - AzureDevOps
+      - Gcp
+      - Databricks
+      - Snowflake
+      - Glean
+      - Atlan
+      - ServiceNow
+      - SalesforceAgentforce
+      - CrewAi
+      - AzurePowerApps
+      - GeminiEnterprise
+      - GoogleAgentPlatform
+      - Purview
+      - AzureFunctionApps
+      - GitLab
+    AdministrativeScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Personal
+      enum:
+      - Tenant
+      - Project
+      - User
+    GoogleVertexAuthMethod:
+      type: string
+      description: ''
+      x-enumNames:
+      - ServiceAccount
+      - ExpressApiKey
+      enum:
+      - ServiceAccount
+      - ExpressApiKey
+    AwsBedrockSourceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - region
+      properties:
+        secretKey:
+          type: string
+        accessKey:
+          type: string
+        configurationName:
+          type: string
+        region:
+          type: string
+          minLength: 1
+        createdAfter:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdBefore:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CredentialsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        binderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        type:
+          $ref: '#/components/schemas/CredentialType'
+        expired:
+          type:
+          - boolean
+          - 'null'
+        expiresOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        administrativeScope:
+          $ref: '#/components/schemas/AdministrativeScope'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        credentialData:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialEntry'
+        origin:
+          $ref: '#/components/schemas/CredentialOrigin'
+        enabledForPythonBlocks:
+          type: boolean
+        customCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentials'
+        sourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        provider:
+          type:
+          - string
+          - 'null'
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    NonAiriaAssetConnectionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        sourceId:
+          type: string
+          format: guid
+        name:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/AiAssetSourceType'
+        credentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsViewModel'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CustomCredentials:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          credentialData:
+            type: string
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    CredentialKeyField:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAIAPIKey
+      - AzureAPIKey
+      - OllamaAPIKey
+      - HuggingFaceAPIKey
+      - AnthropicAPIKey
+      - AzureAIStudioApiKey
+      - ReplicateAPIKey
+      - StabilityAPIKey
+      - MistralAPIKey
+      - PerplexityAPIKey
+      - WatsonAPIKey
+      - Ai21APIKey
+      - CohereAPIKey
+      - GoogleAPIKey
+      - TogetherAIAPIKey
+      - PineconeAPIKey
+      - WeaviateAPIKey
+      - CustomOpenAIAPIKey
+      - XAIAPIKey
+      - XAPIKey
+      - FirecrawlAPIKey
+      - YoutubeAPIKey
+      - MicrosoftBingSearchAPIKey
+      - BedrockAPIKey
+      - AWSSecretKey
+      - AwsAccessKey
+      - AWSRegion
+      - CustomApiKey
+      - ConvertKitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - CompassAPIKey
+      - SnowflakePrivateKey
+      - SnowflakePasswordPhrase
+      - AzureMLAPIKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - AzureClientId
+      - AzureClientSecret
+      - AzureTenantId
+      - AlibabaApiKey
+      - GenericOpenAIAPIKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - ServiceAccountCredentials
+      - ApplicationName
+      - ImpersonateUser
+      - AzureAiAPIKey
+      - BedrockAccountNumber
+      - BedrockExternalId
+      - BedrockIamRole
+      - BedrockUseIRSA
+      - FilerobotToken
+      - XFilerobotKey
+      - WhatsAppAccessToken
+      - WhatsAppPhoneNumberId
+      - WhatsAppAppSecret
+      - Host
+      - Port
+      - Database
+      - Schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - HanaConnectionType
+      - HanaInstanceNumber
+      - ConfluenceUrl
+      - JiraUrl
+      - ContentfulSpaceId
+      - ContentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - CohesityApiKey
+      - CohesityEndpoint
+      - AnthropicInferenceHooksSigningSecret
+      - AnthropicAdminKey
+      - AnthropicAnalyticsKey
+      - GcpProjectId
+      - GcpLocation
+      enum:
+      - openaiApiKey
+      - azureApiKey
+      - ollamaApiKey
+      - huggingFaceApiKey
+      - anthropicApiKey
+      - azureAIStudioApiKey
+      - replicateApiKey
+      - stabilityApiKey
+      - mistralApiKey
+      - perplexityApiKey
+      - watsonApiKey
+      - ai21ApiKey
+      - cohereApiKey
+      - googleApiKey
+      - togetherAiApiKey
+      - pineconeApiKey
+      - weaviateApiKey
+      - customOpenAiApiKey
+      - xAiApiKey
+      - xApiKey
+      - firecrawlApiKey
+      - youtubeApiKey
+      - microsoftBingSearchAPIKey
+      - bedrockApiKey
+      - awsSecretKey
+      - awsAccessKey
+      - awsRegion
+      - CustomAPIKey
+      - convertkitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - compassApiKey
+      - snowflakePrivateKey
+      - snowflakePasswordPhrase
+      - azureMLApiKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - azureClientId
+      - azureClientSecret
+      - azureTenantId
+      - AlibabaApiKey
+      - genericOpenAiApiKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - serviceAccountCredentials
+      - applicationName
+      - impersonateUser
+      - azureAiApiKey
+      - bedrockAccountNumber
+      - bedrockExternalId
+      - bedrockIamRole
+      - bedrockUseIRSA
+      - filerobotToken
+      - xFilerobotKey
+      - whatsAppAccessToken
+      - whatsAppPhoneNumberId
+      - whatsAppAppSecret
+      - host
+      - port
+      - database
+      - schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - hanaConnectionType
+      - hanaInstanceNumber
+      - confluenceUrl
+      - jiraUrl
+      - contentfulSpaceId
+      - contentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - cohesityApiKey
+      - cohesityEndpoint
+      - anthropicInferenceHooksSigningSecret
+      - anthropicAdminKey
+      - anthropicAnalyticsKey
+      - gcpProjectId
+      - gcpLocation
+    CredentialOrigin:
+      type: string
+      description: ''
+      x-enumNames:
+      - Platform
+      - Chat
+      enum:
+      - Platform
+      - Chat
+    AzureOpenAiSourceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - region
+      properties:
+        region:
+          type: string
+          minLength: 1
+        resourceName:
+          type:
+          - string
+          - 'null'
+        configurationName:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        deploymentId:
+          type:
+          - string
+          - 'null'
+        azureTenantId:
+          type: string
+        subscriptionId:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

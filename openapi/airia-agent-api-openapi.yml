@@ -1,0 +1,342 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Agent
+paths:
+  /.well-known/agent.json:
+    get:
+      tags:
+      - Agent
+      operationId: Agent_Get
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentCardModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent get
+      x-summary-source: derived
+components:
+  schemas:
+    AgentCardSignature:
+      type: object
+      additionalProperties: false
+      properties:
+        protected:
+          type: string
+        signature:
+          type: string
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    SecurityRequirement:
+      type: object
+      additionalProperties: false
+      properties:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    AgentCapabilities:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension'
+    AgentProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          type: string
+        url:
+          type: string
+    AgentInterface:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        protocolBinding:
+          type: string
+        protocolVersion:
+          type: string
+        tenant:
+          type:
+          - string
+          - 'null'
+    SecurityScheme:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          apiKey: '#/components/schemas/ApiKeySecurityScheme'
+          http: '#/components/schemas/HttpSecurityScheme'
+          oauth2: '#/components/schemas/OAuth2SecurityScheme'
+          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme'
+          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentSkill:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        examples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        inputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement'
+    AgentCardModel:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      properties:
+        projectId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        supportedInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentInterface'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/AgentProvider'
+        version:
+          type: string
+        documentationUrl:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities'
+        securitySchemes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityScheme'
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement'
+        signatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardSignature'
+        defaultInputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        defaultOutputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSkill'
+    AgentExtension:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

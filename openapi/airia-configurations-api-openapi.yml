@@ -1,0 +1,378 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Configurations API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Configurations
+paths:
+  /v1/Configurations/IsOnPrem:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetIsOnPrem2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get is on prem2
+      x-summary-source: derived
+  /v1/Configurations/AIGateway:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetAIGateway2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIGatewayResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get AI gateway2
+      x-summary-source: derived
+  /v1/Configurations/SupportedVectorDbTypes:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetSupportedVectorDbTypes2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedVectorDbTypesResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get supported vector db types2
+      x-summary-source: derived
+  /v1/Configurations/SupportedEmbeddingConfigurations:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetSupportedEmbeddingConfigurations2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmbeddingConfigurationResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get supported embedding configurations2
+      x-summary-source: derived
+  /v1/Configurations/OAuthCallbackUrl:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetOAuthCallbackUrl2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthCallbackUrlResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get OAuth callback url2
+      x-summary-source: derived
+  /v1/Configurations/AWSConfiguration:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetAWSConfiguration2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AWSConfiguration'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Configurations get AWS configuration2
+      x-summary-source: derived
+  /v1/Configurations/SasExpiry:
+    get:
+      tags:
+      - Configurations
+      operationId: Configurations_GetSasExpiryConfiguration2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SasExpiryConfigurationResponse'
+      summary: Configurations get sas expiry configuration2
+      x-summary-source: derived
+components:
+  schemas:
+    AIGatewayRegionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        regionName:
+          type: string
+        regionalEndpoint:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AWSConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - accountNumber
+      - accountUser
+      - externalId
+      properties:
+        accountNumber:
+          type: string
+          minLength: 1
+        accountUser:
+          type: string
+          minLength: 1
+        externalId:
+          type: string
+          minLength: 1
+    EmbeddingConfigurationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        model:
+          type: string
+        vectorBatchSize:
+          type: integer
+          format: int32
+        dimensions:
+          type: integer
+          format: int32
+        displayName:
+          type: string
+        isReadonly:
+          type: boolean
+        supportedDimensions:
+          type: array
+          items:
+            type: integer
+            format: int32
+    AIGatewayResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        homeRegion:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIGatewayRegionDto'
+    SupportedVectorDbTypesResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        airiaHostedEngine:
+          type: string
+        postgresHybrid:
+          type: boolean
+    OAuthCallbackUrlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+    SasExpiryConfigurationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        defaultExpiryMinutes:
+          type: number
+          format: double
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

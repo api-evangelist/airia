@@ -1,0 +1,291 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Recommendations API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Recommendations
+paths:
+  /v1/Recommendations:
+    get:
+      tags:
+      - Recommendations
+      operationId: Recommendations_GetRecommendations
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: sourceType
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/AgentSourceType'
+        x-position: 3
+      - name: actionType
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/RecommendationActionType'
+        x-position: 4
+      - name: priority
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/RecommendationPriority'
+        x-position: 5
+      - name: agentId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 6
+      - name: status
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/RecommendationStatus'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRecommendationDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Recommendations get recommendations
+      x-summary-source: derived
+  /v1/Recommendations/{id}/dismiss:
+    post:
+      tags:
+      - Recommendations
+      operationId: Recommendations_DismissRecommendation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Recommendations dismiss recommendation
+      x-summary-source: derived
+components:
+  schemas:
+    AgentSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - N8n
+      - Bedrock
+      - AzureAI
+      - AzureCopilot
+      enum:
+      - Airia
+      - N8n
+      - Bedrock
+      - AzureAI
+      - AzureCopilot
+    RecommendationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        agentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentSourceType:
+          $ref: '#/components/schemas/AgentSourceType'
+        actionType:
+          $ref: '#/components/schemas/RecommendationActionType'
+        status:
+          $ref: '#/components/schemas/RecommendationStatus'
+        priority:
+          $ref: '#/components/schemas/RecommendationPriority'
+        reason:
+          type: string
+        actionLink:
+          type:
+          - string
+          - 'null'
+        actionMetadata:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        dismissedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        dismissedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfRecommendationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecommendationDto'
+        totalCount:
+          type: integer
+          format: int32
+    RecommendationActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+      enum:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+    RecommendationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - Dismissed
+      enum:
+      - Active
+      - Dismissed
+    RecommendationPriority:
+      type: string
+      description: ''
+      x-enumNames:
+      - High
+      - Medium
+      - Low
+      enum:
+      - High
+      - Medium
+      - Low
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,251 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Prompt Version API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PromptVersion
+paths:
+  /v1/PromptVersion:
+    post:
+      tags:
+      - PromptVersion
+      operationId: PromptVersion_PostPromptVersion2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: createPromptVersion
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePromptVersion'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptVersionDto'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptVersionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompt version post prompt version2
+      x-summary-source: derived
+  /v1/PromptVersion/{promptId}/versions/{promptVersionId}/message:
+    patch:
+      tags:
+      - PromptVersion
+      operationId: PromptVersion_PatchPromptVersionMessage2
+      parameters:
+      - name: promptId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: promptVersionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: message
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptVersionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompt version patch prompt version message2
+      x-summary-source: derived
+components:
+  schemas:
+    PromptMessageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+        order:
+          type: integer
+          format: int32
+    CreatePromptVersion:
+      type: object
+      additionalProperties: false
+      properties:
+        promptId:
+          type: string
+          format: guid
+        versionChangeDescription:
+          type: string
+        messages:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        message:
+          type:
+          - string
+          - 'null'
+        versionNumber:
+          type: integer
+          format: int32
+    PromptVersionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        versionNumber:
+          type: integer
+          format: int32
+        versionChangeDescription:
+          type: string
+        message:
+          type:
+          - string
+          - 'null'
+        messages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        isLatest:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

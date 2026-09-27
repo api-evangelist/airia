@@ -1,0 +1,805 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Discovery People API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DiscoveryPeople
+paths:
+  /v1/discovery/people:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPeople
+      parameters:
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 2
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfDiscoveryPersonSummaryDto'
+      summary: Discovery people get people
+      x-summary-source: derived
+  /v1/discovery/people/grants:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonGrants
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiscoveryPersonGrantDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery people get person grants
+      x-summary-source: derived
+  /v1/discovery/people/agents:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonAgents
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiscoveryPersonAgentDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery people get person agents
+      x-summary-source: derived
+  /v1/discovery/people/browser-activity:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonBrowserActivity
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryPersonBrowserActivityDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+      summary: Discovery people get person browser activity
+      x-summary-source: derived
+  /v1/discovery/people/endpoint-apps:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonEndpointApps
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryPersonEndpointActivityDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery people get person endpoint apps
+      x-summary-source: derived
+  /v1/discovery/people/endpoint-risk:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetEndpointRisk
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryEndpointRiskDto'
+      summary: Discovery people get endpoint risk
+      x-summary-source: derived
+  /v1/discovery/people/stats:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPeopleStats
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryPeopleStatsDto'
+      summary: Discovery people get people stats
+      x-summary-source: derived
+  /v1/discovery/people/agent-usage:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetAgentUsagePeople
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryAgentUsagePeopleDto'
+      summary: Discovery people get agent usage people
+      x-summary-source: derived
+  /v1/discovery/people/gateway-sessions:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonGatewaySessions
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiscoveryPersonGatewaySessionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery people get person gateway sessions
+      x-summary-source: derived
+  /v1/discovery/people/platform-runs:
+    get:
+      tags:
+      - DiscoveryPeople
+      operationId: DiscoveryPeople_GetPersonPlatformRuns
+      parameters:
+      - name: identifier
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryPersonPlatformRunsDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery people get person platform runs
+      x-summary-source: derived
+components:
+  schemas:
+    DiscoveryPersonSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        displayIdentifier:
+          type: string
+        identifierKind:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryPersonKeyKind'
+        linkState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryPersonLinkState'
+        appCount:
+          type: integer
+          format: int32
+        sensitiveAppCount:
+          type: integer
+          format: int32
+        firstSeen:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        displayName:
+          type:
+          - string
+          - 'null'
+        directoryDepartment:
+          type:
+          - string
+          - 'null'
+        assignedDepartment:
+          type:
+          - string
+          - 'null'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonSource'
+    DiscoveryPersonBrowserActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isLinkedToPlatformUser:
+          type: boolean
+        linkState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryPersonLinkState'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonBrowserEventDto'
+    DiscoveryPersonPlatformRunDto:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        agentName:
+          type:
+          - string
+          - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+        hasFailedToolCalls:
+          type: boolean
+        toolCallCount:
+          type: integer
+          format: int32
+        temporary:
+          type: boolean
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DiscoveryPersonEndpointAppDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        vendor:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        hostName:
+          type: string
+        os:
+          type:
+          - string
+          - 'null'
+        lastSeen:
+          type: string
+          format: date-time
+        mcpServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonEndpointMcpServerDto'
+    DiscoveryPersonBrowserEventDto:
+      type: object
+      additionalProperties: false
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        sourceApplication:
+          type:
+          - string
+          - 'null'
+        domain:
+          type: string
+        actionTaken:
+          type: string
+        browserType:
+          type:
+          - string
+          - 'null'
+        hasPromptDetails:
+          type: boolean
+    DiscoveryPersonEndpointActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isAttributionAvailable:
+          type: boolean
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonEndpointAppDto'
+    DiscoveryPeopleStatsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalPeople:
+          type: integer
+          format: int32
+        peopleWithSensitiveAccess:
+          type: integer
+          format: int32
+        discoveredAppCount:
+          type: integer
+          format: int32
+        sensitiveAppCount:
+          type: integer
+          format: int32
+    DiscoveryPersonLinkState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Linked
+      - NoDirectoryMatch
+      - NotLinkable
+      enum:
+      - Linked
+      - NoDirectoryMatch
+      - NotLinkable
+    DiscoveryPersonAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type: string
+        used:
+          type: boolean
+        owned:
+          type: boolean
+        usageCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lastUsedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonAgentComponentDto'
+    DiscoveryRiskLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    DiscoveryPersonEndpointMcpServerDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        transport:
+          type: string
+        sanctioned:
+          type: boolean
+        hasPlaintextSecret:
+          type: boolean
+        routedThroughGateway:
+          type: boolean
+    DiscoveryAgentUsagePersonDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        eventCount:
+          type: integer
+          format: int32
+        agentCount:
+          type: integer
+          format: int32
+    DiscoveryPersonPlatformRunsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isLinkedToPlatformUser:
+          type: boolean
+        linkState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryPersonLinkState'
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonPlatformRunDto'
+    DiscoveryPersonSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Spm
+      - Endpoint
+      - Gateway
+      enum:
+      - Spm
+      - Endpoint
+      - Gateway
+    DiscoveryPersonKeyKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+      enum:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+    DiscoveryPersonGatewaySessionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sessionId:
+          type: string
+        service:
+          type: string
+        surface:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        promptCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        lastActivityAt:
+          type: string
+          format: date-time
+    DiscoveryPersonAgentComponentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        componentType:
+          $ref: '#/components/schemas/SpmComponentType'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DiscoveryEndpointRiskDto:
+      type: object
+      additionalProperties: false
+      properties:
+        people:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryEndpointRiskPersonDto'
+        totalDevices:
+          type: integer
+          format: int32
+        devicesWithEmail:
+          type: integer
+          format: int32
+    DiscoveryPersonGrantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        clientId:
+          type: string
+        provider:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        hasSensitiveScopes:
+          type: boolean
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+        consentType:
+          type:
+          - string
+          - 'null'
+        discoveredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DiscoveryEndpointRiskPersonDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        plaintextSecretAppCount:
+          type: integer
+          format: int32
+        unsanctionedAppCount:
+          type: integer
+          format: int32
+    DiscoveryAgentUsageDayDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        people:
+          type: integer
+          format: int32
+        events:
+          type: integer
+          format: int32
+    PagedResultV2OfDiscoveryPersonSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonSummaryDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    DiscoveryAgentUsagePeopleDto:
+      type: object
+      additionalProperties: false
+      properties:
+        windowDays:
+          type: integer
+          format: int32
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryAgentUsageDayDto'
+        topPeople:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryAgentUsagePersonDto'
+        totalEvents:
+          type: integer
+          format: int32
+        attributedEvents:
+          type: integer
+          format: int32
+    SpmComponentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+      enum:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

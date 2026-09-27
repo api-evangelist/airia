@@ -1,0 +1,702 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Smart Scan Template API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: SmartScanTemplate
+paths:
+  /v1/smart-scan/templates:
+    get:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_GetTemplates
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: includeSystemTemplates
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfSmartScanTemplateResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template get templates
+      x-summary-source: derived
+    post:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_CreateTemplate
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSmartScanTemplateRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScanTemplateResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template create template
+      x-summary-source: derived
+  /v1/smart-scan/templates/{id}:
+    get:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_GetTemplateById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScanTemplateResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template get template by id
+      x-summary-source: derived
+    put:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_UpdateTemplate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSmartScanTemplateRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScanTemplateResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template update template
+      x-summary-source: derived
+    delete:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_DeleteTemplate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template delete template
+      x-summary-source: derived
+  /v1/smart-scan/templates/groups:
+    get:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_GetGroups
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfSmartScanTemplateGroupResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template get groups
+      x-summary-source: derived
+    post:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_CreateGroup
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSmartScanTemplateGroupRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScanTemplateGroupResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template create group
+      x-summary-source: derived
+  /v1/smart-scan/templates/groups/{id}:
+    delete:
+      tags:
+      - SmartScanTemplate
+      operationId: SmartScanTemplate_DeleteGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Smart scan template delete group
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfSmartScanTemplateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartScanTemplateResponse'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfSmartScanTemplateGroupResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartScanTemplateGroupResponse'
+        totalCount:
+          type: integer
+          format: int32
+    SmartScanTemplateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        isSystemTemplate:
+          type: boolean
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupName:
+          type:
+          - string
+          - 'null'
+        templatePrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartScanTemplatePromptResponse'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UpdateSmartScanTemplateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - templatePrompts
+      properties:
+        id:
+          type: string
+          format: guid
+          minLength: 1
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+        isSystemTemplate:
+          type: boolean
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        templatePrompts:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CreateSmartScanTemplatePromptRequest'
+    CreateSmartScanTemplatePromptRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - prompt
+      properties:
+        sequenceNumber:
+          type: integer
+          format: int32
+        type:
+          $ref: '#/components/schemas/SmartScanPromptType'
+        prompt:
+          type: string
+          minLength: 1
+        promptName:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+    SmartScanTemplateGroupResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        tenantId:
+          type: string
+          format: guid
+        templateCount:
+          type: integer
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SmartScanTemplatePromptResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        sequenceNumber:
+          type: integer
+          format: int32
+        type:
+          $ref: '#/components/schemas/SmartScanPromptType'
+        prompt:
+          type: string
+        promptName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CreateSmartScanTemplateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - templatePrompts
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+        isSystemTemplate:
+          type: boolean
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        templatePrompts:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CreateSmartScanTemplatePromptRequest'
+    CreateSmartScanTemplateGroupRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+    SmartScanPromptType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tag
+      - Extract
+      - Summarize
+      enum:
+      - Tag
+      - Extract
+      - Summarize
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

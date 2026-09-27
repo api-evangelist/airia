@@ -1,0 +1,152 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Use Case Autofill API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UseCaseAutofill
+paths:
+  /v1/governance/usecases/{useCaseId}/autofill:
+    post:
+      tags:
+      - UseCaseAutofill
+      operationId: UseCaseAutofill_Start2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseAutofillRunStatusDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Use case autofill start2
+      x-summary-source: derived
+  /v1/governance/usecases/{useCaseId}/autofill/status:
+    get:
+      tags:
+      - UseCaseAutofill
+      operationId: UseCaseAutofill_GetStatus2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseAutofillRunStatusDto'
+        204:
+          description: ''
+      summary: Use case autofill get status2
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UseCaseAutofillRunStatusDto:
+      type: object
+      additionalProperties: false
+      required:
+      - runId
+      - useCaseId
+      - state
+      properties:
+        runId:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        state:
+          type: string
+        isInProgress:
+          type: boolean
+        sectionStates:
+          type: object
+          additionalProperties:
+            type: string
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        failureReason:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

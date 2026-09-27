@@ -1,0 +1,572 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Local Apps API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: LocalApps
+paths:
+  /v1/security/local-apps:
+    get:
+      tags:
+      - LocalApps
+      operationId: LocalApps_GetAll2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnifiedInventoryItemDto'
+        500:
+          description: ''
+      summary: Local apps get all2
+      x-summary-source: derived
+  /v1/security/local-apps/{appId}:
+    get:
+      tags:
+      - LocalApps
+      operationId: LocalApps_GetDetail2
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalAppDetailV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Local apps get detail2
+      x-summary-source: derived
+components:
+  schemas:
+    SpmSecurityScoreStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+      enum:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+    DeviceReportV1:
+      type: object
+      additionalProperties: false
+      properties:
+        deviceId:
+          type: string
+        hostName:
+          type: string
+        userName:
+          type: string
+        userEmail:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        llmApiBaseUrl:
+          type: string
+        llmApiConfigSource:
+          type: string
+        llmApiRouted:
+          type: boolean
+        gatewayConfigurationName:
+          type:
+          - string
+          - 'null'
+        keystoreEntryPresent:
+          type: boolean
+        aiApiKeyFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiApiKeyFinding'
+        managedPolicyPresent:
+          type: boolean
+        mdmEnforcedKeys:
+          type: array
+          items:
+            type: string
+        configParseErrors:
+          type: integer
+          format: int32
+        parseErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigParseErrorV1'
+        mcpServerCount:
+          type: integer
+          format: int32
+        policyRevision:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        policyMode:
+          type: string
+        ollama:
+          oneOf:
+          - $ref: '#/components/schemas/OllamaDetailV1'
+    McpServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        scope:
+          type: string
+        transport:
+          type: string
+        endpoint:
+          type: string
+        authType:
+          type: string
+        hasPlaintextSecret:
+          type: boolean
+        routedThroughGateway:
+          type: boolean
+        sanctioned:
+          type: boolean
+        replaceableTier:
+          type: string
+        capability:
+          type:
+          - string
+          - 'null'
+        reportedByDeviceIds:
+          type: array
+          items:
+            type: string
+    LocalAppDetailV1:
+      type: object
+      additionalProperties: false
+      properties:
+        appId:
+          type: string
+        name:
+          type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceReportV1'
+        mcpServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpServerV1'
+    Scanner:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+      enum:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+    OllamaBlobV1:
+      type: object
+      additionalProperties: false
+      properties:
+        descriptorKind:
+          type: string
+        digest:
+          type: string
+        mediaType:
+          type: string
+        path:
+          type: string
+        declaredSizeBytes:
+          type: integer
+          format: int64
+        actualSizeBytes:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    OllamaModelV1:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+        digest:
+          type: string
+        manifestPath:
+          type: string
+        manifestSizeBytes:
+          type: integer
+          format: int64
+        logicalSizeBytes:
+          type: integer
+          format: int64
+        onDiskSizeBytes:
+          type: integer
+          format: int64
+        loadState:
+          type: string
+        blobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OllamaBlobV1'
+    AiApiKeyFinding:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        configPath:
+          type: string
+        line:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    SecurePostureStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+      enum:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+    OllamaDetailV1:
+      type: object
+      additionalProperties: false
+      properties:
+        serverState:
+          type: string
+        serverObservedAt:
+          type: string
+          format: date-time
+        inventoryStatus:
+          type: string
+        inventoryObservedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastInventoryAttemptAt:
+          type: string
+          format: date-time
+        scanErrorCount:
+          type: integer
+          format: int32
+        omittedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedBlobCount:
+          type: integer
+          format: int32
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/OllamaModelV1'
+    UnifiedInventoryItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        source:
+          $ref: '#/components/schemas/InventoryItemSource'
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        securityScore:
+          type:
+          - string
+          - 'null'
+        securityScoreStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SpmSecurityScoreStatus'
+        securityAnalysisDetails:
+          type:
+          - string
+          - 'null'
+        isSecurable:
+          type: boolean
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+        aiModelNames:
+          type:
+          - string
+          - 'null'
+        aiProviderNames:
+          type:
+          - string
+          - 'null'
+        scanner:
+          oneOf:
+          - $ref: '#/components/schemas/Scanner'
+        findingFingerprint:
+          type:
+          - string
+          - 'null'
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        externalCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        externalCreatedBy:
+          type:
+          - string
+          - 'null'
+        externalOwner:
+          type:
+          - string
+          - 'null'
+        externalModifiedBy:
+          type:
+          - string
+          - 'null'
+        externalPublishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        language:
+          type:
+          - string
+          - 'null'
+        authenticationMode:
+          type:
+          - string
+          - 'null'
+        authenticationTrigger:
+          type:
+          - string
+          - 'null'
+        accessControlPolicy:
+          type:
+          - string
+          - 'null'
+        externalStatus:
+          type:
+          - string
+          - 'null'
+        owningBusinessUnit:
+          type:
+          - string
+          - 'null'
+        externalPublishedBy:
+          type:
+          - string
+          - 'null'
+        isAutonomous:
+          type:
+          - boolean
+          - 'null'
+        platformUrl:
+          type:
+          - string
+          - 'null'
+        orgWideAccessible:
+          type:
+          - boolean
+          - 'null'
+        publiclyAccessible:
+          type:
+          - boolean
+          - 'null'
+        sharedWithUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sharedWithUsers:
+          type:
+          - string
+          - 'null'
+        resourceCategory:
+          type:
+          - string
+          - 'null'
+        resourceType:
+          type:
+          - string
+          - 'null'
+        platformResourceId:
+          type:
+          - string
+          - 'null'
+        agentAuthenticationSetting:
+          type:
+          - string
+          - 'null'
+        instructions:
+          type:
+          - string
+          - 'null'
+        schemaName:
+          type:
+          - string
+          - 'null'
+        autonomousTriggersCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        webBrowsingCapability:
+          type:
+          - boolean
+          - 'null'
+        requireUsersToSignIn:
+          type:
+          - boolean
+          - 'null'
+        generativeAiEnabled:
+          type:
+          - boolean
+          - 'null'
+        agentToAgentEnabled:
+          type:
+          - boolean
+          - 'null'
+    InventoryItemSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+      enum:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+    ConfigParseErrorV1:
+      type: object
+      additionalProperties: false
+      properties:
+        configPath:
+          type: string
+        configId:
+          type:
+          - string
+          - 'null'
+        errorClass:
+          type: string
+        errorMessage:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

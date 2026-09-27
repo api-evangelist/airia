@@ -1,0 +1,564 @@
+openapi: 3.2.0
+info:
+  title: Airia Web MCP Servers API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: MCP Servers
+paths:
+  /v1/McpServers/getServerInfo:
+    post:
+      tags:
+      - MCP Servers
+      operationId: McpServers_GetMcpSererInfo2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: mcpRequestModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/McpGetAvailableToolsBody'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerInfo'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Mcp servers get mcp serer info2
+      x-summary-source: derived
+  /v1/McpServers/{toolDefinitionId}/headers/{headerKey}:
+    delete:
+      tags:
+      - MCP Servers
+      operationId: McpServers_DeleteToolHeader2
+      parameters:
+      - name: toolDefinitionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: headerKey
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Mcp servers delete tool header2
+      x-summary-source: derived
+components:
+  schemas:
+    ToolType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Custom
+      - Calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+      enum:
+      - custom
+      - calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+    McpToolParametersInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        schema: {}
+        isRequired:
+          type: boolean
+    ToolHeaderModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    McpServerInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        serverName:
+          type: string
+        version:
+          type: string
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpToolInfo'
+    McpToolInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpToolParametersInfo'
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+    McpGetAvailableToolsBody:
+      type: object
+      additionalProperties: false
+      required:
+      - toolType
+      properties:
+        toolType:
+          $ref: '#/components/schemas/ToolType'
+        mcpServerUrl:
+          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        headers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolHeaderModel'
+        credentialsSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/SourceType'
+        credentialConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useJwtForwarding:
+          type: boolean
+        routeThroughACC:
+          type: boolean
+        isPersonal:
+          type: boolean
+        accGroup:
+          type:
+          - string
+          - 'null'
+        toolDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

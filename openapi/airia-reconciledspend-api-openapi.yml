@@ -1,0 +1,197 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Reconciled Spend API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ReconciledSpend
+paths:
+  /v1/reconciled-spend:
+    get:
+      tags:
+      - ReconciledSpend
+      operationId: ReconciledSpend_GetByDimension2
+      parameters:
+      - name: dimension
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconciledSpendResultDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Reconciled spend get by dimension2
+      x-summary-source: derived
+components:
+  schemas:
+    ReconciledSpendRowDto:
+      type: object
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        kind:
+          $ref: '#/components/schemas/ReconciledSpendRowKind'
+        label:
+          type:
+          - string
+          - 'null'
+        costCents:
+          type: number
+          format: decimal
+        sharePercent:
+          type: number
+          format: double
+        anyEstimated:
+          type: boolean
+        actorCount:
+          type: integer
+          format: int32
+        actorsNotInPlatformCount:
+          type: integer
+          format: int32
+    ReconciledSpendResultDto:
+      type: object
+      additionalProperties: false
+      required:
+      - dimension
+      - status
+      - currency
+      - rows
+      properties:
+        dimension:
+          type: string
+        status:
+          $ref: '#/components/schemas/ReconciledSpendStatus'
+        mappedAttributeKey:
+          type:
+          - string
+          - 'null'
+        currency:
+          type: string
+        hasMixedCurrencies:
+          type: boolean
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconciledSpendRowDto'
+        totalCostCents:
+          type: number
+          format: decimal
+        anyEstimated:
+          type: boolean
+        attributedPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+    ReconciledSpendRowKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - DimensionValue
+      - NoDimensionValue
+      - NotUserAttributed
+      enum:
+      - DimensionValue
+      - NoDimensionValue
+      - NotUserAttributed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ReconciledSpendStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Ok
+      - DimensionNotMapped
+      - MappedAttributeHasNoData
+      enum:
+      - Ok
+      - DimensionNotMapped
+      - MappedAttributeHasNoData
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

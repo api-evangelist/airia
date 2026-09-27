@@ -1,0 +1,442 @@
+openapi: 3.2.0
+info:
+  title: Airia Web AI Asset Metadata Assignment API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AiAssetMetadataAssignment
+paths:
+  /v1/AiAssetMetadataAssignment/by-aggregate-id/{aiAssetAggregateId}:
+    get:
+      tags:
+      - AiAssetMetadataAssignment
+      operationId: AiAssetMetadataAssignment_GetByAggregateId
+      parameters:
+      - name: aiAssetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetMetadataAssignmentResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata assignment get by aggregate id
+      x-summary-source: derived
+  /v1/AiAssetMetadataAssignment/by-internal-id/{internalId}:
+    get:
+      tags:
+      - AiAssetMetadataAssignment
+      operationId: AiAssetMetadataAssignment_GetByInternalId
+      parameters:
+      - name: internalId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: assetType
+        in: query
+        schema:
+          $ref: '#/components/schemas/AiAssetType'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetMetadataAssignmentResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata assignment get by internal id
+      x-summary-source: derived
+  /v1/AiAssetMetadataAssignment/by-aggregate/{aiAssetAggregateId}:
+    put:
+      tags:
+      - AiAssetMetadataAssignment
+      operationId: AiAssetMetadataAssignment_UpsertByAggregateId
+      parameters:
+      - name: aiAssetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: requests
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateAiAssetMetadataAssignmentRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetMetadataAssignmentResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata assignment upsert by aggregate id
+      x-summary-source: derived
+  /v1/AiAssetMetadataAssignment/by-internal/{internalId}:
+    put:
+      tags:
+      - AiAssetMetadataAssignment
+      operationId: AiAssetMetadataAssignment_UpsertByInternalId
+      parameters:
+      - name: internalId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: assetType
+        in: query
+        schema:
+          $ref: '#/components/schemas/AiAssetType'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: requests
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateAiAssetMetadataAssignmentRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetMetadataAssignmentResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata assignment upsert by internal id
+      x-summary-source: derived
+components:
+  schemas:
+    CreateAiAssetMetadataAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetMetadataDefinitionId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinitionOptionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
+    AiAssetMetadataDefinitionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        metadataName:
+          type: string
+        metadataType:
+          $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isPredefined:
+          type: boolean
+        isRequired:
+          type: boolean
+        isSystemGenerated:
+          type: boolean
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
+    AiAssetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+      enum:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+    AiAssetMetadataAssignmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinitionId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        aiAssetMetadataDefinitionOptionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        aiAssetMetadataDefinitionOption:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
+    AiAssetMetadataValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+      enum:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiAssetMetadataDefinitionOptionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        value:
+          type: string
+    AiAssetMetadataType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+      enum:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

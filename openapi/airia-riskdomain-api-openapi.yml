@@ -1,0 +1,277 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Risk Domain API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RiskDomain
+paths:
+  /v1/risk-registry/risk-domains:
+    get:
+      tags:
+      - RiskDomain
+      operationId: RiskDomain_GetRiskDomains
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskDomainResponse'
+      summary: Risk domain get risk domains
+      x-summary-source: derived
+  /v1/risk-registry/risk-domains/taxonomy:
+    get:
+      tags:
+      - RiskDomain
+      operationId: RiskDomain_GetRiskTaxonomy
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskTaxonomyDomainResponse'
+      summary: Risk domain get risk taxonomy
+      x-summary-source: derived
+  /v1/risk-registry/risk-domains/{domainId}/sub-domains:
+    get:
+      tags:
+      - RiskDomain
+      operationId: RiskDomain_GetRiskSubDomains
+      parameters:
+      - name: domainId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskSubDomainResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk domain get risk sub domains
+      x-summary-source: derived
+  /v1/risk-registry/risk-domains/sub-domains/{subDomainId}:
+    get:
+      tags:
+      - RiskDomain
+      operationId: RiskDomain_GetRiskSubDomainDetail
+      parameters:
+      - name: subDomainId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskSubDomainDetailResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk domain get risk sub domain detail
+      x-summary-source: derived
+components:
+  schemas:
+    RiskSubDomainDetailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        domainId:
+          type: string
+          format: guid
+        domainName:
+          type: string
+        domainColor:
+          type:
+          - string
+          - 'null'
+        mitigations:
+          type: array
+          items:
+            type: string
+        frameworks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskFrameworkControlsResponse'
+    RiskFrameworkControlsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        isEnabled:
+          type: boolean
+        controls:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskControlResponse'
+    RiskSubDomainResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        code:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        displayOrder:
+          type: integer
+          format: int32
+        mitigations:
+          type: array
+          items:
+            type: string
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RiskTaxonomyDomainResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        color:
+          type:
+          - string
+          - 'null'
+        displayOrder:
+          type: integer
+          format: int32
+        subDomains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskSubDomainResponse'
+    RiskDomainResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        color:
+          type:
+          - string
+          - 'null'
+        displayOrder:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

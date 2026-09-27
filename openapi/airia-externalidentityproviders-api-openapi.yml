@@ -1,0 +1,380 @@
+openapi: 3.2.0
+info:
+  title: Airia Web External Identity Providers API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ExternalIdentityProviders
+paths:
+  /v1/ExternalIdentityProvider:
+    get:
+      tags:
+      - ExternalIdentityProviders
+      operationId: ExternalIdentityProviders_Get
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalIdProviderDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: External identity providers get
+      x-summary-source: derived
+    put:
+      tags:
+      - ExternalIdentityProviders
+      operationId: ExternalIdentityProviders_Save
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalIdpConfigurationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalIdProviderDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: External identity providers save
+      x-summary-source: derived
+  /v1/ExternalIdentityProvider/validate-jwks:
+    post:
+      tags:
+      - ExternalIdentityProviders
+      operationId: ExternalIdentityProviders_ValidateJwksUrl
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: jwksUrl
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: External identity providers validate jwks url
+      x-summary-source: derived
+components:
+  schemas:
+    CrossAppAccessConfigDto:
+      type: object
+      additionalProperties: false
+      properties:
+        providerConfigId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        tokenEndpoint:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        identityProviderTokenEndpoint:
+          type: string
+        resourceAuthorizationServerIssuer:
+          type: string
+        resourceIdentifier:
+          type:
+          - string
+          - 'null'
+        resourceClientId:
+          type:
+          - string
+          - 'null'
+        resourceClientSecret:
+          type:
+          - string
+          - 'null'
+        subjectTokenType:
+          type:
+          - string
+          - 'null'
+        clientAuthenticationMethod:
+          type:
+          - string
+          - 'null'
+        sendScopeOnRedemption:
+          type: boolean
+    ExternalIdProviderDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        displayName:
+          type: string
+        issuerUrl:
+          type: string
+        jwksUrl:
+          type: string
+        audience:
+          type: string
+        claimMappings:
+          type:
+          - string
+          - 'null'
+        enableJwtPassThrough:
+          type: boolean
+        isEnabled:
+          type: boolean
+        allowedClockSkewSeconds:
+          type: integer
+          format: int32
+        validateLifetime:
+          type: boolean
+        validateIssuer:
+          type: boolean
+        validateAudience:
+          type: boolean
+        metadata:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type: string
+          format: guid
+        tokenExchangeConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenExchangeConfigDto'
+        crossAppAccessConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrossAppAccessConfigDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ExternalIdpConfigurationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - displayName
+      - issuerUrl
+      - jwksUrl
+      - audience
+      properties:
+        displayName:
+          type: string
+          maxLength: 256
+          minLength: 1
+        issuerUrl:
+          type: string
+          maxLength: 512
+          minLength: 1
+        jwksUrl:
+          type: string
+          maxLength: 512
+          minLength: 1
+        audience:
+          type: string
+          maxLength: 256
+          minLength: 1
+        claimMappings:
+          type:
+          - string
+          - 'null'
+        enableJwtPassThrough:
+          type: boolean
+        isEnabled:
+          type: boolean
+        allowedClockSkewSeconds:
+          type: integer
+          format: int32
+        validateLifetime:
+          type: boolean
+        validateIssuer:
+          type: boolean
+        validateAudience:
+          type: boolean
+        metadata:
+          type:
+          - string
+          - 'null'
+        tokenExchangeConfigs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TokenExchangeConfigDto'
+        crossAppAccessConfigs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CrossAppAccessConfigDto'
+    TokenExchangeConfigDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tokenUrl:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        resourceAudience:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        grantType:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

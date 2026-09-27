@@ -1,0 +1,715 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Custom Roles API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Custom Roles
+paths:
+  /v1/custom-roles:
+    get:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_GetRoles
+      parameters:
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: sortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: sortDirection
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 4
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: -1
+        x-position: 5
+      - name: roleType
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCustomRoleSummary'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles get roles
+      x-summary-source: derived
+    post:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_CreateRole
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomRoleRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomRoleDetail'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles create role
+      x-summary-source: derived
+  /v1/custom-roles/by-ids:
+    post:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_GetRolesByIds
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRolesByIdsRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomRoleDetail'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles get roles by ids
+      x-summary-source: derived
+  /v1/custom-roles/assignable-by-caller:
+    post:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_GetAssignableRoleIds
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAssignableRoleIdsRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: guid
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles get assignable role ids
+      x-summary-source: derived
+  /v1/custom-roles/{roleId}/duplicate:
+    post:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_DuplicateRole
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomRoleDetail'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles duplicate role
+      x-summary-source: derived
+  /v1/custom-roles/{roleId}:
+    get:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_GetRole
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomRoleDetail'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles get role
+      x-summary-source: derived
+    put:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_UpdateRole
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomRoleRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomRoleDetail'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles update role
+      x-summary-source: derived
+    delete:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_DeleteRole
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles delete role
+      x-summary-source: derived
+  /v1/custom-roles/permissions:
+    get:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_GetAvailablePermissions
+      parameters:
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: sortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: sortDirection
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 4
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: -1
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfString'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles get available permissions
+      x-summary-source: derived
+  /v1/custom-roles/validate-permissions:
+    post:
+      tags:
+      - Custom Roles
+      operationId: CustomRoles_ValidatePermissions
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidatePermissionsRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionValidationIssue'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Custom roles validate permissions
+      x-summary-source: derived
+components:
+  schemas:
+    CreateCustomRoleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        displayName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        permissions:
+          type: array
+          items:
+            type: string
+    PermissionValidationIssueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - MissingPrerequisite
+      - MissingDependency
+      enum:
+      - missing_prerequisite
+      - missing_dependency
+    PagedResultOfCustomRoleSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomRoleSummary'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ValidatePermissionsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type: array
+          items:
+            type: string
+    GetAssignableRoleIdsRequest:
+      allOf:
+      - $ref: '#/components/schemas/GetRolesByIdsRequest'
+      - type: object
+        additionalProperties: false
+        properties:
+          targetUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    UpdateCustomRoleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        permissions:
+          type: array
+          items:
+            type: string
+    GetRolesByIdsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        roleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    PagedResultOfString:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+        totalCount:
+          type: integer
+          format: int32
+    CustomRoleSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        roleId:
+          type: string
+          format: guid
+        roleName:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        permissionCount:
+          type: integer
+          format: int32
+        userCount:
+          type: integer
+          format: int32
+        isSystemRole:
+          type: boolean
+        isProjectSpecific:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    CustomRoleDetail:
+      type: object
+      additionalProperties: false
+      properties:
+        roleId:
+          type: string
+          format: guid
+        roleName:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isSystemRole:
+          type: boolean
+        isProjectSpecific:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+    PermissionValidationIssue:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/PermissionValidationIssueType'
+        permission:
+          type: string
+        relatedPermission:
+          type:
+          - string
+          - 'null'
+        message:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,569 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Red Teaming Attack Library API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RedTeamingAttackLibrary
+paths:
+  /v1/RedTeamingAttackLibrary:
+    get:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_GetAttackLibraries
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: includeGlobalLibraries
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRedTeamingAttackLibraryDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library get attack libraries
+      x-summary-source: derived
+  /v1/RedTeamingAttackLibrary/{id}:
+    get:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_GetAttackLibraryById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedTeamingAttackLibraryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library get attack library by id
+      x-summary-source: derived
+    delete:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_DeleteAttackLibrary
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library delete attack library
+      x-summary-source: derived
+  /v1/RedTeamingAttackLibrary/{id}/test-cases:
+    get:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_GetTestCasesByLibraryId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRedTeamingAttackTestCaseDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library get test cases by library id
+      x-summary-source: derived
+  /v1/RedTeamingAttackLibrary/import:
+    post:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_ImportAttackLibrary
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                Version:
+                  type:
+                  - string
+                  - 'null'
+                Source:
+                  type:
+                  - string
+                  - 'null'
+                Tags:
+                  type:
+                  - string
+                  - 'null'
+                CsvFile:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                SecurityStandardId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library import attack library
+      x-summary-source: derived
+  /v1/RedTeamingAttackLibrary/validate-libraries:
+    post:
+      tags:
+      - RedTeamingAttackLibrary
+      operationId: RedTeamingAttackLibrary_ValidateLibrarySelection
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: libraryIds
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: guid
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        400:
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming attack library validate library selection
+      x-summary-source: derived
+components:
+  schemas:
+    DatasetGenerationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Pending
+      - Generating
+      - Completed
+      - Failed
+      enum:
+      - none
+      - pending
+      - generating
+      - completed
+      - failed
+    ISecurityStandardCategory:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+    PagedResultOfRedTeamingAttackTestCaseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAttackTestCaseDto'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RedTeamingAttackTestCaseDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - prompt
+      - category
+      - attackLibraryId
+      properties:
+        id:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        category:
+          type: string
+        attackLibraryId:
+          type: string
+          format: guid
+    RedTeamingAttackLibraryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - description
+      - categories
+      - sourceType
+      - version
+      - source
+      - tags
+      - isActive
+      - testCaseCount
+      - createdAt
+      - updatedAt
+      - generationStatus
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        categoryInfo:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ISecurityStandardCategory'
+        sourceType:
+          $ref: '#/components/schemas/SourceType'
+        version:
+          type: string
+        source:
+          type: string
+        tags:
+          type: string
+        isActive:
+          type: boolean
+        testCaseCount:
+          type: integer
+          format: int32
+        judgePrompt:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        generationStatus:
+          $ref: '#/components/schemas/DatasetGenerationStatus'
+        generationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+    PagedResultOfRedTeamingAttackLibraryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAttackLibraryDto'
+        totalCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

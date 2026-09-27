@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Discovery Reports Board Deck API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DiscoveryReportsBoardDeck
+paths:
+  /v1/discovery-reports/board-deck:
+    post:
+      tags:
+      - DiscoveryReportsBoardDeck
+      operationId: DiscoveryReportsBoardDeck_RequestGeneration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardDeckGenerationStartedResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardDeckGenerationStartedResponse'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery reports board deck request generation
+      x-summary-source: derived
+  /v1/discovery-reports/board-deck/{requestId}:
+    get:
+      tags:
+      - DiscoveryReportsBoardDeck
+      operationId: DiscoveryReportsBoardDeck_GetStatus
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardDeckGenerationStatusResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery reports board deck get status
+      x-summary-source: derived
+components:
+  schemas:
+    BoardDeckGenerationStartedResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        requestId:
+          type: string
+          format: guid
+    BoardDeckGenerationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BoardDeckGenerationStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        requestId:
+          type: string
+          format: guid
+        status:
+          $ref: '#/components/schemas/BoardDeckGenerationStatus'
+        attachmentDownloadUrl:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

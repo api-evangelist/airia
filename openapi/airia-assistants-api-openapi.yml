@@ -1,0 +1,631 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Assistants API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Assistants
+paths:
+  /v1/Assistants/{id}:
+    get:
+      tags:
+      - Assistants
+      operationId: Assistants_GetById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAssistantResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assistants get by id
+      x-summary-source: derived
+    put:
+      tags:
+      - Assistants
+      operationId: Assistants_Update
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssistantRequest'
+        required: true
+        x-position: 2
+      responses:
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAssistantResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assistants update
+      x-summary-source: derived
+    delete:
+      tags:
+      - Assistants
+      operationId: Assistants_DeleteAssistant
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAssistantResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assistants delete assistant
+      x-summary-source: derived
+  /v1/Assistants:
+    post:
+      tags:
+      - Assistants
+      operationId: Assistants_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssistantRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assistants create
+      x-summary-source: derived
+components:
+  schemas:
+    OutputStructureTypes:
+      type: string
+      description: ''
+      x-enumNames:
+      - Custom
+      - BulletPoints
+      - Paragraph
+      - Outline
+      - Slides
+      - SingleSentence
+      - Character
+      enum:
+      - Custom
+      - BulletPoints
+      - Paragraph
+      - Outline
+      - Slides
+      - SingleSentence
+      - Character
+    InputType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Image
+      - Audio
+      - Video
+      enum:
+      - text
+      - image
+      - audio
+      - video
+    DataStoreParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        useDataStore:
+          type: boolean
+        topK:
+          type: integer
+          format: int32
+        relevanceThreshold:
+          type: integer
+          format: int32
+        neighboringChunksCount:
+          type: integer
+          format: int32
+        hybridSearchAlpha:
+          type:
+          - number
+          - 'null'
+          format: float
+    UpdateAssistantResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseCreateOrUpdateResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          updatedAt:
+            type: string
+            format: date-time
+          modelParameters:
+            oneOf:
+            - $ref: '#/components/schemas/ModelParametersResponse'
+          promptParameters:
+            oneOf:
+            - $ref: '#/components/schemas/PromptParametersResponse'
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    OutputParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        outputStructure:
+          oneOf:
+          - $ref: '#/components/schemas/OutputStructureTypes'
+        customOutputStructure:
+          type:
+          - string
+          - 'null'
+        characterCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+    PersonalityTypes:
+      type: string
+      description: ''
+      x-enumNames:
+      - Custom
+      - Neutral
+      - Inspiring
+      - Empathetic
+      - Direct
+      - Formal
+      enum:
+      - Custom
+      - Neutral
+      - Inspiring
+      - Empathetic
+      - Direct
+      - Formal
+    DeploymentParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        deployToChat:
+          type: boolean
+    CreateAssistantRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - promptParameters
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+          minLength: 0
+        agentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        promptParameters:
+          $ref: '#/components/schemas/PromptParameters'
+        modelParameters:
+          $ref: '#/components/schemas/ModelParameters'
+        dataStoreParameters:
+          $ref: '#/components/schemas/DataStoreParameters'
+        deploymentParameters:
+          $ref: '#/components/schemas/DeploymentParameters'
+    GetAssistantResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        isActiveVersion:
+          type: boolean
+        agentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        promptParameters:
+          oneOf:
+          - $ref: '#/components/schemas/PromptParameters'
+        modelParameters:
+          oneOf:
+          - $ref: '#/components/schemas/ModelParameters'
+        dataStoreParameters:
+          oneOf:
+          - $ref: '#/components/schemas/DataStoreParameters'
+        deploymentParameters:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentParameters'
+    PromptParametersResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - prompt
+      properties:
+        personality:
+          oneOf:
+          - $ref: '#/components/schemas/PersonalityParameters'
+        output:
+          oneOf:
+          - $ref: '#/components/schemas/OutputParameters'
+        prompt:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PromptParameters:
+      type: object
+      additionalProperties: false
+      required:
+      - prompt
+      properties:
+        personality:
+          oneOf:
+          - $ref: '#/components/schemas/PersonalityParameters'
+        output:
+          oneOf:
+          - $ref: '#/components/schemas/OutputParameters'
+        prompt:
+          type: string
+    UpdateAssistantRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isActiveVersion:
+          type:
+          - boolean
+          - 'null'
+        agentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        promptParameters:
+          oneOf:
+          - $ref: '#/components/schemas/PromptParameters'
+        modelParameters:
+          oneOf:
+          - $ref: '#/components/schemas/ModelParameters'
+        dataStoreParameters:
+          oneOf:
+          - $ref: '#/components/schemas/DataStoreParameters'
+        deploymentParameters:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentParameters'
+    BaseCreateOrUpdateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        assistantVersion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ModelIdentifierType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    PersonalityParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        personalityType:
+          oneOf:
+          - $ref: '#/components/schemas/PersonalityTypes'
+        customPersonality:
+          type:
+          - string
+          - 'null'
+    ModelParametersResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        temperature:
+          type: number
+          format: decimal
+    DeleteAssistantResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        promptDeleted:
+          type: boolean
+        deploymentDeleted:
+          type: boolean
+        pipelineDeleted:
+          type: boolean
+        modelDeleted:
+          type: boolean
+    ModelParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        libraryModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelIsAvailableInProject:
+          type:
+          - boolean
+          - 'null'
+        temperature:
+          type: number
+          format: decimal
+        projectModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelIdentifierType:
+          $ref: '#/components/schemas/ModelIdentifierType2'
+        inputType:
+          oneOf:
+          - $ref: '#/components/schemas/InputType'
+        outputSchema:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

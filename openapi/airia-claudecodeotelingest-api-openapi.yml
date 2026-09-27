@@ -1,0 +1,82 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Claude Code Otel Ingest API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ClaudeCodeOtelIngest
+paths:
+  /v1/ClaudeCodeOtelIngest/ingest:
+    post:
+      tags:
+      - ClaudeCodeOtelIngest
+      operationId: ClaudeCodeOtelIngest_Ingest
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Claude code otel ingest ingest
+      x-summary-source: derived
+  /v1/ClaudeCodeOtelIngest/ingest/v1/logs:
+    post:
+      tags:
+      - ClaudeCodeOtelIngest
+      operationId: ClaudeCodeOtelIngest_Ingest2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Claude code otel ingest ingest2
+      x-summary-source: derived
+  /v1/ClaudeCodeOtelIngest/ingest/v1/metrics:
+    post:
+      tags:
+      - ClaudeCodeOtelIngest
+      operationId: ClaudeCodeOtelIngest_IngestMetrics
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Claude code otel ingest ingest metrics
+      x-summary-source: derived
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

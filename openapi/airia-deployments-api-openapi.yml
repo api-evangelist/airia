@@ -1,0 +1,2435 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Deployments API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Deployments
+paths:
+  /v1/Deployments:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeployments2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Deployment'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployments2
+      x-summary-source: derived
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_PostDeployment2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: deploymentDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeployment'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentDTO'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments post deployment2
+      x-summary-source: derived
+  /v1/Deployments/{id}:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeployment2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentDTO'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Deployments
+      operationId: Deployments_DeleteDeployment2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments delete deployment2
+      x-summary-source: derived
+    put:
+      tags:
+      - Deployments
+      operationId: Deployments_UpdateDeployment2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: updateDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDeployment'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentDTO'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments update deployment2
+      x-summary-source: derived
+  /v1/Deployments/search:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentsByProjectId2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Deployment'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployments by project id2
+      x-summary-source: derived
+  /v1/Deployments/ApiKey/{agentId}:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetApiKey2
+      parameters:
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyValueViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get api key2
+      x-summary-source: derived
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_GenerateApiKey2
+      parameters:
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyValueViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments generate api key2
+      x-summary-source: derived
+  /v1/Deployments/pin/{deploymentId}:
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_PinProjectForUser2
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        201:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments pin project for user2
+      x-summary-source: derived
+  /v1/Deployments/unpin/{deploymentId}:
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_UnPinProjectForUser2
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments un pin project for user2
+      x-summary-source: derived
+  /v1/Deployments/batch:
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_ExecuteBatchDeploymentOperations2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchDeploymentRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchDeploymentResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments execute batch deployment operations2
+      x-summary-source: derived
+  /v1/Deployments/{deploymentId}/teams-manifest:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_DownloadTeamsManifest2
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments download teams manifest2
+      x-summary-source: derived
+    post:
+      tags:
+      - Deployments
+      operationId: Deployments_DownloadCustomTeamsManifest2
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                botName:
+                  type:
+                  - string
+                  - 'null'
+                colorIcon:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                outlineIcon:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments download custom teams manifest2
+      x-summary-source: derived
+  /v2/Deployments:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeployments2All
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentDTOV2'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployments2 all
+      x-summary-source: derived
+  /v2/Deployments/paged:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetPagedDeployments
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: tags
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 6
+      - name: isRecommended
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 7
+      - name: isScheduled
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfDeploymentDTOV2'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get paged deployments
+      x-summary-source: derived
+  /v2/Deployments/list:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentSummaryList
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentSummaryDto'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment summary list
+      x-summary-source: derived
+  /v2/Deployments/by-pipeline/{pipelineId}:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentByPipelineId
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentSummaryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment by pipeline id
+      x-summary-source: derived
+  /v2/Deployments/by-ids:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentSummariesByIds
+      parameters:
+      - name: ids
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentSummaryDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment summaries by ids
+      x-summary-source: derived
+  /v2/Deployments/{id}:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentDTOV2'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment by id
+      x-summary-source: derived
+  /v2/Deployments/{deploymentType}:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeployments2All2
+      parameters:
+      - name: deploymentType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentDTOV2'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployments2 all2
+      x-summary-source: derived
+  /v2/Deployments/types:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentTypesForAgent
+      parameters:
+      - name: agentId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DeploymentDTOV2'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment types for agent
+      x-summary-source: derived
+  /v2/Deployments/recently-used:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetRecentlyUsedDeployments
+      parameters:
+      - name: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 1
+      - name: pageNumber
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: includeTotalCount
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfDeploymentDTOV2'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get recently used deployments
+      x-summary-source: derived
+  /v2/Deployments/pinned:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetPinnedDeployments
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentDTOV2'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get pinned deployments
+      x-summary-source: derived
+  /v2/Deployments/tags:
+    get:
+      tags:
+      - Deployments
+      operationId: Deployments_GetDeploymentTags
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Deployments get deployment tags
+      x-summary-source: derived
+components:
+  schemas:
+    QuickAction:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        quickActionType:
+          $ref: '#/components/schemas/QuickActionType'
+        initialMessage:
+          type:
+          - string
+          - 'null'
+        assignedAgent:
+          oneOf:
+          - $ref: '#/components/schemas/AssignedAgent'
+        targetDomains:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    DeploymentDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        deploymentName:
+          type: string
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        deploymentIconUrl:
+          type:
+          - string
+          - 'null'
+        deploymentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        isRecommended:
+          type: boolean
+        userPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPromptDto'
+        deploymentPrompt:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        conversationType:
+          $ref: '#/components/schemas/ConversationType'
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDataSourceDto'
+        pipelineUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        about:
+          $ref: '#/components/schemas/AboutDeploymentMetadata'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        displayConsumptionInfo:
+          type: boolean
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        isEndUserPrivate:
+          type: boolean
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        webhook:
+          oneOf:
+          - $ref: '#/components/schemas/BotWebhookInfo'
+    BatchDeploymentOperation:
+      type: object
+      additionalProperties: false
+      properties:
+        operationType:
+          $ref: '#/components/schemas/BatchOperationType'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        deploymentData:
+          oneOf:
+          - $ref: '#/components/schemas/CreateDeployment'
+        capability:
+          type:
+          - string
+          - 'null'
+    DeploymentPrompt:
+      type: string
+      description: ''
+      x-enumNames:
+      - Artifact
+      - Citation
+      enum:
+      - Artifact
+      - Citation
+    BotWebhookInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
+        verifyToken:
+          type:
+          - string
+          - 'null'
+    DeploymentDataSourceDto:
+      allOf:
+      - $ref: '#/components/schemas/DatasourceSummaryDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          selectedFilesForIngestion:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          selectedFoldersForIngestion:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+    TeamsManifestCustomizationConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        botName:
+          type:
+          - string
+          - 'null'
+        colorIconBlobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        outlineIconBlobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    DeploymentUserPrompt:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          userPromptId:
+            type: string
+            format: guid
+    BatchDeploymentResult:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        createdDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        deletedDeploymentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        errorMessage:
+          type:
+          - string
+          - 'null'
+    DeploymentDTOV2:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        deploymentName:
+          type: string
+        deploymentIconUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        userPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPromptDto'
+        dataSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDataSourceDto'
+        isRecommended:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        isPinned:
+          type: boolean
+        isScheduled:
+          type: boolean
+        hasAnyPausedSchedule:
+          type: boolean
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        conversationType:
+          $ref: '#/components/schemas/ConversationType'
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pipelineUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        pipelineProjectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        deploymentPrompt:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        aboutDeploymentMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/AboutDeploymentMetadata'
+        behaviours:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentBehaviours'
+        isDeployedViaAssistants:
+          type: boolean
+        libraryAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isSeeded:
+          type: boolean
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        displayConsumptionInfo:
+          type: boolean
+        hasVisionSupport:
+          type: boolean
+        ownerDisplayName:
+          type:
+          - string
+          - 'null'
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        isEndUserPrivate:
+          type: boolean
+        targetAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeploymentTargetAgentDto'
+    AgentDeploymentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+      enum:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+    ApiKeyValueViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    SupportedInputMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FileUpload
+      - Whiteboard
+      - Code
+      - Math
+      enum:
+      - FileUpload
+      - Whiteboard
+      - Code
+      - Math
+    UserPromptDto:
+      type: object
+      additionalProperties: false
+      properties:
+        userPromptId:
+          type: string
+          format: guid
+        name:
+          type: string
+          maxLength: 256
+        message:
+          type: string
+          maxLength: 4096
+        description:
+          type: string
+          maxLength: 4096
+        updatedAt:
+          type: string
+          format: date-time
+        activeDeployments:
+          type: integer
+          format: int32
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        project:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectModelBase'
+    BatchDeploymentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchDeploymentOperation'
+    PagedResultV2OfDeploymentDTOV2:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDTOV2'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    PagedResultOfDeploymentDTOV2:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDTOV2'
+        totalCount:
+          type: integer
+          format: int32
+    AssignedAgent:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentUrl:
+          type: string
+        isConfigurable:
+          type: boolean
+    DeploymentTargetAgent:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          targetPipelineId:
+            type: string
+            format: guid
+    ConversationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - StandardChat
+      - ImageOnly
+      - FileOnly
+      enum:
+      - StandardChat
+      - ImageOnly
+      - FileOnly
+    AgentBehaviours:
+      type: string
+      description: ''
+      x-enumNames:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+      enum:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+    DeploymentTargetAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        targetPipelineId:
+          type: string
+          format: guid
+        targetPipelineName:
+          type:
+          - string
+          - 'null'
+    WebhookConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        impersonateUser:
+          type: boolean
+        successfulResponseCode:
+          type: integer
+          format: int32
+        failedResponseCode:
+          type: integer
+          format: int32
+        useExternalUserMapping:
+          type:
+          - boolean
+          - 'null'
+        requireUserMapping:
+          type:
+          - boolean
+          - 'null'
+        autoProvisionUsers:
+          type:
+          - boolean
+          - 'null'
+        provisionedUserRole:
+          type:
+          - string
+          - 'null'
+        sendTypingIndicator:
+          type:
+          - boolean
+          - 'null'
+        teamsAppId:
+          type:
+          - string
+          - 'null'
+        oneDriveDriveId:
+          type:
+          - string
+          - 'null'
+        oneDriveFolderId:
+          type:
+          - string
+          - 'null'
+        oneDriveCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        oneDriveProviderConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        oneDriveAllowedExtensions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        oneDriveIncludeSubfolders:
+          type:
+          - boolean
+          - 'null'
+        oneDriveGraphSubscriptionId:
+          type:
+          - string
+          - 'null'
+        oneDriveClientState:
+          type:
+          - string
+          - 'null'
+        oneDriveSubscriptionExpiration:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        oneDriveDeltaLink:
+          type:
+          - string
+          - 'null'
+        sharePointSiteId:
+          type:
+          - string
+          - 'null'
+        sharePointDriveId:
+          type:
+          - string
+          - 'null'
+        sharePointFolderId:
+          type:
+          - string
+          - 'null'
+        sharePointListId:
+          type:
+          - string
+          - 'null'
+        sharePointCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharePointProviderConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharePointAllowedExtensions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        sharePointIncludeSubfolders:
+          type:
+          - boolean
+          - 'null'
+        sharePointGraphSubscriptionId:
+          type:
+          - string
+          - 'null'
+        sharePointClientState:
+          type:
+          - string
+          - 'null'
+        sharePointSubscriptionExpiration:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        sharePointDeltaLink:
+          type:
+          - string
+          - 'null'
+        fetchChannelContext:
+          type:
+          - boolean
+          - 'null'
+        channelContextMessageCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        asanaHookSecret:
+          type:
+          - string
+          - 'null'
+    AboutDeploymentMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: integer
+          format: int32
+        videoUrl:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Deployment:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineId:
+            type: string
+            format: guid
+          name:
+            type: string
+            maxLength: 256
+            minLength: 0
+          description:
+            type: string
+          deploymentUserPrompts:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentUserPrompt'
+          deploymentPrompt:
+            oneOf:
+            - $ref: '#/components/schemas/DeploymentPrompt'
+          projectId:
+            type: string
+            format: guid
+          isRecommended:
+            type: boolean
+          deploymentType:
+            $ref: '#/components/schemas/AgentDeploymentType'
+          conversationType:
+            $ref: '#/components/schemas/ConversationType'
+          externalOAuthCredentialId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          about:
+            oneOf:
+            - $ref: '#/components/schemas/AboutDeploymentMetadata'
+          isDeployedViaAssistants:
+            type: boolean
+          assignments:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DeploymentAssignments'
+          targetAgents:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentTargetAgent'
+          supportedInputModes:
+            type: array
+            items:
+              $ref: '#/components/schemas/SupportedInputMode'
+          browserExtensionConfig:
+            oneOf:
+            - $ref: '#/components/schemas/BrowserExtensionConfig'
+          teamsManifestCustomization:
+            oneOf:
+            - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+          displayConsumptionInfo:
+            type: boolean
+          greetingMessage:
+            type:
+            - string
+            - 'null'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    DatasourceSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    UpdateDeployment:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        userPromptIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        deploymentPrompt:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        isRecommended:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        conversationType:
+          $ref: '#/components/schemas/ConversationType'
+        aboutDeploymentMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/AboutDeploymentMetadata'
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        displayConsumptionInfo:
+          type:
+          - boolean
+          - 'null'
+        deploymentType:
+          oneOf:
+          - $ref: '#/components/schemas/AgentDeploymentType'
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
+          items:
+            type: string
+            format: guid
+        webhookConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
+    BrowserExtensionConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        quickActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickAction'
+    QuickActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Page
+      - Selection
+      - PageSource
+      enum:
+      - Page
+      - Selection
+      - PageSource
+    CreateDeployment:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        name:
+          type: string
+        deploymentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        description:
+          type: string
+        userPromptIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        deploymentPrompt:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        isRecommended:
+          type: boolean
+        deploymentType:
+          oneOf:
+          - $ref: '#/components/schemas/AgentDeploymentType'
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        conversationType:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationType'
+        aboutDeploymentMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/AboutDeploymentMetadata'
+        isDeployedViaAssistants:
+          type: boolean
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        displayConsumptionInfo:
+          type: boolean
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
+          items:
+            type: string
+            format: guid
+        webhookConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
+    DeploymentSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        deploymentName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        libraryAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        deploymentIconUrl:
+          type:
+          - string
+          - 'null'
+    BatchOperationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Delete
+      enum:
+      - Create
+      - Delete
+    DeploymentAssignments:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          id:
+            type: string
+            format: guid
+          entityId:
+            type: string
+            format: guid
+          entityType:
+            type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

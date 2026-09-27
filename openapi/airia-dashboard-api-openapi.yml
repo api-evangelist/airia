@@ -1,0 +1,329 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Dashboard API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Dashboard
+paths:
+  /v1/Dashboard/usage-summary:
+    get:
+      tags:
+      - Dashboard
+      operationId: Dashboard_GetUsageSummary2
+      parameters:
+      - name: compareWithPreviousMonth
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardUsageSummaryResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Dashboard get usage summary2
+      x-summary-source: derived
+  /v1/Dashboard/top-agents:
+    get:
+      tags:
+      - Dashboard
+      operationId: Dashboard_GetTopAgents2
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 1
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopResourceResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Dashboard get top agents2
+      x-summary-source: derived
+  /v1/Dashboard/top-models:
+    get:
+      tags:
+      - Dashboard
+      operationId: Dashboard_GetTopModels2
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 1
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopResourceResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Dashboard get top models2
+      x-summary-source: derived
+  /v1/Dashboard/top-tools:
+    get:
+      tags:
+      - Dashboard
+      operationId: Dashboard_GetTopTools2
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 1
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopResourceResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Dashboard get top tools2
+      x-summary-source: derived
+components:
+  schemas:
+    ResourceUsageSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        count:
+          type: integer
+          format: int32
+        percentageChange:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        delta:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DashboardUsageSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        agents:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        models:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        tools:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        dataSources:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+    TopResourceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        executionCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

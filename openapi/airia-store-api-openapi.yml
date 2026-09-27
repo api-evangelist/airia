@@ -1,0 +1,1735 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Store API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Store
+paths:
+  /v1/Store/UploadFile:
+    post:
+      tags:
+      - Store
+      operationId: Store_UploadFile
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                StoreConnectorId:
+                  type: string
+                  format: guid
+                FolderId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                PendingIngestion:
+                  type: boolean
+                ProjectId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                File:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store upload file
+      x-summary-source: derived
+  /v1/Store/UpdateFile:
+    put:
+      tags:
+      - Store
+      operationId: Store_UpdateFile
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                StoreConnectorId:
+                  type: string
+                  format: guid
+                StoreFileId:
+                  type: string
+                  format: guid
+                PendingIngestion:
+                  type: boolean
+                ProjectId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                File:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store update file
+      x-summary-source: derived
+  /v1/Store/GetFile/{projectId}/{fileId}:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetFile
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFileResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get file
+      x-summary-source: derived
+  /v1/Store/GetAllFiles/{projectId}/{storeConnectorId}:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetAllFiles
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: storeConnectorId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllFilesResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get all files
+      x-summary-source: derived
+  /v1/Store/DeleteFile/{projectId}/{fileId}:
+    delete:
+      tags:
+      - Store
+      operationId: Store_DeleteFile
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store delete file
+      x-summary-source: derived
+  /v1/Store/Pinecone/IsSparseVectorEnabled/{credentialId}/{indexName}:
+    get:
+      tags:
+      - Store
+      operationId: Store_IsPineconeSparseVectorEnabled
+      parameters:
+      - name: credentialId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: indexName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store is pinecone sparse vector enabled
+      x-summary-source: derived
+  /v1/Store/Weaviate/IsConnectionValid/{credentialId}/{endpoint}:
+    get:
+      tags:
+      - Store
+      operationId: Store_IsWeaviateConnectionValid
+      parameters:
+      - name: credentialId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: endpoint
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store is weaviate connection valid
+      x-summary-source: derived
+  /v1/Store/CheckConflicts:
+    post:
+      tags:
+      - Store
+      operationId: Store_CheckConflicts
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: checkConflictsRequestV1
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckConflictsRequestV1'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckConflictsResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store check conflicts
+      x-summary-source: derived
+  /v1/Store/UploadFile_ConflictResolution:
+    post:
+      tags:
+      - Store
+      operationId: Store_ResolveConflicts
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                StoreConnectorId:
+                  type: string
+                  format: guid
+                FolderId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                ProjectId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                Resolutions:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/ConflictResolutionV1'
+                FolderResolutions:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/FolderConflictResolutionV1'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveConflictsResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store resolve conflicts
+      x-summary-source: derived
+  /v1/Store/{id}/references:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetDataSourceReferences
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PipelineReferenceDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get data source references
+      x-summary-source: derived
+  /v1/Store/{id}:
+    delete:
+      tags:
+      - Store
+      operationId: Store_DeleteDataSource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store delete data source
+      x-summary-source: derived
+  /v1/Store/{storeId}/graph:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetGraph
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphDto2'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get graph
+      x-summary-source: derived
+  /v1/Store/{storeId}/graph/cypher:
+    post:
+      tags:
+      - Store
+      operationId: Store_ExecuteCypher
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: cypherQuery
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CypherQueryDto2'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonDocument'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store execute cypher
+      x-summary-source: derived
+  /v1/Store/{storeId}/graph/relationships/count:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetRelationshipCount
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphRelationshipRecordsInfoDto2'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get relationship count
+      x-summary-source: derived
+  /v1/Store/{storeId}/graph/nodes/count:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetNodeCount
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphNodeRecordsInfoDto2'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get node count
+      x-summary-source: derived
+  /v1/Store/parsers:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetAvailablePdfParsers
+      parameters:
+      - name: fileExtension
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAvailableParsersResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get available pdf parsers
+      x-summary-source: derived
+  /v1/Store/parsers/default:
+    get:
+      tags:
+      - Store
+      operationId: Store_GetDefaultPreferredParser
+      parameters:
+      - name: fileExtension
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDefaultParserIdResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Store get default preferred parser
+      x-summary-source: derived
+components:
+  schemas:
+    FileDownloadUrlV1:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+    CheckConflictsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        hasConflicts:
+          type: boolean
+        conflicts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileConflictInfoV1'
+        folderConflicts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderConflictInfoV1'
+    FileV12:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/FileProcessingStatus3'
+        storeConnectorId:
+          type: string
+          format: guid
+        parentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+        mimeType:
+          type: string
+        path:
+          type: string
+        fileLastUpdatedAt:
+          type: string
+          format: date-time
+        additionalMetadataJson:
+          type: string
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        processedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ingestionProcessingStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngestionProcessingStatus2'
+        fileHash:
+          type: string
+        userErrors:
+          type: array
+          items:
+            type: string
+        systemErrors:
+          type: array
+          items:
+            type: string
+        externalId:
+          type: string
+        ingestionDuration:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        tokensConsumed:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        processingMessage:
+          type: string
+        executedParserId:
+          type: string
+        nestingDepth:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ConflictAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Replace
+      - KeepBoth
+      enum:
+      - Replace
+      - KeepBoth
+    FileConflictInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - fileName
+      - existingFile
+      properties:
+        fileName:
+          type: string
+        existingFile:
+          $ref: '#/components/schemas/ExistingFileInfoV1'
+    FolderConflictResolutionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        folderName:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConflictAction'
+        existingFolderId:
+          type:
+          - string
+          - 'null'
+    IngestionProcessingStatusStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+      enum:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+    TableDocumentProcessingMode2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+      enum:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+    FileProcessingStatus3:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+      enum:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+    ParserInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+    Timestamp:
+      type: object
+      additionalProperties: false
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
+    ExistingFileInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - fileId
+      - fileName
+      - fileSize
+      - lastModified
+      properties:
+        fileId:
+          type: string
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        lastModified:
+          type: string
+          format: date-time
+    FilePreviewUrl:
+      type: object
+      additionalProperties: false
+      properties:
+        previewUrl:
+          type:
+          - string
+          - 'null'
+        lastModifiedDateTimeDrive:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        connectorTypeId:
+          type:
+          - string
+          - 'null'
+        connectorTypeName:
+          type:
+          - string
+          - 'null'
+    ExistingFolderInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - folderId
+      - folderName
+      properties:
+        folderId:
+          type: string
+        folderName:
+          type: string
+        fileCount:
+          type: integer
+          format: int32
+        subFolderCount:
+          type: integer
+          format: int32
+    CreatedFolderInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - folderName
+      - folderId
+      properties:
+        folderName:
+          type: string
+        folderId:
+          type: string
+    GraphDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    PipelineReferenceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineName:
+          type: string
+        versionDisplay:
+          type: string
+        isLatest:
+          type: boolean
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+    GraphNodeRecordsInfoDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+    CypherQueryDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        query:
+          type: string
+    GraphRelationshipRecordsInfoDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    IngestionProcessingStatusTableDocumentProcessingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+      enum:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+    GetAllFilesResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FileV1'
+        downloadInfos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FileDownloadUrlV1'
+        totalCount:
+          type: integer
+          format: int32
+    CheckConflictsRequestV1:
+      type: object
+      additionalProperties: false
+      required:
+      - storeConnectorId
+      - fileNames
+      properties:
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        storeConnectorId:
+          type: string
+          format: guid
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        fileNames:
+          type: array
+          items:
+            type: string
+        folderNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    GetFileResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        file:
+          oneOf:
+          - $ref: '#/components/schemas/FileV1'
+        downloadInfo:
+          oneOf:
+          - $ref: '#/components/schemas/FileDownloadUrlV1'
+        previewInfo:
+          oneOf:
+          - $ref: '#/components/schemas/FilePreviewUrl'
+    IngestionProcessingStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        tableDocumentProcessingMode:
+          $ref: '#/components/schemas/TableDocumentProcessingMode2'
+        userErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        systemErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/FileProcessingStatus2'
+    FileV1:
+      type: object
+      additionalProperties: false
+      properties:
+        storeConnectorId:
+          type:
+          - string
+          - 'null'
+        parentId:
+          type:
+          - string
+          - 'null'
+        hasParentId:
+          type: boolean
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        size:
+          type: integer
+          format: int64
+        mimeType:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        fileLastUpdatedAt:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        additionalMetadataJson:
+          type:
+          - string
+          - 'null'
+        hasAdditionalMetadataJson:
+          type: boolean
+        fileHash:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/FileProcessingStatus2'
+        userErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        systemErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        folderId:
+          type:
+          - string
+          - 'null'
+        hasFolderId:
+          type: boolean
+        externalId:
+          type:
+          - string
+          - 'null'
+        hasExternalId:
+          type: boolean
+        ingestionDuration:
+          type: integer
+        hasIngestionDuration:
+          type: boolean
+        tokensConsumed:
+          type: integer
+        hasTokensConsumed:
+          type: boolean
+        processingMessage:
+          type:
+          - string
+          - 'null'
+        hasProcessingMessage:
+          type: boolean
+        processedAt:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        ingestionProcessingStatuses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IngestionProcessingStatus'
+        executedParserId:
+          type:
+          - string
+          - 'null'
+        hasExecutedParserId:
+          type: boolean
+        nestingDepth:
+          type: integer
+          format: int32
+        acquisitionJobId:
+          type:
+          - string
+          - 'null'
+        hasAcquisitionJobId:
+          type: boolean
+    ConflictResolutionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        fileName:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConflictAction'
+        existingFileId:
+          type:
+          - string
+          - 'null'
+        newFile:
+          type:
+          - string
+          - 'null'
+          format: binary
+    FileProcessingStatus2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+      enum:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+    ResolveConflictsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileV12'
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedFolderInfoV1'
+    IngestionProcessingStatus2:
+      type: object
+      additionalProperties: false
+      properties:
+        tableDocumentProcessingMode:
+          oneOf:
+          - $ref: '#/components/schemas/IngestionProcessingStatusTableDocumentProcessingMode'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/IngestionProcessingStatusStatus'
+        userErrors:
+          type: array
+          items:
+            type: string
+        systemErrors:
+          type: array
+          items:
+            type: string
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    GetAvailableParsersResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        parsers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ParserInfo'
+    FolderConflictInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - folderName
+      - existingFolder
+      properties:
+        folderName:
+          type: string
+        existingFolder:
+          $ref: '#/components/schemas/ExistingFolderInfoV1'
+    GetDefaultParserIdResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        fileExtension:
+          type:
+          - string
+          - 'null'
+        parserId:
+          type:
+          - string
+          - 'null'
+        hasParserId:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

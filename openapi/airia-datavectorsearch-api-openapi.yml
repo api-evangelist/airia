@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Data Vector Search API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DataVectorSearch
+paths:
+  /v1/DataVectorSearch/file/{fileId}/content:
+    get:
+      tags:
+      - DataVectorSearch
+      operationId: DataVectorSearch_GetFileParsedContent
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: chunkLimit
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileContent'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Data vector search get file parsed content
+      x-summary-source: derived
+  /v1/DataVectorSearch/chunks/{dataStoreId}/{fileId}:
+    get:
+      tags:
+      - DataVectorSearch
+      operationId: DataVectorSearch_ListChunks
+      parameters:
+      - name: dataStoreId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 3
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 100
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChunksPageResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Data vector search list chunks
+      x-summary-source: derived
+  /v1/DataVectorSearch/search/{dataStoreId}:
+    post:
+      tags:
+      - DataVectorSearch
+      operationId: DataVectorSearch_SearchWithParams
+      parameters:
+      - name: dataStoreId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: project-id
+        x-originalName: projectIdHeader
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: pipeline-id
+        x-originalName: pipelineIdHeader
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VectorSearchGetRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VectorSearchResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Data vector search search with params
+      x-summary-source: derived
+components:
+  schemas:
+    VectorSearchGetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        query:
+          type: string
+        selectedFileIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        relevanceThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        neighboringChunks:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hybridAlpha:
+          type:
+          - number
+          - 'null'
+          format: float
+        performReranking:
+          type:
+          - boolean
+          - 'null'
+    VectorSearchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        results:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ChunksPageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        chunks:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorChunk'
+        totalCount:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    VectorChunk:
+      type: object
+      additionalProperties: false
+      properties:
+        chunk:
+          type: string
+        documentId:
+          type: string
+        sequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metadata:
+          type: string
+    FileContent:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type: string
+          format: guid
+        content:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,2584 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Risk Registry API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RiskRegistry
+paths:
+  /v1/risk-registry:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_CreateRiskRegistry
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRiskRegistryRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry create risk registry
+      x-summary-source: derived
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetRiskRegistry
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: riskLevel
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: type
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/RiskRegistryType'
+        x-position: 7
+      - name: controlIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 8
+      - name: assetId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 9
+      - name: includeDetails
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 10
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRiskRegistryResponse'
+      summary: Risk registry get risk registry
+      x-summary-source: derived
+  /v1/risk-registry/grouped:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetRiskRegistryGrouped
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: riskLevel
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 6
+      - name: type
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/RiskRegistryType'
+        x-position: 7
+      - name: controlIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 8
+      - name: assetId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 9
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGroupedRiskRegistryResponse'
+      summary: Risk registry get risk registry grouped
+      x-summary-source: derived
+  /v1/risk-registry/{id}:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetRiskRegistryById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskRegistryDetailResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get risk registry by id
+      x-summary-source: derived
+    put:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_UpdateRiskRegistry
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRiskRegistryRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskRegistryResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry update risk registry
+      x-summary-source: derived
+  /v1/risk-registry/{id}/controls/{controlId}:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_AddControl
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: controlId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        201:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry add control
+      x-summary-source: derived
+    delete:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_RemoveControl
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: controlId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry remove control
+      x-summary-source: derived
+  /v1/risk-registry/mitigation-steps/{stepId}/route-endpoint-through-gateway:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_RouteEndpointThroughGateway
+      parameters:
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteEndpointThroughGatewayRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndpointRoutingEnforcementResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry route endpoint through gateway
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_AddMitigationStep
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMitigationStepRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationStepResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry add mitigation step
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/{stepId}:
+    put:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_UpdateMitigationStepStatus
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMitigationStepRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationStepResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry update mitigation step status
+      x-summary-source: derived
+    delete:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_DeleteMitigationStep
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry delete mitigation step
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/{stepId}/suggestion:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetMitigationStepSuggestion
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationSuggestion'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get mitigation step suggestion
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-actions:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetMitigationActionContracts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationActionContractsResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get mitigation action contracts
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/suggestion:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetMitigationSuggestionByControl
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: controlId
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationSuggestion'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get mitigation suggestion by control
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/verify:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_VerifyMitigationSteps
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationStepVerificationResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry verify mitigation steps
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/{stepId}/verify:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_VerifyMitigationStep
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationStepVerificationResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry verify mitigation step
+      x-summary-source: derived
+  /v1/risk-registry/{id}/mitigation-steps/{stepId}/evidence:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetMitigationStepEvidence
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stepId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MitigationStepEvidenceResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get mitigation step evidence
+      x-summary-source: derived
+  /v1/risk-registry/{id}/acceptance-decision:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_CreateAcceptanceDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAcceptanceDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptanceDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry create acceptance decision
+      x-summary-source: derived
+    put:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_UpdateAcceptanceDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAcceptanceDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptanceDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry update acceptance decision
+      x-summary-source: derived
+  /v1/risk-registry/{id}/avoidance-decision:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_CreateAvoidanceDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRiskAvoidanceDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAvoidanceDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry create avoidance decision
+      x-summary-source: derived
+    put:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_UpdateAvoidanceDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRiskAvoidanceDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAvoidanceDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry update avoidance decision
+      x-summary-source: derived
+  /v1/risk-registry/{id}/transfer-decision:
+    post:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_CreateTransferDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRiskTransferDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskTransferDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry create transfer decision
+      x-summary-source: derived
+    put:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_UpdateTransferDecision
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRiskTransferDecisionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskTransferDecisionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry update transfer decision
+      x-summary-source: derived
+  /v1/risk-registry/{id}/treatment-steps:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_GetTreatmentSteps
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: dedupe
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskTreatmentStepsResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry get treatment steps
+      x-summary-source: derived
+  /v1/risk-registry/export/csv:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_ExportAllToCsv
+      parameters:
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Risk registry export all to csv
+      x-summary-source: derived
+  /v1/risk-registry/{id}/export/csv:
+    get:
+      tags:
+      - RiskRegistry
+      operationId: RiskRegistry_ExportByIdToCsv
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk registry export by id to csv
+      x-summary-source: derived
+components:
+  schemas:
+    EndpointRoutingEnforcementResult:
+      type: object
+      additionalProperties: false
+      properties:
+        endpointAppAggregateId:
+          type: string
+          format: guid
+        clientId:
+          type: string
+        provider:
+          type: string
+        gatewayUrl:
+          type: string
+        policyRevision:
+          type: integer
+          format: int64
+        replacedExistingOverride:
+          type: boolean
+        createdTenantWideProviderDefault:
+          type: boolean
+        reachCount:
+          type: integer
+          format: int32
+        routedInstallCount:
+          type: integer
+          format: int32
+    NistAiRmfTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+      enum:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+    MappedControlResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+    AiAssetSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - Aws
+      - Azure
+      - Global
+      - N8n
+      - LangGraph
+      - CopilotStudio
+      - GitHub
+      - Governance
+      - GoogleWorkspace
+      - MicrosoftGraph
+      - EndpointAgent
+      - Browser
+      - CrowdStrike
+      - Okta
+      - CrowdStrikeEndpoint
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
+      - Gateway
+      - AzureDevOps
+      - Gcp
+      - Databricks
+      - Snowflake
+      - Glean
+      - Atlan
+      - ServiceNow
+      - SalesforceAgentforce
+      - CrewAi
+      - AzurePowerApps
+      - GeminiEnterprise
+      - GoogleAgentPlatform
+      - Purview
+      - AzureFunctionApps
+      - GitLab
+      enum:
+      - Airia
+      - Aws
+      - Azure
+      - Global
+      - N8n
+      - LangGraph
+      - CopilotStudio
+      - GitHub
+      - Governance
+      - GoogleWorkspace
+      - MicrosoftGraph
+      - EndpointAgent
+      - Browser
+      - CrowdStrike
+      - Okta
+      - CrowdStrikeEndpoint
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
+      - Gateway
+      - AzureDevOps
+      - Gcp
+      - Databricks
+      - Snowflake
+      - Glean
+      - Atlan
+      - ServiceNow
+      - SalesforceAgentforce
+      - CrewAi
+      - AzurePowerApps
+      - GeminiEnterprise
+      - GoogleAgentPlatform
+      - Purview
+      - AzureFunctionApps
+      - GitLab
+    MitigationStepVerificationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        stepsChecked:
+          type: integer
+          format: int32
+        stepsCompleted:
+          type: integer
+          format: int32
+        stepsEvidencePending:
+          type: integer
+          format: int32
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationStepVerificationResultResponse'
+    MitigationActionContract:
+      type: object
+      additionalProperties: false
+      properties:
+        mitigationStepId:
+          type: string
+          format: guid
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        callToAction:
+          type:
+          - string
+          - 'null'
+        actionType:
+          $ref: '#/components/schemas/MitigationActionType'
+        eligibility:
+          $ref: '#/components/schemas/MitigationActionEligibilityStatus'
+        eligibilityReason:
+          type: string
+        uiMessage:
+          type:
+          - string
+          - 'null'
+        prerequisiteCallToAction:
+          type:
+          - string
+          - 'null'
+        prerequisiteMitigationStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isPrerequisite:
+          type: boolean
+        eligibleTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationActionTarget'
+        blockedTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationBlockedTarget'
+        suggestedCreatePayload:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationSuggestion'
+        minimumCompletionProfile:
+          $ref: '#/components/schemas/MitigationMinimumCompletionProfile'
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        supportsAutomaticVerification:
+          type: boolean
+    MitigationActionTarget:
+      type: object
+      additionalProperties: false
+      properties:
+        targetType:
+          $ref: '#/components/schemas/MitigationActionTargetType'
+        targetId:
+          type: string
+          format: guid
+        assetAggregateId:
+          type: string
+          format: guid
+        displayName:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureProvider'
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetSourceType'
+        sourceInstanceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        externalId:
+          type:
+          - string
+          - 'null'
+        spmAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        supportsInvocation:
+          type:
+          - boolean
+          - 'null'
+        clientId:
+          type:
+          - string
+          - 'null'
+        reachCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        routedInstallCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        verifierValidatable:
+          type: boolean
+    CreateRiskTransferDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      - transferredOwner
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        transferredOwner:
+          type: string
+          maxLength: 500
+          minLength: 1
+        evidenceLink:
+          type:
+          - string
+          - 'null'
+          format: uri
+          maxLength: 200
+    PagedResultOfGroupedRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedRiskRegistryResponse'
+        totalCount:
+          type: integer
+          format: int32
+    RouteEndpointThroughGatewayRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointAppAggregateId
+      - provider
+      properties:
+        endpointAppAggregateId:
+          type: string
+          format: guid
+        provider:
+          type: string
+          maxLength: 128
+          minLength: 1
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    MitigationMinimumCompletionProfile:
+      type: object
+      additionalProperties: false
+      properties:
+        requirementText:
+          type:
+          - string
+          - 'null'
+        requiresEnforcedGuardrail:
+          type: boolean
+        requiresDataLossPreventionFilter:
+          type: boolean
+        requiresSuccessfulExecution:
+          type: boolean
+        verifiedByEventOnly:
+          type: boolean
+        manualCompletionOnly:
+          type: boolean
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+    MitigationActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Guardrail
+      - DataLossPrevention
+      - Evaluation
+      - RedTeaming
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - Assessment
+      - Disclosure
+      - EndpointGatewayRouting
+      - Navigation
+      enum:
+      - Guardrail
+      - DataLossPrevention
+      - Evaluation
+      - RedTeaming
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - Assessment
+      - Disclosure
+      - EndpointGatewayRouting
+      - Navigation
+    CreateAcceptanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        residualRisk:
+          oneOf:
+          - $ref: '#/components/schemas/ResidualRisk'
+    MitigationArtifactEvidenceState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Qualifying
+      - Candidate
+      - Missing
+      - InProgress
+      enum:
+      - Qualifying
+      - Candidate
+      - Missing
+      - InProgress
+    MitigationArtifactEvidenceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        artifactType:
+          $ref: '#/components/schemas/MitigationArtifactType'
+        entityId:
+          type: string
+          format: guid
+        displayName:
+          type: string
+        state:
+          $ref: '#/components/schemas/MitigationArtifactEvidenceState'
+        change:
+          $ref: '#/components/schemas/MitigationArtifactChange'
+        status:
+          type:
+          - string
+          - 'null'
+        appliesNow:
+          type: boolean
+        dataLossPreventionCategories:
+          type: array
+          items:
+            type: string
+        agentPipelineIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        artifactTimestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    MitigationActionContractsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        riskItemId:
+          type: string
+          format: guid
+        useCaseId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationActionContract'
+    MitigationStepVerificationEvidenceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        verifierKey:
+          $ref: '#/components/schemas/MitigationVerifierKey'
+        evidenceEntityIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
+        verifiedAt:
+          type: string
+          format: date-time
+        trigger:
+          $ref: '#/components/schemas/MitigationVerificationTrigger'
+        evidenceMissingAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RiskRegistryType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UseCase
+      enum:
+      - UseCase
+    RiskRegistryStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - PendingReview
+      - Mitigate
+      - Accept
+      - Transfer
+      - Avoid
+      enum:
+      - PendingReview
+      - Mitigate
+      - Accept
+      - Transfer
+      - Avoid
+    RiskTreatmentStepsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        riskId:
+          type: string
+          format: guid
+        controlIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        treatmentSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskTreatmentStepResponse'
+    MitigationSuggestion:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+        suggestedName:
+          type:
+          - string
+          - 'null'
+        suggestedDescription:
+          type:
+          - string
+          - 'null'
+        candidateGatewayConfigurationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    MitigationArtifactType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Guardrail
+      - Evaluation
+      - RedTeamingCampaign
+      - Assessment
+      - GatewayLimit
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - ExternalAgentRouting
+      enum:
+      - Guardrail
+      - Evaluation
+      - RedTeamingCampaign
+      - Assessment
+      - GatewayLimit
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - ExternalAgentRouting
+    MitigationVerificationOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - Satisfied
+      - NotSatisfied
+      - AgentMismatch
+      - Inconclusive
+      enum:
+      - Satisfied
+      - NotSatisfied
+      - AgentMismatch
+      - Inconclusive
+    PagedResultOfRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskRegistryResponse'
+        totalCount:
+          type: integer
+          format: int32
+    AcceptanceDecisionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        decision:
+          type: string
+        residualRisk:
+          oneOf:
+          - $ref: '#/components/schemas/ResidualRisk'
+        createdById:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdByName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ResidualRisk:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
+    UpdateRiskRegistryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        riskName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/RiskRegistryStatus'
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        euAiAct:
+          oneOf:
+          - $ref: '#/components/schemas/EuAiActCategory'
+        nistAiRmf:
+          oneOf:
+          - $ref: '#/components/schemas/NistAiRmfTier'
+        iso42001:
+          oneOf:
+          - $ref: '#/components/schemas/Iso42001Level'
+        riskLevel:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        riskProfileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        catalogVersion:
+          type:
+          - string
+          - 'null'
+    MitigationVerificationTrigger:
+      type: string
+      description: ''
+      x-enumNames:
+      - Event
+      - Creation
+      - Manual
+      - Scheduled
+      - ResidualRecompute
+      - WorkStarted
+      enum:
+      - Event
+      - Creation
+      - Manual
+      - Scheduled
+      - ResidualRecompute
+      - WorkStarted
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GroupedRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        riskName:
+          type: string
+        count:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskRegistryResponse'
+    MitigationActionEligibilityStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Eligible
+      - NotApplicable
+      - Unavailable
+      - ManualOnly
+      enum:
+      - Eligible
+      - NotApplicable
+      - Unavailable
+      - ManualOnly
+    RiskTransferDecisionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        justification:
+          type: string
+        transferredOwner:
+          type: string
+        evidenceLink:
+          type:
+          - string
+          - 'null'
+        createdByName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    MitigationVerifierKey:
+      type: string
+      description: ''
+      x-enumNames:
+      - Guardrail
+      - Evaluation
+      - RedTeaming
+      - Gateway
+      - Assessment
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      enum:
+      - Guardrail
+      - Evaluation
+      - RedTeaming
+      - Gateway
+      - Assessment
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+    MitigationActionTargetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - GatewayAssignment
+      - SpmAgent
+      - EndpointApp
+      enum:
+      - InternalAgent
+      - GatewayAssignment
+      - SpmAgent
+      - EndpointApp
+    MitigationStepVerificationResultResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        stepId:
+          type: string
+          format: guid
+        riskMetadataId:
+          type: string
+          format: guid
+        verifierKey:
+          $ref: '#/components/schemas/MitigationVerifierKey'
+        outcome:
+          $ref: '#/components/schemas/MitigationVerificationOutcome'
+        stepCompleted:
+          type: boolean
+        evidencePendingConfirmation:
+          type: boolean
+        evidenceEntityIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        evidenceMissingAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        detail:
+          type:
+          - string
+          - 'null'
+    MitigationStepResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/MitigationStepStatus'
+        callToAction:
+          type:
+          - string
+          - 'null'
+        controlId:
+          type:
+          - string
+          - 'null'
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        canVerify:
+          type: boolean
+        manualCompletionAllowed:
+          type: boolean
+        completionSource:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepCompletionSource'
+        completedByName:
+          type:
+          - string
+          - 'null'
+        verificationEvidence:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepVerificationEvidenceResponse'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RiskTreatmentStepResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type: string
+        mappedControls:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappedControlResult'
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+    MitigationStepStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - New
+      - InProgress
+      - Completed
+      - Failed
+      enum:
+      - New
+      - InProgress
+      - Completed
+      - Failed
+    Iso42001Level:
+      type: string
+      description: ''
+      x-enumNames:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+      enum:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    CreateRiskRegistryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        assetId:
+          type: string
+          format: guid
+        assignedLabelPriority:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        controlIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        riskProfileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        catalogVersion:
+          type:
+          - string
+          - 'null'
+        requireTaxonomy:
+          type: boolean
+    UpdateRiskTransferDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      - transferredOwner
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        transferredOwner:
+          type: string
+          maxLength: 500
+          minLength: 1
+        evidenceLink:
+          type:
+          - string
+          - 'null'
+          format: uri
+          maxLength: 200
+    RiskRegistryDetailResponse:
+      allOf:
+      - $ref: '#/components/schemas/RiskRegistryResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          classificationAssignmentId:
+            type: string
+            format: guid
+          description:
+            type:
+            - string
+            - 'null'
+          mitigationSteps:
+            type: array
+            items:
+              $ref: '#/components/schemas/MitigationStepResponse'
+          catalogVersion:
+            type:
+            - string
+            - 'null'
+          acceptanceDecision:
+            oneOf:
+            - $ref: '#/components/schemas/AcceptanceDecisionResponse'
+          avoidanceDecision:
+            oneOf:
+            - $ref: '#/components/schemas/RiskAvoidanceDecisionResponse'
+          transferDecision:
+            oneOf:
+            - $ref: '#/components/schemas/RiskTransferDecisionResponse'
+    MitigationBlockedTarget:
+      type: object
+      additionalProperties: false
+      properties:
+        assetAggregateId:
+          type: string
+          format: guid
+        displayName:
+          type:
+          - string
+          - 'null'
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        prerequisiteCallToAction:
+          type:
+          - string
+          - 'null'
+        prerequisiteMitigationStepId:
+          type: string
+          format: guid
+    UpdateAcceptanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      - residualRisk
+      properties:
+        decision:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        residualRisk:
+          $ref: '#/components/schemas/ResidualRisk'
+    RiskAvoidanceDecisionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        justification:
+          type: string
+        createdByName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CreateMitigationStepRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - description
+      properties:
+        title:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepStatus'
+        callToAction:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        controlId:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UpdateRiskAvoidanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
+    CreateRiskAvoidanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+    MitigationStepEvidenceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        stepId:
+          type: string
+          format: guid
+        riskMetadataId:
+          type: string
+          format: guid
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        canVerify:
+          type: boolean
+        completionSource:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepCompletionSource'
+        outcome:
+          $ref: '#/components/schemas/MitigationVerificationOutcome'
+        detail:
+          type:
+          - string
+          - 'null'
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        evidenceMissingAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
+    RiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        classificationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskName:
+          type: string
+        euAiAct:
+          oneOf:
+          - $ref: '#/components/schemas/EuAiActCategory'
+        nistAiRmf:
+          oneOf:
+          - $ref: '#/components/schemas/NistAiRmfTier'
+        iso42001:
+          oneOf:
+          - $ref: '#/components/schemas/Iso42001Level'
+        status:
+          $ref: '#/components/schemas/RiskRegistryStatus'
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskDomainName:
+          type:
+          - string
+          - 'null'
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainName:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        assetId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetName:
+          type:
+          - string
+          - 'null'
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/RiskRegistryType'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdById:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdByName:
+          type:
+          - string
+          - 'null'
+        controls:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskControlResponse'
+        inherentRiskScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        residualRiskScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inherentRiskLevel:
+          type:
+          - string
+          - 'null'
+        residualRiskLevel:
+          type:
+          - string
+          - 'null'
+        rationale:
+          type:
+          - string
+          - 'null'
+    MitigationStepCompletionSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Manual
+      - Verified
+      enum:
+      - Manual
+      - Verified
+    UpdateMitigationStepRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - description
+      - status
+      properties:
+        title:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/MitigationStepStatus'
+    SecurePostureProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+      enum:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+    MitigationArtifactChange:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Added
+      - Retained
+      - Removed
+      enum:
+      - None
+      - Added
+      - Retained
+      - Removed
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

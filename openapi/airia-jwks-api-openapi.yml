@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Jwks API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: JWKS
+paths:
+  /.well-known/jwks.json:
+    get:
+      tags:
+      - JWKS
+      operationId: Jwks_Get
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonWebKeySet'
+      summary: Jwks get
+      x-summary-source: derived
+components:
+  schemas:
+    JsonWebKeySet:
+      type: object
+      additionalProperties: false
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/JsonWebKey'
+    JsonWebKey:
+      type: object
+      additionalProperties: false
+      properties:
+        kty:
+          type: string
+        crv:
+          type: string
+        x:
+          type: string
+        y:
+          type: string
+        use:
+          type: string
+        alg:
+          type: string
+        kid:
+          type: string
+        feed:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

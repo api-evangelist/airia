@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Mitigation Capability API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: MitigationCapability
+paths:
+  /v1/risk-registry/mitigation-capabilities/grants:
+    get:
+      tags:
+      - MitigationCapability
+      operationId: MitigationCapability_GetCapabilityGrants
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CapabilityGrantMatrixRowResponse'
+      summary: Mitigation capability get capability grants
+      x-summary-source: derived
+components:
+  schemas:
+    MitigationCapability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+      enum:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+    ConditionalCapabilityGrantResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        capability:
+          $ref: '#/components/schemas/MitigationCapability'
+        condition:
+          $ref: '#/components/schemas/MitigationCapabilityGrantCondition'
+    CapabilityGrantMatrixRowResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        baseCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationCapability'
+        conditionalCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionalCapabilityGrantResponse'
+        noteCode:
+          type:
+          - string
+          - 'null'
+    MitigationCapabilityGrantCondition:
+      type: string
+      description: ''
+      x-enumNames:
+      - ProviderSupportsInvocation
+      - GatewayAssociated
+      - EndpointInstallRouted
+      enum:
+      - ProviderSupportsInvocation
+      - GatewayAssociated
+      - EndpointInstallRouted
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

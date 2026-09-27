@@ -1,0 +1,446 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Outbound Webhook Subscription API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: OutboundWebhookSubscription
+paths:
+  /v1/OutboundWebhookSubscription:
+    get:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_GetAll
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription get all
+      x-summary-source: derived
+    post:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription create
+      x-summary-source: derived
+  /v1/OutboundWebhookSubscription/{id}:
+    get:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_GetById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription get by id
+      x-summary-source: derived
+    put:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_Update
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundWebhookSubscriptionDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription update
+      x-summary-source: derived
+    delete:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_Delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription delete
+      x-summary-source: derived
+  /v1/OutboundWebhookSubscription/{id}/regenerate-secret:
+    post:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_RegenerateSecret
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription regenerate secret
+      x-summary-source: derived
+  /v1/OutboundWebhookSubscription/{id}/delivery-log:
+    get:
+      tags:
+      - OutboundWebhookSubscription
+      operationId: OutboundWebhookSubscription_GetDeliveryLog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OutboundWebhookDeliveryLogDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Outbound webhook subscription get delivery log
+      x-summary-source: derived
+components:
+  schemas:
+    OutboundWebhookDeliveryLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        eventId:
+          type: string
+          format: guid
+        eventType:
+          type: string
+        attemptNumber:
+          type: integer
+          format: int32
+        status:
+          type: string
+        httpStatusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        attemptedAt:
+          type: string
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    OutboundWebhookSubscriptionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type: string
+        authMethod:
+          type:
+          - string
+          - 'null'
+        bearerToken:
+          type:
+          - string
+          - 'null'
+        eventTypes:
+          type: array
+          items:
+            type: string
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        signingSecret:
+          type:
+          - string
+          - 'null'
+        consecutiveFailures:
+          type: integer
+          format: int32
+        lastDeliveryAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disabledReason:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

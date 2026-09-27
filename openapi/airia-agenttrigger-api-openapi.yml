@@ -1,0 +1,305 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent Trigger API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AgentTrigger
+paths:
+  /v1/AgentTrigger/{id}:
+    get:
+      tags:
+      - AgentTrigger
+      operationId: AgentTrigger_GetAlertTriggers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent trigger get alert triggers
+      x-summary-source: derived
+    put:
+      tags:
+      - AgentTrigger
+      operationId: AgentTrigger_UpdateAlertTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentTriggerModel'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent trigger update alert trigger
+      x-summary-source: derived
+    delete:
+      tags:
+      - AgentTrigger
+      operationId: AgentTrigger_DeleteAlertTrigger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent trigger delete alert trigger
+      x-summary-source: derived
+  /v1/AgentTrigger:
+    post:
+      tags:
+      - AgentTrigger
+      operationId: AgentTrigger_CreateAlertTrigger
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentTriggerModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent trigger create alert trigger
+      x-summary-source: derived
+components:
+  schemas:
+    EmailAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Reply
+      - ReplyAll
+      - Forward
+      - None
+      enum:
+      - Reply
+      - ReplyAll
+      - Forward
+      - None
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentTriggerAllowedType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unrestricted
+      - Domains
+      - Emails
+      enum:
+      - Unrestricted
+      - Domains
+      - Emails
+    AgentTriggerModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - pipelineId
+      - allowedType
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        emailId:
+          type: string
+        allowedType:
+          $ref: '#/components/schemas/AgentTriggerAllowedType'
+        allowedValues:
+          type: string
+        dataSourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        storeConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        emailAction:
+          $ref: '#/components/schemas/EmailAction'
+        forwardTo:
+          type:
+          - string
+          - 'null'
+        useEmailUserMapping:
+          type:
+          - boolean
+          - 'null'
+        requireUserMapping:
+          type:
+          - boolean
+          - 'null'
+        autoProvisionUsers:
+          type:
+          - boolean
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

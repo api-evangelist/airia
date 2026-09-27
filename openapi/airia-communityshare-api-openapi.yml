@@ -1,0 +1,197 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Community Share API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: CommunityShare
+paths:
+  /v1/CommunityShare/pipeline/{pipelineId}/history:
+    get:
+      tags:
+      - CommunityShare
+      operationId: CommunityShare_GetCommunityShareHistory
+      parameters:
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCommunityShareHistoryItem'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Community share get community share history
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfCommunityShareHistoryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunityShareHistoryItem'
+        totalCount:
+          type: integer
+          format: int32
+    CommunityShareHistoryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/CommunityShareHistoryType'
+        id:
+          type: string
+          format: guid
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+        createdBy:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        linkUrl:
+          type:
+          - string
+          - 'null'
+        linkIdentifier:
+          type:
+          - string
+          - 'null'
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        consumptionCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        maxConsumptions:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        communityName:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CommunityShareHistoryType:
+      type: string
+      description: ''
+      x-enumNames:
+      - ShareableLink
+      - Community
+      enum:
+      - ShareableLink
+      - Community
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

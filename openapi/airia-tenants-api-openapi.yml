@@ -1,0 +1,244 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Tenants API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Tenants
+paths:
+  /v1/Tenants:
+    get:
+      tags:
+      - Tenants
+      operationId: Tenants_GetActiveTenant2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Tenants get active tenant2
+      x-summary-source: derived
+    put:
+      tags:
+      - Tenants
+      operationId: Tenants_SetTenant2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: setTenantRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetTenantRequest'
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Tenants set tenant2
+      x-summary-source: derived
+  /v1/Tenants/{tenantId}/organizations/{organizationId}/UserRoles:
+    get:
+      tags:
+      - Tenants
+      operationId: Tenants_GetOrganizationUserRole2
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Tenants get organization user role2
+      x-summary-source: derived
+components:
+  schemas:
+    SetTenantRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - tenantId
+      - organizationExternalId
+      properties:
+        tenantId:
+          type: string
+          minLength: 1
+        organizationExternalId:
+          type: string
+          minLength: 1
+    TenantPermissionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    TenantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        identifier:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        accessControlGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TenantPermissionsDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

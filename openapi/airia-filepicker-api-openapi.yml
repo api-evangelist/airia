@@ -1,0 +1,206 @@
+openapi: 3.2.0
+info:
+  title: Airia Web File Picker API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: FilePicker
+paths:
+  /v1/FilePicker/onedrive/item:
+    post:
+      tags:
+      - FilePicker
+      operationId: FilePicker_GetOneDriveItem
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDriveItemRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriveItemMetadataResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: File picker get one drive item
+      x-summary-source: derived
+  /v1/FilePicker/sharepoint/item:
+    post:
+      tags:
+      - FilePicker
+      operationId: FilePicker_GetSharePointItem
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSharePointItemRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriveItemMetadataResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: File picker get share point item
+      x-summary-source: derived
+components:
+  schemas:
+    DriveItemMetadataResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        isRoot:
+          type: boolean
+    GetDriveItemRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credentialId
+      properties:
+        credentialId:
+          type: string
+          format: guid
+        driveId:
+          type: string
+        itemId:
+          type:
+          - string
+          - 'null'
+    GetSharePointItemRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credentialId
+      properties:
+        credentialId:
+          type: string
+          format: guid
+        siteId:
+          type:
+          - string
+          - 'null'
+        driveId:
+          type: string
+        itemId:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

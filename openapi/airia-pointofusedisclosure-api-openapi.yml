@@ -1,0 +1,601 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Point Of Use Disclosure API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PointOfUseDisclosure
+paths:
+  /v1/governance/disclosures:
+    get:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_GetAllDisclosures2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointOfUseDisclosureDto'
+      summary: Point of use disclosure get all disclosures2
+      x-summary-source: derived
+    post:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_CreateDisclosure2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePointOfUseDisclosureRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfUseDisclosureDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure create disclosure2
+      x-summary-source: derived
+  /v1/governance/disclosures/{id}:
+    get:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_GetDisclosureById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfUseDisclosureDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure get disclosure by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_UpdateDisclosure2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePointOfUseDisclosureRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfUseDisclosureDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure update disclosure2
+      x-summary-source: derived
+    delete:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_DeleteDisclosure2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure delete disclosure2
+      x-summary-source: derived
+  /v1/governance/disclosures/{id}/preview:
+    post:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_PreviewDisclosure2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: draftOverrides
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisclosureAttributeOverrides'
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicGovernanceDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure preview disclosure2
+      x-summary-source: derived
+  /v1/governance/disclosures/by-agent/{agentId}:
+    get:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_GetActiveDisclosuresByAgentId2
+      parameters:
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointOfUseDisclosureDto'
+      summary: Point of use disclosure get active disclosures by agent id2
+      x-summary-source: derived
+  /v1/governance/disclosures/{id}/activate:
+    patch:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_ActivateDisclosure2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfUseDisclosureDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure activate disclosure2
+      x-summary-source: derived
+  /v1/governance/disclosures/{id}/deactivate:
+    patch:
+      tags:
+      - PointOfUseDisclosure
+      operationId: PointOfUseDisclosure_DeactivateDisclosure2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfUseDisclosureDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Point of use disclosure deactivate disclosure2
+      x-summary-source: derived
+components:
+  schemas:
+    PointOfUseDisclosureDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        useCaseName:
+          type: string
+        useCaseStage:
+          type: string
+        useCaseOwner:
+          type: string
+        shareToken:
+          type: string
+          format: guid
+        isActive:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disclosureTemplateId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        audience:
+          $ref: '#/components/schemas/DisclosureAudience'
+        attributeOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
+    DisclosureAttributeOverrides:
+      type: object
+      additionalProperties: false
+      properties:
+        includeAssetIdentity:
+          type:
+          - boolean
+          - 'null'
+        includeModelDetails:
+          type:
+          - boolean
+          - 'null'
+        includeModelNames:
+          type:
+          - boolean
+          - 'null'
+        includeGuardrails:
+          type:
+          - boolean
+          - 'null'
+        includeGuardrailNames:
+          type:
+          - boolean
+          - 'null'
+        includeRiskClassification:
+          type:
+          - boolean
+          - 'null'
+        includeUseCaseDetails:
+          type:
+          - boolean
+          - 'null'
+        includeHumanReview:
+          type:
+          - boolean
+          - 'null'
+        includeDisclaimer:
+          type:
+          - boolean
+          - 'null'
+    PublicGovernanceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseName:
+          type: string
+        useCaseStage:
+          type:
+          - string
+          - 'null'
+        owner:
+          type:
+          - string
+          - 'null'
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        governanceScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        autonomy:
+          type:
+          - string
+          - 'null'
+        lastAssessedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PublicModelDto'
+        assets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PublicAssetDto'
+        guardrails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        guardrailCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        intendedFor:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        notIntendedFor:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        disclaimer:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        riskClassifications:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PublicRiskClassificationDto'
+    CreatePointOfUseDisclosureRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+          minLength: 1
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        disclosureTemplateId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attributeOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
+    PublicRiskClassificationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKey:
+          type: string
+        frameworkName:
+          type: string
+        level:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DisclosureAudience:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
+    PublicModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        version:
+          type:
+          - string
+          - 'null'
+    PublicAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    UpdatePointOfUseDisclosureRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        isActive:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        disclosureTemplateId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attributeOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,405 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Profile API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Profile
+paths:
+  /v1/Profile:
+    get:
+      tags:
+      - Profile
+      operationId: Profile_GetUserProfile2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoDto'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Profile get user profile2
+      x-summary-source: derived
+  /v1/Profile/{userId}:
+    put:
+      tags:
+      - Profile
+      operationId: Profile_UpdateUserProfile2
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: updateUserInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserInfo'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Profile update user profile2
+      x-summary-source: derived
+  /v1/Profile/settings:
+    patch:
+      tags:
+      - Profile
+      operationId: Profile_UpdateUserSetting2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSettingRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Profile update user setting2
+      x-summary-source: derived
+components:
+  schemas:
+    TenantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        identifier:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        accessControlGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TenantPermissionsDto'
+    ActiveOrganizationClaim:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UpdateUserSettingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          $ref: '#/components/schemas/UserSettingKey'
+        value:
+          type:
+          - string
+          - 'null'
+    UserSettingsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        hasSeenFileIngestionSuccessMessage:
+          type:
+          - boolean
+          - 'null'
+        language:
+          type:
+          - string
+          - 'null'
+        readingVoice:
+          type:
+          - string
+          - 'null'
+        hasCompletedOnboarding:
+          type:
+          - boolean
+          - 'null'
+        hasDismissedWelcomeVideo:
+          type:
+          - boolean
+          - 'null'
+        isNewNavigationEnabled:
+          type:
+          - boolean
+          - 'null'
+        hasSeenSidebarIaAdoption:
+          type:
+          - boolean
+          - 'null'
+    UpdateUserInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        profileImageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userDetails:
+          oneOf:
+          - $ref: '#/components/schemas/UserDetailsModel'
+        userSettings:
+          oneOf:
+          - $ref: '#/components/schemas/UserSettingsModel'
+    UserInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        givenName:
+          type:
+          - string
+          - 'null'
+        surname:
+          type:
+          - string
+          - 'null'
+        subject:
+          type:
+          - string
+          - 'null'
+        profileImageUrl:
+          type:
+          - string
+          - 'null'
+        profileImageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        restrictSensitiveDataAccess:
+          type: boolean
+        activeOrganizationClaim:
+          oneOf:
+          - $ref: '#/components/schemas/ActiveOrganizationClaim'
+        groups:
+          type: array
+          items:
+            type: string
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        roles:
+          type: array
+          items:
+            type: string
+        roleDisplayNames:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        tenant:
+          $ref: '#/components/schemas/TenantDto'
+        userDetails:
+          $ref: '#/components/schemas/UserDetailsModel'
+        userSettings:
+          oneOf:
+          - $ref: '#/components/schemas/UserSettingsModel'
+    UserDetailsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        general:
+          type: string
+        workDescription:
+          type:
+          - string
+          - 'null'
+        personalPreferences:
+          type:
+          - string
+          - 'null'
+    TenantPermissionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    UserSettingKey:
+      type: string
+      description: ''
+      x-enumNames:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+      enum:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1850 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Cloud Connectors API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Cloud Connectors
+paths:
+  /v1/CloudConnectors:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetAllCloudConnectors
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors get all cloud connectors
+      x-summary-source: derived
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_CreateCloudConnector
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: createCloudConnector
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCloudConnectorDto'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors create cloud connector
+      x-summary-source: derived
+  /v1/CloudConnectors/{id}:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors get cloud connector
+      x-summary-source: derived
+    put:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_UpdateCloudConnector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: cloudConnector
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudConnectorDto'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors update cloud connector
+      x-summary-source: derived
+    delete:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_DeleteCloudConnector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors delete cloud connector
+      x-summary-source: derived
+  /v1/CloudConnectors/{id}/test:
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_TestCloudConnector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorTestResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors test cloud connector
+      x-summary-source: derived
+  /v1/CloudConnectors/{id}/force-disconnect:
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_ForceDisconnectCloudConnector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Cloud connectors force disconnect cloud connector
+      x-summary-source: derived
+  /v1/CloudConnectors/download:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_DownloadClient
+      parameters:
+      - name: arch
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        503:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors download client
+      x-summary-source: derived
+  /v1/CloudConnectors/version-manifest:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetVersionManifest
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorVersionManifestDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Cloud connectors get version manifest
+      x-summary-source: derived
+  /v1/CloudConnectors/Groups:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetAllCloudConnectorGroups
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorGroupDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors get all cloud connector groups
+      x-summary-source: derived
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_CreateCloudConnectorGroup
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: createGroupDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCloudConnectorGroupDto'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorGroupDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors create cloud connector group
+      x-summary-source: derived
+  /v1/CloudConnectors/Groups/{id}:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorGroupById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors get cloud connector group by id
+      x-summary-source: derived
+    put:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_UpdateCloudConnectorGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: groupDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudConnectorGroupDto'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors update cloud connector group
+      x-summary-source: derived
+    delete:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_DeleteCloudConnectorGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors delete cloud connector group
+      x-summary-source: derived
+  /v1/CloudConnectors/stream-download:
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_StreamFileDownload
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamFileDownloadRequestDto'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors stream file download
+      x-summary-source: derived
+  /v1/CloudConnectors/events:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorEvents
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: columnFilters
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ColumnFilter'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorEventFeedSummary'
+        500:
+          description: ''
+      summary: Cloud connectors get cloud connector events
+      x-summary-source: derived
+  /v1/CloudConnectors/{connectorId}/events:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorEventsByConnector
+      parameters:
+      - name: connectorId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: columnFilters
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ColumnFilter'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorEventFeedSummary'
+        500:
+          description: ''
+      summary: Cloud connectors get cloud connector events by connector
+      x-summary-source: derived
+  /v1/CloudConnectors/Groups/{groupId}/events:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorEventsByGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: columnFilters
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ColumnFilter'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorEventFeedSummary'
+        500:
+          description: ''
+      summary: Cloud connectors get cloud connector events by group
+      x-summary-source: derived
+  /v1/CloudConnectors/events/by-request/{requestId}:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorEventsByRequestId
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCloudConnectorEventFeedSummary'
+        500:
+          description: ''
+      summary: Cloud connectors get cloud connector events by request id
+      x-summary-source: derived
+  /v1/CloudConnectors/events/{id}:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetCloudConnectorEventDetail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudConnectorEvent'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Cloud connectors get cloud connector event detail
+      x-summary-source: derived
+  /v1/CloudConnectors/browser-agents:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_GetBrowserAgents
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BrowserAgentInfoDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors get browser agents
+      x-summary-source: derived
+  /v1/CloudConnectors/browser-agents/{deviceId}/files:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_ListBrowserAgentFiles
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserAgentDirectoryListingDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors list browser agent files
+      x-summary-source: derived
+    delete:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_DeleteBrowserAgentFile
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: recursive
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors delete browser agent file
+      x-summary-source: derived
+  /v1/CloudConnectors/browser-agents/{deviceId}/files/content:
+    get:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_ReadBrowserAgentFile
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserAgentFileContentDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors read browser agent file
+      x-summary-source: derived
+    put:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_WriteBrowserAgentFile
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WriteBrowserAgentFileRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserAgentFileRefDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors write browser agent file
+      x-summary-source: derived
+  /v1/CloudConnectors/browser-agents/{deviceId}/files/rename:
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_RenameBrowserAgentFile
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameBrowserAgentFileRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserAgentFileRefDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors rename browser agent file
+      x-summary-source: derived
+  /v1/CloudConnectors/browser-agents/{deviceId}/folders:
+    post:
+      tags:
+      - Cloud Connectors
+      operationId: CloudConnectors_CreateBrowserAgentFolder
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBrowserAgentFolderRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrowserAgentFileRefDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Cloud connectors create browser agent folder
+      x-summary-source: derived
+components:
+  schemas:
+    BrowserAgentInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        deviceId:
+          type: string
+        connectionId:
+          type: string
+        connectionType:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+    RenameBrowserAgentFileRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - from
+      - to
+      properties:
+        from:
+          type: string
+          minLength: 1
+        to:
+          type: string
+          minLength: 1
+        overwrite:
+          type:
+          - boolean
+          - 'null'
+    CloudConnectorTestResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type:
+          - string
+          - 'null'
+        details:
+          type:
+          - string
+          - 'null'
+    ConnectorEventType:
+      type: string
+      description: ''
+      x-enumNames:
+      - ConnectorOnline
+      - ConnectorOffline
+      - ConnectorSelected
+      - RequestSent
+      - ResponseReceived
+      - Error
+      enum:
+      - ConnectorOnline
+      - ConnectorOffline
+      - ConnectorSelected
+      - RequestSent
+      - ResponseReceived
+      - Error
+    BrowserAgentFileEntryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - path
+      - isDirectory
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        isDirectory:
+          type: boolean
+        size:
+          type: integer
+          format: int64
+        lastModified:
+          type: integer
+          format: int64
+    WriteBrowserAgentFileRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      - contentBase64
+      properties:
+        path:
+          type: string
+          minLength: 1
+        contentBase64:
+          type: string
+          maxLength: 14680064
+          minLength: 1
+        overwrite:
+          type:
+          - boolean
+          - 'null'
+    ColumnFilterOperator:
+      type: string
+      description: ''
+      x-enumNames:
+      - Equals
+      - NotEquals
+      - In
+      - NotIn
+      - InCaseInsensitive
+      - Contains
+      - DoesNotContain
+      - BetweenDateRange
+      - LessThan
+      - GreaterThan
+      - WithinRange
+      - NotWithinRange
+      enum:
+      - Equals
+      - NotEquals
+      - In
+      - NotIn
+      - InCaseInsensitive
+      - Contains
+      - DoesNotContain
+      - BetweenDateRange
+      - LessThan
+      - GreaterThan
+      - WithinRange
+      - NotWithinRange
+    PagedResultOfCloudConnectorEventFeedSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudConnectorEventFeedSummary'
+        totalCount:
+          type: integer
+          format: int32
+    CloudConnectorVersionManifestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: string
+        releaseDate:
+          type: string
+          format: date-time
+        releaseNotes:
+          type:
+          - string
+          - 'null'
+        isMandatory:
+          type: boolean
+        minimumVersion:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CloudConnectorPlatformDownloadDto'
+    ColumnFilter:
+      type: object
+      additionalProperties: false
+      properties:
+        column:
+          type: string
+        operator:
+          $ref: '#/components/schemas/ColumnFilterOperator'
+        value:
+          type: string
+    StreamFileDownloadRequestDto:
+      type: object
+      additionalProperties: false
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: uri
+          minLength: 1
+        chunkSize:
+          type: integer
+          format: int32
+          maximum: 1048576
+          minimum: 1024
+        accGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CloudConnectorPlatformDownloadDto:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        checksum:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        fileName:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CreateBrowserAgentFolderRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          minLength: 1
+    CreateCloudConnectorGroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+    PagedResultOfCloudConnectorGroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudConnectorGroupDto'
+        totalCount:
+          type: integer
+          format: int32
+    CloudConnectorGroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        accCount:
+          type: integer
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    BrowserAgentFileRefDto:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      properties:
+        path:
+          type: string
+    CloudConnectorEventFeedSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        eventType:
+          $ref: '#/components/schemas/ConnectorEventType'
+        connectorId:
+          type: string
+          format: guid
+        connectorName:
+          type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        siteId:
+          type:
+          - string
+          - 'null'
+        requestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        commandType:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type: string
+          format: date-time
+    BrowserAgentDirectoryListingDto:
+      type: object
+      additionalProperties: false
+      required:
+      - root
+      - path
+      - entries
+      properties:
+        root:
+          type: string
+        path:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserAgentFileEntryDto'
+    BrowserAgentFileContentDto:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      - contentBase64
+      properties:
+        path:
+          type: string
+        size:
+          type: integer
+          format: int64
+        lastModified:
+          type: integer
+          format: int64
+        contentBase64:
+          type: string
+    PagedResultOfCloudConnectorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudConnectorDto'
+        totalCount:
+          type: integer
+          format: int32
+    CloudConnectorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupName:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        lastConnected:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activeToken:
+          type: string
+        oldToken:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CreateCloudConnectorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CloudConnectorEvent:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        eventType:
+          $ref: '#/components/schemas/ConnectorEventType'
+        connectorId:
+          type: string
+          format: guid
+        connectorName:
+          type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        siteId:
+          type:
+          - string
+          - 'null'
+        requestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        commandType:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

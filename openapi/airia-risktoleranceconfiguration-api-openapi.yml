@@ -1,0 +1,249 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Risk Tolerance Configuration API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RiskToleranceConfiguration
+paths:
+  /v1/governance/configurations/risk-tolerance:
+    get:
+      tags:
+      - RiskToleranceConfiguration
+      operationId: RiskToleranceConfiguration_Get2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskToleranceConfigurationResponse'
+      summary: Risk tolerance configuration get2
+      x-summary-source: derived
+  /v1/governance/configurations/risk-tolerance/posture:
+    put:
+      tags:
+      - RiskToleranceConfiguration
+      operationId: RiskToleranceConfiguration_SetPosture2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetRiskTolerancePostureRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskToleranceConfigurationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk tolerance configuration set posture2
+      x-summary-source: derived
+  /v1/governance/configurations/risk-tolerance/domains/{riskDomainId}:
+    put:
+      tags:
+      - RiskToleranceConfiguration
+      operationId: RiskToleranceConfiguration_SetDomainOverride2
+      parameters:
+      - name: riskDomainId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetRiskDomainToleranceOverrideRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskToleranceConfigurationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk tolerance configuration set domain override2
+      x-summary-source: derived
+    delete:
+      tags:
+      - RiskToleranceConfiguration
+      operationId: RiskToleranceConfiguration_ClearDomainOverride2
+      parameters:
+      - name: riskDomainId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskToleranceConfigurationResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Risk tolerance configuration clear domain override2
+      x-summary-source: derived
+components:
+  schemas:
+    SetRiskDomainToleranceOverrideRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - maxRiskLevel
+      properties:
+        maxRiskLevel:
+          $ref: '#/components/schemas/RiskLevel'
+    RiskToleranceConfigurationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        posture:
+          $ref: '#/components/schemas/RiskTolerancePosture'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDomainToleranceItem'
+    RiskLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    RiskDomainToleranceItem:
+      type: object
+      additionalProperties: false
+      properties:
+        riskDomainId:
+          type: string
+          format: guid
+        name:
+          type: string
+        color:
+          type:
+          - string
+          - 'null'
+        displayOrder:
+          type: integer
+          format: int32
+        level:
+          $ref: '#/components/schemas/RiskLevel'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RiskTolerancePosture:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Conservative
+      - Balanced
+      - Progressive
+      enum:
+      - None
+      - Conservative
+      - Balanced
+      - Progressive
+    SetRiskTolerancePostureRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - posture
+      properties:
+        posture:
+          $ref: '#/components/schemas/RiskTolerancePosture'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

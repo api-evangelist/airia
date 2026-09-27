@@ -1,0 +1,1315 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Project API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Project
+paths:
+  /v1/Project:
+    post:
+      tags:
+      - Project
+      operationId: Project_CreateProject2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: projectDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDto'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project create project2
+      x-summary-source: derived
+  /v1/Project/paginated:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetAllProjectsPaginated2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get all projects paginated2
+      x-summary-source: derived
+  /v1/Project/list:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetProjectSummaries2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListingProjectDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get project summaries2
+      x-summary-source: derived
+  /v1/Project/pinned:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetAllPinnedProjects2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get all pinned projects2
+      x-summary-source: derived
+  /v1/Project/{id}:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetProjectById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get project by id2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Project
+      operationId: Project_DeleteProject2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDeletionBlockedDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project delete project2
+      x-summary-source: derived
+    put:
+      tags:
+      - Project
+      operationId: Project_UpdateProject2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: projectDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDto'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project update project2
+      x-summary-source: derived
+  /v1/Project/by-name/{name}:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetProjectByName2
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get project by name2
+      x-summary-source: derived
+  /v1/Project/bulk:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetProjectsByIds2
+      parameters:
+      - name: ids
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get projects by ids2
+      x-summary-source: derived
+  /v1/Project/{id}/contents:
+    delete:
+      tags:
+      - Project
+      operationId: Project_CleanupProjectContents2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: tenantId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: hardDelete
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project cleanup project contents2
+      x-summary-source: derived
+  /v1/Project/resume/{id}:
+    put:
+      tags:
+      - Project
+      operationId: Project_ResumeForCurrentBudgetCycle2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project resume for current budget cycle2
+      x-summary-source: derived
+  /v1/Project/pin/{id}:
+    post:
+      tags:
+      - Project
+      operationId: Project_PinProjectForUser2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project pin project for user2
+      x-summary-source: derived
+  /v1/Project/unpin/{id}:
+    post:
+      tags:
+      - Project
+      operationId: Project_UnPinProjectForUser2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project un pin project for user2
+      x-summary-source: derived
+  /v1/Project/{projectId}/admins:
+    get:
+      tags:
+      - Project
+      operationId: Project_GetProjectAdmins2
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfUserViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project get project admins2
+      x-summary-source: derived
+  /v1/Project/exists-by-name:
+    get:
+      tags:
+      - Project
+      operationId: Project_CheckProjectExistsByName2
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Project check project exists by name2
+      x-summary-source: derived
+components:
+  schemas:
+    ProjectDeletionBlockingEntities:
+      type: object
+      additionalProperties: false
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        memories:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        dataSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        userPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        classifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+        classificationProjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingEntityInfo'
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProjectDto:
+      allOf:
+      - $ref: '#/components/schemas/ProjectModelBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          tenantId:
+            type: string
+            format: guid
+          createdAt:
+            type: string
+            format: date-time
+          requireClassification:
+            type: boolean
+          budgetAmount:
+            type:
+            - number
+            - 'null'
+            format: float
+          budgetPeriod:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          budgetAlert:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          budgetStop:
+            type: boolean
+          usedBudgetAmount:
+            type:
+            - number
+            - 'null'
+            format: float
+          resumeEndsAt:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          updatedAt:
+            type: string
+            format: date-time
+          pipelines:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineSummaryDto'
+          models:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          dataSources:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DatasourceSummaryDto'
+          prompts:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          apiKeys:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          memories:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          projectIcon:
+            type:
+            - string
+            - 'null'
+          projectIconId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          description:
+            type:
+            - string
+            - 'null'
+          projectType:
+            $ref: '#/components/schemas/ProjectType'
+          classifications:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              format: guid
+    DatasourceSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    PagedResultOfUserViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    GroupViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        parentId:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        identityServerGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalUsers:
+          type: integer
+          format: int32
+        rolesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        isIdpProvisioned:
+          type: boolean
+        groupLeader:
+          oneOf:
+          - $ref: '#/components/schemas/UserViewModel'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    ListingProjectDto:
+      allOf:
+      - $ref: '#/components/schemas/ProjectModelBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          tenantId:
+            type: string
+            format: guid
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+          description:
+            type:
+            - string
+            - 'null'
+          projectIconId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          projectIcon:
+            type:
+            - string
+            - 'null'
+          projectType:
+            $ref: '#/components/schemas/ProjectType'
+    ProjectType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
+      enum:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+    BlockingEntityInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    PipelineSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    ProjectDeletionBlockedDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type: string
+        blockingEntities:
+          $ref: '#/components/schemas/ProjectDeletionBlockingEntities'
+    UserViewModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: guid
+        identityServerUserId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        isCurrentLoggedInUser:
+          type: boolean
+        lastTenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GroupViewModel'
+        roles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        organizationNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        organizationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastLogin:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isIdpProvisioned:
+          type: boolean
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        lastInviteSentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        invitationExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isEligibleForReinvite:
+          type: boolean
+        profileImageUrl:
+          type:
+          - string
+          - 'null'
+        isDeleted:
+          type: boolean
+        departmentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        departmentLabel:
+          type:
+          - string
+          - 'null'
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

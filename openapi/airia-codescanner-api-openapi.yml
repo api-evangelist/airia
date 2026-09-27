@@ -1,0 +1,1043 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Code Scanner API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: CodeScanner
+paths:
+  /v1/CodeScanner/webhook:
+    post:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_ReceiveScanResults2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeScanWebhookRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeScanWebhookResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner receive scan results2
+      x-summary-source: derived
+  /v1/CodeScanner/repositories:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetRepositories2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGitHubRepositoryDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get repositories2
+      x-summary-source: derived
+  /v1/CodeScanner/executions/{executionId}:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetExecutionById2
+      parameters:
+      - name: executionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeScanExecutionDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get execution by id2
+      x-summary-source: derived
+  /v1/CodeScanner/repositories/{repositoryId}/executions:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetExecutionsByRepositoryId2
+      parameters:
+      - name: repositoryId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCodeScanExecutionDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get executions by repository id2
+      x-summary-source: derived
+  /v1/CodeScanner/fingerprint/{fingerprint}/executions:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetExecutionsByFingerprint2
+      parameters:
+      - name: fingerprint
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCodeScanExecutionDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get executions by fingerprint2
+      x-summary-source: derived
+  /v1/CodeScanner/executions/{executionId}/findings:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetFindingsByExecutionId2
+      parameters:
+      - name: executionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCodeScanFindingDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get findings by execution id2
+      x-summary-source: derived
+  /v1/CodeScanner/executions/{executionId}/statistics:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetFindingStatistics2
+      parameters:
+      - name: executionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get finding statistics2
+      x-summary-source: derived
+  /v1/CodeScanner/findings/{findingId}/related:
+    get:
+      tags:
+      - CodeScanner
+      operationId: CodeScanner_GetRelatedFindings2
+      parameters:
+      - name: findingId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfCodeScanFindingDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Code scanner get related findings2
+      x-summary-source: derived
+components:
+  schemas:
+    CodeScanFindingDto:
+      type: object
+      additionalProperties: false
+      required:
+      - ruleId
+      - filePath
+      properties:
+        id:
+          type: string
+          format: guid
+        codeScanExecutionId:
+          type: string
+          format: guid
+        scanner:
+          oneOf:
+          - $ref: '#/components/schemas/Scanner'
+        findingType:
+          $ref: '#/components/schemas/FindingType'
+        ruleId:
+          type: string
+          maxLength: 100
+          minLength: 0
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        severity:
+          $ref: '#/components/schemas/Severity'
+        filePath:
+          type: string
+          maxLength: 1024
+          minLength: 0
+        lineNumber:
+          type: integer
+          format: int32
+        sourceUrl:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        metadata:
+          type:
+          - string
+          - 'null'
+        findingFingerprint:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+          minLength: 0
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GitHubRepositoryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - repositoryUrl
+      - branch
+      properties:
+        id:
+          type: string
+          format: guid
+        provider:
+          $ref: '#/components/schemas/CodeRepositoryProvider'
+        name:
+          type: string
+          maxLength: 256
+          minLength: 0
+        projectName:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+          minLength: 0
+        repositoryUrl:
+          type: string
+          maxLength: 512
+          minLength: 0
+        branch:
+          type: string
+          maxLength: 256
+          minLength: 0
+        isEnabled:
+          type: boolean
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        lastScanAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    FindingType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Provider
+      - Framework
+      - McpServer
+      - Secret
+      - AgentPattern
+      - ApiEndpoint
+      - ModelReference
+      - ToolIntegration
+      - Dependency
+      - ModelArtifact
+      - AstCodePattern
+      - Configuration
+      - Agent
+      - Task
+      - Workflow
+      - Tool
+      - Unknown
+      enum:
+      - Provider
+      - Framework
+      - McpServer
+      - Secret
+      - AgentPattern
+      - ApiEndpoint
+      - ModelReference
+      - ToolIntegration
+      - Dependency
+      - ModelArtifact
+      - AstCodePattern
+      - Configuration
+      - Agent
+      - Task
+      - Workflow
+      - Tool
+      - Unknown
+    CodeScanExecutionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        gitHubRepositoryId:
+          type: string
+          format: guid
+        repositoryName:
+          type:
+          - string
+          - 'null'
+        repositoryUrl:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+        totalFilesScanned:
+          type: integer
+          format: int32
+        totalFindings:
+          type: integer
+          format: int32
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        stats:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ScanStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Completed
+      - Failed
+      - CompletedWithWarnings
+      enum:
+      - Completed
+      - Failed
+      - CompletedWithWarnings
+    PagedResultOfCodeScanFindingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeScanFindingDto'
+        totalCount:
+          type: integer
+          format: int32
+    FindingInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - ruleId
+      - severity
+      - filePath
+      properties:
+        scanner:
+          oneOf:
+          - $ref: '#/components/schemas/Scanner'
+        type:
+          $ref: '#/components/schemas/FindingType'
+        ruleId:
+          type: string
+          maxLength: 100
+          minLength: 1
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        severity:
+          $ref: '#/components/schemas/Severity'
+        filePath:
+          type: string
+          maxLength: 1000
+          minLength: 1
+        lineNumber:
+          type: integer
+          format: int32
+        sourceUrl:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        metadata:
+          type:
+          - string
+          - 'null'
+    CodeScanWebhookResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        executionId:
+          type: string
+          format: guid
+        repositoryId:
+          type: string
+          format: guid
+        findingsProcessed:
+          type: integer
+          format: int32
+        errorMessage:
+          type:
+          - string
+          - 'null'
+    Severity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Info
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Info
+      - Low
+      - Medium
+      - High
+      - Critical
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RepositoryInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - repositoryUrl
+      - repositoryOwner
+      - repositoryName
+      properties:
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/CodeRepositoryProvider'
+        repositoryUrl:
+          type: string
+          maxLength: 500
+          minLength: 1
+        repositoryOwner:
+          type: string
+          maxLength: 200
+          minLength: 1
+        projectName:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        repositoryName:
+          type: string
+          maxLength: 200
+          minLength: 1
+        branch:
+          type: string
+          maxLength: 100
+    PagedResultOfGitHubRepositoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitHubRepositoryDto'
+        totalCount:
+          type: integer
+          format: int32
+    CodeRepositoryProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - GitHub
+      - AzureDevOps
+      - GitLab
+      enum:
+      - GitHub
+      - AzureDevOps
+      - GitLab
+    ScanStats:
+      type: object
+      additionalProperties: false
+      properties:
+        totalFilesScanned:
+          type: integer
+          format: int32
+        totalFindings:
+          type: integer
+          format: int32
+        gitleaks:
+          type: integer
+          format: int32
+        naive:
+          type: integer
+          format: int32
+        dependencies:
+          type: integer
+          format: int32
+        modelArtifacts:
+          type: integer
+          format: int32
+        astAnalysis:
+          type: integer
+          format: int32
+        configAnalysis:
+          type: integer
+          format: int32
+        agentAnalysis:
+          type: integer
+          format: int32
+        duplicatesRemoved:
+          type: integer
+          format: int32
+        uniqueModels:
+          type: integer
+          format: int32
+        uniqueProviders:
+          type: integer
+          format: int32
+        agentCount:
+          type: integer
+          format: int32
+        riskScore:
+          type: number
+          format: double
+    CodeScanWebhookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - executionId
+      - repository
+      - status
+      - findings
+      properties:
+        executionId:
+          type: string
+          format: guid
+          minLength: 1
+        repository:
+          $ref: '#/components/schemas/RepositoryInfo'
+        commitSha:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/FindingInfo'
+        stats:
+          oneOf:
+          - $ref: '#/components/schemas/ScanStats'
+    Scanner:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+      enum:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+    PagedResultOfCodeScanExecutionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeScanExecutionDto'
+        totalCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

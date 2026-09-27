@@ -1,0 +1,485 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Internal Application API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: InternalApplication
+paths:
+  /v1/governance/internal-applications:
+    get:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_GetCatalog2
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 2
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: category
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: riskLevel
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          default: Name
+        x-position: 6
+      - name: sortDirection
+        in: query
+        schema:
+          type: string
+          default: asc
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfInternalApplicationDto'
+      summary: Internal application get catalog2
+      x-summary-source: derived
+    post:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_Create2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InternalApplicationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApplicationDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Internal application create2
+      x-summary-source: derived
+  /v1/governance/internal-applications/dropdown-options:
+    get:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_GetDropdownOptions2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApplicationDropdownOptionsDto'
+      summary: Internal application get dropdown options2
+      x-summary-source: derived
+  /v1/governance/internal-applications/{id}:
+    get:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_GetById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApplicationDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Internal application get by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_Update2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InternalApplicationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalApplicationDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Internal application update2
+      x-summary-source: derived
+    delete:
+      tags:
+      - InternalApplication
+      operationId: InternalApplication_Delete2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Internal application delete2
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfInternalApplicationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalApplicationDto'
+        totalCount:
+          type: integer
+          format: int32
+    InternalApplicationDropdownOptionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    InternalApplicationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        provider:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          minLength: 0
+        category:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          minLength: 0
+        riskLevel:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          minLength: 0
+        complianceCerts:
+          type:
+          - string
+          - 'null'
+          maxLength: 4000
+          minLength: 0
+        aiFeaturesInScope:
+          type:
+          - string
+          - 'null'
+        aiModels:
+          type:
+          - string
+          - 'null'
+        subProcessors:
+          type:
+          - string
+          - 'null'
+        deploymentOptions:
+          type:
+          - string
+          - 'null'
+          maxLength: 4000
+          minLength: 0
+        dataSentToAi:
+          type:
+          - string
+          - 'null'
+        retention:
+          type:
+          - string
+          - 'null'
+        encryption:
+          type:
+          - string
+          - 'null'
+        trainingOnCustomerData:
+          type:
+          - string
+          - 'null'
+          maxLength: 4000
+          minLength: 0
+        riskFlags:
+          type:
+          - string
+          - 'null'
+        securityLinks:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+          minLength: 0
+    InternalApplicationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/SourceType'
+        provider:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        complianceCerts:
+          type:
+          - string
+          - 'null'
+        aiFeaturesInScope:
+          type:
+          - string
+          - 'null'
+        aiModels:
+          type:
+          - string
+          - 'null'
+        subProcessors:
+          type:
+          - string
+          - 'null'
+        deploymentOptions:
+          type:
+          - string
+          - 'null'
+        dataSentToAi:
+          type:
+          - string
+          - 'null'
+        retention:
+          type:
+          - string
+          - 'null'
+        encryption:
+          type:
+          - string
+          - 'null'
+        trainingOnCustomerData:
+          type:
+          - string
+          - 'null'
+        riskFlags:
+          type:
+          - string
+          - 'null'
+        securityLinks:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

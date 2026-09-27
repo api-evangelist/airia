@@ -1,0 +1,326 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Classification API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Classification
+paths:
+  /v1/Classification:
+    get:
+      tags:
+      - Classification
+      operationId: Classification_GetAllClassification
+      parameters:
+      - name: type
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/ClassificationType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClassificationResponse'
+      summary: Classification get all classification
+      x-summary-source: derived
+    post:
+      tags:
+      - Classification
+      operationId: Classification_CreateClassification
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClassificationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification create classification
+      x-summary-source: derived
+  /v1/Classification/{id}:
+    put:
+      tags:
+      - Classification
+      operationId: Classification_UpdateClassification
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClassificationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification update classification
+      x-summary-source: derived
+    delete:
+      tags:
+      - Classification
+      operationId: Classification_DeleteClassification
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification delete classification
+      x-summary-source: derived
+components:
+  schemas:
+    ClassificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Default
+      - Custom
+      - RiskLevel
+      enum:
+      - Default
+      - Custom
+      - RiskLevel
+    ClassificationLabelResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        labelName:
+          type: string
+        isDefaultValue:
+          type: boolean
+        classificationId:
+          type: string
+          format: guid
+        priority:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ClassificationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        classificationName:
+          type: string
+        required:
+          type: boolean
+        isActive:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ClassificationType'
+        classificationLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassificationLabelResponse'
+    CreateClassificationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        classificationName:
+          type: string
+        required:
+          type: boolean
+        isActive:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ClassificationType'
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClassificationLabelDto'
+    UpdateClassificationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        classificationName:
+          type:
+          - string
+          - 'null'
+        required:
+          type: boolean
+        isActive:
+          type: boolean
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClassificationLabelDto'
+    ClassificationLabelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        labelName:
+          type: string
+        labelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isDefaultValue:
+          type: boolean
+        priority:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

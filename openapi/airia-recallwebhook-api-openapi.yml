@@ -1,0 +1,106 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Recall Webhook API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RecallWebhook
+paths:
+  /v1/RecallWebhook:
+    post:
+      tags:
+      - RecallWebhook
+      operationId: RecallWebhook_ProcessWebhook
+      parameters:
+      - name: svix-id
+        x-originalName: svixId
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: webhook-id
+        x-originalName: legacyWebhookId
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: payload
+        content:
+          application/json:
+            schema: {}
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Recall webhook process webhook
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

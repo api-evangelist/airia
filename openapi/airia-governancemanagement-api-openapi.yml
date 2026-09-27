@@ -1,0 +1,165 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Governance Management API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GovernanceManagement
+paths:
+  /v1/governance/management/summary:
+    get:
+      tags:
+      - GovernanceManagement
+      operationId: GovernanceManagement_GetSummary2
+      parameters:
+      - name: tenantId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceManagementSummaryDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance management get summary2
+      x-summary-source: derived
+components:
+  schemas:
+    GovernanceManagementComingSoonFrameworkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GovernanceManagementSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworksEnabled:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceManagementFrameworkDto'
+        useCasesTotal:
+          type: integer
+          format: int32
+        useCasesInMonitoring:
+          type: integer
+          format: int32
+        assessmentRuns:
+          type: integer
+          format: int32
+        comingSoonFrameworksRequested:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceManagementComingSoonFrameworkDto'
+        windowStart:
+          type: string
+          format: date-time
+        windowEnd:
+          type: string
+          format: date-time
+    GovernanceManagementFrameworkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,4305 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Use Case API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UseCase
+paths:
+  /v1/governance/usecases:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetAllUseCases2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: governanceLevel
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 6
+      - name: stage
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: owner
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: name
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: acceptsAssetUpdates
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 10
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfUseCaseListDto'
+      summary: Use case get all use cases2
+      x-summary-source: derived
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_CreateUseCase2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUseCaseRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case create use case2
+      x-summary-source: derived
+  /v1/governance/usecases/versions:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseVersions2
+      parameters:
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: governanceLevel
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 4
+      - name: stage
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: activeOnly
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 6
+      - name: includeArchived
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfUseCaseVersionListDto'
+      summary: Use case get use case versions2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/versions:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseVersionHistory2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UseCaseVersionListDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case version history2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/versions/changelog:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseVersionChangeLog2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 2
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfUseCaseVersionChangeLogEntryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case version change log2
+      x-summary-source: derived
+  /v1/governance/usecases/batch-names:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseNamesByIds2
+      parameters:
+      - name: ids
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityNamesResult'
+      summary: Use case get use case names by ids2
+      x-summary-source: derived
+  /v1/governance/usecases/stats:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetStats2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseStatsDto'
+      summary: Use case get stats2
+      x-summary-source: derived
+  /v1/governance/usecases/ownership-gaps:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetOwnershipGaps2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceOwnershipGapsResponseDto'
+      summary: Use case get ownership gaps2
+      x-summary-source: derived
+  /v1/governance/usecases/ready-to-advance:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetReadyToAdvance2
+      parameters:
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfGovernanceReadyToAdvanceEntryDto'
+      summary: Use case get ready to advance2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - UseCase
+      operationId: UseCase_UpdateUseCase2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUseCaseRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case update use case2
+      x-summary-source: derived
+    patch:
+      tags:
+      - UseCase
+      operationId: UseCase_PatchUseCase2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: patch
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchUseCaseRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case patch use case2
+      x-summary-source: derived
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_DeleteUseCase2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case delete use case2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/guardrails:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseGuardrails2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UseCaseGuardrailDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case guardrails2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/security-violations:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseSecurityViolations2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseSecurityViolationsDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case security violations2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/linked-gateways:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseLinkedGateways2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseLinkedGatewaysDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case linked gateways2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/asset-components:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseAssetComponents2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseAssetComponentsDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case asset components2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/nutrition-label:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetNutritionLabel2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NutritionLabelV2'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get nutrition label2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/receipt:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetReceipt2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseReceiptV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get receipt2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/export:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_ExportUseCaseReport2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: type
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: format
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseReportExportResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case export use case report2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/risk-ids:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetRiskIdsForUseCase2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: guid
+      summary: Use case get risk ids for use case2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/completeness:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseCompleteness2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseCompletenessDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case completeness2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/completeness/summary:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseCompletenessSummary2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseCompletenessSummaryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case completeness summary2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/completeness/sections/{key}:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseCompletenessSection2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseCompletenessSectionDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case completeness section2
+      x-summary-source: derived
+  /v1/governance/usecases/field-metadata:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseFieldMetadata2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UseCaseFieldMetadataDto'
+      summary: Use case get use case field metadata2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/intake-context:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetUseCaseIntakeContext2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseIntakeContextDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get use case intake context2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/evaluations:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetEvaluationResults2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseEvaluationResultsResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get evaluation results2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/evaluations/candidates:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetEvaluationCandidates2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseEvaluationCandidatesResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get evaluation candidates2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/evaluations/selection:
+    put:
+      tags:
+      - UseCase
+      operationId: UseCase_SetEvaluationSelection2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUseCaseEvaluationSelectionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseEvaluationResultsResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case set evaluation selection2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/evaluations/selection/{evaluationId}:
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_RemoveEvaluationSelection2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: evaluationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseEvaluationResultsResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case remove evaluation selection2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/agents/{agentId}:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_AssignAgent2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case assign agent2
+      x-summary-source: derived
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_RemoveAgent2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case remove agent2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/activity:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetActivity2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 2
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 20
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseActivityDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+      summary: Use case get activity2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/agents:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_AssignAgents2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignAgentsRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignAgentsResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case assign agents2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/applications/{applicationId}:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_AssignApplication2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: applicationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case assign application2
+      x-summary-source: derived
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_RemoveApplication2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: applicationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case remove application2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/internal-applications/{internalApplicationId}:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_AssignInternalApplication2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: internalApplicationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case assign internal application2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/internal-applications/{internalApplicationAggregateId}:
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_RemoveInternalApplication2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: internalApplicationAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case remove internal application2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/risk-entries:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_CreateRiskEntries2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUseCaseRiskEntriesRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case create risk entries2
+      x-summary-source: derived
+  /v1/governance/usecases/bulk-import:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_BulkImport2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                ContentType:
+                  type:
+                  - string
+                  - 'null'
+                ContentDisposition:
+                  type:
+                  - string
+                  - 'null'
+                Headers:
+                  type:
+                  - array
+                  - 'null'
+                  items: {}
+                Length:
+                  type: integer
+                  format: int64
+                Name:
+                  type:
+                  - string
+                  - 'null'
+                FileName:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkImportResult'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkImportResult'
+      summary: Use case bulk import2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/artifacts:
+    post:
+      tags:
+      - UseCase
+      operationId: UseCase_CreateArtifact2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGovernanceArtifactRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceArtifactDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case create artifact2
+      x-summary-source: derived
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetArtifacts2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GovernanceArtifactDto'
+      summary: Use case get artifacts2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/artifacts/{artifactId}:
+    delete:
+      tags:
+      - UseCase
+      operationId: UseCase_DeleteArtifact2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: artifactId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case delete artifact2
+      x-summary-source: derived
+  /v1/governance/usecases/{id}/artifacts/{artifactId}/download:
+    get:
+      tags:
+      - UseCase
+      operationId: UseCase_GetArtifactDownloadUrl2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: artifactId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case get artifact download url2
+      x-summary-source: derived
+components:
+  schemas:
+    NistAiRmfTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+      enum:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+    NutritionLabelAssetParent:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    AssignAgentsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UseCaseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type: string
+        stage:
+          $ref: '#/components/schemas/UseCaseStage'
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        description:
+          type:
+          - string
+          - 'null'
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAssignmentDto'
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        reviewerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        reviewerName:
+          type:
+          - string
+          - 'null'
+        impacted:
+          type:
+          - string
+          - 'null'
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetAggregateId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseStatus'
+        core:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseCoreSectionDto'
+        intendedUse:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseIntendedUseSectionDto'
+        reviewPolicy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseReviewPolicySectionDto'
+        riskProfile:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseRiskProfileSectionDto'
+        completeness:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseCompletenessDto'
+        frameworkSnapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseFrameworkSnapshotDto'
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationAssignmentDto'
+        internalApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternalApplicationAssignmentDto'
+        acceptsAssetUpdates:
+          type: boolean
+        hasNutritionLabel:
+          type: boolean
+        approvedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        disclosure:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseDisclosureDto'
+    UpdateUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        stage:
+          $ref: '#/components/schemas/UseCaseStage'
+        description:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        reviewerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        impacted:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+          minLength: 0
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseStatus'
+        core:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseCore'
+        intendedUse:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseIntendedUse'
+        reviewPolicy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseReviewPolicy'
+    CreateGovernanceArtifactRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - artifactType
+      - fileId
+      - fileName
+      properties:
+        artifactType:
+          type: string
+          maxLength: 200
+          minLength: 1
+        fileId:
+          type: string
+          maxLength: 100
+          minLength: 1
+        fileName:
+          type: string
+          maxLength: 500
+          minLength: 1
+        slotKey:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+    NutritionLabelGovernanceScoreSection:
+      type: object
+      additionalProperties: false
+      properties:
+        level:
+          type:
+          - string
+          - 'null'
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scoreRationale:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfGovernanceReadyToAdvanceEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceReadyToAdvanceEntryDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    UseCaseAssetComponentNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        provider:
+          type:
+          - string
+          - 'null'
+        connectorName:
+          type:
+          - string
+          - 'null'
+        isRepeated:
+          type: boolean
+        truncated:
+          type: boolean
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
+    SecurePostureStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+      enum:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+    UseCaseEvaluationResultsResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agentEvaluations
+      properties:
+        agentEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAgentEvaluationDto'
+    UseCaseStatsDto:
+      type: object
+      additionalProperties: false
+      required:
+      - totalUseCases
+      - highOrCriticalRisk
+      - pendingRiskMitigation
+      - pendingApproval
+      properties:
+        totalUseCases:
+          type: integer
+          format: int32
+        highOrCriticalRisk:
+          type: integer
+          format: int32
+        pendingRiskMitigation:
+          type: integer
+          format: int32
+        pendingApproval:
+          type: integer
+          format: int32
+    UseCaseReportExportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+    PatchUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          $ref: '#/components/schemas/FieldPatch'
+        description:
+          $ref: '#/components/schemas/FieldPatch'
+        autonomy:
+          $ref: '#/components/schemas/FieldPatch'
+        impacted:
+          $ref: '#/components/schemas/FieldPatch'
+        summary:
+          $ref: '#/components/schemas/FieldPatch'
+        tags:
+          $ref: '#/components/schemas/FieldPatch'
+        businessPurpose:
+          $ref: '#/components/schemas/FieldPatch'
+        userPopulation:
+          $ref: '#/components/schemas/FieldPatch'
+        deploymentContext:
+          $ref: '#/components/schemas/FieldPatch'
+        deploymentRegion:
+          $ref: '#/components/schemas/FieldPatch'
+        dataCategories:
+          $ref: '#/components/schemas/FieldPatch'
+        rightsAffecting:
+          $ref: '#/components/schemas/FieldPatch'
+        intendedOutcome:
+          $ref: '#/components/schemas/FieldPatch'
+        operatingCadence:
+          $ref: '#/components/schemas/FieldPatch'
+        intendedFor:
+          $ref: '#/components/schemas/FieldPatch'
+        notIntendedFor:
+          $ref: '#/components/schemas/FieldPatch'
+        disclaimerText:
+          $ref: '#/components/schemas/FieldPatch'
+        reviewCadence:
+          $ref: '#/components/schemas/FieldPatch'
+    UseCaseLinkedGatewaysDto:
+      type: object
+      additionalProperties: false
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayDto'
+        unsecuredAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
+        mcpRouting:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayMcpDto'
+        routingEnforced:
+          type:
+          - boolean
+          - 'null'
+        trafficWindowDays:
+          type: integer
+          format: int32
+        isDegraded:
+          type: boolean
+    NutritionLabelV2:
+      type: object
+      additionalProperties: false
+      properties:
+        schemaVersion:
+          type: string
+        header:
+          $ref: '#/components/schemas/NutritionLabelHeader'
+        core:
+          $ref: '#/components/schemas/NutritionLabelCoreSection'
+        intendedUse:
+          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
+        governanceScore:
+          $ref: '#/components/schemas/NutritionLabelGovernanceScoreSection'
+        frameworkRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
+        notApplicableRiskCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        excludedRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelAssetEntry'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelDocumentEntry'
+        guardrails:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
+        reviewPolicy:
+          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
+        isSealed:
+          type: boolean
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ApplicationAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        isAIService:
+          type:
+          - boolean
+          - 'null'
+        aiServiceConfidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        userCount:
+          type: integer
+          format: int32
+        scopes:
+          type:
+          - string
+          - 'null'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        assetVersionTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    SetUseCaseEvaluationSelectionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UseCaseEvaluationSelectionSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Manual
+      - CreatedFromUseCase
+      - Automation
+      - LegacyAuto
+      enum:
+      - Manual
+      - CreatedFromUseCase
+      - Automation
+      - LegacyAuto
+    UseCaseDisclosureDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        isActive:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseSecurityViolationsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSecurityViolationDto'
+        totalCount:
+          type: integer
+          format: int32
+        windowDays:
+          type: integer
+          format: int32
+        isDegraded:
+          type: boolean
+    FieldPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        isSet:
+          type: boolean
+        value: {}
+        isNull:
+          type: boolean
+    GovernanceOwnershipGapsResponseDto:
+      type: object
+      additionalProperties: false
+      required:
+      - entries
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceOwnershipGapEntryDto'
+    UseCaseCore:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    GovernanceReadyToAdvanceNextStageDto:
+      type: object
+      additionalProperties: false
+      required:
+      - stageId
+      - name
+      properties:
+        stageId:
+          type: string
+          format: guid
+        name:
+          type: string
+    GovernanceReadyToAdvanceEntryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - useCaseId
+      - name
+      - stage
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        next:
+          oneOf:
+          - $ref: '#/components/schemas/GovernanceReadyToAdvanceNextStageDto'
+    GovernanceArtifactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        artifactType:
+          type: string
+        fileId:
+          type: string
+        fileName:
+          type: string
+        slotKey:
+          type:
+          - string
+          - 'null'
+        uploadedByUserId:
+          type: string
+          format: guid
+        uploadedAt:
+          type: string
+          format: date-time
+    UseCaseEvaluationCandidatesResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - candidates
+      properties:
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseEvaluationCandidateDto'
+    RiskEntryInput:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        mitDomain:
+          type:
+          - string
+          - 'null'
+        mitSubDomain:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type: integer
+          format: int32
+        description:
+          type:
+          - string
+          - 'null'
+        controlIds:
+          type: array
+          items:
+            type: string
+        mitigationSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationStepInput'
+    UseCaseLinkedGatewayMcpDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        routedInstallCount:
+          type: integer
+          format: int32
+        reachCount:
+          type: integer
+          format: int32
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+    UseCaseCompletenessSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSectionCompleteness'
+        overallPercent:
+          type: integer
+          format: int32
+    UseCaseReceiptApprovalEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        approverUserId:
+          type: string
+          format: guid
+        approverDisplayName:
+          type: string
+        decision:
+          $ref: '#/components/schemas/ApprovalDecision'
+        comments:
+          type:
+          - string
+          - 'null'
+        decidedAt:
+          type: string
+          format: date-time
+    GovernanceOwnershipGapEntryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - name
+      - stage
+      - ownerMissing
+      - approversMissing
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        ownerMissing:
+          type: boolean
+        approversMissing:
+          type: boolean
+        ownerLivenessState:
+          oneOf:
+          - $ref: '#/components/schemas/InactiveAssigneeState'
+        reviewerLivenessState:
+          oneOf:
+          - $ref: '#/components/schemas/InactiveAssigneeState'
+    AiAssetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+      enum:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+    EntityNamesResult:
+      type: object
+      additionalProperties: false
+      properties:
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    BulkImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        createdCount:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            type: string
+        hasErrors:
+          type: boolean
+    UseCaseIntendedUseSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        impacted:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+    NutritionLabelReviewPolicySection:
+      type: object
+      additionalProperties: false
+      properties:
+        disclaimerText:
+          type:
+          - string
+          - 'null'
+        reviewCadence:
+          type:
+          - string
+          - 'null'
+        nextReviewDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseCoreSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    MitigationStepInput:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type:
+          - string
+          - 'null'
+        controlId:
+          type:
+          - string
+          - 'null'
+    UseCaseReceiptMitigationArtifact:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          type: string
+        name:
+          type: string
+    UseCaseAutonomy:
+      type: string
+      description: ''
+      x-enumNames:
+      - HumanInTheLoop
+      - HumanOnTheLoop
+      - HumanInTheCommand
+      - SupervisedAutonomy
+      - FullAutonomy
+      enum:
+      - HumanInTheLoop
+      - HumanOnTheLoop
+      - HumanInTheCommand
+      - SupervisedAutonomy
+      - FullAutonomy
+    UseCaseReceiptHeader:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        useCaseId:
+          type: string
+          format: guid
+        approvedAt:
+          type: string
+          format: date-time
+        useCaseCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+        version:
+          type: string
+    NutritionLabelAssetEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          $ref: '#/components/schemas/AiAssetType'
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        isDependency:
+          type: boolean
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelAssetParent'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    InactiveAssigneeState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Deactivated
+      - Removed
+      enum:
+      - Deactivated
+      - Removed
+    PagedResultOfUseCaseListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseListDto'
+        totalCount:
+          type: integer
+          format: int32
+    UseCaseReviewPolicySectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disclaimerText:
+          type:
+          - string
+          - 'null'
+        reviewCadence:
+          type:
+          - string
+          - 'null'
+        nextReviewDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseReceiptV1:
+      type: object
+      additionalProperties: false
+      properties:
+        schemaVersion:
+          type: string
+        header:
+          $ref: '#/components/schemas/UseCaseReceiptHeader'
+        core:
+          $ref: '#/components/schemas/NutritionLabelCoreSection'
+        intendedUse:
+          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
+        riskProfile:
+          $ref: '#/components/schemas/UseCaseReceiptRiskProfileSection'
+        treatmentPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptTreatmentPlanEntry'
+        guardrails:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
+        evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptEvidenceEntry'
+        reviewPolicy:
+          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
+        approvals:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptApprovalEntry'
+        isSealed:
+          type: boolean
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseIntakeContextDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetContext:
+          type: string
+        frameworksContext:
+          type: string
+    UseCaseReceiptTreatmentPlanEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        riskId:
+          type: string
+        riskName:
+          type: string
+        strategy:
+          type:
+          - string
+          - 'null'
+        rationale:
+          type:
+          - string
+          - 'null'
+        inherentLevel:
+          type:
+          - string
+          - 'null'
+        residualLevel:
+          type:
+          - string
+          - 'null'
+        mitigationArtifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptMitigationArtifact'
+    PagedResultV2OfUseCaseVersionChangeLogEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseVersionChangeLogEntryDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    UseCaseLinkedGatewayAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        clientId:
+          type: string
+        linkedVia:
+          $ref: '#/components/schemas/UseCaseGatewayLinkSource'
+        providers:
+          type: array
+          items:
+            type: string
+        isClientOverride:
+          type: boolean
+        routedInstallCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        reachCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+    UseCaseVersionChangeLogEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        versionId:
+          type: string
+          format: guid
+        version:
+          type: string
+        description:
+          type: string
+        changedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        changedBy:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isActive:
+          type: boolean
+        isArchived:
+          type: boolean
+    UseCaseActivityEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        actorName:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        operation:
+          type: string
+    InternalApplicationAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        internalApplicationId:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        assetVersionTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseFieldStateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        section:
+          type: string
+        label:
+          type: string
+        kind:
+          type: string
+        missing:
+          type: boolean
+        required:
+          type: boolean
+        value:
+          type:
+          - string
+          - 'null'
+        values:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        suggestedValues:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        allowsCustom:
+          type: boolean
+        vocabularyEnforced:
+          type: boolean
+        maxLength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        agentHint:
+          type:
+          - string
+          - 'null'
+        isFrameworkDemanded:
+          type: boolean
+        demandingFrameworkKeys:
+          type: array
+          items:
+            type: string
+        absentBehavior:
+          oneOf:
+          - $ref: '#/components/schemas/RegisterFactAbsentBehavior'
+        aiConfidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        aiReasoning:
+          type:
+          - string
+          - 'null'
+    NutritionLabelExcludedRiskEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        domainName:
+          type: string
+        subDomainName:
+          type: string
+        reason:
+          type:
+          - string
+          - 'null'
+    UseCaseCompletenessDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSectionCompleteness'
+        overallPercent:
+          type: integer
+          format: int32
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseFieldStateDto'
+    UseCaseGatewayLinkSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - EndpointRoutingPolicy
+      - GatewaySecuredExternalAgent
+      enum:
+      - EndpointRoutingPolicy
+      - GatewaySecuredExternalAgent
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    UseCaseLinkedGatewayDto:
+      type: object
+      additionalProperties: false
+      properties:
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        isIdentitySuppressed:
+          type: boolean
+        linkedAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
+        traffic:
+          oneOf:
+          - $ref: '#/components/schemas/GatewayTrafficTotals'
+        availableControls:
+          type: array
+          items:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SecurityViolationSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
+    UseCaseListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        stage:
+          type: string
+        stageKey:
+          type:
+          - string
+          - 'null'
+        stageName:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          type:
+          - string
+          - 'null'
+        agentNames:
+          type: string
+        agentCount:
+          type: integer
+          format: int32
+        applicationNames:
+          type: string
+        applicationCount:
+          type: integer
+          format: int32
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        impacted:
+          type:
+          - string
+          - 'null'
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pendingTaskCount:
+          type: integer
+          format: int32
+        acceptsAssetUpdates:
+          type: boolean
+        hasNutritionLabel:
+          type: boolean
+        approvedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UseCaseGuardrailDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseGuardrailFilterDto'
+        triggeringAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseGuardrailAssetDto'
+    Iso42001Level:
+      type: string
+      description: ''
+      x-enumNames:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+      enum:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    NutritionLabelFrameworkRiskEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKey:
+          type: string
+        classificationValue:
+          type: string
+        rationale:
+          type:
+          - string
+          - 'null'
+        confidence:
+          type:
+          - string
+          - 'null'
+    UseCaseActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseActivityEntryDto'
+    UseCaseCompletenessSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        populated:
+          type: boolean
+        missingFields:
+          type: array
+          items:
+            type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseFieldStateDto'
+    UseCaseVersionListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        versionNumber:
+          type: integer
+          format: int32
+        versionLabel:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        isArchived:
+          type: boolean
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        stage:
+          type: string
+        stageKey:
+          type:
+          - string
+          - 'null'
+        stageName:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          type:
+          - string
+          - 'null'
+        agentNames:
+          type: string
+        agentCount:
+          type: integer
+          format: int32
+        applicationNames:
+          type: string
+        applicationCount:
+          type: integer
+          format: int32
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        impacted:
+          type:
+          - string
+          - 'null'
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pendingTaskCount:
+          type: integer
+          format: int32
+        acceptsAssetUpdates:
+          type: boolean
+        hasNutritionLabel:
+          type: boolean
+        approvedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UseCaseAgentEvaluationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - agentVersionId
+      - agentName
+      - agentVersion
+      - evaluationId
+      - evaluationName
+      - averageAccuracy
+      - averageAgentExecutionDurationMs
+      - averageModelCallCost
+      - averageTokens
+      - averageModelCallDurationMs
+      - status
+      - selectionSource
+      - selectedAt
+      - isAssetLinked
+      properties:
+        agentVersionId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentVersion:
+          type: string
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        agentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluationId:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        runAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        averageAccuracy:
+          type: number
+          format: double
+        averageAgentExecutionDurationMs:
+          type: integer
+          format: int32
+        averageModelCallCost:
+          type: number
+          format: decimal
+        averageTokens:
+          type: number
+          format: double
+        averageModelCallDurationMs:
+          type: integer
+          format: int32
+        averageBias:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageDrift:
+          type:
+          - number
+          - 'null'
+          format: double
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/JobStatus'
+        selectionSource:
+          $ref: '#/components/schemas/UseCaseEvaluationSelectionSource'
+        selectedAt:
+          type: string
+          format: date-time
+        isAssetLinked:
+          type: boolean
+    CreateUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        stage:
+          $ref: '#/components/schemas/UseCaseStage'
+        description:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        agentAssetIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        applicationAssetId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        internalApplicationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        reviewerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        impacted:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+          minLength: 0
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        core:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseCore'
+        intendedUse:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseIntendedUse'
+        reviewPolicy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseReviewPolicy'
+    NutritionLabelGuardrailInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        filterTypes:
+          type: array
+          items:
+            type: string
+        targetType:
+          type: string
+    UseCaseIntendedUse:
+      type: object
+      additionalProperties: false
+      properties:
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        affectedPopulation:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+    UseCaseFrameworkSnapshotDto:
+      type: object
+      additionalProperties: false
+      properties:
+        governanceFrameworkId:
+          type: string
+          format: guid
+        frameworkName:
+          type: string
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+    UseCaseReviewPolicy:
+      type: object
+      additionalProperties: false
+      properties:
+        disclaimerText:
+          type:
+          - string
+          - 'null'
+        reviewCadence:
+          type:
+          - string
+          - 'null'
+        nextReviewDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    NutritionLabelIntendedUseSection:
+      type: object
+      additionalProperties: false
+      properties:
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+    CreateUseCaseRiskEntriesRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        risks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEntryInput'
+    UseCaseFieldMetadataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        section:
+          type: string
+        label:
+          type: string
+        kind:
+          type: string
+        suggestedValues:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        allowsCustom:
+          type: boolean
+        vocabularyEnforced:
+          type: boolean
+        maxLength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        agentHint:
+          type:
+          - string
+          - 'null'
+    UseCaseAssetComponentsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        roots:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
+        maxDepth:
+          type: integer
+          format: int32
+        truncated:
+          type: boolean
+    UseCaseReceiptEvidenceEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          type: string
+        name:
+          type: string
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    PagedResultV2OfUseCaseVersionListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseVersionListDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    UseCaseSectionCompleteness:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        populated:
+          type: boolean
+        missingFields:
+          type: array
+          items:
+            type: string
+    ApprovalDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+      enum:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+    NutritionLabelDocumentEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        fileName:
+          type: string
+        fileId:
+          type: string
+        artifactType:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+    UseCaseGuardrailAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+    UseCaseStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Rejected
+      enum:
+      - Approved
+      - Rejected
+    NutritionLabelHeader:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        subtitle:
+          type:
+          - string
+          - 'null'
+        assessmentDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        useCaseCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+        useCaseUpdatedAt:
+          type:
+          - string
+          - 'null'
+          format: date
+        version:
+          type: string
+    AgentAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        assetVersionTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseEvaluationCandidateDto:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - evaluationName
+      - agentName
+      - isSelected
+      - isSelectable
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/JobStatus'
+        runAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        agentName:
+          type: string
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        agentVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isSelected:
+          type: boolean
+        isSelectable:
+          type: boolean
+        notSelectableReason:
+          type:
+          - string
+          - 'null'
+    GatewayTrafficTotals:
+      type: object
+      additionalProperties: false
+      properties:
+        requestCount:
+          type: integer
+          format: int32
+        promptTokens:
+          type: integer
+          format: int64
+        completionTokens:
+          type: integer
+          format: int64
+        totalTokens:
+          type: integer
+          format: int64
+        cost:
+          type: number
+          format: decimal
+    NutritionLabelCoreSection:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type:
+          - string
+          - 'null'
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+    AssignAgentsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        linkedAgentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UseCaseGuardrailFilterDto:
+      type: object
+      additionalProperties: false
+      properties:
+        filterType:
+          type: string
+        label:
+          type:
+          - string
+          - 'null'
+        action:
+          type:
+          - string
+          - 'null'
+    UseCaseRiskProfileSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+    UseCaseSecurityViolationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        violationId:
+          type: string
+          format: guid
+        timestamp:
+          type: string
+          format: date-time
+        violationType:
+          type: string
+        violationAttributeName:
+          type: string
+        severity:
+          $ref: '#/components/schemas/SecurityViolationSeverity'
+        configuredAction:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        score:
+          type: number
+          format: double
+    UseCaseStage:
+      type: string
+      description: ''
+      x-enumNames:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+      enum:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+    UseCaseReceiptRiskProfileSection:
+      type: object
+      additionalProperties: false
+      properties:
+        airiaScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        airiaScoreInherent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        airiaLevel:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        euAiAct:
+          oneOf:
+          - $ref: '#/components/schemas/EuAiActCategory'
+        nistAiRmfTier:
+          oneOf:
+          - $ref: '#/components/schemas/NistAiRmfTier'
+        iso42001Level:
+          oneOf:
+          - $ref: '#/components/schemas/Iso42001Level'
+        riskDomain:
+          type:
+          - string
+          - 'null'
+        riskSubDomain:
+          type:
+          - string
+          - 'null'
+        frameworkRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
+        notApplicableRiskCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        excludedRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
+    RegisterFactAbsentBehavior:
+      type: string
+      description: ''
+      x-enumNames:
+      - FailClosed
+      - FailOpen
+      enum:
+      - FailClosed
+      - FailOpen
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

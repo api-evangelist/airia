@@ -1,0 +1,1030 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Audit Log API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Audit Log
+paths:
+  /v1/AuditLog/entries:
+    get:
+      tags:
+      - Audit Log
+      operationId: AuditLog_GetAuditEntries
+      parameters:
+      - name: TenantId
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: ResourceId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: ActorId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: ResourceTypes
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ResourceType'
+        x-position: 5
+      - name: ResourceIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 6
+      - name: ActorIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 7
+      - name: Operations
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditOperation'
+        x-position: 8
+      - name: Page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        x-position: 9
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 1
+        x-position: 10
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 11
+      - name: ResourceType
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourceType'
+        x-position: 12
+      - name: Operation
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/AuditOperation'
+        x-position: 13
+      - name: StartDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 14
+      - name: EndDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 15
+      - name: SearchTerm
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 16
+      - name: Severities
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditEventSeverity'
+        x-position: 17
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 18
+      - name: SortDirection
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 19
+      - name: ProjectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 20
+      - name: Success
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 21
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuditEntriesOperationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Audit log get audit entries
+      x-summary-source: derived
+  /v1/AuditLog/entries/{id}:
+    get:
+      tags:
+      - Audit Log
+      operationId: AuditLog_GetAuditEntry
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: tenantId
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuditEntryOperationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Audit log get audit entry
+      x-summary-source: derived
+  /v1/AuditLog/search:
+    get:
+      tags:
+      - Audit Log
+      operationId: AuditLog_SearchAuditEntries
+      parameters:
+      - name: TenantId
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: SearchTerm
+        in: query
+        schema:
+          type: string
+        x-position: 3
+      - name: Page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        x-position: 4
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 1
+        x-position: 5
+      - name: Severities
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditEventSeverity'
+        x-position: 6
+      - name: ProjectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchAuditEntriesOperationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      deprecated: true
+      summary: Audit log search audit entries
+      x-summary-source: derived
+  /v1/AuditLog/export/csv:
+    get:
+      tags:
+      - Audit Log
+      operationId: AuditLog_ExportToCsv
+      parameters:
+      - name: TenantId
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: ResourceId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: ActorId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: ResourceTypes
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ResourceType'
+        x-position: 5
+      - name: ResourceIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 6
+      - name: ActorIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 7
+      - name: Operations
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditOperation'
+        x-position: 8
+      - name: ResourceType
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourceType'
+        x-position: 9
+      - name: Operation
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/AuditOperation'
+        x-position: 10
+      - name: StartDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 11
+      - name: EndDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 12
+      - name: IncludeColumns
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 13
+      - name: Severities
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditEventSeverity'
+        x-position: 14
+      - name: ProjectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 15
+      - name: Success
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 16
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Audit log export to csv
+      x-summary-source: derived
+  /v1/AuditLog/recent-modifications:
+    get:
+      tags:
+      - Audit Log
+      operationId: AuditLog_GetRecentlyModifiedResources
+      parameters:
+      - name: tenantId
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: actorId
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: resourceType
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourceType'
+        x-position: 3
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 4
+      - name: operations
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditOperation'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Audit log get recently modified resources
+      x-summary-source: derived
+components:
+  schemas:
+    AuditEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        operation:
+          type:
+          - string
+          - 'null'
+        severity:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        actor:
+          oneOf:
+          - $ref: '#/components/schemas/Actor'
+        resource:
+          oneOf:
+          - $ref: '#/components/schemas/Resource'
+        changes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AuditChange'
+        correlationId:
+          type:
+          - string
+          - 'null'
+        sessionId:
+          type:
+          - string
+          - 'null'
+        sourceIp:
+          type:
+          - string
+          - 'null'
+        userAgent:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        eventId:
+          type:
+          - string
+          - 'null'
+        previousStatus:
+          type:
+          - string
+          - 'null'
+        newStatus:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+    AuditChange:
+      type: object
+      additionalProperties: false
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+        oldValue:
+          type:
+          - string
+          - 'null'
+        newValue:
+          type:
+          - string
+          - 'null'
+    ResourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Agent
+      - Pipeline
+      - Model
+      - DataSource
+      - Prompt
+      - UserPrompt
+      - Memory
+      - KnowledgeGraph
+      - Tool
+      - Evaluation
+      - Guardrail
+      - AccountSettings
+      - BrandingSettings
+      - ClassificationSettings
+      - DataRetentionSettings
+      - PeopleSettings
+      - ApiKey
+      - AccessControl
+      - Credential
+      - RateLimit
+      - SiemSettings
+      - SsoSettings
+      - Webhook
+      - File
+      - User
+      - Group
+      - Deployment
+      - DeploymentSchedule
+      - RiskRegistry
+      - Project
+      - Session
+      - AuthenticationAttempt
+      - SecurityEvent
+      - SensitiveData
+      - System
+      - UseCase
+      - EvaluationThreshold
+      - Classification
+      - Budget
+      - Community
+      - Other
+      - DataStore
+      - DataStoreConnector
+      - DataStoreSchedule
+      - ExternalAiResource
+      - CloudConnector
+      - Gateway
+      - GovernanceFramework
+      - DefaultApproverConfiguration
+      - Conversation
+      - Payment
+      - GovernanceWorkflow
+      - DocumentGeneration
+      - PointOfUseDisclosure
+      - DisclosureTemplate
+      enum:
+      - Agent
+      - Pipeline
+      - Model
+      - DataSource
+      - Prompt
+      - UserPrompt
+      - Memory
+      - KnowledgeGraph
+      - Tool
+      - Evaluation
+      - Guardrail
+      - AccountSettings
+      - BrandingSettings
+      - ClassificationSettings
+      - DataRetentionSettings
+      - PeopleSettings
+      - ApiKey
+      - AccessControl
+      - Credential
+      - RateLimit
+      - SiemSettings
+      - SsoSettings
+      - Webhook
+      - File
+      - User
+      - Group
+      - Deployment
+      - DeploymentSchedule
+      - RiskRegistry
+      - Project
+      - Session
+      - AuthenticationAttempt
+      - SecurityEvent
+      - SensitiveData
+      - System
+      - UseCase
+      - EvaluationThreshold
+      - Classification
+      - Budget
+      - Community
+      - Other
+      - DataStore
+      - DataStoreConnector
+      - DataStoreSchedule
+      - ExternalAiResource
+      - CloudConnector
+      - Gateway
+      - GovernanceFramework
+      - DefaultApproverConfiguration
+      - Conversation
+      - Payment
+      - GovernanceWorkflow
+      - DocumentGeneration
+      - PointOfUseDisclosure
+      - DisclosureTemplate
+    AuditEventSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
+    GetAuditEntryOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entry:
+            oneOf:
+            - $ref: '#/components/schemas/AuditEntry'
+    Resource:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+        activeVersionId:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Timestamp:
+      type: object
+      additionalProperties: false
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
+    SearchAuditEntriesOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entries:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEntry'
+          totalCount:
+            type: integer
+            format: int32
+          page:
+            type: integer
+            format: int32
+          pageSize:
+            type: integer
+            format: int32
+    Actor:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        role:
+          type:
+          - string
+          - 'null'
+    AuditLogOperationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isOperationSuccessful:
+          type: boolean
+        operationErrorMessage:
+          type:
+          - string
+          - 'null'
+    AuditOperation:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Read
+      - Update
+      - Edit
+      - Delete
+      - Publish
+      - SetActiveVersion
+      - Toggle
+      - Upload
+      - PermissionToggle
+      - AutoAddFundsToggle
+      - SettingsChanged
+      - CreateInvitation
+      - Login
+      - Logout
+      - PasswordReset
+      - PermissionGranted
+      - PermissionRevoked
+      - Export
+      - Import
+      - Configure
+      - RoleAssigned
+      - RoleRevoked
+      - RoleChanged
+      - Enable
+      - Disable
+      - AuthenticationSuccess
+      - AuthenticationFailure
+      - SessionTermination
+      - PasswordSet
+      - PasswordChange
+      - Attach
+      - Detach
+      - Assign
+      - Unassign
+      - CanvasOperationAdd
+      - CanvasOperationRemove
+      - PolicyViolation
+      - DlpViolation
+      - AnomalyDetected
+      - DataAccess
+      - DataExport
+      - AuditAccess
+      - Execute
+      - Approve
+      - Reject
+      - Impersonate
+      - Password
+      - Access
+      - Unpublish
+      - Grant
+      - Revoke
+      enum:
+      - Create
+      - Read
+      - Update
+      - Edit
+      - Delete
+      - Publish
+      - SetActiveVersion
+      - Toggle
+      - Upload
+      - PermissionToggle
+      - AutoAddFundsToggle
+      - SettingsChanged
+      - CreateInvitation
+      - Login
+      - Logout
+      - PasswordReset
+      - PermissionGranted
+      - PermissionRevoked
+      - Export
+      - Import
+      - Configure
+      - RoleAssigned
+      - RoleRevoked
+      - RoleChanged
+      - Enable
+      - Disable
+      - AuthenticationSuccess
+      - AuthenticationFailure
+      - SessionTermination
+      - PasswordSet
+      - PasswordChange
+      - Attach
+      - Detach
+      - Assign
+      - Unassign
+      - CanvasOperationAdd
+      - CanvasOperationRemove
+      - PolicyViolation
+      - DlpViolation
+      - AnomalyDetected
+      - DataAccess
+      - DataExport
+      - AuditAccess
+      - Execute
+      - Approve
+      - Reject
+      - Impersonate
+      - Password
+      - Access
+      - Unpublish
+      - Grant
+      - Revoke
+    GetAuditEntriesOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entries:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEntry'
+          totalCount:
+            type: integer
+            format: int32
+          page:
+            type: integer
+            format: int32
+          pageSize:
+            type: integer
+            format: int32
+          hasMore:
+            type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

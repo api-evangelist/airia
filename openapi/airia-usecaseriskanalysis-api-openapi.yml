@@ -1,0 +1,545 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Use Case Risk Analysis API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UseCaseRiskAnalysis
+paths:
+  /v1/governance/usecases/{useCaseId}/risk-analysis:
+    post:
+      tags:
+      - UseCaseRiskAnalysis
+      operationId: UseCaseRiskAnalysis_Start2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskAnalysisStartRequest'
+        required: true
+        x-position: 2
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAnalysisRunStatusDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Use case risk analysis start2
+      x-summary-source: derived
+  /v1/governance/usecases/{useCaseId}/risk-analysis/recompute:
+    post:
+      tags:
+      - UseCaseRiskAnalysis
+      operationId: UseCaseRiskAnalysis_Recompute2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskRecomputeRequest'
+        x-position: 2
+      responses:
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAnalysisRunStatusDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Use case risk analysis recompute2
+      x-summary-source: derived
+  /v1/governance/usecases/{useCaseId}/risk-analysis/status:
+    get:
+      tags:
+      - UseCaseRiskAnalysis
+      operationId: UseCaseRiskAnalysis_GetStatus2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: stage
+        in: query
+        schema:
+          default: Register
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseStage'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAnalysisRunStatusDto'
+        204:
+          description: ''
+      summary: Use case risk analysis get status2
+      x-summary-source: derived
+  /v1/governance/usecases/{useCaseId}/risk-analysis/profile:
+    get:
+      tags:
+      - UseCaseRiskAnalysis
+      operationId: UseCaseRiskAnalysis_GetProfile2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskProfileDto'
+        204:
+          description: ''
+      summary: Use case risk analysis get profile2
+      x-summary-source: derived
+components:
+  schemas:
+    RiskProfileFrameworkDto:
+      type: object
+      additionalProperties: false
+      required:
+      - frameworkKey
+      properties:
+        frameworkKey:
+          type: string
+        classificationValue:
+          type:
+          - string
+          - 'null'
+        confidence:
+          type:
+          - string
+          - 'null'
+        rationale:
+          type:
+          - string
+          - 'null'
+        applicability:
+          type:
+          - string
+          - 'null'
+    RiskProfileSubdomainDto:
+      type: object
+      additionalProperties: false
+      properties:
+        domainName:
+          type:
+          - string
+          - 'null'
+        subDomainName:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        riskSubDomainId:
+          type: string
+          format: guid
+        applicable:
+          type: boolean
+        confidence:
+          type:
+          - string
+          - 'null'
+        rationale:
+          type:
+          - string
+          - 'null'
+        inherentImpact:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inherentLikelihood:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inherentScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        residualImpact:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        residualLikelihood:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        residualScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inherentLikelihoodDrivers:
+          oneOf:
+          - $ref: '#/components/schemas/LikelihoodDriversDto'
+        residualLikelihoodDrivers:
+          oneOf:
+          - $ref: '#/components/schemas/LikelihoodDriversDto'
+        inherentLevel:
+          type:
+          - string
+          - 'null'
+        residualLevel:
+          type:
+          - string
+          - 'null'
+        inherentUnknownFields:
+          type: array
+          items:
+            type: string
+        residualUnknownFields:
+          type: array
+          items:
+            type: string
+    RiskScoreBreakdownDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        frameworkWeight:
+          type: number
+          format: double
+        subdomainAggregate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        subdomainWeight:
+          type: number
+          format: double
+        combined:
+          type: integer
+          format: int32
+        frameworkContributions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskScoreFrameworkContributionDto'
+        drivingFrameworkKey:
+          type:
+          - string
+          - 'null'
+        unknownDriven:
+          type: boolean
+        mediumThreshold:
+          type: integer
+          format: int32
+        highThreshold:
+          type: integer
+          format: int32
+        criticalThreshold:
+          type: integer
+          format: int32
+        regulatoryFloor:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseStage:
+      type: string
+      description: ''
+      x-enumNames:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+      enum:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+    RiskRecomputeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        stage:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseStage'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RiskScoreFrameworkContributionDto:
+      type: object
+      additionalProperties: false
+      required:
+      - frameworkKey
+      - score
+      properties:
+        frameworkKey:
+          type: string
+        score:
+          type: integer
+          format: int32
+    RiskEvidenceRequestDto:
+      type: object
+      additionalProperties: false
+      required:
+      - subDomainName
+      - field
+      - phase
+      properties:
+        subDomainName:
+          type: string
+        field:
+          type: string
+        phase:
+          type: string
+    RiskAnalysisRunStatusDto:
+      type: object
+      additionalProperties: false
+      required:
+      - runId
+      - useCaseId
+      - state
+      properties:
+        runId:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        state:
+          type: string
+        runType:
+          type: string
+        isInProgress:
+          type: boolean
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        failureReason:
+          type:
+          - string
+          - 'null'
+        attemptCount:
+          type: integer
+          format: int32
+        contextGaps:
+          type: array
+          items:
+            type: string
+    LikelihoodDriversDto:
+      type: object
+      additionalProperties: false
+      required:
+      - exposure
+      - autonomy
+      - opFrequency
+      - inputSurface
+      properties:
+        exposure:
+          type: integer
+          format: int32
+        autonomy:
+          type: integer
+          format: int32
+        opFrequency:
+          type: integer
+          format: int32
+        inputSurface:
+          type: integer
+          format: int32
+    RiskProfileDto:
+      type: object
+      additionalProperties: false
+      properties:
+        governanceScoreInherent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        governanceScoreResidual:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        needsInherentRerun:
+          type: boolean
+        needsResidualRerun:
+          type: boolean
+        frameworks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskProfileFrameworkDto'
+        subdomains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskProfileSubdomainDto'
+        evidenceRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvidenceRequestDto'
+        scoreBreakdownInherent:
+          oneOf:
+          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
+        scoreBreakdownResidual:
+          oneOf:
+          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
+    RiskAnalysisStartRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseDescription
+      properties:
+        useCaseDescription:
+          type: string
+          minLength: 1
+        organizationalContext:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

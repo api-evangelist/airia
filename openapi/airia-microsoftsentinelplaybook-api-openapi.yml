@@ -1,0 +1,305 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Microsoft Sentinel Playbook API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: MicrosoftSentinelPlaybook
+paths:
+  /v1/spm/microsoft-sentinel/playbook-events:
+    post:
+      tags:
+      - MicrosoftSentinelPlaybook
+      operationId: MicrosoftSentinelPlaybook_ReportPlaybookEvent
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicrosoftSentinelPlaybookCallbackRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrosoftSentinelPlaybookCallbackResponse'
+      summary: Microsoft sentinel playbook report playbook event
+      x-summary-source: derived
+    get:
+      tags:
+      - MicrosoftSentinelPlaybook
+      operationId: MicrosoftSentinelPlaybook_GetPlaybookEvents
+      parameters:
+      - name: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 1
+      - name: pageNumber
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 2
+      - name: includeTotalCount
+        in: query
+        schema:
+          type: boolean
+          default: true
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfMicrosoftSentinelPlaybookEventResponse'
+      summary: Microsoft sentinel playbook get playbook events
+      x-summary-source: derived
+  /v1/spm/microsoft-sentinel/playbook-events/{id}:
+    get:
+      tags:
+      - MicrosoftSentinelPlaybook
+      operationId: MicrosoftSentinelPlaybook_GetPlaybookEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrosoftSentinelPlaybookEventResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Microsoft sentinel playbook get playbook event
+      x-summary-source: derived
+  /v1/spm/microsoft-sentinel/logic-app-template:
+    get:
+      tags:
+      - MicrosoftSentinelPlaybook
+      operationId: MicrosoftSentinelPlaybook_DownloadLogicAppTemplate
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Microsoft sentinel playbook download logic app template
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultV2OfMicrosoftSentinelPlaybookEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicrosoftSentinelPlaybookEventResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    MicrosoftSentinelPlaybookCallbackResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        eventId:
+          type: string
+          format: guid
+        accepted:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    MicrosoftSentinelPlaybookTargetEntity:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - identifier
+      properties:
+        type:
+          type: string
+          maxLength: 256
+          minLength: 0
+        identifier:
+          type: string
+          maxLength: 512
+          minLength: 0
+    MicrosoftSentinelPlaybookEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        playbookRunId:
+          type: string
+        playbookName:
+          type: string
+        incidentId:
+          type:
+          - string
+          - 'null'
+        action:
+          type: string
+        targetEntityType:
+          type:
+          - string
+          - 'null'
+        targetEntityIdentifier:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        details:
+          type:
+          - string
+          - 'null'
+        correlationId:
+          type:
+          - string
+          - 'null'
+        payloadJson:
+          type:
+          - string
+          - 'null'
+    MicrosoftSentinelPlaybookCallbackRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - playbookRunId
+      - playbookName
+      - action
+      - status
+      - occurredAt
+      properties:
+        playbookRunId:
+          type: string
+          maxLength: 512
+          minLength: 0
+        playbookName:
+          type: string
+          maxLength: 512
+          minLength: 0
+        incidentId:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+          minLength: 0
+        action:
+          type: string
+          maxLength: 256
+          minLength: 0
+        targetEntity:
+          oneOf:
+          - $ref: '#/components/schemas/MicrosoftSentinelPlaybookTargetEntity'
+        status:
+          type: string
+          maxLength: 64
+          minLength: 0
+        occurredAt:
+          type: string
+          format: date-time
+        details:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+          minLength: 0
+        correlationId:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+          minLength: 0
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

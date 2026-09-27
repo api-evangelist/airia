@@ -1,0 +1,591 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Roles API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Roles
+paths:
+  /v1/Roles:
+    get:
+      tags:
+      - Roles
+      operationId: Roles_GetAllRoles
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles get all roles
+      x-summary-source: derived
+  /v1/Roles/{id}/policies:
+    get:
+      tags:
+      - Roles
+      operationId: Roles_GetRolePolicies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePoliciesViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles get role policies
+      x-summary-source: derived
+  /v1/Roles/{roleId}/users:
+    get:
+      tags:
+      - Roles
+      operationId: Roles_GetRoleUsers
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: max
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 3
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRoleUserAssignmentViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles get role users
+      x-summary-source: derived
+  /v1/Roles/{roleId}/groups:
+    get:
+      tags:
+      - Roles
+      operationId: Roles_GetRoleGroups
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: max
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 25
+        x-position: 2
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 0
+        x-position: 3
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRoleGroupAssignmentViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles get role groups
+      x-summary-source: derived
+  /v1/Roles/{roleId}/users/{userId}:
+    delete:
+      tags:
+      - Roles
+      operationId: Roles_UnassignRoleFromUser
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles unassign role from user
+      x-summary-source: derived
+  /v1/Roles/{roleId}/groups/{groupId}:
+    delete:
+      tags:
+      - Roles
+      operationId: Roles_UnassignRoleFromGroup
+      parameters:
+      - name: roleId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Roles unassign role from group
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfRoleGroupAssignmentViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleGroupAssignmentViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfRoleUserAssignmentViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleUserAssignmentViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RoleGroupAssignmentViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        groupId:
+          type: string
+          format: guid
+        groupName:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        grantedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orphaned:
+          type: boolean
+    RolePoliciesViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        isDlpPoliciesEnabled:
+          type: boolean
+        isRaiPoliciesEnabled:
+          type: boolean
+        isSecurityPoliciesEnabled:
+          type: boolean
+        isAgentExecutionFeedEnabled:
+          type: boolean
+        isDataIngestedFeedEnabled:
+          type: boolean
+        isDataProcessingFeedEnabled:
+          type: boolean
+        isDlpFeedEnabled:
+          type: boolean
+        isGatewayFeedEnabled:
+          type: boolean
+        isRaiViolationsFeedEnabled:
+          type: boolean
+        isSecurityViolationsFeedEnabled:
+          type: boolean
+        isTokenConsumptionFeedEnabled:
+          type: boolean
+        isAccountSettingsEnabled:
+          type: boolean
+        isBrandingSetttingsEnabled:
+          type: boolean
+        isClassificationsEnabled:
+          type: boolean
+        isGatewaySettingsEnabled:
+          type: boolean
+        isPeopleSettingsEnabled:
+          type: boolean
+        isApiSettingsEnabled:
+          type: boolean
+        isCredentialSettingsEnabled:
+          type: boolean
+        isSiemSettingsEnabled:
+          type: boolean
+        isSsoSettingsEnabled:
+          type: boolean
+        isWorkspaceSettingsEnabled:
+          type: boolean
+        isGuardrailsEnabled:
+          type: boolean
+        isDataRetentionEnabled:
+          type: boolean
+        isCloudConnectorEnabled:
+          type: boolean
+        isMyCredentialsEnabled:
+          type: boolean
+        isRateLimitEnabled:
+          type: boolean
+        isAgentRequestEditingEnabled:
+          type: boolean
+    RoleUserAssignmentViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        grantedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orphaned:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

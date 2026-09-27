@@ -1,0 +1,473 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Attack Paths API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AttackPaths
+paths:
+  /v1/spm/attack-paths/graph:
+    get:
+      tags:
+      - AttackPaths
+      operationId: AttackPaths_GetGraph
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttackPathGraphStatusResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Attack paths get graph
+      x-summary-source: derived
+  /v1/spm/attack-paths/refresh:
+    post:
+      tags:
+      - AttackPaths
+      operationId: AttackPaths_Refresh
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttackPathRefreshResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Attack paths refresh
+      x-summary-source: derived
+  /v1/spm/attack-paths/runs:
+    get:
+      tags:
+      - AttackPaths
+      operationId: AttackPaths_GetRuns
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttackPathRunSummaryDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Attack paths get runs
+      x-summary-source: derived
+  /v1/spm/attack-paths/runs/{id}/graph:
+    get:
+      tags:
+      - AttackPaths
+      operationId: AttackPaths_GetRunGraph
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttackPathGraphStatusResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Attack paths get run graph
+      x-summary-source: derived
+  /v1/spm/attack-paths/diff:
+    get:
+      tags:
+      - AttackPaths
+      operationId: AttackPaths_GetDiff
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttackPathDiffResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Attack paths get diff
+      x-summary-source: derived
+components:
+  schemas:
+    GraphEdgeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - source
+      - target
+      - type
+      properties:
+        source:
+          type: string
+        target:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+    GraphNodeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - type
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        risk:
+          type: integer
+          format: int32
+        status:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+    AttackPathDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - type
+      - severity
+      - nodes
+      - scoreFactors
+      - detectorId
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        score:
+          type: integer
+          format: int32
+        severity:
+          type: string
+        nodes:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        affectedDataTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        recommendation:
+          type:
+          - string
+          - 'null'
+        scoreFactors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScoreFactorDto'
+        detectorId:
+          type: string
+    AttackPathDiffChangeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - current
+      - previousSeverity
+      properties:
+        current:
+          $ref: '#/components/schemas/AttackPathDto'
+        previousScore:
+          type: integer
+          format: int32
+        previousSeverity:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AttackPathRefreshResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    AttackPathGraphStatusResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      properties:
+        status:
+          type: string
+        isRunning:
+          type: boolean
+        generatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        truncated:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeDto'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphEdgeDto'
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
+    AttackPathDiffResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        hasComparison:
+          type: boolean
+        currentRunId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        currentGeneratedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        previousRunId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        previousGeneratedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        newFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
+        resolvedFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
+        changedFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDiffChangeDto'
+    AttackPathRunSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          format: guid
+        status:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        truncated:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
+        findingCount:
+          type: integer
+          format: int32
+    ScoreFactorDto:
+      type: object
+      additionalProperties: false
+      required:
+      - group
+      - factor
+      - evidence
+      properties:
+        group:
+          type: string
+        factor:
+          type: string
+        evidence:
+          type: string
+        points:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

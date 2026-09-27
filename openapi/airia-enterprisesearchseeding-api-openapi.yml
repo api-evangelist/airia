@@ -1,0 +1,658 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Enterprise Search Seeding API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: EnterpriseSearchSeeding
+paths:
+  /v1/EnterpriseSearchSeeding/start:
+    post:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_StartSeeding2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseSearchSeedingProgressDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding start seeding2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/progress:
+    get:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_GetProgress2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseSearchSeedingProgressDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding get progress2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/status:
+    get:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_GetStatus2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeedingStatusResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding get status2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/deploy-integration:
+    post:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_DeployIntegration2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeployIntegrationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseSearchSeedingProgressDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding deploy integration2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/remove-integration:
+    post:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_RemoveIntegration2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveIntegrationRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseSearchSeedingProgressDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding remove integration2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/remove-progress:
+    get:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_GetRemoveProgress2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseSearchSeedingProgressDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding get remove progress2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/integration-status:
+    get:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_GetIntegrationStatus2
+      parameters:
+      - name: integrationType
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: projectId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeploymentStatusDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding get integration status2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/integration-oauth-requirements:
+    get:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_GetIntegrationOAuthRequirements2
+      parameters:
+      - name: integrationType
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: projectId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationOAuthRequirementsDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding get integration OAuth requirements2
+      x-summary-source: derived
+  /v1/EnterpriseSearchSeeding/execute-agent:
+    post:
+      tags:
+      - EnterpriseSearchSeeding
+      operationId: EnterpriseSearchSeeding_ExecuteAgent2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteAgentRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentExecutionResultDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Enterprise search seeding execute agent2
+      x-summary-source: derived
+components:
+  schemas:
+    EnterpriseSearchSeedingProgressDto:
+      type: object
+      additionalProperties: false
+      properties:
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        totalAgents:
+          type: integer
+          format: int32
+        completedAgents:
+          type: integer
+          format: int32
+        currentAgentName:
+          type:
+          - string
+          - 'null'
+        currentStep:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/EnterpriseSearchSeedingStatus'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        failedAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    DeployIntegrationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        integrationType:
+          type: string
+    IntegrationOAuthRequirementsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        requiresOAuth:
+          type: boolean
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentOAuthRequirement'
+    ExecuteAgentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - agentId
+      - projectId
+      properties:
+        agentId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+    RemoveIntegrationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      properties:
+        integrationType:
+          type: string
+        projectId:
+          type: string
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentOAuthRequirement:
+      type: object
+      additionalProperties: false
+      properties:
+        agentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        provider:
+          type: string
+        isUserCredentialConfigured:
+          type: boolean
+        requiredScopes:
+          type: array
+          items:
+            type: string
+    AgentExecutionResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        result:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    EnterpriseSearchSeedingStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+      enum:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+    IntegrationDeploymentStatusDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isDeployed:
+          type: boolean
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    SeedingStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isInProgress:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,657 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Community Submission API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: CommunitySubmission
+paths:
+  /v1/CommunitySubmission/submit-to-community:
+    post:
+      tags:
+      - CommunitySubmission
+      operationId: CommunitySubmission_SubmitToCommunity2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommunitySubmissionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunitySubmissionResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Community submission submit to community2
+      x-summary-source: derived
+  /v1/CommunitySubmission/submit-to-community-api:
+    post:
+      tags:
+      - CommunitySubmission
+      operationId: CommunitySubmission_SubmitToCommunityApi2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommunitySubmissionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunitySubmissionResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Community submission submit to community api2
+      x-summary-source: derived
+  /v1/CommunitySubmission/review-agent:
+    post:
+      tags:
+      - CommunitySubmission
+      operationId: CommunitySubmission_ReviewAgent2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSubmitReviewerRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineExecutionResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Community submission review agent2
+      x-summary-source: derived
+  /v1/CommunitySubmission/review-agent/stream:
+    post:
+      tags:
+      - CommunitySubmission
+      operationId: CommunitySubmission_ReviewAgentStream2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSubmitReviewerRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Community submission review agent stream2
+      x-summary-source: derived
+components:
+  schemas:
+    AgentBaseStepResult:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          string: '#/components/schemas/AgentStepStringResult'
+          branch: '#/components/schemas/AgentStepBranchedResult'
+          halt: '#/components/schemas/AgentStepHaltResult'
+          stopAndError: '#/components/schemas/AgentStopAndErrorResult'
+          memoryLoad: '#/components/schemas/AgentLoadMemoryStepResult'
+          memoryStore: '#/components/schemas/AgentStoreMemoryStepResult'
+          datasearch: '#/components/schemas/AgentDatasearchStepResult'
+          input: '#/components/schemas/AgentInputStepResult'
+          output: '#/components/schemas/AgentOutputStepResult'
+          agent: '#/components/schemas/AgentInvocationStepResult'
+          model: '#/components/schemas/AgentModelStepResult'
+          python: '#/components/schemas/AgentPythonStepResult'
+          structuredResponsePython: '#/components/schemas/AgentPythonStructuredStepResutlt'
+          approval: '#/components/schemas/AgentApprovalStepResult'
+          toolAction: '#/components/schemas/AgentToolActionStepResult'
+          card: '#/components/schemas/AgentCardStepResult'
+          loopContainer: '#/components/schemas/AgentLoopContainerStepResult'
+          loopStart: '#/components/schemas/AgentLoopStartStepResult'
+          loopEnd: '#/components/schemas/AgentLoopEndStepResult'
+          jsonFormatter: '#/components/schemas/AgentJsonFormatterStepResult'
+          sdkStep: '#/components/schemas/AgentSdkStepResult'
+          messageFormatter: '#/components/schemas/AgentMessageFormatterStepResult'
+          passthrough: '#/components/schemas/AgentPassthroughStepResult'
+          webhookApproval: '#/components/schemas/AgentWebhookApprovalStepResult'
+          modelStructured: '#/components/schemas/AgentModelStepStructuredResult'
+          customFormApproval: '#/components/schemas/AgentCustomFormApprovalStepStructuredResult'
+          image: '#/components/schemas/AgentImageStepResult'
+          documentSplitter: '#/components/schemas/AgentDocumentSplitterStepResult'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        stepType:
+          $ref: '#/components/schemas/StepType'
+        stepId:
+          type: string
+          format: guid
+        $type:
+          type: string
+    StepType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AIOperation
+      - DataSearch
+      - ExecutePipelineStep
+      - InputStep
+      - MachineLearningOperationStep
+      - MemoryLoadStep
+      - MemoryStoreStep
+      - OutputStep
+      - PythonStep
+      - Exception
+      - RouterStep
+      - AnnotationStep
+      - ApprovalStep
+      - WebhookApprovalStep
+      - ToolActionStep
+      - AgentCardStep
+      - ConditionalBranchStep
+      - LoopContainerStep
+      - LoopStartStep
+      - LoopEndStep
+      - JsonFormatterStep
+      - SdkStep
+      - CustomFormHumanApprovalStep
+      - ImageGenerationStep
+      - DocumentSplitterStep
+      enum:
+      - AIOperation
+      - dataSearch
+      - executePipelineStep
+      - inputStep
+      - machineLearningOperationStep
+      - memoryLoadStep
+      - memoryStoreStep
+      - outputStep
+      - pythonStep
+      - exception
+      - routerStep
+      - annotationStep
+      - approvalStep
+      - webhookApprovalStep
+      - toolActionStep
+      - agentCardStep
+      - conditionalBranchStep
+      - loopContainerStep
+      - loopStartStep
+      - loopEndStep
+      - jsonFormatterStep
+      - sdkStep
+      - customFormHumanApprovalStep
+      - imageGenerationStep
+      - documentSplitterStep
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    TimeTrackingData:
+      type: object
+      additionalProperties: false
+      properties:
+        duration:
+          type:
+          - string
+          - 'null'
+          example: 0.0
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    AgentStepCompletionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Cancelled
+      - Complete
+      - DataReady
+      - BranchedComplete
+      - Exception
+      - Halt
+      - LazyComplete
+      enum:
+      - None
+      - Cancelled
+      - Complete
+      - DataReady
+      - BranchedComplete
+      - Exception
+      - Halt
+      - LazyComplete
+    PipelineExecutionResult:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          string: '#/components/schemas/PipelineExecutionStringResult'
+          objectArray: '#/components/schemas/PipelineExecutionArrayResult'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        report:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IPipelineStepResult'
+        isBackupPipeline:
+          type: boolean
+        executionId:
+          type: string
+          format: guid
+        userInputId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        disclosure:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosurePayload'
+        $type:
+          type: string
+    AgentSubmitReviewerRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userInput:
+          type: string
+        saveHistory:
+          type: boolean
+        asyncOutput:
+          type: boolean
+        additionalInfo:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    CommunitySubmissionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - agentId
+      properties:
+        agentId:
+          type: string
+          format: guid
+          minLength: 1
+        note:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        errorDetails:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    IPipelineStepResult:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        stepId:
+          type: string
+          format: guid
+        stepType:
+          oneOf:
+          - $ref: '#/components/schemas/StepType'
+        stepTitle:
+          type: string
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/AgentBaseStepResult'
+        input:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+        success:
+          type:
+          - boolean
+          - 'null'
+        completionStatus:
+          $ref: '#/components/schemas/AgentStepCompletionStatus'
+        timeTrackingData:
+          $ref: '#/components/schemas/TimeTrackingData'
+        exceptionMessage:
+          type:
+          - string
+          - 'null'
+        debugInformation:
+          type: object
+          additionalProperties: {}
+    DisclosurePayload:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type: string
+        agentName:
+          type:
+          - string
+          - 'null'
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        agentType:
+          type:
+          - string
+          - 'null'
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelDisclosure'
+        primaryModel:
+          oneOf:
+          - $ref: '#/components/schemas/ModelDisclosure'
+        guardrailsApplied:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        guardrailCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        useCases:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UseCaseDisclosure'
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+        humanReviewed:
+          type:
+          - boolean
+          - 'null'
+        reviewedBy:
+          type:
+          - string
+          - 'null'
+        disclosureVersion:
+          type: string
+    CommunitySubmissionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        communityAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        errorCode:
+          type:
+          - string
+          - 'null'
+    UseCaseDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        stage:
+          type: string
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+    ModelDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

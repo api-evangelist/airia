@@ -1,0 +1,1226 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Job Orchestration API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: JobOrchestration
+paths:
+  /v1/JobOrchestration:
+    post:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJobRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateJobResult'
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        402:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration create
+      x-summary-source: derived
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_GetJobResults
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: requesterId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 6
+      - name: requesterName
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: jobName
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: jobType
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: externalId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 11
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGetJobResult'
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get job results
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_Get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetJobResult'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get
+      x-summary-source: derived
+    delete:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_Delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration delete
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/sse:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_GetJobStatusStream
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get job status stream
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/result:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_GetJobResult
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JsonDocument'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get job result
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/csv:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_GetJobResultCsv
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get job result csv
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/rename:
+    post:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_RenameJob
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: renameJobRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameJobRequest'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration rename job
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/cancel:
+    post:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_CancelJob
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: cancellationReason
+        in: query
+        schema:
+          default: UserRequested
+          oneOf:
+          - $ref: '#/components/schemas/JobCancellationReason'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration cancel job
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/retry:
+    post:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_RetryJob
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration retry job
+      x-summary-source: derived
+  /v1/JobOrchestration/sse:
+    post:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_CreateAndStream
+      parameters:
+      - name: x-correlation-id
+        x-originalName: correlationIdHeader
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJobRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        500:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        402:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration create and stream
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/logs:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_GetJobTaskLogs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfJobTaskLogResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration get job task logs
+      x-summary-source: derived
+  /v1/JobOrchestration/{id}/resume:
+    get:
+      tags:
+      - JobOrchestration
+      operationId: JobOrchestration_ResumeStream
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: fromTimestamp
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Job orchestration resume stream
+      x-summary-source: derived
+components:
+  schemas:
+    JobResilienceSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        timeoutSettings:
+          $ref: '#/components/schemas/ResilienceTimeoutSettingsRequest'
+    ResilienceTimeoutSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        timeoutMilliseconds:
+          type: integer
+          format: int64
+    CreateJobRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        externalId:
+          type:
+          - string
+          - 'null'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+        source:
+          $ref: '#/components/schemas/JobSource'
+        jobExecutionSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobExecutionSettingsRequest'
+        jobResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobResilienceSettingsRequest'
+        jobTaskResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobTaskResilienceSettingsRequest'
+        jobParameters:
+          type: string
+        pollingEnabled:
+          type: boolean
+    JobTaskStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+      enum:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    JobTaskLogResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        taskId:
+          type: string
+          format: guid
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+        previousStatus:
+          oneOf:
+          - $ref: '#/components/schemas/JobTaskStatus'
+        updatedStatus:
+          $ref: '#/components/schemas/JobTaskStatus'
+        log:
+          type:
+          - string
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+    FailedJobTaskBehavior:
+      type: string
+      description: ''
+      x-enumNames:
+      - Continue
+      - StopJob
+      enum:
+      - Continue
+      - StopJob
+    GetJobResult:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+          minLength: 1
+        externalId:
+          type:
+          - string
+          - 'null'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+        source:
+          $ref: '#/components/schemas/JobSource'
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        jobExecutionSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobExecutionSettingsRequest'
+        jobResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobResilienceSettingsRequest'
+        jobTaskResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobTaskResilienceSettingsRequest'
+        taskStatusCount:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        jobParameters:
+          type: string
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        totalTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        requesterName:
+          type:
+          - string
+          - 'null'
+        requesterId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    JobCancellationReason:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserRequested
+      - TimedOut
+      - ExecutionError
+      - SchedulerRequested
+      - UserPaused
+      - AgentExecutionLimitReached
+      enum:
+      - UserRequested
+      - TimedOut
+      - ExecutionError
+      - SchedulerRequested
+      - UserPaused
+      - AgentExecutionLimitReached
+    JobSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - PlatformApi
+      - PlatformBuilder
+      - ChatWebUi
+      - ChatMobileApp
+      - AgentToAgent
+      - ScheduledTask
+      enum:
+      - Unknown
+      - PlatformApi
+      - PlatformBuilder
+      - ChatWebUi
+      - ChatMobileApp
+      - AgentToAgent
+      - ScheduledTask
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfJobTaskLogResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobTaskLogResult'
+        totalCount:
+          type: integer
+          format: int32
+    CreateJobResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        externalId:
+          type:
+          - string
+          - 'null'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+        source:
+          $ref: '#/components/schemas/JobSource'
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        jobExecutionSettings:
+          $ref: '#/components/schemas/JobExecutionSettingsRequest'
+        jobResilienceSettings:
+          $ref: '#/components/schemas/JobResilienceSettingsRequest'
+        jobTaskResilienceSettings:
+          $ref: '#/components/schemas/JobTaskResilienceSettingsRequest'
+        jobStatusCount:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        jobParameters:
+          type: string
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        requesterName:
+          type:
+          - string
+          - 'null'
+        requesterId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    JobType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - SmartScan
+      - SingleFileSplitProcessing
+      - AgentExecution
+      - StorageCleanup
+      - AgentEvaluation
+      - GoalBasedRedTeaming
+      - MeetingTranscriptProcessing
+      - MemoryDataMigration
+      - ConversationMigration
+      - InitializeCassandraMigrationTracking
+      - ImageMigration
+      - AIAssetSync
+      - OwaspPromptGeneration
+      - DataSourceFileContentAgentExecution
+      - BranchCompletionReconciliation
+      - FoundryAgentEvaluation
+      - GovernanceFrameworkCatalogReconciliation
+      - UseCaseVersionBackfill
+      enum:
+      - Unknown
+      - SmartScan
+      - SingleFileSplitProcessing
+      - AgentExecution
+      - StorageCleanup
+      - AgentEvaluation
+      - GoalBasedRedTeaming
+      - MeetingTranscriptProcessing
+      - MemoryDataMigration
+      - ConversationMigration
+      - InitializeCassandraMigrationTracking
+      - ImageMigration
+      - AIAssetSync
+      - OwaspPromptGeneration
+      - DataSourceFileContentAgentExecution
+      - BranchCompletionReconciliation
+      - FoundryAgentEvaluation
+      - GovernanceFrameworkCatalogReconciliation
+      - UseCaseVersionBackfill
+    RenameJobRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+    JobTaskResilienceSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        timeoutSettings:
+          $ref: '#/components/schemas/ResilienceTimeoutSettingsRequest'
+        retrySettings:
+          oneOf:
+          - $ref: '#/components/schemas/ResilienceRetrySettingsRequest'
+    BackoffType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Constant
+      - Linear
+      - Exponential
+      enum:
+      - Constant
+      - Linear
+      - Exponential
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    PagedResultOfGetJobResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetJobResult'
+        totalCount:
+          type: integer
+          format: int32
+    ResilienceRetrySettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetryAttempts:
+          type: integer
+          format: int64
+        maxInternalRetryAttempts:
+          type: integer
+          format: int64
+        shouldHandle:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        backoffType:
+          $ref: '#/components/schemas/BackoffType'
+        delayMilliseconds:
+          type: integer
+          format: int32
+        maxDelayMilliseconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        useJitter:
+          type: boolean
+    JobExecutionSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        maxDegreeOfParallelism:
+          type: integer
+          format: int32
+        failedJobTaskBehavior:
+          $ref: '#/components/schemas/FailedJobTaskBehavior'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

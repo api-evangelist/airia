@@ -1,0 +1,204 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Data Retention Settings API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DataRetentionSettings
+paths:
+  /v1/DataRetentionSettings:
+    get:
+      tags:
+      - DataRetentionSettings
+      operationId: DataRetentionSettings_GetSettings
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataRetentionSettingsDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Data retention settings get settings
+      x-summary-source: derived
+    put:
+      tags:
+      - DataRetentionSettings
+      operationId: DataRetentionSettings_Update
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: newSettings
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataRetentionSettingsDto'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataRetentionSettingsDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Data retention settings update
+      x-summary-source: derived
+components:
+  schemas:
+    DataRetentionSettingsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doNotRetainConversationData:
+          type: boolean
+          deprecated: true
+          x-deprecatedMessage: Use ConversationAccessLevel instead. Will be removed in future version.
+        restrictConversationDetailsToOriginatingUserOnly:
+          type: boolean
+        browserExtensionPromptRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cloudflareRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        spmProcessExecutionEventRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        platformDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        claudeMonitoringDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        policyEnforcementDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        mcpGatewayDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        meetingDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        budgetEvaluationDataRetentionDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        clearBudgetEvaluationDataRetention:
+          type: boolean
+        backfilledFromLegacy:
+          type: boolean
+        tierCapDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

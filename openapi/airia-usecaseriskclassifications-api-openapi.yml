@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Use Case Risk Classifications API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UseCaseRiskClassifications
+paths:
+  /v1/governance/usecases/{useCaseId}/risk-classifications/active:
+    get:
+      tags:
+      - UseCaseRiskClassifications
+      operationId: UseCaseRiskClassifications_GetActive2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCaseRiskClassificationDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Use case risk classifications get active2
+      x-summary-source: derived
+  /v1/governance/usecases/{useCaseId}/risk-classifications/history:
+    get:
+      tags:
+      - UseCaseRiskClassifications
+      operationId: UseCaseRiskClassifications_GetHistory2
+      parameters:
+      - name: useCaseId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UseCaseRiskClassificationDto'
+      summary: Use case risk classifications get history2
+      x-summary-source: derived
+components:
+  schemas:
+    NistAiRmfTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+      enum:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+    Iso42001Level:
+      type: string
+      description: ''
+      x-enumNames:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+      enum:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    UseCaseRiskClassificationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        isActive:
+          type: boolean
+        euAiAct:
+          $ref: '#/components/schemas/EuAiActCategory'
+        nistAiRmfTier:
+          $ref: '#/components/schemas/NistAiRmfTier'
+        iso42001Level:
+          $ref: '#/components/schemas/Iso42001Level'
+        mitRiskControlIds:
+          type: array
+          items:
+            type: string
+        coSaiControlIds:
+          type: array
+          items:
+            type: string
+        governanceScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        riskAssessmentJson:
+          type:
+          - string
+          - 'null'
+        euAiActConfidence:
+          type:
+          - string
+          - 'null'
+        nistAiRmfConfidence:
+          type:
+          - string
+          - 'null'
+        iso42001Confidence:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

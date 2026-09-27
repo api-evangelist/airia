@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Files API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Files
+paths:
+  /v1/files/transfer:
+    post:
+      tags:
+      - Files
+      operationId: Files_Transfer
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileTransferRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatastoreFileReference'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Files transfer
+      x-summary-source: derived
+components:
+  schemas:
+    FileTransferTarget:
+      type: object
+      additionalProperties: false
+      required:
+      - storeConnectorId
+      - projectId
+      - fileName
+      properties:
+        storeConnectorId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        fileName:
+          type: string
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        conflict:
+          type:
+          - string
+          - 'null'
+    FileTransferRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - source
+      - target
+      properties:
+        source:
+          $ref: '#/components/schemas/FileTransferSource'
+        target:
+          $ref: '#/components/schemas/FileTransferTarget'
+    DatastoreFileReference:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        storeConnectorId:
+          type: string
+          format: guid
+        size:
+          type: integer
+          format: int64
+        mimeType:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        fileLastUpdatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        systemErrors:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        processingMessage:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    FileTransferSource:
+      type: object
+      additionalProperties: false
+      properties:
+        blobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datastoreFileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        generatedText:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

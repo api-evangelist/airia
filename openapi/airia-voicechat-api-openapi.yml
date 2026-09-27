@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Voice Chat API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: VoiceChat
+paths:
+  /v1/VoiceChat/sessions:
+    post:
+      tags:
+      - VoiceChat
+      operationId: VoiceChat_CreateVoiceSession
+      parameters:
+      - name: Authorization
+        x-originalName: authorization
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: X-Refresh-Token
+        x-originalName: refreshToken
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: X-Spaces-Guest-Token
+        x-originalName: spacesGuestToken
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVoiceSessionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoiceSessionResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Voice chat create voice session
+      x-summary-source: derived
+components:
+  schemas:
+    CreateVoiceSessionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - pipelineId
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        conversationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        voice:
+          type:
+          - string
+          - 'null'
+        conversationTitle:
+          type:
+          - string
+          - 'null'
+        conversationDeploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    VoiceSessionResult:
+      type: object
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+        roomName:
+          type: string
+        url:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

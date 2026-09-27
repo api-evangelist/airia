@@ -1,0 +1,152 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Replace Variables API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ReplaceVariables
+paths:
+  /docgen/v2/ReplaceVariables:
+    post:
+      tags:
+      - ReplaceVariables
+      operationId: ReplaceVariables_ReplaceVariables
+      parameters:
+      - name: X-Use-Platform-Blob-Proxy
+        x-originalName: usePlatformBlobProxy
+        in: header
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceVariablesRequestV2'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplaceVariablesResponseV2'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        413:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Replace variables replace variables
+      x-summary-source: derived
+components:
+  schemas:
+    ReplaceVariablesRequestV2:
+      type: object
+      additionalProperties: false
+      required:
+      - variables
+      properties:
+        file:
+          type:
+          - string
+          - 'null'
+        fileUrl:
+          type:
+          - string
+          - 'null'
+        variables:
+          type: object
+          additionalProperties:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ReplaceVariablesResponseV2:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        filename:
+          type: string
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int64
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,797 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Discovery Insights API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DiscoveryInsights
+paths:
+  /v1/discovery/reports/ungoverned-devices:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetUngovernedDeviceWatchlist
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get ungoverned device watchlist
+      x-summary-source: derived
+  /v1/discovery/reports/adoption-curve:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetEnforcementAdoptionCurve
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get enforcement adoption curve
+      x-summary-source: derived
+  /v1/discovery/reports/posture-delta:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetPostureDeltaScorecard
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get posture delta scorecard
+      x-summary-source: derived
+  /v1/discovery/reports/governance-funnel:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetAiEstateGovernanceFunnel
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get ai estate governance funnel
+      x-summary-source: derived
+  /v1/discovery/reports/guardrail-effectiveness:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetGuardrailEffectiveness
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get guardrail effectiveness
+      x-summary-source: derived
+  /v1/discovery/reports/unmet-ai-demand:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetUnmetAiDemand
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get unmet ai demand
+      x-summary-source: derived
+  /v1/discovery/reports/credential-exposure:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetAiCredentialExposureRegister
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get ai credential exposure register
+      x-summary-source: derived
+  /v1/discovery/reports/coverage-confidence:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetShadowAiCoverageConfidence
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get shadow ai coverage confidence
+      x-summary-source: derived
+  /v1/discovery/reports/sanctioned-conversion:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetSanctionedConversion
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get sanctioned conversion
+      x-summary-source: derived
+  /v1/discovery/reports/shadow-mcp-register:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetShadowMcpServerRegister
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get shadow mcp server register
+      x-summary-source: derived
+  /v1/discovery/reports/person-risk-profile:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetPersonAiRiskProfile
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get person ai risk profile
+      x-summary-source: derived
+  /v1/discovery/reports/code-to-cloud-sprawl:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetCodeToCloudAiSprawl
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get code to cloud ai sprawl
+      x-summary-source: derived
+  /v1/discovery/reports/model-deprecation-exposure:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetModelDeprecationExposure
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get model deprecation exposure
+      x-summary-source: derived
+  /v1/discovery/reports/oauth-blast-radius:
+    get:
+      tags:
+      - DiscoveryInsights
+      operationId: DiscoveryInsights_GetAiOAuthBlastRadius
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryInsightResultDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery insights get ai OAuth blast radius
+      x-summary-source: derived
+components:
+  schemas:
+    DiscoveryInsightEntityRowDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entityKey:
+          type: string
+        displayLabel:
+          type: string
+        entityKind:
+          $ref: '#/components/schemas/DiscoveryInsightEntityKind'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
+    DiscoveryInsightProvenanceReadDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceKey:
+          type: string
+        fields:
+          type: array
+          items:
+            type: string
+        noteKey:
+          type:
+          - string
+          - 'null'
+    DiscoveryInsightDenominatorState:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotApplicable
+      - CountsOnly
+      - Percent
+      enum:
+      - NotApplicable
+      - CountsOnly
+      - Percent
+    DiscoveryMetricValueState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Measured
+      - Floor
+      - Unavailable
+      - Estimated
+      enum:
+      - Measured
+      - Floor
+      - Unavailable
+      - Estimated
+    DiscoveryInsightResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        reportId:
+          type: string
+        asOf:
+          type: string
+          format: date-time
+        denominatorState:
+          $ref: '#/components/schemas/DiscoveryInsightDenominatorState'
+        currentWindowStart:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        currentWindowEnd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        baselineWindowStart:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        baselineWindowEnd:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
+        entities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightEntityRowDto'
+        provenance:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightProvenanceEntryDto'
+        narratives:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightNarrativeDto'
+    DiscoveryScorecardSurfaceVerdict:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotStarted
+      - Flat
+      - Improving
+      enum:
+      - NotStarted
+      - Flat
+      - Improving
+    DiscoveryInsightProvenanceEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        metricKey:
+          type: string
+        reads:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightProvenanceReadDto'
+        derivationKey:
+          type: string
+        derivationParams:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        caveatKeys:
+          type: array
+          items:
+            type: string
+    DiscoveryExitCriterionState:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotApplicable
+      - Met
+      - Missed
+      enum:
+      - NotApplicable
+      - Met
+      - Missed
+    DiscoveryInsightNarrativeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        templateKey:
+          type: string
+        params:
+          type: object
+          additionalProperties: {}
+        isGenerated:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DiscoveryInsightEntityKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Person
+      - Model
+      - Grant
+      - Device
+      enum:
+      - Person
+      - Model
+      - Grant
+      - Device
+    DiscoveryInsightMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        labelKey:
+          type: string
+        value: {}
+        unitKey:
+          type:
+          - string
+          - 'null'
+        formulaKey:
+          type:
+          - string
+          - 'null'
+        formulaParams:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        valueState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryMetricValueState'
+        higherIsBetter:
+          type:
+          - boolean
+          - 'null'
+        exitCriterionState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryExitCriterionState'
+        surfaceVerdict:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryScorecardSurfaceVerdict'
+        scorecardSurfaceKey:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,286 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Policy Admin API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PolicyAdmin
+paths:
+  /v1/admin/endpoint-agent/policy:
+    get:
+      tags:
+      - PolicyAdmin
+      operationId: PolicyAdmin_Get2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthoredPolicyResponseV1'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Policy admin get2
+      x-summary-source: derived
+    put:
+      tags:
+      - PolicyAdmin
+      operationId: PolicyAdmin_Upsert2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePolicyRequestV1'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthoredPolicyResponseV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Policy admin upsert2
+      x-summary-source: derived
+components:
+  schemas:
+    AuthoredPolicyV1:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type: string
+        mcp:
+          $ref: '#/components/schemas/McpPolicyV1'
+        secrets:
+          $ref: '#/components/schemas/SecretsPolicyV1'
+        sanctionedServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SanctionedServerV1'
+        llmProxy:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AuthoredLlmProxyEntryV1'
+    GetAuthoredPolicyResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        schemaVersion:
+          type: integer
+          format: int32
+        revision:
+          type: integer
+          format: int64
+        generatedAt:
+          type: string
+          format: date-time
+        policy:
+          $ref: '#/components/schemas/AuthoredPolicyV1'
+    SecretsPolicyV1:
+      type: object
+      additionalProperties: false
+      properties:
+        plaintextForbidden:
+          type: boolean
+    UpdatePolicyRequestV1:
+      type: object
+      additionalProperties: false
+      required:
+      - expectedRevision
+      - policy
+      properties:
+        expectedRevision:
+          type: integer
+          format: int64
+        policy:
+          $ref: '#/components/schemas/AuthoredPolicyV1'
+    HttpValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/ProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    SanctionedServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        logicalId:
+          type: string
+        match:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchPredicateV1'
+        gatewayUrl:
+          type: string
+    McpPolicyV1:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedHosts:
+          type: array
+          items:
+            type: string
+        forbidTransports:
+          type: array
+          items:
+            type: string
+        requireKnownHost:
+          type: boolean
+        allowlistMode:
+          type: string
+        defaultServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefaultMcpServerV1'
+    AuthoredLlmProxyEntryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        gatewayUrl:
+          type: string
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        overrides:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AuthoredLlmProxyOverrideV1'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DefaultMcpServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        logicalId:
+          type: string
+        gatewayUrl:
+          type: string
+        installIn:
+          type: array
+          items:
+            type: string
+    MatchPredicateV1:
+      type: object
+      additionalProperties: false
+      properties:
+        host:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+    AuthoredLlmProxyOverrideV1:
+      type: object
+      additionalProperties: false
+      properties:
+        gatewayUrl:
+          type: string
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

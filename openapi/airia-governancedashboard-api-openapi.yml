@@ -1,0 +1,531 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Governance Dashboard API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GovernanceDashboard
+paths:
+  /v1/governance/dashboard/summary:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetDashboardSummary2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceDashboardSummaryDto'
+      summary: Governance dashboard get dashboard summary2
+      x-summary-source: derived
+  /v1/governance/dashboard/heatmap:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetHeatmap2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceDashboardHeatmapDto'
+      summary: Governance dashboard get heatmap2
+      x-summary-source: derived
+  /v1/governance/dashboard/additional-details:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetAdditionalDetails2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceDashboardAdditionalDetailsDto'
+      summary: Governance dashboard get additional details2
+      x-summary-source: derived
+  /v1/governance/dashboard/risk-domain-summary:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetRiskDomainSummary2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceDashboardRiskDomainSummaryDto'
+      summary: Governance dashboard get risk domain summary2
+      x-summary-source: derived
+  /v1/governance/dashboard/alerts/dismiss-all:
+    post:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_DismissAllRiskAlerts2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+      summary: Governance dashboard dismiss all risk alerts2
+      x-summary-source: derived
+  /v1/governance/dashboard/alerts/{auditLogEntryId}/dismiss:
+    post:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_DismissRiskAlert2
+      parameters:
+      - name: auditLogEntryId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance dashboard dismiss risk alert2
+      x-summary-source: derived
+  /v1/governance/dashboard/alerts:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetRiskAlerts2
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 20
+        x-position: 2
+      - name: includeDismissed
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskAlertsResponseDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance dashboard get risk alerts2
+      x-summary-source: derived
+  /v1/governance/dashboard/sla-at-risk:
+    get:
+      tags:
+      - GovernanceDashboard
+      operationId: GovernanceDashboard_GetSlaAtRisk2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: approachingWindowHours
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 72
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GovernanceSlaAtRiskResponseDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Governance dashboard get sla at risk2
+      x-summary-source: derived
+components:
+  schemas:
+    GovernanceSlaAtRiskEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        blocker:
+          type: string
+        detail:
+          type: string
+        status:
+          type: string
+        gateSlaDeadline:
+          type: string
+          format: date-time
+    DashboardMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        currentPeriod:
+          type: number
+          format: double
+        previousPeriod:
+          type: number
+          format: double
+        diffValue:
+          type: number
+          format: double
+    RiskAlertResourceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        tenantId:
+          type: string
+    GovernanceDashboardAdditionalDetailsDto:
+      type: object
+      additionalProperties: false
+      required:
+      - totalAgents
+      - internalAgentsCount
+      - externalAgentsCount
+      - modelsCount
+      - appsCount
+      - noEvaluations
+      - biasThresholdExceeded
+      - noRedTeamTests
+      - agentsDeployedWithoutGuardrails
+      properties:
+        totalAgents:
+          type: integer
+          format: int32
+        internalAgentsCount:
+          type: integer
+          format: int32
+        externalAgentsCount:
+          type: integer
+          format: int32
+        modelsCount:
+          type: integer
+          format: int32
+        appsCount:
+          type: integer
+          format: int32
+        noEvaluations:
+          type: integer
+          format: int32
+        biasThresholdExceeded:
+          type: integer
+          format: int32
+        noRedTeamTests:
+          type: integer
+          format: int32
+        agentsDeployedWithoutGuardrails:
+          type: integer
+          format: int32
+    RiskAlertsResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskAlertEntryDto'
+        totalCount:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    RiskAlertActorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    GovernanceDashboardHeatmapDto:
+      type: object
+      additionalProperties: false
+      required:
+      - dataPoints
+      properties:
+        dataPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeatmapDataPointDto'
+    RiskDomainCountDto:
+      type: object
+      additionalProperties: false
+      required:
+      - riskDomainId
+      - riskDomainName
+      - count
+      properties:
+        riskDomainId:
+          type: string
+          format: guid
+        riskDomainName:
+          type: string
+        count:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GovernanceDashboardRiskDomainSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - domains
+      properties:
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDomainCountDto'
+    GovernanceSlaAtRiskResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceSlaAtRiskEntryDto'
+        totalCount:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        overdueCount:
+          type: integer
+          format: int32
+        approachingCount:
+          type: integer
+          format: int32
+    GovernanceScoreMetricDto:
+      allOf:
+      - $ref: '#/components/schemas/DashboardMetricDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          riskClassificationDiscipline:
+            type: number
+            format: double
+          controlCoverage:
+            type: number
+            format: double
+          agentIntegrityHealth:
+            type: number
+            format: double
+          riskGovernance:
+            type: number
+            format: double
+          oversightEffectiveness:
+            type: number
+            format: double
+    HeatmapDataPointDto:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - useCaseName
+      - axisY
+      - axisX
+      - bubbleSize
+      - executionCount
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        axisY:
+          type: integer
+          format: int32
+        axisX:
+          type: integer
+          format: int32
+        bubbleSize:
+          type: string
+        executionCount:
+          type: integer
+          format: int32
+        riskLevel:
+          type:
+          - string
+          - 'null'
+    GovernanceDashboardSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - governanceScore
+      - monitoredUseCases
+      - highRiskUseCases
+      - agentsGoverned
+      - policyEnforcements
+      - pendingHumanReviews
+      properties:
+        governanceScore:
+          $ref: '#/components/schemas/GovernanceScoreMetricDto'
+        monitoredUseCases:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        highRiskUseCases:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        agentsGoverned:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        policyEnforcements:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        pendingHumanReviews:
+          $ref: '#/components/schemas/DashboardMetricDto'
+    RiskAlertEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        operation:
+          type: string
+        severity:
+          type: string
+        description:
+          type: string
+        actor:
+          $ref: '#/components/schemas/RiskAlertActorDto'
+        resource:
+          $ref: '#/components/schemas/RiskAlertResourceDto'
+        dismissedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        dismissedByUserName:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

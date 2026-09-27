@@ -1,0 +1,395 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Classification Assignment API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ClassificationAssignment
+paths:
+  /v1/ClassificationAssignment:
+    get:
+      tags:
+      - ClassificationAssignment
+      operationId: ClassificationAssignment_GetAll
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClassificationAssignmentDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification assignment get all
+      x-summary-source: derived
+    post:
+      tags:
+      - ClassificationAssignment
+      operationId: ClassificationAssignment_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssignmentRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification assignment create
+      x-summary-source: derived
+  /v1/ClassificationAssignment/asset/{assetId}:
+    get:
+      tags:
+      - ClassificationAssignment
+      operationId: ClassificationAssignment_GetByAssetId
+      parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: types
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClassificationType'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssetClassificationDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification assignment get by asset id
+      x-summary-source: derived
+  /v1/ClassificationAssignment/{id}:
+    put:
+      tags:
+      - ClassificationAssignment
+      operationId: ClassificationAssignment_Update
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssignmentRequest'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification assignment update
+      x-summary-source: derived
+    delete:
+      tags:
+      - ClassificationAssignment
+      operationId: ClassificationAssignment_Delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Classification assignment delete
+      x-summary-source: derived
+components:
+  schemas:
+    ClassificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Default
+      - Custom
+      - RiskLevel
+      enum:
+      - Default
+      - Custom
+      - RiskLevel
+    ClassificationLabelInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        labelName:
+          type: string
+        isDefaultValue:
+          type: boolean
+        classificationId:
+          type: string
+          format: guid
+        priority:
+          type: integer
+          format: int32
+    UpdateAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        assignedClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ClassificationAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        assetId:
+          type: string
+          format: guid
+        classificationId:
+          type: string
+          format: guid
+        assignedClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inferredClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CreateAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: guid
+        assetId:
+          type: string
+          format: guid
+        classificationId:
+          type: string
+          format: guid
+        assignedClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        controlIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    AssetClassificationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assignmentId:
+          type: string
+          format: guid
+        classificationId:
+          type: string
+          format: guid
+        classificationName:
+          type: string
+        classificationType:
+          $ref: '#/components/schemas/ClassificationType'
+        assignedLabel:
+          oneOf:
+          - $ref: '#/components/schemas/ClassificationLabelInfo'
+        inferredLabel:
+          oneOf:
+          - $ref: '#/components/schemas/ClassificationLabelInfo'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

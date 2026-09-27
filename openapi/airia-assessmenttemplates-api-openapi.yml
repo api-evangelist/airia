@@ -1,0 +1,925 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Assessment Templates API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AssessmentTemplates
+paths:
+  /v1/governance/assessment-templates:
+    get:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_GetTemplates2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: category
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/AssessmentTemplateCategory'
+        x-position: 6
+      - name: categories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateCategory'
+        x-position: 7
+      - name: frameworkId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 8
+      - name: isActive
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+          default: true
+        x-position: 9
+      - name: isSystemManaged
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 10
+      - name: isAiriaProvided
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 11
+      - name: scope
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/AssessmentTemplateScope'
+        x-position: 12
+      - name: subCategories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        x-position: 13
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAssessmentTemplateListDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates get templates2
+      x-summary-source: derived
+    post:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_Create2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssessmentTemplateRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates create2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}:
+    get:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_GetById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateDetailDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates get by id2
+      x-summary-source: derived
+    patch:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_Update2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssessmentTemplateRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates update2
+      x-summary-source: derived
+    delete:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_Delete2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates delete2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}/versions:
+    get:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_GetVersions2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
+      summary: Assessment templates get versions2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}/versions/{versionId}:
+    get:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_GetVersionById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateVersionDetailDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates get version by id2
+      x-summary-source: derived
+    patch:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_UpdateDraft2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssessmentTemplateVersionRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateVersionDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates update draft2
+      x-summary-source: derived
+    delete:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_DeleteVersion2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates delete version2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}/versions/draft:
+    post:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_CreateDraft2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssessmentTemplateVersionDraftRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateVersionDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates create draft2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}/versions/{versionId}/publish:
+    post:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_PublishDraft2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateVersionDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates publish draft2
+      x-summary-source: derived
+  /v1/governance/assessment-templates/{id}/fork:
+    post:
+      tags:
+      - AssessmentTemplates
+      operationId: AssessmentTemplates_Fork2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForkAssessmentTemplateRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentTemplateDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Assessment templates fork2
+      x-summary-source: derived
+components:
+  schemas:
+    CreateAssessmentTemplateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type: string
+          format: guid
+        fileUrl:
+          type: string
+    AssessmentTemplateCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Exploratory
+      - Attestation
+      enum:
+      - Exploratory
+      - Attestation
+    ForkAssessmentTemplateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+    CreateAssessmentTemplateVersionDraftRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        templateStructure:
+          type:
+          - string
+          - 'null'
+    AssessmentTemplateVersionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Processing
+      - Completed
+      - Failed
+      enum:
+      - Processing
+      - Completed
+      - Failed
+    AssessmentTemplateListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type: string
+          format: guid
+        frameworkName:
+          type:
+          - string
+          - 'null'
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        isSystemManaged:
+          type: boolean
+        latestPublishedVersionNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        latestPublishedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        hasDraft:
+          type: boolean
+        questionCount:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        hasAssessments:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UpdateAssessmentTemplateVersionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        templateStructure:
+          type:
+          - string
+          - 'null'
+        questionCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    AssessmentTemplateScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Organization
+      - UseCase
+      - Asset
+      enum:
+      - Organization
+      - UseCase
+      - Asset
+    UpdateAssessmentTemplateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isActive:
+          type:
+          - boolean
+          - 'null'
+    AssessmentTemplateSubCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+      enum:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AssessmentTemplateVersionDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          templateStructure:
+            type:
+            - string
+            - 'null'
+    AssessmentTemplateDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentTemplateListDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          sourceTemplateId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
+    PagedResultOfAssessmentTemplateListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateListDto'
+        totalCount:
+          type: integer
+          format: int32
+    AssessmentTemplateVersionListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        versionNumber:
+          type: integer
+          format: int32
+        isDraft:
+          type: boolean
+        questionCount:
+          type: integer
+          format: int32
+        hasTemplateStructure:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/AssessmentTemplateVersionStatus'
+        failureReason:
+          type:
+          - string
+          - 'null'
+        hasAssessments:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,480 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Build With AI Seeding API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: BuildWithAiSeeding
+paths:
+  /v1/BuildWithAiSeeding/start-all:
+    post:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_StartSeedingAll2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        202:
+          description: ''
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        499:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding start seeding all2
+      x-summary-source: derived
+  /v1/BuildWithAiSeeding/start:
+    post:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_StartSeeding2
+      parameters:
+      - name: projectType
+        in: query
+        schema:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildWithAiSeedingProgressDto'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        499:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding start seeding2
+      x-summary-source: derived
+  /v1/BuildWithAiSeeding/progress:
+    get:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_GetProgress2
+      parameters:
+      - name: projectType
+        in: query
+        schema:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildWithAiSeedingProgressDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding get progress2
+      x-summary-source: derived
+  /v1/BuildWithAiSeeding/status-all:
+    get:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_GetAllProjectsStatus2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BuildWithAiProjectInfo'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding get all projects status2
+      x-summary-source: derived
+  /v1/BuildWithAiSeeding/status:
+    get:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_GetStatus2
+      parameters:
+      - name: projectType
+        in: query
+        schema:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildWithAiSeedingStatusResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding get status2
+      x-summary-source: derived
+  /v1/BuildWithAiSeeding/disable:
+    delete:
+      tags:
+      - BuildWithAiSeeding
+      operationId: BuildWithAiSeeding_DisableProjectType2
+      parameters:
+      - name: projectType
+        in: query
+        schema:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        x-position: 1
+      - name: projectId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        499:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Build with ai seeding disable project type2
+      x-summary-source: derived
+components:
+  schemas:
+    BuildWithAiProjectType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AgentBuilder
+      - PythonVibeCoding
+      enum:
+      - AgentBuilder
+      - PythonVibeCoding
+    AgentBuilderSeedingStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+      enum:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+    BuildWithAiSeedingStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        projectType:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        isInProgress:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BuildWithAiSeedingProgressDto:
+      type: object
+      additionalProperties: false
+      properties:
+        projectType:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        totalAgents:
+          type: integer
+          format: int32
+        completedAgents:
+          type: integer
+          format: int32
+        currentAgentName:
+          type:
+          - string
+          - 'null'
+        currentStep:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/AgentBuilderSeedingStatus'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        failedAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    BuildWithAiProjectInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        projectType:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        isManagedBySystemAgent:
+          type: boolean
+        projectName:
+          type: string
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

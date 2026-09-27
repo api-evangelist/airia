@@ -1,0 +1,1767 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Change Scenarios API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ChangeScenarios
+paths:
+  /v1/governance/scenarios:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_List2
+      parameters:
+      - name: useCaseId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: status
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioStatus'
+        x-position: 2
+      - name: changeCategory
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeCategory'
+        x-position: 3
+      - name: risk
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/RiskImpact'
+        x-position: 4
+      - name: owner
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 5
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 7
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 8
+      - name: assetAggregateId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 9
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChangeScenarioDto'
+      summary: Change scenarios list2
+      x-summary-source: derived
+    post:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Create2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChangeScenarioRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios create2
+      x-summary-source: derived
+  /v1/governance/scenarios/summary:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetSummary2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioSummaryDto'
+      summary: Change scenarios get summary2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Get2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get2
+      x-summary-source: derived
+    patch:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Update2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChangeScenarioRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios update2
+      x-summary-source: derived
+  /v2/governance/scenarios/{id}:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetV2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get V2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/transition:
+    post:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Transition2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScenarioTransitionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios transition2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/adopt:
+    post:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Adopt2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios adopt2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/discard:
+    post:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Discard2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScenarioTransitionRequest'
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeScenarioDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios discard2
+      x-summary-source: derived
+  /v1/governance/scenarios/compare:
+    post:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_Compare2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScenarioCompareRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeScenarioDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios compare2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/evaluations:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetEvaluations2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioEvaluationsDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get evaluations2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/red-team-runs:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetRedTeamRuns2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioRedTeamRunsDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get red team runs2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/compliance:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetCompliance2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioComplianceDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get compliance2
+      x-summary-source: derived
+  /v1/governance/scenarios/{id}/audit:
+    get:
+      tags:
+      - ChangeScenarios
+      operationId: ChangeScenarios_GetAudit2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioAuditDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Change scenarios get audit2
+      x-summary-source: derived
+components:
+  schemas:
+    EvaluationRunDto:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        runAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        judgeModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        judgeModelIdentifierType:
+          oneOf:
+          - $ref: '#/components/schemas/ModelIdentifierType'
+        averageAccuracy:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        averageBias:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        averageDrift:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        thresholdBreach:
+          type:
+          - boolean
+          - 'null'
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        latencyP95Ms:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        availabilityPct:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        originSource:
+          type:
+          - string
+          - 'null'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        overrideModel:
+          type:
+          - string
+          - 'null'
+        evaluatorSource:
+          type:
+          - string
+          - 'null'
+        evaluatorMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatorMetricDto'
+    AutomationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        automationId:
+          type: string
+          format: guid
+        automationType:
+          type: string
+        timing:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        error:
+          type:
+          - string
+          - 'null'
+        sequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ScenarioSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        active:
+          type: integer
+          format: int32
+        pendingReview:
+          type: integer
+          format: int32
+        evaluationsQueued:
+          type: integer
+          format: int32
+        adoptedThisMonth:
+          type: integer
+          format: int32
+        comparisonsActive:
+          type: integer
+          format: int32
+        comparisonsDecided:
+          type: integer
+          format: int32
+        comparisonsAbandoned:
+          type: integer
+          format: int32
+    ScenarioComplianceUseCaseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        stage:
+          type: string
+        owner:
+          type:
+          - string
+          - 'null'
+        regulatoryFrameworks:
+          type: array
+          items:
+            type: string
+        assignedAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioComplianceAssetDto'
+    ConfigChange:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        from:
+          type:
+          - string
+          - 'null'
+        to:
+          type:
+          - string
+          - 'null'
+    ChangeScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        changeRequestGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetAggregateId:
+          type: string
+          format: guid
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        status:
+          $ref: '#/components/schemas/ScenarioStatus'
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activityNotes:
+          type:
+          - string
+          - 'null'
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioDetails'
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          $ref: '#/components/schemas/ChangeScenarioSource'
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
+        workflowInstanceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        workflowBranchActivationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioStepDto'
+        currentStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        progressCurrent:
+          type: integer
+          format: int32
+        progressTotal:
+          type: integer
+          format: int32
+        pendingActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPendingActionDto'
+    ScenarioOverrides:
+      type: object
+      discriminator:
+        propertyName: kind
+        mapping:
+          Internal: '#/components/schemas/InternalScenarioOverrides'
+          External: '#/components/schemas/ExternalScenarioOverrides'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        modelOverride:
+          oneOf:
+          - $ref: '#/components/schemas/ModelOverride'
+        toolOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/ToolPatch'
+        kind:
+          type: string
+    ScenarioRedTeamRunDto:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        campaignId:
+          type: string
+          format: guid
+        campaignName:
+          type: string
+        campaignType:
+          type: string
+        status:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        executionTimeSeconds:
+          type:
+          - number
+          - 'null'
+          format: double
+        totalTests:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        passedTests:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        failedTests:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        vulnerabilitiesFound:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        attackSuccessRate:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        failureReason:
+          type:
+          - string
+          - 'null'
+        failureCategory:
+          type: string
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    DisplaySectionV2Dto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionable:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+        representational:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+    ScenarioRedTeamRunsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioRedTeamRunDto'
+    ToolPatchEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        toolInstanceId:
+          type:
+          - string
+          - 'null'
+        toolAggregateId:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    CreateChangeScenarioRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - assetAggregateId
+      - changeCategory
+      - name
+      - risk
+      properties:
+        useCaseId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetAggregateId:
+          type: string
+          format: guid
+          minLength: 1
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioDetails'
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioSource'
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
+    ScenarioTransitionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - targetStatus
+      properties:
+        targetStatus:
+          $ref: '#/components/schemas/ScenarioStatus'
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+    PagedResultOfChangeScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeScenarioDto'
+        totalCount:
+          type: integer
+          format: int32
+    GuardrailViolationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        guardrailId:
+          type: string
+          format: guid
+        guardrailName:
+          type: string
+        stage:
+          type: string
+        action:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    ScenarioCompareRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - scenarioIds
+      properties:
+        scenarioIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    EvaluatorMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluatorKey:
+          type: string
+        score:
+          type: number
+          format: double
+        scoreType:
+          type: string
+        reasonText:
+          type:
+          - string
+          - 'null'
+    StageOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+      enum:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+    UpdateChangeScenarioRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activityNotes:
+          type:
+          - string
+          - 'null'
+          maxLength: 4000
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
+    ChangeScenarioDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        modelFrom:
+          type:
+          - string
+          - 'null'
+        modelTo:
+          type:
+          - string
+          - 'null'
+        promptDiff:
+          type:
+          - string
+          - 'null'
+        guardrailThreshold:
+          type:
+          - number
+          - 'null'
+          format: double
+        dataSourceFrom:
+          type:
+          - string
+          - 'null'
+        dataSourceTo:
+          type:
+          - string
+          - 'null'
+        configChanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigChange'
+    AutomationExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+    StageDisplayMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Requirement
+      - Summary
+      - Informational
+      enum:
+      - Requirement
+      - Summary
+      - Informational
+    AttestationRecord:
+      type: object
+      additionalProperties: false
+      properties:
+        attested:
+          type: boolean
+        attestedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ScenarioComplianceScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        status:
+          $ref: '#/components/schemas/ScenarioStatus'
+        owner:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        assetAggregateId:
+          type: string
+          format: guid
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          $ref: '#/components/schemas/ChangeScenarioSource'
+        overridesSummary:
+          type:
+          - string
+          - 'null'
+        activityNotes:
+          type:
+          - string
+          - 'null'
+    JudgeComparability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Comparable
+      - JudgeUnknown
+      - JudgeMismatch
+      enum:
+      - Comparable
+      - JudgeUnknown
+      - JudgeMismatch
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ScenarioStepDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+        title:
+          type: string
+        branchGroup:
+          type: string
+        status:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/StageOutcome'
+        requirementStatus:
+          oneOf:
+          - $ref: '#/components/schemas/StageRequirementStatus'
+        dependsOn:
+          type: array
+          items:
+            type: string
+            format: guid
+        enteredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        gateSlaDeadline:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        requiresApproval:
+          type: boolean
+        genericApproval:
+          type: boolean
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationSummaryDto'
+        displaySection:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionDto'
+        displaySectionV2:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionV2Dto'
+    ModelOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    StageRequirementStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        approvalResolution:
+          type:
+          - string
+          - 'null'
+        approvalsReceived:
+          type: integer
+          format: int32
+        approvalsRequired:
+          type: integer
+          format: int32
+        evaluationResults:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ThresholdResult'
+        artifactStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        documentSlotStatus:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        artifactRequirementReasons:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        attestationStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttestationRecord'
+        approvalNotificationSentAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        defaultApprovalResolution:
+          type:
+          - string
+          - 'null'
+        defaultApprovalsReceived:
+          type: integer
+          format: int32
+        defaultApprovalsRequired:
+          type: integer
+          format: int32
+        requiresApprovalOverride:
+          type:
+          - boolean
+          - 'null'
+    ThresholdResult:
+      type: object
+      additionalProperties: false
+      properties:
+        actualValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        requiredValue:
+          type: number
+          format: double
+        passed:
+          type: boolean
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    DisplaySectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        requiredComponents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredComponentDto'
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetDto'
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    RiskImpact:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    ScenarioComplianceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKeys:
+          type: array
+          items:
+            type: string
+        recentViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailViolationSummaryDto'
+        totalViolations30d:
+          type: integer
+          format: int32
+        generatedAt:
+          type: string
+          format: date-time
+        scenario:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioComplianceScenarioDto'
+        useCase:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioComplianceUseCaseDto'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioStepDto'
+        pendingActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPendingActionDto'
+    ScenarioAuditDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioAuditEntryDto'
+    ConditionNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    DisplaySectionItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        systemRequirement:
+          type: boolean
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        isRequired:
+          type: boolean
+        requirementReason:
+          type:
+          - string
+          - 'null'
+    ScenarioComplianceAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        assetType:
+          type: string
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    StageInstanceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+      enum:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+    ChangeCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
+      enum:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
+    ScenarioEvaluationsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluationRunDto'
+        judgeComparability:
+          $ref: '#/components/schemas/JudgeComparability'
+    ScenarioPendingActionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    ScenarioStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+      enum:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+    ScenarioAuditEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        timestamp:
+          type: string
+          format: date-time
+        action:
+          type: string
+        actor:
+          type:
+          - string
+          - 'null'
+        details:
+          type:
+          - string
+          - 'null'
+    WidgetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/StageDisplayMode'
+        order:
+          type: integer
+          format: int32
+        visibleWhen:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ChangeScenarioSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProposed
+      - AutoMonitorObserved
+      enum:
+      - UserProposed
+      - AutoMonitorObserved
+    RequiredComponentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        visibleWhen:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

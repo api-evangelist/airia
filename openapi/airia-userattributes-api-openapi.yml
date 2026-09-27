@@ -1,0 +1,1054 @@
+openapi: 3.2.0
+info:
+  title: Airia Web User Attributes API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UserAttributes
+paths:
+  /v1/user-attributes/connections:
+    get:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_GetConnections2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAttributeConnectionResponseModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes get connections2
+      x-summary-source: derived
+    post:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_CreateConnection2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAttributeConnectionRequestModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAttributeConnectionResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes create connection2
+      x-summary-source: derived
+  /v1/user-attributes/connections/{connectionId}:
+    put:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_UpdateConnection2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAttributeConnectionRequestModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAttributeConnectionResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes update connection2
+      x-summary-source: derived
+    delete:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_DeleteConnection2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes delete connection2
+      x-summary-source: derived
+  /v1/user-attributes/connections/{connectionId}/test:
+    post:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_TestConnection2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAttributeConnectionTestResultDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes test connection2
+      x-summary-source: derived
+  /v1/user-attributes/connections/{connectionId}/sync:
+    post:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_SyncConnection2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes sync connection2
+      x-summary-source: derived
+  /v1/user-attributes/imports/preview:
+    post:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_PreviewImport2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                identifierColumn:
+                  type:
+                  - string
+                  - 'null'
+                includeColumns:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAttributeImportPreviewResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes preview import2
+      x-summary-source: derived
+  /v1/user-attributes/connections/{connectionId}/import:
+    post:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_ImportConnection2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                identifierColumn:
+                  type:
+                  - string
+                  - 'null'
+                includeColumns:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAttributeImportResponseModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes import connection2
+      x-summary-source: derived
+  /v1/user-attributes/connections/{connectionId}/discovered-attributes:
+    get:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_GetDiscoveredAttributes2
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiscoveredUserAttributeDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes get discovered attributes2
+      x-summary-source: derived
+  /v1/user-attributes/attributes:
+    get:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_GetAttributeStats2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAttributeStatDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes get attribute stats2
+      x-summary-source: derived
+  /v1/user-attributes/attributes/values:
+    get:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_GetAttributeValueCounts2
+      parameters:
+      - name: attributeKey
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAttributeValueCountDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes get attribute value counts2
+      x-summary-source: derived
+  /v1/user-attributes/dimension-mappings:
+    get:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_GetDimensionMappings2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAttributeDimensionMappingModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes get dimension mappings2
+      x-summary-source: derived
+    put:
+      tags:
+      - UserAttributes
+      operationId: UserAttributes_ReplaceDimensionMappings2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: mappings
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserAttributeDimensionMappingModel'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAttributeDimensionMappingModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User attributes replace dimension mappings2
+      x-summary-source: derived
+components:
+  schemas:
+    UserAttributeConnectionRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - provider
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        provider:
+          $ref: '#/components/schemas/UserAttributeSourceProvider'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        syncIntervalHours:
+          type: integer
+          format: int32
+          maximum: 168
+          minimum: 1
+    UserAttributeValueCountDto:
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      properties:
+        value:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        linkedUserCount:
+          type: integer
+          format: int32
+    UserAttributeConnectionResponseModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          $ref: '#/components/schemas/UserAttributeSourceProvider'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        syncIntervalHours:
+          type: integer
+          format: int32
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncStatus:
+          $ref: '#/components/schemas/UserAttributeSyncStatus'
+        lastSyncError:
+          type:
+          - string
+          - 'null'
+        lastSyncSourceUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lastSyncMatchedUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserAttributeImportPreviewResponseModel:
+      type: object
+      additionalProperties: false
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeCsvColumn'
+        identifierColumn:
+          type: string
+        rowCount:
+          type: integer
+          format: int32
+        sourceUserCount:
+          type: integer
+          format: int32
+        storedUserCount:
+          type: integer
+          format: int32
+        linkedUserCount:
+          type: integer
+          format: int32
+        matchedUserCount:
+          type: integer
+          format: int32
+        noIdentifierCount:
+          type: integer
+          format: int32
+        unlinkedSample:
+          type: array
+          items:
+            type: string
+        unmatchedSample:
+          type: array
+          items:
+            type: string
+        attributeKeys:
+          type: array
+          items:
+            type: string
+        rowErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeCsvRowError'
+        warnings:
+          type: array
+          items:
+            type: string
+    UserAttributeDimensionMappingModel:
+      type: object
+      additionalProperties: false
+      required:
+      - dimension
+      - attributeKey
+      properties:
+        dimension:
+          type: string
+          maxLength: 128
+          minLength: 1
+        attributeKey:
+          type: string
+          maxLength: 256
+          minLength: 1
+    UserAttributeStatDto:
+      type: object
+      additionalProperties: false
+      required:
+      - attributeKey
+      properties:
+        attributeKey:
+          type: string
+        usersWithValue:
+          type: integer
+          format: int32
+        linkedUsersWithValue:
+          type: integer
+          format: int32
+        totalUsers:
+          type: integer
+          format: int32
+        coveragePercent:
+          type: number
+          format: double
+        distinctValueCount:
+          type: integer
+          format: int32
+        exampleValue:
+          type:
+          - string
+          - 'null'
+    UserAttributeImportResponseModel:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceUserCount:
+          type: integer
+          format: int32
+        storedUserCount:
+          type: integer
+          format: int32
+        linkedUserCount:
+          type: integer
+          format: int32
+        matchedUserCount:
+          type: integer
+          format: int32
+        noIdentifierCount:
+          type: integer
+          format: int32
+        unlinkedSample:
+          type: array
+          items:
+            type: string
+        unmatchedSample:
+          type: array
+          items:
+            type: string
+        attributeKeys:
+          type: array
+          items:
+            type: string
+        rowErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeCsvRowError'
+        warnings:
+          type: array
+          items:
+            type: string
+    UserAttributeCsvRowError:
+      type: object
+      additionalProperties: false
+      required:
+      - rowNumber
+      - message
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+        message:
+          type: string
+    UserAttributeSyncStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
+      enum:
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
+    UserAttributeCsvColumn:
+      type: object
+      additionalProperties: false
+      required:
+      - header
+      - attributeKey
+      properties:
+        header:
+          type: string
+        attributeKey:
+          type: string
+        isIdentifierCandidate:
+          type: boolean
+        defaultIncluded:
+          type: boolean
+        fillRate:
+          type: integer
+          format: int32
+        sample:
+          type:
+          - string
+          - 'null'
+    UserAttributeConnectionTestCheckDto:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      - status
+      - message
+      properties:
+        key:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        remediation:
+          type:
+          - string
+          - 'null'
+    UserAttributeConnectionTestResultDto:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      - checks
+      properties:
+        status:
+          type: string
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeConnectionTestCheckDto'
+    UserAttributeSourceProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - EntraId
+      - CsvUpload
+      enum:
+      - Undefined
+      - EntraId
+      - CsvUpload
+    DiscoveredUserAttributeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          type: string
+        isCustom:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

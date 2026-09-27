@@ -1,0 +1,552 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Model Resiliency API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ModelResiliency
+paths:
+  /v1/ModelResiliency/rules:
+    get:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_GetRules2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfModelResiliencyRuleDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency get rules2
+      x-summary-source: derived
+    post:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_CreateRule2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateModelResiliencyRuleRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency create rule2
+      x-summary-source: derived
+  /v1/ModelResiliency/rules/{id}:
+    get:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_GetRuleById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency get rule by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_UpdateRule2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateModelResiliencyRuleRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency update rule2
+      x-summary-source: derived
+    delete:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_DeleteRule2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency delete rule2
+      x-summary-source: derived
+  /v1/ModelResiliency/rules/{id}/toggle:
+    patch:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_ToggleRule2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToggleModelResiliencyRuleRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency toggle rule2
+      x-summary-source: derived
+  /v1/ModelResiliency/rules/reorder:
+    put:
+      tags:
+      - ModelResiliency
+      operationId: ModelResiliency_ReorderRules2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReorderModelResiliencyRulesRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Model resiliency reorder rules2
+      x-summary-source: derived
+components:
+  schemas:
+    ReorderModelResiliencyRulesRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - ruleIds
+      properties:
+        ruleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    ModelResiliencyRuleDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        enabled:
+          type: boolean
+        priority:
+          type: integer
+          format: int32
+        primaryModelId:
+          type: string
+          format: guid
+        primaryModelName:
+          type: string
+        replacementModelId:
+          type: string
+          format: guid
+        replacementModelName:
+          type: string
+        type:
+          $ref: '#/components/schemas/ModelResiliencyRuleType'
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+        createdByUserId:
+          type: string
+          format: guid
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+        updatedByUserId:
+          type: string
+          format: guid
+    CreateModelResiliencyRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - primaryModelId
+      - replacementModelId
+      - type
+      properties:
+        enabled:
+          type: boolean
+        primaryModelId:
+          type: string
+          format: guid
+          minLength: 1
+        replacementModelId:
+          type: string
+          format: guid
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/ModelResiliencyRuleType'
+    ToggleModelResiliencyRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ModelResiliencyRuleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Failover
+      - Override
+      enum:
+      - Failover
+      - Override
+    PagedResultOfModelResiliencyRuleDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        totalCount:
+          type: integer
+          format: int32
+    UpdateModelResiliencyRuleRequest:
+      allOf:
+      - $ref: '#/components/schemas/CreateModelResiliencyRuleRequest'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: guid
+            minLength: 1
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

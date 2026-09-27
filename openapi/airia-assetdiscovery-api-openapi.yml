@@ -1,0 +1,80 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Asset Discovery API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AssetDiscovery
+paths:
+  /v1/asset-discovery:
+    get:
+      tags:
+      - AssetDiscovery
+      operationId: AssetDiscovery_GetAgentsToGovern2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAssetDiscoveryResult'
+      summary: Asset discovery get agents to govern2
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfAssetDiscoveryResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDiscoveryResult'
+        totalCount:
+          type: integer
+          format: int32
+    AssetDiscoveryResult:
+      type: object
+      additionalProperties: false
+      required:
+      - aggregateId
+      - name
+      properties:
+        aggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        executionCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

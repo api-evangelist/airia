@@ -1,0 +1,711 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Prompts API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Prompts
+paths:
+  /v1/Prompts:
+    get:
+      tags:
+      - Prompts
+      operationId: Prompts_GetPrompts2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: projectId
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 6
+      - name: includeGlobal
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 7
+      - name: pipelineVersionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfPromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts get prompts2
+      x-summary-source: derived
+    post:
+      tags:
+      - Prompts
+      operationId: Prompts_PostPrompt2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: promptDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePromptRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts post prompt2
+      x-summary-source: derived
+  /v1/Prompts/{id}:
+    get:
+      tags:
+      - Prompts
+      operationId: Prompts_GetActivePromptVersion2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPromptDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts get active prompt version2
+      x-summary-source: derived
+    put:
+      tags:
+      - Prompts
+      operationId: Prompts_PutPrompt2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: prompt
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePromptRequest'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts put prompt2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Prompts
+      operationId: Prompts_DeletePrompt2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptUsageInfo'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts delete prompt2
+      x-summary-source: derived
+  /v1/Prompts/{id}/references:
+    get:
+      tags:
+      - Prompts
+      operationId: Prompts_GetPromptReferences2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptUsageInfo'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Prompts get prompt references2
+      x-summary-source: derived
+components:
+  schemas:
+    UpdatePromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        activeVersionId:
+          type: string
+          format: guid
+    PipelineUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    GetPromptDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        activeVersionId:
+          type: string
+          format: guid
+        activeVersion:
+          oneOf:
+          - $ref: '#/components/schemas/PromptVersionDto'
+        versions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptVersionDto'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isAgentSpecific:
+          type: boolean
+        usageInfo:
+          oneOf:
+          - $ref: '#/components/schemas/PromptUsageInfo'
+    PromptVersionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        versionNumber:
+          type: integer
+          format: int32
+        versionChangeDescription:
+          type: string
+        message:
+          type:
+          - string
+          - 'null'
+        messages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        isLatest:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    PromptMessageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+        order:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ModelUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+          format: guid
+        modelName:
+          type: string
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CreatePromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        versionChangeDescription:
+          type: string
+        messages:
+          type: array
+          deprecated: true
+          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        message:
+          type: string
+        isAgentSpecific:
+          type: boolean
+    PromptDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        activeVersionId:
+          type: string
+          format: guid
+        activeVersion:
+          oneOf:
+          - $ref: '#/components/schemas/PromptVersionDto'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        project:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectModelBase'
+        latestVersionNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isAgentSpecific:
+          type: boolean
+    SegmentUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        segmentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfPromptDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromptDto'
+        totalCount:
+          type: integer
+          format: int32
+    PromptUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelines:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineUsageInfo'
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelUsageInfo'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+        isInUse:
+          type: boolean
+        isInUseByLatestVersion:
+          type: boolean
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

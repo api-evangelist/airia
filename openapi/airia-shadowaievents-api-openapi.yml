@@ -1,0 +1,616 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Shadow AI Events API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ShadowAiEvents
+paths:
+  /v1/ShadowAiEvents:
+    get:
+      tags:
+      - ShadowAiEvents
+      operationId: ShadowAiEvents_GetShadowAiEvents2
+      parameters:
+      - name: Page
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: Descending
+        in: query
+        schema:
+          type: boolean
+        x-position: 4
+      - name: Domains
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 5
+      - name: ActionsTaken
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 6
+      - name: UserIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 7
+      - name: BatchIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 8
+      - name: RuleIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 9
+      - name: StartTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 10
+      - name: EndTime
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        x-position: 11
+      - name: HasPromptDetails
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 12
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetShadowAiEventsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Shadow ai events get shadow ai events2
+      x-summary-source: derived
+  /v1/ShadowAiEvents/{eventId}:
+    get:
+      tags:
+      - ShadowAiEvents
+      operationId: ShadowAiEvents_GetShadowAiEventDetails2
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShadowAiEventV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Shadow ai events get shadow ai event details2
+      x-summary-source: derived
+  /v1/ShadowAiEvents/analytics/top-apps:
+    get:
+      tags:
+      - ShadowAiEvents
+      operationId: ShadowAiEvents_GetTopAppsByUsers2
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 10
+        x-position: 1
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 2
+      - name: pageSize
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTopAppsByUsersResponseV1'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Shadow ai events get top apps by users2
+      x-summary-source: derived
+  /v1/ShadowAiEvents/analytics/usage-over-time:
+    get:
+      tags:
+      - ShadowAiEvents
+      operationId: ShadowAiEvents_GetUsageOverTime2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsageOverTimeResponseV1'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Shadow ai events get usage over time2
+      x-summary-source: derived
+  /v1/ShadowAiEvents/analytics/top-app-users/{sourceApplication}:
+    get:
+      tags:
+      - ShadowAiEvents
+      operationId: ShadowAiEvents_GetTopAppUsers2
+      parameters:
+      - name: sourceApplication
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: limit
+        in: query
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 10
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTopAppUsersResponseV1'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Shadow ai events get top app users2
+      x-summary-source: derived
+components:
+  schemas:
+    ShadowAiEventV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
+        batchId:
+          type:
+          - string
+          - 'null'
+        userId:
+          type:
+          - string
+          - 'null'
+        shadowAiServiceRuleId:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        sourceApplication:
+          type:
+          - string
+          - 'null'
+        userAgent:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        destinationUrl:
+          type:
+          - string
+          - 'null'
+        httpMethod:
+          type:
+          - string
+          - 'null'
+        actionTaken:
+          type:
+          - string
+          - 'null'
+        requestBody:
+          type:
+          - string
+          - 'null'
+        requestSize:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        extensionVersion:
+          type:
+          - string
+          - 'null'
+        browserType:
+          type:
+          - string
+          - 'null'
+        created:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        updated:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+        statusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userEmail:
+          type:
+          - string
+          - 'null'
+    GetUsageOverTimeResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        dataPoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UsageTimeSeriesPointV1'
+    TopAppByUsersV1:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceApplication:
+          type:
+          - string
+          - 'null'
+        uniqueUserCount:
+          type: integer
+          format: int32
+        eventCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GetShadowAiEventsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShadowAiEventV1'
+        pagination:
+          oneOf:
+          - $ref: '#/components/schemas/PaginationInfoV1'
+    Timestamp:
+      type: object
+      additionalProperties: false
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
+    GetTopAppsByUsersResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        apps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TopAppByUsersV1'
+        pagination:
+          oneOf:
+          - $ref: '#/components/schemas/PaginationInfoV1'
+    UsageTimeSeriesPointV1:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        uniqueUsers:
+          type: integer
+          format: int32
+        uniqueApplications:
+          type: integer
+          format: int32
+        eventsByApplication:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: integer
+            format: int32
+    GetTopAppUsersResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TopAppUserV1'
+    PaginationInfoV1:
+      type: object
+      additionalProperties: false
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+    TopAppUserV1:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        lastAccessed:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

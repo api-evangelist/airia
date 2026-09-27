@@ -1,0 +1,5163 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Library API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Library
+paths:
+  /marketplace/v1/Library/models:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryModels2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: Providers
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: Categories
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: Licenses
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: Industries
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: Authors
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: IsOpenSource
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 11
+      - name: ChatSpecialized
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 12
+      - name: Industry
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 13
+      - name: CommercialUse
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 14
+      - name: Certifications
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 15
+      - name: HasToolSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 16
+      - name: HasStreamSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 17
+      - name: SupportsSearch
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 18
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetLibraryModelsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library models2
+      x-summary-source: derived
+  /marketplace/v1/Library/models/{id}:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryModelById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library model by id2
+      x-summary-source: derived
+  /marketplace/v1/Library/models/providers:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryModelProviders2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library model providers2
+      x-summary-source: derived
+  /marketplace/v1/Library/models/categories:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryModelCategories2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library model categories2
+      x-summary-source: derived
+  /marketplace/v1/Library/system-prompts:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibrarySystemPrompts2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: Providers
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: Categories
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: Licenses
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: Industries
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: Authors
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: IsOpenSource
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 11
+      - name: ChatSpecialized
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 12
+      - name: Industry
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 13
+      - name: CommercialUse
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 14
+      - name: Certifications
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 15
+      - name: HasToolSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 16
+      - name: HasStreamSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 17
+      - name: SupportsSearch
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 18
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetLibraryPromptsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library system prompts2
+      x-summary-source: derived
+  /marketplace/v1/Library/system-prompts/{id}:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibrarySystemPromptById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library system prompt by id2
+      x-summary-source: derived
+  /marketplace/v1/Library/user-prompts:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryUserPrompts2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: Providers
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: Categories
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: Licenses
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: Industries
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: Authors
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: IsOpenSource
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 11
+      - name: ChatSpecialized
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 12
+      - name: Industry
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 13
+      - name: CommercialUse
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 14
+      - name: Certifications
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 15
+      - name: HasToolSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 16
+      - name: HasStreamSupport
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 17
+      - name: SupportsSearch
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 18
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetLibraryPromptsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library user prompts2
+      x-summary-source: derived
+  /marketplace/v1/Library/user-prompts/{id}:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryUserPromptById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library user prompt by id2
+      x-summary-source: derived
+  /marketplace/v1/Library/agents:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryAgents2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: Providers
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: Industry
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: AgentDescription
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: Name
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 9
+      - name: TagLine
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 10
+      - name: Tasks
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 11
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetLibraryAgentsResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library agents2
+      x-summary-source: derived
+  /marketplace/v1/Library/agents/{id}:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryAgentById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportPipelineDefinition'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library agent by id2
+      x-summary-source: derived
+  /marketplace/v1/Library/agents/providers:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryAgentProviders2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library agent providers2
+      x-summary-source: derived
+  /marketplace/v1/Library/agents/industries:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryAgentIndustries2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library agent industries2
+      x-summary-source: derived
+  /marketplace/v1/Library/agents/tasks:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryAgentTasks2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library agent tasks2
+      x-summary-source: derived
+  /marketplace/v1/Library/tools:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryTools2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: Tags
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: Providers
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: AuthenticationTypes
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: IsAiriaKeySupported
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 8
+      - name: IsPaginationSupported
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 9
+      - name: Categories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCategory'
+        x-position: 10
+      - name: search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 11
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchToolsResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library tools2
+      x-summary-source: derived
+  /marketplace/v1/Library/tool/{toolType}:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetLibraryTool2
+      parameters:
+      - name: toolType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ToolType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolDefinitionModel'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get library tool2
+      x-summary-source: derived
+  /marketplace/v1/Library/tools/filters:
+    get:
+      tags:
+      - Library
+      operationId: Library_GetTags2
+      parameters:
+      - name: categories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCategory'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Library get tags2
+      x-summary-source: derived
+components:
+  schemas:
+    GetLibraryAgentsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    AgentToolAnnotationsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        destructiveHint:
+          type:
+          - boolean
+          - 'null'
+        idempotentHint:
+          type:
+          - boolean
+          - 'null'
+        openWorldHint:
+          type:
+          - boolean
+          - 'null'
+        readOnlyHint:
+          type:
+          - boolean
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    ToolsMetadataRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      - value
+      properties:
+        key:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+    AgentCapabilities2:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension2'
+    PromptsResponseV1:
+      type: object
+      additionalProperties: false
+      required:
+      - source
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        prompt:
+          type: string
+        recommendedProvider:
+          oneOf:
+          - $ref: '#/components/schemas/ProviderType3'
+        recommendedModels:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        industry:
+          type: string
+        activeVersion:
+          type: integer
+          format: int32
+        latestVersion:
+          type: integer
+          format: int32
+        modifiedOn:
+          type: string
+          format: date-time
+        source:
+          type: string
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/PromptCategory'
+    JsonFormatterStepConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        template:
+          type: string
+        fallbackToRawResultOnUnresolvedPath:
+          type: boolean
+    LoopStepConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        stopOnError:
+          type: boolean
+        retryOnError:
+          type: boolean
+        retryOnErrorCount:
+          type: integer
+          format: int32
+        maxIterations:
+          type: integer
+          format: int32
+        executionMode:
+          type: string
+        parallelConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepParallelConfigurationDefinition'
+        batchConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepBatchConfigurationDefinition'
+        inputExpression:
+          type:
+          - string
+          - 'null'
+    ToolDefinitionModel:
+      type: object
+      additionalProperties: false
+      required:
+      - toolType
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        toolType:
+          $ref: '#/components/schemas/ToolType'
+        name:
+          type: string
+        standardizedName:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        origin:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        methodType:
+          type: string
+        purpose:
+          type: string
+        apiEndpoint:
+          type: string
+        provider:
+          type: string
+        toolCredentials:
+          $ref: '#/components/schemas/ToolCredentialsModel'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolHeaderModel'
+        body:
+          type: string
+        bodyType:
+          $ref: '#/components/schemas/ToolBodyType'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolParameterModel'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        children:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolDefinitionModel'
+        routeThroughACC:
+          type: boolean
+        shouldRedirect:
+          type: boolean
+        aCCGroup:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        documentation:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        toolMetadata:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsMetadataRequest'
+        supportsPagination:
+          type:
+          - boolean
+          - 'null'
+        category:
+          $ref: '#/components/schemas/ToolCategory'
+        requestTimeout:
+          type: integer
+          format: int32
+        useJwtForwarding:
+          type:
+          - boolean
+          - 'null'
+        isCustomSelection:
+          type:
+          - boolean
+          - 'null'
+        enabledToolNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    AgentCardDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        agentCardId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        supportedInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentInterface2'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/AgentProvider2'
+        version:
+          type: string
+        documentationUrl:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities2'
+        securitySchemes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityScheme2'
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
+        signatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardSignature2'
+        defaultInputModes:
+          type: array
+          items:
+            type: string
+        defaultOutputModes:
+          type: array
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSkill2'
+    HandleDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        uuid:
+          type: string
+          format: guid
+        type:
+          type: string
+          maxLength: 6
+        label:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        tooltip:
+          type:
+          - string
+          - 'null'
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+    RetryConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetries:
+          type: integer
+          format: int32
+        delay:
+          type: integer
+          format: int32
+        maxDelay:
+          type: integer
+          format: int32
+        backoffMultiplier:
+          type: number
+          format: double
+        useJitter:
+          type: boolean
+    AgentEventTriggerDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        eventTypeName:
+          type:
+          - string
+          - 'null'
+        filters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          type:
+          - string
+          - 'null'
+    ToolType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Custom
+      - Calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+      enum:
+      - custom
+      - calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+    AdministrativeScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Personal
+      enum:
+      - Tenant
+      - Project
+      - User
+    PipelineStepDependencyDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        parentId:
+          type: string
+          format: guid
+        parentHandleId:
+          type: string
+          format: guid
+        handleId:
+          type: string
+          format: guid
+    ConditionalBranchConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        label:
+          type:
+          - string
+          - 'null'
+    AssignedAgentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentUrl:
+          type: string
+        isConfigurable:
+          type: boolean
+    AgentTriggersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedType:
+          type:
+          - string
+          - 'null'
+        emailAction:
+          type:
+          - string
+          - 'null'
+    SdkStepCredentialReference:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyName:
+          type: string
+        originalCredentialId:
+          type: string
+          format: guid
+        credentialsDefinition:
+          $ref: '#/components/schemas/CredentialsDefinition'
+        required:
+          type: boolean
+        supportedTypes:
+          type: array
+          items:
+            type: string
+    SecurityRequirement2:
+      type: object
+      additionalProperties: false
+      properties:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    CredentialEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          $ref: '#/components/schemas/CredentialKeyField'
+        value:
+          type: string
+    ToolCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Action
+      - Airia
+      - Mcp
+      enum:
+      - Action
+      - Airia
+      - Mcp
+    AgentsResponseV1:
+      type: object
+      additionalProperties: false
+      required:
+      - state
+      properties:
+        id:
+          type: string
+          format: guid
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        name:
+          type:
+          - string
+          - 'null'
+        agentDescription:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+        industry:
+          type:
+          - string
+          - 'null'
+        tasks:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        state:
+          type: string
+    CustomFormApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        emailNotification:
+          type: boolean
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormActionDefinition'
+        structuredOutputSchema: {}
+        useCustomFields:
+          type: boolean
+    RouterConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        isDefault:
+          type:
+          - boolean
+          - 'null'
+    PipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        executionName:
+          type:
+          - string
+          - 'null'
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        agentDescription:
+          type: string
+        markdownDescription:
+          type:
+          - string
+          - 'null'
+        tagline:
+          type:
+          - string
+          - 'null'
+        videoLink:
+          type:
+          - string
+          - 'null'
+        industry:
+          type:
+          - string
+          - 'null'
+        subIndustries:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentDetailItemDefinition'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStepDefinition'
+        behaviours:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        agentIconBase64:
+          type:
+          - string
+          - 'null'
+        alignment:
+          type: string
+        saveToolResponsesToHistory:
+          type:
+          - boolean
+          - 'null'
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+    ToolParameterModel:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        default:
+          type: string
+        validOptions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        arrayItemType:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolParameterModel'
+        requirement:
+          $ref: '#/components/schemas/ToolParameterRequirement'
+    GetLibraryModelsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    CredentialType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ai21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - CustomOpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - HuggingFace
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - TogetherAI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - XKey
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+      enum:
+      - None
+      - AI21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - Custom OpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - Hugging Face
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - Together AI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - X
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+    AgentDetailItemDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        itemType:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    LoopStepBatchConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        batchSize:
+          type: integer
+          format: int32
+        batchDelaySeconds:
+          type: integer
+          format: int32
+    ToolCredentialsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCredentialSettings:
+          $ref: '#/components/schemas/CredentialSettings'
+        toolCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsViewModel'
+        toolCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authRequired:
+          type: boolean
+        useUserCredentials:
+          type: boolean
+        userCredentialConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useUserCredentialsType:
+          type: string
+        credentialsSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/SourceType'
+        useAiriaKeySupport:
+          type: boolean
+    ModelsResponseV1:
+      type: object
+      additionalProperties: false
+      required:
+      - state
+      properties:
+        credentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/ModelCategory2'
+        description:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type: integer
+          format: int32
+        type:
+          $ref: '#/components/schemas/InputType2'
+        languages:
+          type: array
+          items:
+            type: string
+        licenseType:
+          oneOf:
+          - $ref: '#/components/schemas/LicenseType'
+        name:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        price:
+          type: string
+        inputTokenPrice:
+          type:
+          - string
+          - 'null'
+        outputTokenPrice:
+          type:
+          - string
+          - 'null'
+        priceType:
+          $ref: '#/components/schemas/PriceType'
+        promptId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        url:
+          type:
+          - string
+          - 'null'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/ProviderType3'
+        rating:
+          type: integer
+          format: int32
+        tags:
+          type: array
+          items:
+            type: string
+        available:
+          type: boolean
+        tokenPriceConversion:
+          oneOf:
+          - $ref: '#/components/schemas/TokenPriceConversion'
+        allowAiriaCredentials:
+          type: boolean
+        allowBYOKCredentials:
+          type: boolean
+        author:
+          type: string
+        licenseLink:
+          type:
+          - string
+          - 'null'
+        releasedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deprecatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isOpenSource:
+          type: boolean
+        chatSpecialized:
+          type: boolean
+        industry:
+          type: string
+        commercialUse:
+          type: boolean
+        certifications:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelCertificationType'
+        hasToolSupport:
+          type: boolean
+        hasStreamSupport:
+          type: boolean
+        contextWindow:
+          type: integer
+          format: int32
+        maxOutputTokens:
+          type: integer
+          format: int32
+        state:
+          type: string
+        reasoning:
+          type: boolean
+        reasoningEffortLevels:
+          type: array
+          items:
+            type: string
+        supportsSearch:
+          type: boolean
+        systemCardUrl:
+          type:
+          - string
+          - 'null'
+        outputModalities:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputModality'
+    TokenPriceConversion:
+      type: object
+      additionalProperties: false
+      properties:
+        inputTokenPrice1K:
+          type:
+          - string
+          - 'null'
+        outputTokenPrice1K:
+          type:
+          - string
+          - 'null'
+        inputTokenPrice1M:
+          type:
+          - string
+          - 'null'
+        outputTokenPrice1M:
+          type:
+          - string
+          - 'null'
+    ChunkingConfigDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        chunkSize:
+          type: integer
+          format: int32
+        chunkOverlap:
+          type: integer
+          format: int32
+        strategyType:
+          type: string
+    ToolsExportDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        toolType:
+          type: string
+        name:
+          type: string
+        standardizedName:
+          type: string
+        toolDescription:
+          type: string
+        purpose:
+          type: string
+        apiEndpoint:
+          type: string
+        credentialsDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsDefinition'
+        headersDefinition:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolHeadersDefinition'
+        body:
+          type:
+          - string
+          - 'null'
+        parametersDefinition:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolParametersDefinition'
+        methodType:
+          type: string
+        routeThroughACC:
+          type:
+          - boolean
+          - 'null'
+        accGroup:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        useUserCredentials:
+          type: boolean
+        useUserCredentialsType:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        bodyType:
+          type:
+          - string
+          - 'null'
+        numberOfPages:
+          type:
+          - string
+          - 'null'
+        shouldRetrieveFullPageContent:
+          type:
+          - string
+          - 'null'
+        schemaDefinition:
+          type:
+          - string
+          - 'null'
+        requestTimeout:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        annotations:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        shouldReroute:
+          type:
+          - boolean
+          - 'null'
+        credentialsSourceType:
+          type:
+          - string
+          - 'null'
+        useJwtForwarding:
+          type:
+          - boolean
+          - 'null'
+        id:
+          type: string
+          format: guid
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    DataSourceFileDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        dataSourceId:
+          type: string
+          format: guid
+        filePath:
+          type:
+          - string
+          - 'null'
+        inputToken:
+          type:
+          - string
+          - 'null'
+    DataSourcesDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        executionName:
+          type:
+          - string
+          - 'null'
+        chunkingConfig:
+          oneOf:
+          - $ref: '#/components/schemas/ChunkingConfigDefinition'
+        dataSourceType:
+          type: string
+        databaseType:
+          type:
+          - string
+          - 'null'
+        embeddingProvider:
+          type:
+          - string
+          - 'null'
+        isUserSpecific:
+          type: boolean
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourceFileDefinition'
+        fileCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        configurationJson:
+          type:
+          - string
+          - 'null'
+        credentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsDefinition'
+        isImageProcessingEnabled:
+          type: boolean
+        description:
+          type:
+          - string
+          - 'null'
+        vectorStore:
+          oneOf:
+          - $ref: '#/components/schemas/VectorStoreDefinition'
+        scanDocumentForImages:
+          type: boolean
+        imageProcessingPrompt:
+          type:
+          - string
+          - 'null'
+        storeType:
+          type:
+          - string
+          - 'null'
+        tableDocumentProcessingMode:
+          type:
+          - string
+          - 'null'
+        parserConfigurationJson:
+          type:
+          - string
+          - 'null'
+    CustomCredentials:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          credentialData:
+            type: string
+    PipelineStepDefinition:
+      type: object
+      additionalProperties: false
+      required:
+      - stepTitle
+      properties:
+        id:
+          type: string
+          format: guid
+        stepType:
+          type: string
+        position:
+          $ref: '#/components/schemas/PositionDefinition'
+        handles:
+          type: array
+          items:
+            $ref: '#/components/schemas/HandleDefinition'
+        dependenciesObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStepDependencyDefinition'
+        temperature:
+          type:
+          - number
+          - 'null'
+          format: float
+        reasoningEffort:
+          type:
+          - string
+          - 'null'
+        includeDateTimeContext:
+          type:
+          - boolean
+          - 'null'
+        dateTimeTimezoneSettings:
+          oneOf:
+          - $ref: '#/components/schemas/DateTimeTimezoneSettingsDefinition'
+        includeUserDetailsContext:
+          type:
+          - boolean
+          - 'null'
+        promptId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        promptSegments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptSegmentDefinition'
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        toolIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        agentDelegateIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        toolParamsJson:
+          type:
+          - string
+          - 'null'
+        dataSourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        topK:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        relevanceThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        neighboringChunksCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hybridSearchAlpha:
+          type:
+          - number
+          - 'null'
+          format: float
+        databaseType:
+          type:
+          - string
+          - 'null'
+        enableSqlQueries:
+          type:
+          - boolean
+          - 'null'
+        fuzzySearch:
+          type:
+          - boolean
+          - 'null'
+        sqlResultLimit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hybridSearchFusionType:
+          type:
+          - string
+          - 'null'
+        userInputOnVectorSearch:
+          type:
+          - boolean
+          - 'null'
+        performReranking:
+          type:
+          - boolean
+          - 'null'
+        memoryId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pythonCodeBlockId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useUserIdTokenForwarding:
+          type:
+          - boolean
+          - 'null'
+        includedStepResultTitles:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        approvalRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        webhookApprovalRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customFormApprovalRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentCardId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+        stepTitle:
+          type: string
+        parentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        loopStepConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepConfigurationDefinition'
+        jsonFormatterStepConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonFormatterStepConfigurationDefinition'
+        inputVariablesJson:
+          type:
+          - string
+          - 'null'
+        inputTemplate:
+          type:
+          - string
+          - 'null'
+        includeChatHistory:
+          type:
+          - boolean
+          - 'null'
+        isMultiRoute:
+          type:
+          - boolean
+          - 'null'
+        routerConfigJson:
+          type:
+          - string
+          - 'null'
+        conditionalBranchCode:
+          type:
+          - string
+          - 'null'
+        conditionalBranchConfigJson:
+          type:
+          - string
+          - 'null'
+        routerConfig:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/ConditionalBranchConfigurationDefinition'
+        selectedPromptVersion:
+          type:
+          - string
+          - 'null'
+          format: guid
+        stepParams:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        useUserInput:
+          type:
+          - boolean
+          - 'null'
+        aiOperationStepIncludeChatHistory:
+          type:
+          - boolean
+          - 'null'
+        aiOperationStepIncludeAttachments:
+          type:
+          - boolean
+          - 'null'
+        aiOperationStepUseDataSource:
+          type:
+          - boolean
+          - 'null'
+        selectedDataSources:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        memoryStoreStepAppendText:
+          type:
+          - boolean
+          - 'null'
+        aiOperationStepChatHistoryMessagesLimit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        aiOperationStepOutputSchemaJson:
+          type:
+          - string
+          - 'null'
+        executePipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        selectedPipelineVersion:
+          type:
+          - string
+          - 'null'
+          format: guid
+        embeddedAgentVariablesJson:
+          type:
+          - string
+          - 'null'
+        preferredPdfParserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customPdfParserPrompt:
+          type:
+          - string
+          - 'null'
+        retryConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/RetryConfigurationDefinition'
+        mcpServerDeploymentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        mcpHydrationFailurePolicy:
+          oneOf:
+          - $ref: '#/components/schemas/McpHydrationFailurePolicyDefinition'
+        mcpServerDeploymentParamsJson:
+          type:
+          - string
+          - 'null'
+        documentSplitterPrompt:
+          type:
+          - string
+          - 'null'
+        documentSplitterWindowSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        documentSplitterMaxWindowSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        documentSplitterOutputSchemaJson:
+          type:
+          - string
+          - 'null'
+    AgentExtension2:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    InputType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Image
+      - Audio
+      - Video
+      enum:
+      - text
+      - image
+      - audio
+      - video
+    DateTimeTimezoneSettingsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    ToolHeadersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    WebhookApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        webhookUrl:
+          type: string
+        timeoutSeconds:
+          type: integer
+          format: int32
+        maxRetryAttempts:
+          type: integer
+          format: int32
+        message:
+          type:
+          - string
+          - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    SdkStepDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        sdkStepType:
+          type: string
+        category:
+          type: string
+        group:
+          type: string
+        version:
+          type: string
+        stepParameters:
+          type: string
+        credentialReferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/SdkStepCredentialReference'
+        supportedCredentialTypes:
+          type: array
+          items:
+            type: string
+    SecurityScheme2:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          apiKey: '#/components/schemas/ApiKeySecurityScheme2'
+          http: '#/components/schemas/HttpSecurityScheme2'
+          oauth2: '#/components/schemas/OAuth2SecurityScheme2'
+          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme2'
+          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme2'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+    ExportPipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        available:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/PipelineDefinitionMetadata'
+        agent:
+          $ref: '#/components/schemas/PipelineDefinition'
+        dataSources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourcesDefinition'
+        prompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptDefinition'
+        tools:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsExportDefinition'
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelDefinition'
+        memories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MemoryDefinition'
+        pythonCodeBlocks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PythonCodeBlockDefinition'
+        routers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RouterDefinition'
+        approvalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApprovalRequestDefinition'
+        webhookApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WebhookApprovalRequestDefinition'
+        customFormApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormApprovalRequestDefinition'
+        agentCards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardDefinition'
+        subAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineDefinition'
+        subAgentInterfaces:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/InterfacesDefinition'
+        deployment:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentDefinition'
+        interfaces:
+          oneOf:
+          - $ref: '#/components/schemas/InterfacesDefinition'
+        eventTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentEventTriggerDefinition'
+        sdkSteps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SdkStepDefinition'
+        mcpServerPlaceholders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/McpServerPlaceholderDefinition'
+    BatchToolsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolDefinitionModel'
+        totalCount:
+          type: integer
+          format: int32
+    PromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        versionChangeDescription:
+          type: string
+        promptMessage:
+          type:
+          - string
+          - 'null'
+        isAgentSpecific:
+          type:
+          - boolean
+          - 'null'
+        isGlobal:
+          type:
+          - boolean
+          - 'null'
+        id:
+          type: string
+          format: guid
+    PromptSegmentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        promptId:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+    OutputModality:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Image
+      enum:
+      - Text
+      - Image
+    ToolParameterRequirement:
+      type: string
+      description: ''
+      x-enumNames:
+      - Required
+      - Optional
+      - OptionalQueryParam
+      enum:
+      - Required
+      - Optional
+      - OptionalQueryParam
+    AgentProvider2:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          type: string
+        url:
+          type: string
+    RouterDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        routerConfigJson:
+          type:
+          - string
+          - 'null'
+        routerConfig:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RouterConfigurationDefinition'
+        isMultiRoute:
+          type:
+          - boolean
+          - 'null'
+        includeChatHistory:
+          type: boolean
+    ToolHeaderModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    CredentialsDataListDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    QuickActionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        quickActionType:
+          type: string
+        assignedAgent:
+          oneOf:
+          - $ref: '#/components/schemas/AssignedAgentDefinition'
+    PipelineDefinitionMetadata:
+      type: object
+      additionalProperties: false
+      required:
+      - state
+      properties:
+        id:
+          type: string
+          format: guid
+        exportVersion:
+          type:
+          - string
+          - 'null'
+        tagline:
+          type: string
+        agentDescription:
+          type: string
+        industry:
+          type: string
+        tasks:
+          type: string
+        credentialExportOption:
+          type: string
+        dataSourceExportOption:
+          type: string
+        versionInformation:
+          type: string
+        state:
+          type: string
+        contributorId:
+          type:
+          - string
+          - 'null'
+        contributorGivenName:
+          type:
+          - string
+          - 'null'
+        contributorSurname:
+          type:
+          - string
+          - 'null'
+        videoLink:
+          type:
+          - string
+          - 'null'
+        readiness:
+          type:
+          - string
+          - 'null'
+        department:
+          type:
+          - string
+          - 'null'
+        agentLastUpdated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        country:
+          type:
+          - string
+          - 'null'
+    CredentialsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        binderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        type:
+          $ref: '#/components/schemas/CredentialType'
+        expired:
+          type:
+          - boolean
+          - 'null'
+        expiresOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        administrativeScope:
+          $ref: '#/components/schemas/AdministrativeScope'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        credentialData:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialEntry'
+        origin:
+          $ref: '#/components/schemas/CredentialOrigin'
+        enabledForPythonBlocks:
+          type: boolean
+        customCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentials'
+        sourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        provider:
+          type:
+          - string
+          - 'null'
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    ModelDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        displayName:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
+        promptId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        systemPromptDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/PromptDefinition'
+        url:
+          type:
+          - string
+          - 'null'
+        inputType:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        credentialsDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsDefinition'
+        deploymentType:
+          type:
+          - string
+          - 'null'
+        sourceType:
+          type: string
+        connectionString:
+          type:
+          - string
+          - 'null'
+        containerName:
+          type:
+          - string
+          - 'null'
+        deployedKey:
+          type:
+          - string
+          - 'null'
+        deployedUrl:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+        uploadedContainerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        libraryModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inputTokenPrice:
+          type:
+          - string
+          - 'null'
+        outputTokenPrice:
+          type:
+          - string
+          - 'null'
+        tokenUnits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasToolSupport:
+          type:
+          - boolean
+          - 'null'
+        allowAiriaCredentials:
+          type:
+          - boolean
+          - 'null'
+        allowBYOKCredentials:
+          type:
+          - boolean
+          - 'null'
+        author:
+          type:
+          - string
+          - 'null'
+        priceType:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        maxOutputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CredentialOrigin:
+      type: string
+      description: ''
+      x-enumNames:
+      - Platform
+      - Chat
+      enum:
+      - Platform
+      - Chat
+    PositionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        x:
+          type: string
+        y:
+          type: string
+    CustomFormActionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        label:
+          type: string
+        handleId:
+          type: string
+          format: guid
+        style:
+          type: string
+        confirmationText:
+          type:
+          - string
+          - 'null'
+        requiresComment:
+          type: boolean
+    VectorStoreDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        hostingType:
+          type:
+          - string
+          - 'null'
+        modality:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        storeTypeId:
+          type:
+          - string
+          - 'null'
+        credentialId:
+          type:
+          - string
+          - 'null'
+        configurationJson:
+          type:
+          - string
+          - 'null'
+        sparseVectorEnabled:
+          type: boolean
+        embeddingProvider:
+          type:
+          - string
+          - 'null'
+        embeddingConfigurationJson:
+          type:
+          - string
+          - 'null'
+    McpServerPlaceholderDefinition:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        gatewayLibraryId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        selectedTools:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PythonCodeBlockDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        code:
+          type: string
+        credentialIds:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        oAuthProviderConfigIds:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        isStructuredOutputEnabled:
+          type:
+          - boolean
+          - 'null'
+        includeParsedFiles:
+          type:
+          - boolean
+          - 'null'
+        credentialsDefinitions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CredentialsDefinition'
+    LicenseType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Afl30
+      - AGPL_3_0
+      - Apache20
+      - Artistic20
+      - BigCodeOpenRailM
+      - BigScienceBloomRail10
+      - BigScienceOpenRailM
+      - BSD
+      - BSD2_Clause
+      - BSD3_Clause
+      - BSD3_ClauseClear
+      - BSL_1_0
+      - CC
+      - CC0_1_0
+      - CC_BY_2_0
+      - CC_BY_2_5
+      - CC_BY_3_0
+      - CC_BY_4_0
+      - CC_BY_NC_2_0
+      - CC_BY_NC_3_0
+      - CC_BY_NC_4_0
+      - CC_BY_NC_ND_3_0
+      - CC_BY_NC_ND_4_0
+      - CC_BY_NC_SA_2_0
+      - CC_BY_NC_SA_3_0
+      - CC_BY_NC_SA_4_0
+      - CC_BY_ND_4_0
+      - CC_BY_SA_3_0
+      - CC_BY_SA_4_0
+      - CDLA_Permissive_1_0
+      - CDLA_Permissive_2_0
+      - CDLA_Sharing_1_0
+      - CreativeMlOpenRailM
+      - C_UDA
+      - ECL_2_0
+      - EPL_1_0
+      - EPL_2_0
+      - Etalab_2_0
+      - EUPL_1_1
+      - GFDL
+      - GPL
+      - LGPL
+      - LPPL_1_3c
+      - MIT
+      - MPL_2_0
+      - MSPL
+      - ODbL_1_0
+      - OpenRail
+      - PDDL_1_0
+      - Perl_Artistic_2_0
+      - Unlicense
+      - WTFPL
+      - Zlib
+      - LLAMA_3_1
+      - MistralResearch
+      - JambaOpenModelLicense
+      - Unlicensed
+      - LLAMA_2
+      - LLAMA_3
+      - LLAMA_3_2
+      - TongyiQianwen
+      - AiriaModelLicense
+      - AnthropicCommercialTermsOfService
+      - CohereTermsOfUse
+      - MistralAINonProductionLicense
+      - OpenAITermsOfUse
+      - PerplexityApiTermsOfService
+      - Stable_Diffusion_3_5
+      - XAITermsOfService
+      - AnthropicOnBedrockTermsOfService
+      - LLAMA_3_3
+      - LLAMA_4
+      enum:
+      - Afl30
+      - AGPL_3_0
+      - Apache20
+      - Artistic20
+      - BigCodeOpenRailM
+      - BigScienceBloomRail10
+      - BigScienceOpenRailM
+      - BSD
+      - BSD2_Clause
+      - BSD3_Clause
+      - BSD3_ClauseClear
+      - BSL_1_0
+      - CC
+      - CC0_1_0
+      - CC_BY_2_0
+      - CC_BY_2_5
+      - CC_BY_3_0
+      - CC_BY_4_0
+      - CC_BY_NC_2_0
+      - CC_BY_NC_3_0
+      - CC_BY_NC_4_0
+      - CC_BY_NC_ND_3_0
+      - CC_BY_NC_ND_4_0
+      - CC_BY_NC_SA_2_0
+      - CC_BY_NC_SA_3_0
+      - CC_BY_NC_SA_4_0
+      - CC_BY_ND_4_0
+      - CC_BY_SA_3_0
+      - CC_BY_SA_4_0
+      - CDLA_Permissive_1_0
+      - CDLA_Permissive_2_0
+      - CDLA_Sharing_1_0
+      - CreativeMlOpenRailM
+      - C_UDA
+      - ECL_2_0
+      - EPL_1_0
+      - EPL_2_0
+      - Etalab_2_0
+      - EUPL_1_1
+      - GFDL
+      - GPL
+      - LGPL
+      - LPPL_1_3c
+      - MIT
+      - MPL_2_0
+      - MSPL
+      - ODbL_1_0
+      - OpenRail
+      - PDDL_1_0
+      - Perl_Artistic_2_0
+      - Unlicense
+      - WTFPL
+      - Zlib
+      - LLAMA_3_1
+      - MistralResearch
+      - JambaOpenModelLicense
+      - Unlicensed
+      - LLAMA_2
+      - LLAMA_3
+      - LLAMA_3_2
+      - TongyiQianwen
+      - AiriaModelLicense
+      - AnthropicCommercialTermsOfService
+      - CohereTermsOfUse
+      - MistralAINonProductionLicense
+      - OpenAITermsOfUse
+      - PerplexityApiTermsOfService
+      - Stable_Diffusion_3_5
+      - XAITermsOfService
+      - AnthropicOnBedrockTermsOfService
+      - LLAMA_3_3
+      - LLAMA_4
+    ModelCategory2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Multimodal
+      - ComputerVision
+      - NLP
+      - ReinforcementLearning
+      - Embedding
+      - ImageGeneration
+      - MachineLearning
+      - Voice
+      - Reranker
+      - VideoGeneration
+      enum:
+      - Multimodal
+      - ComputerVision
+      - NLP
+      - ReinforcementLearning
+      - Embedding
+      - ImageGeneration
+      - MachineLearning
+      - Voice
+      - Reranker
+      - VideoGeneration
+    ToolBodyType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Json
+      - XFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+      enum:
+      - Json
+      - xFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+    ApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        emailNotification:
+          type: boolean
+        approvalDescription:
+          type:
+          - string
+          - 'null'
+        denialDescription:
+          type:
+          - string
+          - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    GetLibraryPromptsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromptsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    DeploymentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        deploymentIcon:
+          type:
+          - string
+          - 'null'
+        deploymentDescription:
+          type: string
+        userPrompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserPromptDefinition'
+        deploymentPrompt:
+          type:
+          - string
+          - 'null'
+        isRecommended:
+          type: boolean
+        deploymentType:
+          type: string
+        conversationType:
+          type: string
+        aboutJson:
+          type:
+          - string
+          - 'null'
+        supportedInputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfigDefinition'
+        displayConsumptionInfo:
+          type: boolean
+    McpHydrationFailurePolicyDefinition:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
+      enum:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
+    ProviderType3:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAI
+      - Ollama
+      - Azure
+      - HuggingFace
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - Ai21
+      - Cohere
+      - Google
+      - TogetherAI
+      - XAI
+      - Bedrock
+      - Compass
+      - Alibaba
+      enum:
+      - OpenAI
+      - Ollama
+      - Azure
+      - Hugging Face
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - Watson
+      - AI21
+      - Cohere
+      - Google
+      - Together AI
+      - xAI
+      - Amazon Bedrock
+      - Compass
+      - Alibaba
+    CredentialSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        availableCredentialTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialType'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        platformSupportedOAuthTypes:
+          type: array
+          items:
+            type: string
+    AgentInterface2:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        protocolBinding:
+          type: string
+        protocolVersion:
+          type: string
+        tenant:
+          type:
+          - string
+          - 'null'
+    AgentCardSignature2:
+      type: object
+      additionalProperties: false
+      properties:
+        protected:
+          type: string
+        signature:
+          type: string
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    AgentSkill2:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        examples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        inputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
+    AgentToolInterfaceDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        inputSchema:
+          type: string
+        outputSchema:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type: boolean
+        annotations:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolAnnotationsDefinition'
+    LoopStepParallelConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        maxDegreeOfParallelism:
+          type: integer
+          format: int32
+    PriceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - AITextOutputModelPrice
+      - AIImageOutputModelPrice
+      enum:
+      - Unknown
+      - AITextOutputModelPrice
+      - AIImageOutputModelPrice
+    ModelCertificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - SOC2
+      - ISO_27001
+      - ISO_27017
+      - ISO_27018
+      - ISO_27701
+      - HIPAA
+      enum:
+      - SOC2
+      - ISO 27001
+      - ISO 27017
+      - ISO 27018
+      - ISO 27701
+      - HIPAA
+    ToolParametersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        parameterType:
+          type: string
+        parameterDescription:
+          type: string
+        default:
+          type: string
+        validOptions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        arrayItemType:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolParametersDefinition'
+        requirement:
+          type: string
+    CredentialKeyField:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAIAPIKey
+      - AzureAPIKey
+      - OllamaAPIKey
+      - HuggingFaceAPIKey
+      - AnthropicAPIKey
+      - AzureAIStudioApiKey
+      - ReplicateAPIKey
+      - StabilityAPIKey
+      - MistralAPIKey
+      - PerplexityAPIKey
+      - WatsonAPIKey
+      - Ai21APIKey
+      - CohereAPIKey
+      - GoogleAPIKey
+      - TogetherAIAPIKey
+      - PineconeAPIKey
+      - WeaviateAPIKey
+      - CustomOpenAIAPIKey
+      - XAIAPIKey
+      - XAPIKey
+      - FirecrawlAPIKey
+      - YoutubeAPIKey
+      - MicrosoftBingSearchAPIKey
+      - BedrockAPIKey
+      - AWSSecretKey
+      - AwsAccessKey
+      - AWSRegion
+      - CustomApiKey
+      - ConvertKitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - CompassAPIKey
+      - SnowflakePrivateKey
+      - SnowflakePasswordPhrase
+      - AzureMLAPIKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - AzureClientId
+      - AzureClientSecret
+      - AzureTenantId
+      - AlibabaApiKey
+      - GenericOpenAIAPIKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - ServiceAccountCredentials
+      - ApplicationName
+      - ImpersonateUser
+      - AzureAiAPIKey
+      - BedrockAccountNumber
+      - BedrockExternalId
+      - BedrockIamRole
+      - BedrockUseIRSA
+      - FilerobotToken
+      - XFilerobotKey
+      - WhatsAppAccessToken
+      - WhatsAppPhoneNumberId
+      - WhatsAppAppSecret
+      - Host
+      - Port
+      - Database
+      - Schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - HanaConnectionType
+      - HanaInstanceNumber
+      - ConfluenceUrl
+      - JiraUrl
+      - ContentfulSpaceId
+      - ContentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - CohesityApiKey
+      - CohesityEndpoint
+      - AnthropicInferenceHooksSigningSecret
+      - AnthropicAdminKey
+      - AnthropicAnalyticsKey
+      - GcpProjectId
+      - GcpLocation
+      enum:
+      - openaiApiKey
+      - azureApiKey
+      - ollamaApiKey
+      - huggingFaceApiKey
+      - anthropicApiKey
+      - azureAIStudioApiKey
+      - replicateApiKey
+      - stabilityApiKey
+      - mistralApiKey
+      - perplexityApiKey
+      - watsonApiKey
+      - ai21ApiKey
+      - cohereApiKey
+      - googleApiKey
+      - togetherAiApiKey
+      - pineconeApiKey
+      - weaviateApiKey
+      - customOpenAiApiKey
+      - xAiApiKey
+      - xApiKey
+      - firecrawlApiKey
+      - youtubeApiKey
+      - microsoftBingSearchAPIKey
+      - bedrockApiKey
+      - awsSecretKey
+      - awsAccessKey
+      - awsRegion
+      - CustomAPIKey
+      - convertkitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - compassApiKey
+      - snowflakePrivateKey
+      - snowflakePasswordPhrase
+      - azureMLApiKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - azureClientId
+      - azureClientSecret
+      - azureTenantId
+      - AlibabaApiKey
+      - genericOpenAiApiKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - serviceAccountCredentials
+      - applicationName
+      - impersonateUser
+      - azureAiApiKey
+      - bedrockAccountNumber
+      - bedrockExternalId
+      - bedrockIamRole
+      - bedrockUseIRSA
+      - filerobotToken
+      - xFilerobotKey
+      - whatsAppAccessToken
+      - whatsAppPhoneNumberId
+      - whatsAppAppSecret
+      - host
+      - port
+      - database
+      - schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - hanaConnectionType
+      - hanaInstanceNumber
+      - confluenceUrl
+      - jiraUrl
+      - contentfulSpaceId
+      - contentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - cohesityApiKey
+      - cohesityEndpoint
+      - anthropicInferenceHooksSigningSecret
+      - anthropicAdminKey
+      - anthropicAnalyticsKey
+      - gcpProjectId
+      - gcpLocation
+    PromptCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Aggregate
+      - Analyze
+      - Assess
+      - Assist
+      - Craft
+      - Create
+      - Design
+      - Develop
+      - Draft
+      - Enhance
+      - Estimate
+      - Evaluate
+      - Examine
+      - Generate
+      - Grade
+      - Modify
+      - Monitor
+      - Narrate
+      - Organize
+      - Plan
+      - Provide
+      - Recommend
+      - Respond
+      - Review
+      - Screen
+      - Search
+      - Suggest
+      - Summarize
+      - Track
+      - Use
+      - Write
+      enum:
+      - None
+      - Aggregate
+      - Analyze
+      - Assess
+      - Assist
+      - Craft
+      - Create
+      - Design
+      - Develop
+      - Draft
+      - Enhance
+      - Estimate
+      - Evaluate
+      - Examine
+      - Generate
+      - Grade
+      - Modify
+      - Monitor
+      - Narrate
+      - Organize
+      - Plan
+      - Provide
+      - Recommend
+      - Respond
+      - Review
+      - Screen
+      - Search
+      - Suggest
+      - Summarize
+      - Track
+      - Use
+      - Write
+    CustomCredentialsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        credentialType:
+          type: string
+        credentialData:
+          type:
+          - string
+          - 'null'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    CredentialsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        credentialType:
+          type: string
+        sourceType:
+          type: string
+        credentialDataList:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialsDataListDefinition'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        administrativeScope:
+          type:
+          - string
+          - 'null'
+        origin:
+          type:
+          - string
+          - 'null'
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentialsDefinition'
+        id:
+          type: string
+          format: guid
+    MemoryDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        isUserSpecific:
+          type: boolean
+        isConversationScoped:
+          type:
+          - boolean
+          - 'null'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+    InterfacesDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        emailInbox:
+          oneOf:
+          - $ref: '#/components/schemas/AgentTriggersDefinition'
+        toolInterface:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolInterfaceDefinition'
+    BrowserExtensionConfigDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        browserType:
+          type: string
+        quickActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickActionDefinition'
+    UserPromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        promptDescription:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

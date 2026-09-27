@@ -1,0 +1,299 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Pipeline Execution Logs API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PipelineExecutionLogs
+paths:
+  /v1/PipelineExecutionLogs:
+    get:
+      tags:
+      - PipelineExecutionLogs
+      operationId: PipelineExecutionLogs_GetPipelineExecutionLogsByIdentifier2
+      parameters:
+      - name: ExecutionId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: PipelineId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPipelineExecutionResult'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution logs get pipeline execution logs by identifier2
+      x-summary-source: derived
+  /v1/PipelineExecutionLogs/{id}:
+    delete:
+      tags:
+      - PipelineExecutionLogs
+      operationId: PipelineExecutionLogs_DeletePipelineExecutionLogsByIdentifier2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution logs delete pipeline execution logs by identifier2
+      x-summary-source: derived
+components:
+  schemas:
+    StepExecutionLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        stepId:
+          type: string
+          format: guid
+        stepType:
+          oneOf:
+          - $ref: '#/components/schemas/StepType'
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        duration:
+          type:
+          - string
+          - 'null'
+          example: 0.0
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        success:
+          type:
+          - boolean
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
+    StepType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AIOperation
+      - DataSearch
+      - ExecutePipelineStep
+      - InputStep
+      - MachineLearningOperationStep
+      - MemoryLoadStep
+      - MemoryStoreStep
+      - OutputStep
+      - PythonStep
+      - Exception
+      - RouterStep
+      - AnnotationStep
+      - ApprovalStep
+      - WebhookApprovalStep
+      - ToolActionStep
+      - AgentCardStep
+      - ConditionalBranchStep
+      - LoopContainerStep
+      - LoopStartStep
+      - LoopEndStep
+      - JsonFormatterStep
+      - SdkStep
+      - CustomFormHumanApprovalStep
+      - ImageGenerationStep
+      - DocumentSplitterStep
+      enum:
+      - AIOperation
+      - dataSearch
+      - executePipelineStep
+      - inputStep
+      - machineLearningOperationStep
+      - memoryLoadStep
+      - memoryStoreStep
+      - outputStep
+      - pythonStep
+      - exception
+      - routerStep
+      - annotationStep
+      - approvalStep
+      - webhookApprovalStep
+      - toolActionStep
+      - agentCardStep
+      - conditionalBranchStep
+      - loopContainerStep
+      - loopStartStep
+      - loopEndStep
+      - jsonFormatterStep
+      - sdkStep
+      - customFormHumanApprovalStep
+      - imageGenerationStep
+      - documentSplitterStep
+    PipelineExecutionLogDetailsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        duration:
+          type:
+          - string
+          - 'null'
+          example: 0.0
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        success:
+          type:
+          - boolean
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GetPipelineExecutionResult:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        logRecordDetails:
+          $ref: '#/components/schemas/PipelineExecutionLogDetailsDto'
+        stepExecutionLogRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StepExecutionLogDto'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

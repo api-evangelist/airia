@@ -1,0 +1,396 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Red Teaming Dataset Generation API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RedTeamingDatasetGeneration
+paths:
+  /v1/red-teaming-dataset-generation/guidelines:
+    get:
+      tags:
+      - RedTeamingDatasetGeneration
+      operationId: RedTeamingDatasetGeneration_GetOwaspGuidelines
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwaspGuidelineDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming dataset generation get owasp guidelines
+      x-summary-source: derived
+  /v1/red-teaming-dataset-generation/guidelines/{guidelineName}:
+    get:
+      tags:
+      - RedTeamingDatasetGeneration
+      operationId: RedTeamingDatasetGeneration_GetOwaspGuidelineDetails
+      parameters:
+      - name: guidelineName
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwaspGuidelineDetailsDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming dataset generation get owasp guideline details
+      x-summary-source: derived
+  /v1/red-teaming-dataset-generation/preview:
+    post:
+      tags:
+      - RedTeamingDatasetGeneration
+      operationId: RedTeamingDatasetGeneration_PreviewOwaspPrompts
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OwaspPromptPreviewRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OwaspPromptPreviewResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming dataset generation preview owasp prompts
+      x-summary-source: derived
+  /v1/red-teaming-dataset-generation/generate:
+    post:
+      tags:
+      - RedTeamingDatasetGeneration
+      operationId: RedTeamingDatasetGeneration_GenerateOwaspPrompts
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateOwaspPromptsRequest'
+        required: true
+        x-position: 1
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming dataset generation generate owasp prompts
+      x-summary-source: derived
+components:
+  schemas:
+    GenerateOwaspPromptsRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credentialId
+      - libraryName
+      - owaspGuideline
+      - topics
+      - judgePrompt
+      properties:
+        credentialId:
+          type: string
+          format: guid
+          minLength: 1
+        libraryName:
+          type: string
+          maxLength: 200
+          minLength: 1
+        libraryDescription:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        owaspGuideline:
+          type: string
+          maxLength: 200
+          minLength: 1
+        testId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        topics:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        judgePrompt:
+          type: string
+          maxLength: 5000
+          minLength: 1
+        fewShotExamples:
+          type:
+          - string
+          - 'null'
+        promptsPerTopic:
+          type: integer
+          format: int32
+          maximum: 50
+          minimum: 1
+    OwaspGuidelineDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+    OwaspPromptPreviewRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - owaspGuideline
+      - testId
+      - topics
+      - credentialId
+      properties:
+        owaspGuideline:
+          type: string
+          minLength: 1
+        testId:
+          type: string
+          minLength: 1
+        topics:
+          type: array
+          minItems: 1
+          items:
+            type: string
+        judgePrompt:
+          type:
+          - string
+          - 'null'
+        fewShotExamples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        credentialId:
+          type: string
+          format: guid
+          minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    OwaspGuidelineDetailsDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        testId:
+          type:
+          - string
+          - 'null'
+        topics:
+          type: array
+          items:
+            type: string
+        fewShotExamples:
+          type: array
+          items:
+            type: string
+        judgePrompt:
+          type:
+          - string
+          - 'null'
+    OwaspPromptPreviewResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        prompts:
+          type: array
+          items:
+            type: string
+        totalPrompts:
+          type: integer
+          format: int32
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

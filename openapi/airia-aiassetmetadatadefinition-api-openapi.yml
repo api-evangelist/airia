@@ -1,0 +1,468 @@
+openapi: 3.2.0
+info:
+  title: Airia Web AI Asset Metadata Definition API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AiAssetMetadataDefinition
+paths:
+  /v1/AiAssetMetadataDefinition:
+    get:
+      tags:
+      - AiAssetMetadataDefinition
+      operationId: AiAssetMetadataDefinition_GetByAssetType
+      parameters:
+      - name: assetType
+        in: query
+        schema:
+          $ref: '#/components/schemas/AiAssetType'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata definition get by asset type
+      x-summary-source: derived
+    post:
+      tags:
+      - AiAssetMetadataDefinition
+      operationId: AiAssetMetadataDefinition_Create
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAiAssetMetadataDefinitionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata definition create
+      x-summary-source: derived
+  /v1/AiAssetMetadataDefinition/{id}:
+    get:
+      tags:
+      - AiAssetMetadataDefinition
+      operationId: AiAssetMetadataDefinition_GetById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata definition get by id
+      x-summary-source: derived
+    put:
+      tags:
+      - AiAssetMetadataDefinition
+      operationId: AiAssetMetadataDefinition_Update
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAiAssetMetadataDefinitionRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata definition update
+      x-summary-source: derived
+    delete:
+      tags:
+      - AiAssetMetadataDefinition
+      operationId: AiAssetMetadataDefinition_Delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Ai asset metadata definition delete
+      x-summary-source: derived
+components:
+  schemas:
+    AiAssetMetadataDefinitionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        metadataName:
+          type: string
+        metadataType:
+          $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isPredefined:
+          type: boolean
+        isRequired:
+          type: boolean
+        isSystemGenerated:
+          type: boolean
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
+    CreateAiAssetMetadataDefinitionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        metadataName:
+          type: string
+        metadataType:
+          $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isRequired:
+          type: boolean
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
+    AiAssetMetadataValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+      enum:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+    AiAssetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+      enum:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiAssetMetadataDefinitionOptionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type: string
+    AiAssetMetadataDefinitionOptionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        value:
+          type: string
+    UpdateAiAssetMetadataDefinitionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        metadataName:
+          type:
+          - string
+          - 'null'
+        metadataType:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isRequired:
+          type:
+          - boolean
+          - 'null'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
+    AiAssetMetadataType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+      enum:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

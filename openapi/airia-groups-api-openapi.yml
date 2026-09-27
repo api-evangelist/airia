@@ -1,0 +1,796 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Groups API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Groups
+paths:
+  /v1/Groups/batch-names:
+    get:
+      tags:
+      - Groups
+      operationId: Groups_GetGroupNamesByIds2
+      parameters:
+      - name: ids
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityNamesResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Groups get group names by ids2
+      x-summary-source: derived
+  /v1/Groups:
+    get:
+      tags:
+      - Groups
+      operationId: Groups_GetGroups2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: prioritizeLeaderGroups
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupViewModel'
+        400:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Groups get groups2
+      x-summary-source: derived
+    post:
+      tags:
+      - Groups
+      operationId: Groups_AddGroup2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: group
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequestViewModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupViewModel'
+        400:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        409:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Groups add group2
+      x-summary-source: derived
+  /v1/Groups/{groupId}:
+    get:
+      tags:
+      - Groups
+      operationId: Groups_GetGroupsById2
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupViewModel'
+        400:
+          description: ''
+        404:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Groups get groups by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - Groups
+      operationId: Groups_UpdateGroup2
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: group
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditGroupRequestViewModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditGroupRequestViewModel'
+        400:
+          description: ''
+        404:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Groups update group2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Groups
+      operationId: Groups_DeleteGroup2
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+        404:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Groups delete group2
+      x-summary-source: derived
+  /v1/Groups/{groupId}/groups:
+    post:
+      tags:
+      - Groups
+      operationId: Groups_AssignGroupToUser2
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: groupViewModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupViewModel'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+        404:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Groups assign group to user2
+      x-summary-source: derived
+  /v1/Groups/{groupId}/roles:
+    post:
+      tags:
+      - Groups
+      operationId: Groups_AssignRoleToGroup2
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: assignUserGroupRoleRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignUserGroupRoleRequest'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        404:
+          description: ''
+        default:
+          description: ''
+      summary: Groups assign role to group2
+      x-summary-source: derived
+  /v1/Groups/AssignRole:
+    post:
+      tags:
+      - Groups
+      operationId: Groups_AssignRoleToGroupMembers2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        500:
+          description: ''
+        default:
+          description: ''
+      summary: Groups assign role to group members2
+      x-summary-source: derived
+  /v1/Groups/bulk-invite:
+    post:
+      tags:
+      - Groups
+      operationId: Groups_BulkInviteGroupUsers2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkInviteUsersRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkInviteUsersResponse'
+        400:
+          description: ''
+        404:
+          description: ''
+        401:
+          description: ''
+      summary: Groups bulk invite group users2
+      x-summary-source: derived
+components:
+  schemas:
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    EditGroupRequestViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        roleIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupLeaderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    CreateGroupRequestViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        roleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupLeaderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UserInviteResult:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        email:
+          type: string
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        reason:
+          type: string
+        inviteSentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        invitationExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    EntityNamesResult:
+      type: object
+      additionalProperties: false
+      properties:
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+    AssignUserGroupRoleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        groupId:
+          type: string
+          format: guid
+        roleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    BulkInviteUsersRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - groupId
+      properties:
+        groupId:
+          type: string
+          format: guid
+          minLength: 1
+    BulkInviteUsersResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        totalRequested:
+          type: integer
+          format: int32
+        successfullyInvited:
+          type: integer
+          format: int32
+        filteredOut:
+          type: integer
+          format: int32
+        failed:
+          type: integer
+          format: int32
+        successfulInvites:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInviteResult'
+        filteredUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInviteResult'
+        failedInvites:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInviteResult'
+        message:
+          type: string
+    GroupViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        parentId:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        identityServerGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalUsers:
+          type: integer
+          format: int32
+        rolesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        isIdpProvisioned:
+          type: boolean
+        groupLeader:
+          oneOf:
+          - $ref: '#/components/schemas/UserViewModel'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UserViewModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: guid
+        identityServerUserId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        isCurrentLoggedInUser:
+          type: boolean
+        lastTenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GroupViewModel'
+        roles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        organizationNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        organizationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastLogin:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isIdpProvisioned:
+          type: boolean
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        lastInviteSentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        invitationExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isEligibleForReinvite:
+          type: boolean
+        profileImageUrl:
+          type:
+          - string
+          - 'null'
+        isDeleted:
+          type: boolean
+        departmentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        departmentLabel:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

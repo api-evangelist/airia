@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Tutorials API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Tutorials
+paths:
+  /v1/Tutorials/vimeo/{videoId}/metadata:
+    get:
+      tags:
+      - Tutorials
+      operationId: Tutorials_GetVimeoVideoMetadata
+      parameters:
+      - name: videoId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VimeoVideoMetadata'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Tutorials get vimeo video metadata
+      x-summary-source: derived
+  /v1/Tutorials/vimeo/metadata:
+    post:
+      tags:
+      - Tutorials
+      operationId: Tutorials_GetVimeoVideoMetadataByUrl
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: url
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VimeoVideoMetadata'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Tutorials get vimeo video metadata by url
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    VimeoVideoMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        videoId:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        authorName:
+          type:
+          - string
+          - 'null'
+        authorUrl:
+          type:
+          - string
+          - 'null'
+        thumbnailUrl:
+          type:
+          - string
+          - 'null'
+        thumbnailWidth:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbnailHeight:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        uploadDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        videoUrl:
+          type: string
+        embedHtml:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent Attribute Auto Fill API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AgentAttributeAutoFill
+paths:
+  /v1/governance/agents/{assetId}/attributes/auto-fill:
+    post:
+      tags:
+      - AgentAttributeAutoFill
+      operationId: AgentAttributeAutoFill_AutoFill2
+      parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAttributeAutoFillResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent attribute auto fill auto fill2
+      x-summary-source: derived
+components:
+  schemas:
+    ClassificationFieldSuggestion:
+      type: object
+      additionalProperties: false
+      required:
+      - classificationId
+      - classificationName
+      properties:
+        classificationId:
+          type: string
+          format: guid
+        classificationName:
+          type: string
+        suggestedLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        suggestedLabelName:
+          type:
+          - string
+          - 'null'
+        reasoning:
+          type:
+          - string
+          - 'null'
+    AgentAttributeFieldSuggestion:
+      type: object
+      additionalProperties: false
+      required:
+      - fieldName
+      - metadataDefinitionId
+      properties:
+        fieldName:
+          type: string
+        metadataDefinitionId:
+          type: string
+        suggestedValue:
+          type:
+          - string
+          - 'null'
+        suggestedOptionId:
+          type:
+          - string
+          - 'null'
+        reasoning:
+          type:
+          - string
+          - 'null'
+    AgentAttributeAutoFillResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - suggestions
+      - classificationSuggestions
+      properties:
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAttributeFieldSuggestion'
+        classificationSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassificationFieldSuggestion'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

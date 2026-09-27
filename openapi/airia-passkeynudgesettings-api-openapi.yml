@@ -1,0 +1,230 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Passkey Nudge Settings API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PasskeyNudgeSettings
+paths:
+  /v1/PasskeyNudgeSettings:
+    get:
+      tags:
+      - PasskeyNudgeSettings
+      operationId: PasskeyNudgeSettings_GetSettings
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasskeyNudgeSettingsViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Passkey nudge settings get settings
+      x-summary-source: derived
+    put:
+      tags:
+      - PasskeyNudgeSettings
+      operationId: PasskeyNudgeSettings_Update
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: newSettings
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasskeyNudgeSettingsUpdateViewModel'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasskeyNudgeSettingsViewModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Passkey nudge settings update
+      x-summary-source: derived
+  /v1/PasskeyNudgeSettings/reset:
+    post:
+      tags:
+      - PasskeyNudgeSettings
+      operationId: PasskeyNudgeSettings_Reset
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasskeyNudgeSettingsViewModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Passkey nudge settings reset
+      x-summary-source: derived
+components:
+  schemas:
+    PasskeyNudgeSettingsUpdateViewModel:
+      type: object
+      additionalProperties: false
+      required:
+      - mode
+      properties:
+        mode:
+          $ref: '#/components/schemas/PasskeyNudgeMode'
+        snoozeDays:
+          type: integer
+          format: int32
+        maxDeclines:
+          type: integer
+          format: int32
+    PasskeyNudgeMode:
+      type: string
+      description: The passkey nudge mode, in increasing order of insistence.
+      enum:
+      - none
+      - nudge
+      - enforce
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PasskeyNudgeSettingsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        configured:
+          type: boolean
+        mode:
+          $ref: '#/components/schemas/PasskeyNudgeMode'
+        snoozeDays:
+          type: integer
+          format: int32
+        maxDeclines:
+          type: integer
+          format: int32
+        resetAt:
+          type:
+          - integer
+          - 'null'
+          format: int64
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

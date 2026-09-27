@@ -1,0 +1,550 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Agent Feedback API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AgentFeedback
+paths:
+  /v1/AgentFeedback:
+    get:
+      tags:
+      - AgentFeedback
+      operationId: AgentFeedback_GetFeedback2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: status
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentFeedbackStatus'
+        x-position: 6
+      - name: agentId
+        x-originalName: agentIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 7
+      - name: projectId
+        x-originalName: projectIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAgentFeedbackModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent feedback get feedback2
+      x-summary-source: derived
+    post:
+      tags:
+      - AgentFeedback
+      operationId: AgentFeedback_CreateFeedback2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAgentFeedbackModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentFeedbackModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent feedback create feedback2
+      x-summary-source: derived
+  /v1/AgentFeedback/{id}:
+    get:
+      tags:
+      - AgentFeedback
+      operationId: AgentFeedback_GetFeedbackById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentFeedbackModel'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent feedback get feedback by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - AgentFeedback
+      operationId: AgentFeedback_UpdateFeedback2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentFeedbackModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentFeedbackModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent feedback update feedback2
+      x-summary-source: derived
+    delete:
+      tags:
+      - AgentFeedback
+      operationId: AgentFeedback_DeleteFeedback2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Agent feedback delete feedback2
+      x-summary-source: derived
+components:
+  schemas:
+    CreateAgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - executionId
+      properties:
+        comment:
+          type: string
+        userId:
+          type: string
+          format: guid
+        executionId:
+          type: string
+          format: guid
+        agent:
+          oneOf:
+          - $ref: '#/components/schemas/AgentModel'
+        requestVersion:
+          type:
+          - string
+          - 'null'
+          format: guid
+        requestVersionNumber:
+          type:
+          - string
+          - 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/AgentFeedbackStatus'
+        sentiment:
+          $ref: '#/components/schemas/AgentFeedbackSentiment'
+    AgentFeedbackSentiment:
+      type: string
+      description: ''
+      x-enumNames:
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
+      enum:
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
+    ProjectInfoModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    PagedResultOfAgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentFeedbackModel'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - status
+      - userId
+      - executionId
+      - requestVersion
+      - tenantId
+      - sentiment
+      properties:
+        id:
+          type: string
+          format: guid
+        comment:
+          type: string
+        status:
+          $ref: '#/components/schemas/AgentFeedbackStatus'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type: string
+          format: guid
+        userName:
+          type: string
+        executionId:
+          type: string
+          format: guid
+        requestVersion:
+          type: string
+          format: guid
+        requestVersionNumber:
+          type: string
+        fixVersion:
+          type:
+          - string
+          - 'null'
+          format: guid
+        fixVersionNumber:
+          type:
+          - string
+          - 'null'
+        agent:
+          $ref: '#/components/schemas/AgentModel'
+        tenantId:
+          type: string
+          format: guid
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        sentiment:
+          $ref: '#/components/schemas/AgentFeedbackSentiment'
+        departmentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        departmentLabel:
+          type:
+          - string
+          - 'null'
+    AgentModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        activeVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        versionNumber:
+          type:
+          - string
+          - 'null'
+        project:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectInfoModel'
+    AgentFeedbackStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Open
+      - Declined
+      - Resolved
+      enum:
+      - Open
+      - Declined
+      - Resolved
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

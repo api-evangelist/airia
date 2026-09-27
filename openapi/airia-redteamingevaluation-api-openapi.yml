@@ -1,0 +1,2386 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Red Teaming Evaluation API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: RedTeamingEvaluation
+paths:
+  /v1/RedTeamingEvaluation:
+    post:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_CreateRedTeamingEvaluation
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                EvaluationName:
+                  type: string
+                Description:
+                  type:
+                  - string
+                  - 'null'
+                AgentVersionIds:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                    format: guid
+                ModelId:
+                  type: string
+                  format: guid
+                ModelIdentifierType:
+                  $ref: '#/components/schemas/ModelIdentifierType'
+                AttackLibraryIds:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                    format: guid
+                DatasetFile:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                DatasetTitle:
+                  type:
+                  - string
+                  - 'null'
+                Schedule.Second:
+                  type: integer
+                  format: int32
+                Schedule.Minute:
+                  type: integer
+                  format: int32
+                Schedule.Hour:
+                  type: integer
+                  format: int32
+                Schedule.ExecutionHour:
+                  type:
+                  - integer
+                  - 'null'
+                  format: int32
+                Schedule.Day:
+                  type: integer
+                  format: int32
+                Schedule.Month:
+                  type: integer
+                  format: int32
+                Schedule.ScheduleType:
+                  $ref: '#/components/schemas/ScheduleType'
+                Schedule.DaysOfWeek:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    $ref: '#/components/schemas/DayOfWeek'
+                Schedule.MonthlyWeekOccurrence:
+                  oneOf:
+                  - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+                Schedule.TimeZoneId:
+                  type:
+                  - string
+                  - 'null'
+                Schedule.Year:
+                  type:
+                  - integer
+                  - 'null'
+                  format: int32
+                Schedule.StartDate:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                Schedule.EndDate:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+                SecurityStandardId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                HttpEndpointConfig.EndpointUrl:
+                  type: string
+                HttpEndpointConfig.HttpMethod:
+                  type: string
+                HttpEndpointConfig.Headers:
+                  type:
+                  - object
+                  - 'null'
+                  additionalProperties:
+                    type: string
+                HttpEndpointConfig.HeadersJson:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.BodyTemplate:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.ResponseJsonPath:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.TimeoutMs:
+                  type: integer
+                  format: int32
+                HttpEndpointConfig.QueryStringsJson:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.IgnoreSslErrors:
+                  type: boolean
+                HttpEndpointConfig.BodyType:
+                  type:
+                  - string
+                  - 'null'
+                HttpEndpointConfig.CredentialId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                SpmAgentId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+                SpmAliasId:
+                  type:
+                  - string
+                  - 'null'
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAgentEvaluationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation create red teaming evaluation
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/{id}:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_Get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAgentEvaluationResponse'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get
+      x-summary-source: derived
+    delete:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_DeleteRedTeamingEvaluation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation delete red teaming evaluation
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/Clone/{id}:
+    post:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_Clone
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAgentEvaluationResponse'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation clone
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/DetailedResults/{evaluationJobId}/{agentVersionId}:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetDetailedResults
+      parameters:
+      - name: evaluationJobId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: agentVersionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 6
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEvaluationDetailedResponse'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get detailed results
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/dashboard:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetRedTeamingDashboard
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedTeamingDashboardResponse'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      deprecated: true
+      summary: Red teaming evaluation get red teaming dashboard
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/evaluation/details/{evaluationId}:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetRedTeamingEvaluationDetails
+      parameters:
+      - name: evaluationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: jobId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedTeamingEvaluationDetailsResponse'
+        500:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get red teaming evaluation details
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/evaluations/logs/{evaluationId}:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetRedTeamingEvaluationLogs
+      parameters:
+      - name: evaluationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRedTeamingEvaluationLogDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get red teaming evaluation logs
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/campaigns:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetRedTeamingCampaigns
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRedTeamingCampaignSummary'
+        500:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get red teaming campaigns
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/{id}/vulnerabilities:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetVulnerabilitiesByEvaluationId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: jobId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 2
+      - name: datasetId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRedTeamingEvaluationDatasetDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get vulnerabilities by evaluation id
+      x-summary-source: derived
+  /v1/RedTeamingEvaluation/asr-over-time:
+    get:
+      tags:
+      - RedTeamingEvaluation
+      operationId: RedTeamingEvaluation_GetAsrOverTime
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: evaluationId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RedTeamingAsrOverTime'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Red teaming evaluation get asr over time
+      x-summary-source: derived
+components:
+  schemas:
+    EvaluatorSelectionView:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluatorKey
+      properties:
+        evalSuiteEvaluatorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluatorSource'
+        evaluatorKey:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        deploymentName:
+          type:
+          - string
+          - 'null'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: double
+    RedTeamingEvaluationLogDto:
+      allOf:
+      - $ref: '#/components/schemas/RedTeamingEvaluationBaseDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          jobId:
+            type: string
+            format: guid
+          executionId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          cancellationReason:
+            type:
+            - string
+            - 'null'
+          failureReason:
+            type:
+            - string
+            - 'null'
+          failureCategory:
+            type:
+            - string
+            - 'null'
+          totalInputTokens:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          totalOutputTokens:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          totalCost:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          totalModelCallDurationSeconds:
+            type:
+            - number
+            - 'null'
+            format: double
+    EvaluationConnectionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
+      enum:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
+    RedTeamingEvaluationDatasetDto:
+      type: object
+      additionalProperties: false
+      required:
+      - datasetId
+      - prompt
+      properties:
+        datasetId:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        testId:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        severity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        reason:
+          type:
+          - string
+          - 'null'
+    WhatIfComparisonResult:
+      type: object
+      additionalProperties: false
+      required:
+      - comparisonSetId
+      - baseline
+      - variants
+      properties:
+        comparisonSetId:
+          type: string
+          format: guid
+        baseline:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfVariantComparison'
+    RedTeamingEvaluationBaseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        runAt:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        securityScore:
+          type: number
+          format: double
+        asrPercentage:
+          type: number
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        completed:
+          type: integer
+          format: int32
+        asrByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+    AgentEvaluationDetailedResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agent
+      - summary
+      - evaluations
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentDefinition'
+        summary:
+          $ref: '#/components/schemas/AgentEvaluationSummaryDto'
+        evaluations:
+          $ref: '#/components/schemas/PagedResultOfAgentEvaluationDetailedResultDto'
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    ScenarioOverrides:
+      type: object
+      discriminator:
+        propertyName: kind
+        mapping:
+          Internal: '#/components/schemas/InternalScenarioOverrides'
+          External: '#/components/schemas/ExternalScenarioOverrides'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        modelOverride:
+          oneOf:
+          - $ref: '#/components/schemas/ModelOverride'
+        toolOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/ToolPatch'
+        kind:
+          type: string
+    ExternalScenarioOverrides:
+      allOf:
+      - $ref: '#/components/schemas/ScenarioOverrides'
+      - type: object
+        additionalProperties: false
+        properties:
+          overrideKind:
+            $ref: '#/components/schemas/ScenarioOverrideKind'
+          systemPromptOverride:
+            type:
+            - string
+            - 'null'
+          additionalInstructions:
+            type:
+            - string
+            - 'null'
+          configOverrides:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/JsonNode'
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    RedTeamingEvaluationDetailsResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - evaluationName
+      - runAt
+      - status
+      - securityScore
+      - asrPercentage
+      - vulnerabilitiesFound
+      - maxVulnerabilities
+      - asrByCategory
+      - asrByAgent
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        evaluationDescription:
+          type:
+          - string
+          - 'null'
+        runAt:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        asrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        asrByCategory:
+          $ref: '#/components/schemas/PagedResultOfRedTeamingCategoryAsrDto'
+        asrByAgent:
+          $ref: '#/components/schemas/PagedResultOfRedTeamingAgentAsrDto'
+        primaryAgentName:
+          type:
+          - string
+          - 'null'
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/RedTeamingScheduleInfo'
+        targetAgentName:
+          type:
+          - string
+          - 'null'
+        modelName:
+          type:
+          - string
+          - 'null'
+        securityStandardType:
+          type:
+          - string
+          - 'null'
+    CreateAgentEvaluationResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - evaluationName
+      - agentVersionIds
+      properties:
+        id:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        agentVersionIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datasetIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    WhatIfVariantComparison:
+      type: object
+      additionalProperties: false
+      required:
+      - variant
+      properties:
+        variant:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        failed:
+          type: boolean
+        metricDeltas:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfMetricDelta'
+        latencyDeltaMs:
+          type:
+          - number
+          - 'null'
+          format: double
+        estimatedCostDelta:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalTokensDelta:
+          type:
+          - number
+          - 'null'
+          format: double
+    RedTeamingAsrOverTime:
+      type: object
+      additionalProperties: false
+      required:
+      - date
+      properties:
+        date:
+          type: string
+        totalAttacks:
+          type: integer
+          format: int32
+        successfulAttacks:
+          type: integer
+          format: int32
+        asrPercentage:
+          type: number
+          format: double
+    RedTeamingCampaignSummary:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - jobId
+      - campaignId
+      - name
+      - status
+      - createdBy
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        jobId:
+          type: string
+          format: guid
+        campaignId:
+          type: string
+          format: guid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          format: guid
+        primaryAgentName:
+          type:
+          - string
+          - 'null'
+        asrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        totalTasks:
+          type: integer
+          format: int32
+        completedTasks:
+          type: integer
+          format: int32
+        cancellationReason:
+          type:
+          - string
+          - 'null'
+        jobCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        scheduleType:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleType'
+        isScheduleCancelled:
+          type:
+          - boolean
+          - 'null'
+    AgentDefinition:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - versionId
+      - name
+      - version
+      properties:
+        id:
+          type: string
+          format: guid
+        versionId:
+          type: string
+          format: guid
+        name:
+          type: string
+        version:
+          type: string
+    RedTeamingScheduleInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        hour:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+        day:
+          type: integer
+          format: int32
+        month:
+          type: integer
+          format: int32
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        daysOfWeek:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    EvaluationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+      enum:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+    ToolPatchEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        toolInstanceId:
+          type:
+          - string
+          - 'null'
+        toolAggregateId:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    PagedResultOfRedTeamingEvaluationLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingEvaluationLogDto'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfRedTeamingCampaignSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCampaignSummary'
+        totalCount:
+          type: integer
+          format: int32
+    AgentEvaluationJobTaskResult:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - pipelineVersionId
+      - datasetId
+      - actualOutput
+      - detailedRationale
+      - accuracy
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        datasetId:
+          type: string
+          format: guid
+        actualOutput:
+          type: string
+        detailedRationale:
+          type: string
+        accuracy:
+          type: number
+          format: double
+        isScored:
+          type: boolean
+        biasRiskScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        biasSeverity:
+          type:
+          - string
+          - 'null'
+        overallDriftScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        driftType:
+          type:
+          - string
+          - 'null'
+        judgeModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        judgeModelIdentifierType:
+          oneOf:
+          - $ref: '#/components/schemas/ModelIdentifierType'
+        variantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isBaseline:
+          type: boolean
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        estimatedCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        runStatus:
+          type:
+          - string
+          - 'null'
+        runLastError:
+          type:
+          - string
+          - 'null'
+        appliedOverrideSummary:
+          type:
+          - string
+          - 'null'
+        correlationId:
+          type:
+          - string
+          - 'null'
+        telemetryClassifier:
+          type:
+          - string
+          - 'null'
+        consistencyScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        consistencyRationale:
+          type:
+          - string
+          - 'null'
+        contradictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outlierRunIndices:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        accuracyMin:
+          type:
+          - number
+          - 'null'
+          format: double
+        accuracyMax:
+          type:
+          - number
+          - 'null'
+          format: double
+        runs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConsistencyRunResult'
+        differencesSummary:
+          type:
+          - string
+          - 'null'
+        runExecutionIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        judgeInputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        judgeOutputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        judgeCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        judgeLatencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    AgentEvaluationSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - latencyMs
+      - tokenCount
+      - cost
+      - accuracy
+      properties:
+        latencyMs:
+          type: number
+          format: double
+        tokenCount:
+          type: integer
+          format: int32
+        cost:
+          type: number
+          format: decimal
+        accuracy:
+          type: number
+          format: double
+        bias:
+          type:
+          - number
+          - 'null'
+          format: double
+        drift:
+          type:
+          - number
+          - 'null'
+          format: double
+        consistency:
+          type:
+          - number
+          - 'null'
+          format: double
+        evaluatorCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        evaluatorTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        evaluatorLatencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+    WhatIfBaselineMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FreshInJob
+      - ReuseExisting
+      enum:
+      - FreshInJob
+      - ReuseExisting
+    JobTaskStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+      enum:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    RedTeamingAgentAsrDto2:
+      type: object
+      additionalProperties: false
+      required:
+      - pipelineVersionId
+      - agentName
+      - agentVersion
+      - asrPercentage
+      - attacksSucceeded
+      - totalAttacks
+      - securityScore
+      properties:
+        pipelineVersionId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentVersion:
+          type: string
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        asrPercentage:
+          type: number
+          format: double
+        attacksSucceeded:
+          type: integer
+          format: int32
+        totalAttacks:
+          type: integer
+          format: int32
+        securityScore:
+          type: number
+          format: double
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    WhatIfComparisonSection:
+      type: object
+      additionalProperties: false
+      required:
+      - comparisonSetId
+      - variantResults
+      properties:
+        comparisonSetId:
+          type: string
+          format: guid
+        variantResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationJobTaskResult'
+        comparison:
+          oneOf:
+          - $ref: '#/components/schemas/WhatIfComparisonResult'
+    WhatIfMetricDelta:
+      type: object
+      additionalProperties: false
+      required:
+      - metricName
+      - baselineValue
+      - variantValue
+      - delta
+      - isImprovement
+      properties:
+        metricName:
+          type: string
+        baselineValue:
+          type: number
+          format: double
+        variantValue:
+          type: number
+          format: double
+        delta:
+          type: number
+          format: double
+        isImprovement:
+          type: boolean
+    AgentEvaluationVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        variantId:
+          type: string
+          format: guid
+        label:
+          type: string
+        isBaseline:
+          type: boolean
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ExternalScenarioOverrides'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfRedTeamingAgentAsrDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAgentAsrDto2'
+        totalCount:
+          type: integer
+          format: int32
+    ModelOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    ConsistencyRunResult:
+      type: object
+      additionalProperties: false
+      required:
+      - actualOutput
+      - accuracy
+      properties:
+        actualOutput:
+          type: string
+        truncated:
+          type: boolean
+        accuracy:
+          type: number
+          format: double
+        detailedRationale:
+          type: string
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    ConsistencyRunDto:
+      type: object
+      additionalProperties: false
+      required:
+      - actualOutput
+      - accuracy
+      properties:
+        actualOutput:
+          type: string
+        truncated:
+          type: boolean
+        accuracy:
+          type: number
+          format: double
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    RedTeamingCategoryAsrDto2:
+      type: object
+      additionalProperties: false
+      required:
+      - attackCategory
+      - asrPercentage
+      - attacksSucceeded
+      - totalAttacks
+      - vulnerabilitiesFound
+      properties:
+        attackCategory:
+          type: string
+        asrPercentage:
+          type: number
+          format: double
+        attacksSucceeded:
+          type: integer
+          format: int32
+        totalAttacks:
+          type: integer
+          format: int32
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+    GetAgentEvaluationResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - evaluationName
+      - agentVersionIds
+      - datasetIds
+      properties:
+        id:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        agentVersionIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datasetIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        evaluationType:
+          $ref: '#/components/schemas/EvaluationType'
+        runsPerTestCase:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        modelIdentifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+        externalAgentUrls:
+          type: array
+          items:
+            type: string
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        baselineEvaluationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatorKeys:
+          type: array
+          items:
+            type: string
+        evaluatorSelections:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatorSelectionView'
+        evaluatorSource:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluatorSource'
+        connectionStatus:
+          $ref: '#/components/schemas/EvaluationConnectionStatus'
+        spmAgentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        variants:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentEvaluationVariant'
+        comparisonSetId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        baselineMode:
+          $ref: '#/components/schemas/WhatIfBaselineMode'
+        isWhatIfVariantSet:
+          type: boolean
+        whatIf:
+          oneOf:
+          - $ref: '#/components/schemas/WhatIfComparisonSection'
+    PagedResultOfRedTeamingEvaluationDatasetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingEvaluationDatasetDto'
+        totalCount:
+          type: integer
+          format: int32
+    AgentEvaluationDetailedResultDto:
+      type: object
+      additionalProperties: false
+      required:
+      - input
+      - expectedOutput
+      - executionStatus
+      - actualOutput
+      - latencyMs
+      - tokenCount
+      - cost
+      - accuracy
+      properties:
+        input:
+          type: string
+        expectedOutput:
+          type:
+          - string
+          - 'null'
+        executionStatus:
+          $ref: '#/components/schemas/JobTaskStatus'
+        actualOutput:
+          type: string
+        latencyMs:
+          type: integer
+          format: int32
+        tokenCount:
+          type: integer
+          format: int32
+        cost:
+          type: number
+          format: decimal
+        accuracy:
+          type: number
+          format: double
+        detailedRationale:
+          type: string
+        bias:
+          type:
+          - number
+          - 'null'
+          format: double
+        biasType:
+          type:
+          - string
+          - 'null'
+        drift:
+          type:
+          - number
+          - 'null'
+          format: double
+        driftType:
+          type:
+          - string
+          - 'null'
+        consistencyScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        accuracyMin:
+          type:
+          - number
+          - 'null'
+          format: double
+        accuracyMax:
+          type:
+          - number
+          - 'null'
+          format: double
+        runCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        consistencyRationale:
+          type:
+          - string
+          - 'null'
+        contradictions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outlierRunIndices:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        runs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConsistencyRunDto'
+        differencesSummary:
+          type:
+          - string
+          - 'null'
+        judgeTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        judgeCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        judgeLatencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    WhatIfVariantAggregate:
+      type: object
+      additionalProperties: false
+      properties:
+        variantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isBaseline:
+          type: boolean
+        runCount:
+          type: integer
+          format: int32
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        averageLatencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageEstimatedCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        averageTotalTokens:
+          type:
+          - number
+          - 'null'
+          format: double
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    PagedResultOfRedTeamingCategoryAsrDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+        totalCount:
+          type: integer
+          format: int32
+    ScenarioOverrideKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
+    PagedResultOfAgentEvaluationDetailedResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationDetailedResultDto'
+        totalCount:
+          type: integer
+          format: int32
+    EvaluatorSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - AzureFoundry
+      enum:
+      - Airia
+      - AzureFoundry
+    ScheduleModel:
+      type: object
+      additionalProperties: false
+      properties:
+        second:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RedTeamingDashboardResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - securityScore
+      - averageAsrPercentage
+      - vulnerabilitiesFound
+      - maxVulnerabilities
+      - activeCampaignsCount
+      - asrByCategory
+      - asrByAgent
+      properties:
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageAsrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        activeCampaignsCount:
+          type: integer
+          format: int32
+        asrByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+        asrByAgent:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAgentAsrDto2'
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

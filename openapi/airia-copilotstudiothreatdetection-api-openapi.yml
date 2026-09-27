@@ -1,0 +1,358 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Copilot Studio Threat Detection API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: CopilotStudioThreatDetection
+paths:
+  /v1/copilot-studio/validate:
+    post:
+      tags:
+      - CopilotStudioThreatDetection
+      operationId: CopilotStudioThreatDetection_Validate
+      parameters:
+      - name: x-ms-correlation-id
+        x-originalName: correlationId
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionValidationResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionErrorResponse'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionErrorResponse'
+      summary: Copilot studio threat detection validate
+      x-summary-source: derived
+  /v1/copilot-studio/analyze-tool-execution:
+    post:
+      tags:
+      - CopilotStudioThreatDetection
+      operationId: CopilotStudioThreatDetection_AnalyzeToolExecution
+      parameters:
+      - name: x-ms-correlation-id
+        x-originalName: correlationId
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThreatDetectionEvaluationRequest'
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionAnalyzeResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionErrorResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionErrorResponse'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreatDetectionErrorResponse'
+      summary: Copilot studio threat detection analyze tool execution
+      x-summary-source: derived
+components:
+  schemas:
+    ThreatDetectionAnalyzeResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        blockAction:
+          type: boolean
+        reasonCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        reason:
+          type:
+          - string
+          - 'null'
+        diagnostics:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionEvaluationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        plannerContext:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionPlannerContext'
+        toolDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionToolDefinition'
+        inputValues:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        conversationMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionConversationMetadata'
+    ThreatDetectionToolExecutionOutput:
+      type: object
+      additionalProperties: false
+      properties:
+        toolId:
+          type:
+          - string
+          - 'null'
+        toolName:
+          type:
+          - string
+          - 'null'
+        outputs: {}
+        timestamp:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionUserContext:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        role:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionAgentContext:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
+        environmentId:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
+        isPublished:
+          type:
+          - boolean
+          - 'null'
+    ThreatDetectionToolParameter:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        type: {}
+    ThreatDetectionValidationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isSuccessful:
+          type: boolean
+        status:
+          type: string
+    ThreatDetectionPlannerContext:
+      type: object
+      additionalProperties: false
+      properties:
+        userMessage:
+          type:
+          - string
+          - 'null'
+        thought:
+          type:
+          - string
+          - 'null'
+        chatHistory:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionChatMessage'
+        previousToolOutputs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolExecutionOutput'
+    ThreatDetectionTriggerContext:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        schemaName:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionErrorResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        httpStatus:
+          type: integer
+          format: int32
+        diagnostics:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionToolDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        inputParameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolParameter'
+        outputParameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolParameter'
+    ThreatDetectionConversationMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        agent:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionAgentContext'
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionUserContext'
+        trigger:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionTriggerContext'
+        conversationId:
+          type:
+          - string
+          - 'null'
+        planId:
+          type:
+          - string
+          - 'null'
+        planStepId:
+          type:
+          - string
+          - 'null'
+        parentAgentComponentId:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

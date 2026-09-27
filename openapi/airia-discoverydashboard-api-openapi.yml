@@ -1,0 +1,892 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Discovery Dashboard API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: DiscoveryDashboard
+paths:
+  /v1/discovery/dashboard/summary:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetSummary
+      parameters:
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 30
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryDashboardSummaryDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get summary
+      x-summary-source: derived
+  /v1/discovery/dashboard/ai-calls:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetAiCalls
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryAiCallsDto'
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get ai calls
+      x-summary-source: derived
+  /v1/discovery/dashboard/findings:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetFindings
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiscoveryFindingDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get findings
+      x-summary-source: derived
+  /v1/discovery/dashboard/assets:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetAssets
+      parameters:
+      - name: findingType
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryFindingType'
+        x-position: 1
+      - name: category
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryAssetCategory'
+        x-position: 2
+      - name: IncludeTotalCount
+        in: query
+        schema:
+          type: boolean
+        x-position: 3
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 5
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 7
+      - name: reviewDecision
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultV2OfDiscoveryAssetDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get assets
+      x-summary-source: derived
+  /v1/discovery/dashboard/findings/{findingType}/graph:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetFindingGraph
+      parameters:
+      - name: findingType
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DiscoveryFindingType'
+        x-position: 1
+      - name: maxPeople
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 24
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryFindingGraphDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get finding graph
+      x-summary-source: derived
+  /v1/discovery/dashboard/assets/{id}:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetAssetDetail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveryAssetDetailDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get asset detail
+      x-summary-source: derived
+  /v1/discovery/dashboard/assets/{id}/decision-history:
+    get:
+      tags:
+      - DiscoveryDashboard
+      operationId: DiscoveryDashboard_GetAssetDecisionHistory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiAssetReviewDecisionHistoryEntry'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Discovery dashboard get asset decision history
+      x-summary-source: derived
+components:
+  schemas:
+    DiscoveryAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        provider:
+          type:
+          - string
+          - 'null'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoverySurface'
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        userCount:
+          type: integer
+          format: int32
+        firstSeen:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSeen:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        managed:
+          type:
+          - boolean
+          - 'null'
+        hasSensitiveScopes:
+          type:
+          - boolean
+          - 'null'
+        isBehindSso:
+          type:
+          - boolean
+          - 'null'
+        reviewDecision:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfDiscoveryAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryAssetDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    DiscoveryUserCoverageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        observedRegisteredUserCount:
+          type: integer
+          format: int32
+        registeredUserCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type:
+          - number
+          - 'null'
+          format: double
+    DiscoverySurface:
+      type: string
+      description: ''
+      x-enumNames:
+      - Identity
+      - Code
+      - Gateway
+      - Platform
+      - Endpoint
+      enum:
+      - Identity
+      - Code
+      - Gateway
+      - Platform
+      - Endpoint
+    DiscoveryKpisDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalAssets:
+          type: integer
+          format: int32
+        newAssetsThisWeek:
+          type: integer
+          format: int32
+        discoveredAppsCount:
+          type: integer
+          format: int32
+        newAppsThisWeek:
+          type: integer
+          format: int32
+        peopleExposed:
+          type: integer
+          format: int32
+        newPeopleThisWeek:
+          type: integer
+          format: int32
+        criticalExposures:
+          type: integer
+          format: int32
+        newCriticalExposuresThisWeek:
+          type: integer
+          format: int32
+        observedDeviceCount:
+          type: integer
+          format: int32
+    DiscoveryAiCallsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalToday:
+          type: integer
+          format: int32
+        deltaPct:
+          type:
+          - number
+          - 'null'
+          format: double
+        sparkline:
+          type: array
+          items:
+            type: integer
+            format: int32
+    DiscoveryFindingGraphDto:
+      type: object
+      additionalProperties: false
+      properties:
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryGraphAppNodeDto'
+        people:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryGraphPersonNodeDto'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryGraphEdgeDto'
+        totalPeople:
+          type: integer
+          format: int32
+    DiscoveryAssetCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Agents
+      - Models
+      - DataSources
+      - McpTools
+      - DiscoveredApps
+      - SpmInventory
+      enum:
+      - Agents
+      - Models
+      - DataSources
+      - McpTools
+      - DiscoveredApps
+      - SpmInventory
+    DiscoveryTopAppDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        sensitive:
+          type: boolean
+    DiscoveryRiskLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    DiscoveryFindingSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Info
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Info
+      - Medium
+      - High
+      - Critical
+    DiscoveryGraphAppNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        sensitive:
+          type: boolean
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DiscoveryFindingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        findingType:
+          $ref: '#/components/schemas/DiscoveryFindingType'
+        severity:
+          $ref: '#/components/schemas/DiscoveryFindingSeverity'
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoverySurface'
+        headlineValue:
+          type: integer
+          format: int32
+        headlineUnit:
+          $ref: '#/components/schemas/DiscoveryMetricUnit'
+        newThisWeek:
+          type: integer
+          format: int32
+        isNewThisWeek:
+          type: boolean
+        impact:
+          $ref: '#/components/schemas/DiscoveryFindingImpactDto'
+    DiscoveryFindingType:
+      type: string
+      description: ''
+      x-enumNames:
+      - ScopeExposure
+      - UndeclaredApps
+      - OverExposedPeople
+      - RecentApps
+      - WeakPosture
+      enum:
+      - ScopeExposure
+      - UndeclaredApps
+      - OverExposedPeople
+      - RecentApps
+      - WeakPosture
+    DiscoveryCoverageCategoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        totalCount:
+          type: integer
+          format: int32
+        newThisWeek:
+          type: integer
+          format: int32
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoverySurface'
+    DiscoveryFindingImpactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        affectedAssets:
+          type: integer
+          format: int32
+        affectedUsers:
+          type: integer
+          format: int32
+        sharePct:
+          type: integer
+          format: int32
+        breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryCategoryCountDto'
+        topApps:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryTopAppDto'
+    DiscoveryGraphEdgeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        appAssetId:
+          type: string
+          format: guid
+        personIdentifier:
+          type: string
+        sensitive:
+          type: boolean
+    DiscoveryTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        assetCount:
+          type: integer
+          format: int32
+        highRiskCount:
+          type: integer
+          format: int32
+        hasData:
+          type: boolean
+    AiAssetReviewDecisionHistoryEntry:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      - value
+      - createdAt
+      properties:
+        action:
+          $ref: '#/components/schemas/AiAssetReviewDecisionAction'
+        value:
+          type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        reason:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+    AiAssetReviewDecisionAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sanction
+      - Divert
+      enum:
+      - Sanction
+      - Divert
+    DiscoveryMetricUnit:
+      type: string
+      description: ''
+      x-enumNames:
+      - People
+      - Apps
+      - Assets
+      enum:
+      - People
+      - Apps
+      - Assets
+    DiscoveryGraphPersonNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        appCount:
+          type: integer
+          format: int32
+        sensitiveAppCount:
+          type: integer
+          format: int32
+    DiscoveryCategoryCountDto:
+      type: object
+      additionalProperties: false
+      properties:
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        count:
+          type: integer
+          format: int32
+    DiscoveryAssetDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/DiscoveryAssetDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          description:
+            type:
+            - string
+            - 'null'
+          status:
+            type:
+            - string
+            - 'null'
+          instructions:
+            type:
+            - string
+            - 'null'
+          industry:
+            type:
+            - string
+            - 'null'
+          tags:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+          isEndUserPrivate:
+            type:
+            - boolean
+            - 'null'
+          models:
+            type: array
+            items:
+              type: string
+          scopes:
+            type: array
+            items:
+              type: string
+          users:
+            type: array
+            items:
+              type: string
+          owner:
+            type:
+            - string
+            - 'null'
+          usedBy:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          diverted:
+            type:
+            - boolean
+            - 'null'
+    DiscoveryDashboardSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        kpis:
+          $ref: '#/components/schemas/DiscoveryKpisDto'
+        coverage:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryCoverageCategoryDto'
+        trend:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryTrendPointDto'
+        userCoverage:
+          $ref: '#/components/schemas/DiscoveryUserCoverageDto'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,978 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Gateway Usage API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GatewayUsage
+paths:
+  /v1/GatewayUsage/project/{projectId}:
+    get:
+      tags:
+      - GatewayUsage
+      operationId: GatewayUsage_GetGatewayUsageForProject
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProxyUsageDto'
+        401:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Gateway usage get gateway usage for project
+      x-summary-source: derived
+  /v1/GatewayUsage/tenant:
+    get:
+      tags:
+      - GatewayUsage
+      operationId: GatewayUsage_GetGatewayUsage
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProxyUsageDto'
+        401:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Gateway usage get gateway usage
+      x-summary-source: derived
+  /v1/GatewayUsage/details/{itemId}:
+    get:
+      tags:
+      - GatewayUsage
+      operationId: GatewayUsage_GetDetails
+      parameters:
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayUsageDetailed'
+        404:
+          description: ''
+        401:
+          description: ''
+        403:
+          description: ''
+        default:
+          description: ''
+      summary: Gateway usage get details
+      x-summary-source: derived
+  /v2/GatewayUsage/details/{itemId}:
+    get:
+      tags:
+      - GatewayUsage
+      operationId: GatewayUsage_GetDetails2
+      parameters:
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayUsageDetailedV2'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway usage get details2
+      x-summary-source: derived
+components:
+  schemas:
+    GatewayAdvertisedSkillV1:
+      type: object
+      additionalProperties: false
+      properties:
+        slug:
+          type: string
+        description:
+          type: string
+        catalogName:
+          type: string
+        slugAbbreviated:
+          type: boolean
+    ToolResultInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCallId:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+    GatewayTimeTrackingEvent:
+      type: object
+      additionalProperties: false
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        elapsedMilliseconds:
+          type: number
+          format: double
+    GatewaySessionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Legacy
+      - Gateway
+      - Agent
+      - User
+      enum:
+      - Legacy
+      - Gateway
+      - Agent
+      - User
+    ToolDefinitionInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+    GatewayUsageDetailed:
+      allOf:
+      - $ref: '#/components/schemas/GatewayUsageFeedSummary'
+      - type: object
+        additionalProperties: false
+        properties:
+          requestHeaders:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type: string
+          requestEndpoint:
+            type: string
+          responseHeaders:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type: string
+          requestBody:
+            type:
+            - string
+            - 'null'
+          responses:
+            type: array
+            items:
+              type: string
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    MessageRole:
+      type: string
+      description: ''
+      x-enumNames:
+      - User
+      - Assistant
+      - System
+      - Tool
+      enum:
+      - User
+      - Assistant
+      - System
+      - Tool
+    GatewayAdvertisedSkillsV1:
+      type: object
+      additionalProperties: false
+      properties:
+        blockFound:
+          type: boolean
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayAdvertisedSkillV1'
+        omittedSkillCount:
+          type: integer
+          format: int32
+        rejectedSlugCount:
+          type: integer
+          format: int32
+    GatewayUsageFeedSummaryV2:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        apiKeyName:
+          type:
+          - string
+          - 'null'
+        streamed:
+          type: boolean
+        duration:
+          type: string
+          example: 0.0
+        requestModel:
+          type:
+          - string
+          - 'null'
+        requestMethod:
+          type:
+          - string
+          - 'null'
+        requestPath:
+          type: string
+        statusCode:
+          type: integer
+          format: int32
+        providerType:
+          $ref: '#/components/schemas/ProviderType'
+        totalTokens:
+          type: integer
+          format: int32
+        userAgent:
+          type:
+          - string
+          - 'null'
+        clientIpAddress:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          type:
+          - string
+          - 'null'
+        servedByRegion:
+          type:
+          - string
+          - 'null'
+        requestType:
+          $ref: '#/components/schemas/GatewayRequestType'
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        airiaKeyUsed:
+          type:
+          - boolean
+          - 'null'
+        sessionType:
+          $ref: '#/components/schemas/GatewaySessionType'
+        sessionId:
+          type:
+          - string
+          - 'null'
+        userEmail:
+          type:
+          - string
+          - 'null'
+    GatewayInvokedSkillV1:
+      type: object
+      additionalProperties: false
+      properties:
+        slug:
+          type: string
+        slugAbbreviated:
+          type: boolean
+        catalogName:
+          type: string
+        callId:
+          type: string
+    GatewayRequestType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Api
+      - Inference
+      enum:
+      - Api
+      - Inference
+    MessageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        role:
+          $ref: '#/components/schemas/MessageRole'
+        content:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        toolCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCallInfo'
+        toolCallId:
+          type:
+          - string
+          - 'null'
+        toolResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolResultInfo'
+        contentParts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageContentPart'
+    MessageContentPart:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ContentType'
+        text:
+          type:
+          - string
+          - 'null'
+        image:
+          oneOf:
+          - $ref: '#/components/schemas/ImageSource'
+    ImageSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Url
+      - Base64
+      enum:
+      - Url
+      - Base64
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProxyUsageDto:
+      type: object
+      additionalProperties: false
+      required:
+      - apiKeyName
+      - requestModel
+      - responseModel
+      properties:
+        id:
+          type: string
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        apiKeyName:
+          type: string
+          maxLength: 64
+          minLength: 1
+        streamed:
+          type: boolean
+        duration:
+          type: string
+          example: 0.0
+        requestModel:
+          type: string
+          maxLength: 64
+          minLength: 1
+        responseModel:
+          type: string
+          maxLength: 64
+          minLength: 1
+        providerType:
+          $ref: '#/components/schemas/ProviderType'
+        promptTokens:
+          type: integer
+          format: int32
+        completionTokens:
+          type: integer
+          format: int32
+        totalTokens:
+          type: integer
+          format: int32
+        userAgent:
+          type:
+          - string
+          - 'null'
+        clientIpAddress:
+          type:
+          - string
+          - 'null'
+    ChatResponseInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        assistantText:
+          type:
+          - string
+          - 'null'
+        toolCalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCallInfo'
+        modelName:
+          type:
+          - string
+          - 'null'
+        responseId:
+          type:
+          - string
+          - 'null'
+        finishReason:
+          type:
+          - string
+          - 'null'
+    ProviderType:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAI
+      - Ollama
+      - Azure
+      - HuggingFace
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - Ai21
+      - Cohere
+      - Google
+      - TogetherAI
+      - XAI
+      - Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - GoogleVertex
+      enum:
+      - OpenAI
+      - Ollama
+      - Azure
+      - Hugging Face
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - AI21
+      - Cohere
+      - Google
+      - Together AI
+      - xAI
+      - Amazon Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - Google Vertex AI
+    ImageSource:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ImageSourceType'
+        mediaType:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - string
+          - 'null'
+        detail:
+          type:
+          - string
+          - 'null'
+    GatewayAuthorizationReceiptV1:
+      type: object
+      additionalProperties: false
+      properties:
+        receiptId:
+          type: string
+          format: guid
+        parentReceiptId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceEventId:
+          type: string
+          format: guid
+        sourceKind:
+          type: string
+        sourceOrdinal:
+          type: integer
+          format: int32
+        decision:
+          type: string
+        reasonCode:
+          type: string
+        actionJson:
+          type: string
+        contextJson:
+          type: string
+        identityJson:
+          type: string
+        evidenceJson:
+          type: string
+        approvalJson:
+          type:
+          - string
+          - 'null'
+        deferralJson:
+          type:
+          - string
+          - 'null'
+        outcome:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        canonicalVersion:
+          type: string
+        canonicalBytesBase64:
+          type: string
+        contentHash:
+          type: string
+        signature:
+          type: string
+        signatureKeyId:
+          type: string
+        signatureAlgorithm:
+          type:
+          - string
+          - 'null'
+        signatureStatus:
+          type: string
+    ToolCallInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        arguments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+        rawArguments:
+          type:
+          - string
+          - 'null'
+        toolType:
+          type:
+          - string
+          - 'null'
+    ContentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Image
+      - ToolResult
+      enum:
+      - Text
+      - Image
+      - ToolResult
+    GatewayUsageFeedSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        apiKeyId:
+          type: string
+          format: guid
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayName:
+          type: string
+        isV2Request:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        apiKeyName:
+          type:
+          - string
+          - 'null'
+        streamed:
+          type: boolean
+        duration:
+          type: string
+          example: 0.0
+        requestModel:
+          type:
+          - string
+          - 'null'
+        requestMethod:
+          type:
+          - string
+          - 'null'
+        responseModel:
+          type:
+          - string
+          - 'null'
+        providerType:
+          $ref: '#/components/schemas/ProviderType'
+        responseProviderType:
+          $ref: '#/components/schemas/ProviderType'
+        promptTokens:
+          type: integer
+          format: int32
+        completionTokens:
+          type: integer
+          format: int32
+        totalTokens:
+          type: integer
+          format: int32
+        userAgent:
+          type:
+          - string
+          - 'null'
+        clientIpAddress:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          type:
+          - string
+          - 'null'
+        responseStatusCode:
+          type: integer
+          format: int32
+        requestType:
+          $ref: '#/components/schemas/GatewayRequestType'
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        sessionId:
+          type:
+          - string
+          - 'null'
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    GatewayInvokedSkillsV1:
+      type: object
+      additionalProperties: false
+      properties:
+        responseParsed:
+          type: boolean
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayInvokedSkillV1'
+        omittedSkillCount:
+          type: integer
+          format: int32
+    GatewayUsageDetailedV2:
+      allOf:
+      - $ref: '#/components/schemas/GatewayUsageFeedSummaryV2'
+      - type: object
+        additionalProperties: false
+        properties:
+          apiKeyMasked:
+            type:
+            - string
+            - 'null'
+          requestHeaders:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type: string
+          requestEndpoint:
+            type: string
+          responseEndpoint:
+            type: string
+          responseHeaders:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type: string
+          requestBody:
+            type:
+            - string
+            - 'null'
+          responses:
+            type: array
+            items:
+              type: string
+          promptTokens:
+            type: integer
+            format: int32
+          completionTokens:
+            type: integer
+            format: int32
+          timeTracking:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/GatewayTimeTrackingEvent'
+          userTier:
+            type:
+            - string
+            - 'null'
+          requestMessages:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/MessageInfo'
+          wireRequestMessageCount:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          requestToolDefinitions:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ToolDefinitionInfo'
+          advertisedSkills:
+            $ref: '#/components/schemas/GatewayAdvertisedSkillsV1'
+          invokedSkills:
+            $ref: '#/components/schemas/GatewayInvokedSkillsV1'
+          modelResponse:
+            oneOf:
+            - $ref: '#/components/schemas/ChatResponseInfo'
+          signatureStatus:
+            type: string
+          contentHash:
+            type:
+            - string
+            - 'null'
+          signatureKeyId:
+            type:
+            - string
+            - 'null'
+          signatureAlgorithm:
+            type:
+            - string
+            - 'null'
+          authorizationReceipts:
+            type: array
+            items:
+              $ref: '#/components/schemas/GatewayAuthorizationReceiptV1'
+          supportsAuthorizationReceipts:
+            type: boolean
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

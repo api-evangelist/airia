@@ -1,0 +1,1824 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Conversations API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Conversations
+paths:
+  /v1/Conversations/{conversationId}:
+    get:
+      tags:
+      - Conversations
+      operationId: Conversations_GetConversationById2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConversationByIdResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Conversations get conversation by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - Conversations
+      operationId: Conversations_UpdateConversation2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConversationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations update conversation2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Conversations
+      operationId: Conversations_DeleteConversation2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Conversations delete conversation2
+      x-summary-source: derived
+  /v1/Conversations/feed:
+    get:
+      tags:
+      - Conversations
+      operationId: Conversations_GetConversationsFeed2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfConversationFeedDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Conversations get conversations feed2
+      x-summary-source: derived
+  /v1/Conversations:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_CreateConversation2
+      parameters:
+      - name: X-PIPELINE-API-KEY
+        x-originalName: pipelineApiKey
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConversationRequest'
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateConversationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Conversations create conversation2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/messages/{messageId}/truncate:
+    delete:
+      tags:
+      - Conversations
+      operationId: Conversations_DeleteMessagesFromPoint2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: messageId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMessagesFromPointResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Conversations delete messages from point2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/mark-as-read:
+    patch:
+      tags:
+      - Conversations
+      operationId: Conversations_MarkConversationAsRead2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations mark conversation as read2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/share:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_ShareConversation2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareConversationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations share conversation2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/participants/{userId}:
+    delete:
+      tags:
+      - Conversations
+      operationId: Conversations_UnshareConversation2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations unshare conversation2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/participants:
+    get:
+      tags:
+      - Conversations
+      operationId: Conversations_GetConversationParticipants2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversationParticipantDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations get conversation participants2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/participants/{userId}/role:
+    put:
+      tags:
+      - Conversations
+      operationId: Conversations_UpdateParticipantRole2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateParticipantRoleRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations update participant role2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/typing:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_SendTypingStatus2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypingStatusRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations send typing status2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/presence:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_SendPresenceUpdate2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PresenceUpdateRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations send presence update2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/messages:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_AddMessageToConversation2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMessageToConversationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddMessageToConversationResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations add message to conversation2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/external-identities:
+    get:
+      tags:
+      - Conversations
+      operationId: Conversations_GetConversationExternalIdentities2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalConversationIdentityMappingResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations get conversation external identities2
+      x-summary-source: derived
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_CreateExternalConversationIdentityMapping2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExternalConversationIdentityMappingRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalConversationIdentityMappingResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations create external conversation identity mapping2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/external-identities/{identityId}:
+    delete:
+      tags:
+      - Conversations
+      operationId: Conversations_DeleteExternalConversationIdentityMapping2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: identityId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations delete external conversation identity mapping2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/attachments:
+    get:
+      tags:
+      - Conversations
+      operationId: Conversations_GetConversationAttachments2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversationAttachmentDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Conversations get conversation attachments2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/agent-attachments:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_UploadAgentAttachment2
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAttachmentUploadResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Conversations upload agent attachment2
+      x-summary-source: derived
+  /v1/Conversations/{conversationId}/agent-attachments/base64:
+    post:
+      tags:
+      - Conversations
+      operationId: Conversations_UploadAgentAttachmentBase642
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadAgentAttachmentRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAttachmentUploadResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      summary: Conversations upload agent attachment base642
+      x-summary-source: derived
+components:
+  schemas:
+    ConversationType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+      enum:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+    ConversationRole:
+      type: string
+      description: ''
+      x-enumNames:
+      - Owner
+      - Collaborator
+      - Viewer
+      enum:
+      - Owner
+      - Collaborator
+      - Viewer
+    GetConversationByIdResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationMessage'
+        title:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        agentName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        violationCount:
+          type: integer
+          format: int32
+        websocketUrl:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSourceFiles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type: boolean
+        policyRedactions:
+          oneOf:
+          - $ref: '#/components/schemas/RedactionStoreData'
+        lastExecutionStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LastExecutionStatus'
+        lastExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        isEndUserPrivate:
+          type: boolean
+        isContentRedacted:
+          type: boolean
+        lastComputeEnvironmentId:
+          type:
+          - string
+          - 'null'
+        lastComputeEnvironmentType:
+          oneOf:
+          - $ref: '#/components/schemas/ComputeEnvironmentType'
+    CreateConversationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSourceFiles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type: boolean
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userInput:
+          type:
+          - string
+          - 'null'
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationType2'
+    CreateExternalConversationIdentityMappingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - externalSystem
+      - externalChannelId
+      - externalThreadId
+      properties:
+        externalSystem:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[A-Za-z][A-Za-z0-9]*$
+        externalChannelId:
+          type: string
+          maxLength: 255
+          minLength: 1
+        externalThreadId:
+          type: string
+          maxLength: 255
+          minLength: 1
+    ConversationMessageUserDto:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+    ComputeEnvironmentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sandbox
+      - BrowserAgent
+      enum:
+      - Sandbox
+      - BrowserAgent
+    AgentAttachmentUploadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        blobId:
+          type: string
+        url:
+          type: string
+    LastExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+      enum:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+    UploadAgentAttachmentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - base64Content
+      - fileName
+      - contentType
+      properties:
+        base64Content:
+          type: string
+          minLength: 1
+        fileName:
+          type: string
+          maxLength: 512
+          minLength: 1
+        contentType:
+          type: string
+          maxLength: 256
+          minLength: 1
+    UpdateParticipantRoleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - role
+      properties:
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    AttachmentSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - User
+      - Agent
+      enum:
+      - user
+      - agent
+    RedactionRecordData:
+      type: object
+      additionalProperties: false
+      properties:
+        violatingText:
+          type: string
+        confidenceScore:
+          type: number
+          format: double
+        startOffset:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        placeholderBase:
+          type: string
+        placeholderIndex:
+          type: integer
+          format: int32
+        contexts:
+          type: array
+          items:
+            type: string
+        violatingSubIndex:
+          type: integer
+          format: int32
+    TypingStatusRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - isTyping
+      properties:
+        isTyping:
+          type: boolean
+    UpdateConversationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+        dataSourceFiles:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type:
+          - boolean
+          - 'null'
+        policyRedactionsJson:
+          type:
+          - string
+          - 'null'
+        lastExecutionStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LastExecutionStatus'
+        lastExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AddMessageToConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        messageId:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+    DeleteMessagesFromPointResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        fromMessageId:
+          type: string
+          format: guid
+        deletedCount:
+          type: integer
+          format: int32
+        remainingCount:
+          type: integer
+          format: int32
+    ConversationFeedDto:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        username:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        messageCount:
+          type: integer
+          format: int32
+        violationCount:
+          type: integer
+          format: int32
+        agentId:
+          type: string
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        projectId:
+          type: string
+          format: guid
+        agentName:
+          type:
+          - string
+          - 'null'
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        isEndUserPrivate:
+          type: boolean
+    RedactionStoreData:
+      type: object
+      additionalProperties: false
+      properties:
+        messageRedactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/RedactionRecordData'
+        contextIndex:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              format: guid
+        version:
+          type: integer
+          format: int32
+        lastModified:
+          type: string
+          format: date-time
+    ShareConversationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - role
+      properties:
+        userId:
+          type: string
+          format: guid
+          minLength: 1
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    ExternalConversationIdentityMappingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        externalSystem:
+          type: string
+        externalChannelId:
+          type: string
+        externalThreadId:
+          type: string
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ConversationAttachmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        messageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        blobId:
+          type: string
+          format: guid
+        fileName:
+          type: string
+        contentType:
+          type: string
+        fileSizeBytes:
+          type: integer
+          format: int64
+        source:
+          $ref: '#/components/schemas/AttachmentSource'
+        createdAt:
+          type: string
+          format: date-time
+        downloadUrl:
+          type:
+          - string
+          - 'null'
+    AddMessageToConversationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        imageAttachmentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        role:
+          type:
+          - string
+          - 'null'
+    ConversationMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        role:
+          type: string
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        fileContextMessages:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        userId:
+          type: string
+          format: guid
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMessageUserDto'
+        isSummary:
+          type: boolean
+        extractedMemories:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        originStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originStepTitle:
+          type:
+          - string
+          - 'null'
+        toolCalls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCallData'
+        toolResponses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolResponseData'
+    ToolResponseData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        response:
+          type:
+          - string
+          - 'null'
+    CreateConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        websocketUrl:
+          type: string
+        deploymentId:
+          type: string
+          format: guid
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        spaceName:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    ToolCallData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        parameters:
+          type:
+          - string
+          - 'null'
+    ConversationParticipantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        username:
+          type:
+          - string
+          - 'null'
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+        sharedAt:
+          type: string
+          format: date-time
+        sharedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharedByUsername:
+          type:
+          - string
+          - 'null'
+    PagedResultOfConversationFeedDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationFeedDto'
+        totalCount:
+          type: integer
+          format: int32
+    PresenceUpdateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      properties:
+        action:
+          type: string
+          minLength: 1
+          pattern: ^(joined|left)$
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

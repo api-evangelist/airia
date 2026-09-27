@@ -1,0 +1,67 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Service Discovery API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Service Discovery
+paths:
+  /.well-known/service-configuration:
+    get:
+      tags:
+      - Service Discovery
+      operationId: ServiceDiscovery_Get
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformLinksResult'
+      summary: Service discovery get
+      x-summary-source: derived
+components:
+  schemas:
+    PlatformLink:
+      type: object
+      additionalProperties: false
+      required:
+      - rel
+      - href
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+    PlatformLinksResult:
+      type: object
+      additionalProperties: false
+      required:
+      - links
+      properties:
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformLink'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

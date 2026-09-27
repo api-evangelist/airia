@@ -1,0 +1,760 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Asset Assessments API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: AssetAssessments
+paths:
+  /v1/governance/assets/{assetAggregateId}/assessments:
+    get:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_GetByAsset
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: status
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/AssessmentStatus'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfAssessmentListDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments get by asset
+      x-summary-source: derived
+    post:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_Create
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssessmentRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments create
+      x-summary-source: derived
+  /v1/governance/assets/{assetAggregateId}/assessments/suggested-templates:
+    get:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_GetSuggestedTemplates
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: category
+        in: query
+        schema:
+          oneOf:
+          - oneOf:
+            - $ref: '#/components/schemas/AssessmentTemplateCategory'
+        x-position: 2
+      - name: subCategories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        x-position: 3
+      - name: excludeSubCategories
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssessmentTemplateListDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments get suggested templates
+      x-summary-source: derived
+  /v1/governance/assets/{assetAggregateId}/assessments/{id}:
+    get:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_GetById
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentDetailDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments get by id
+      x-summary-source: derived
+    put:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_Update
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssessmentRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentDetailDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments update
+      x-summary-source: derived
+  /v1/governance/assets/{assetAggregateId}/assessments/{id}/auto-complete:
+    post:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_AutoComplete
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoCompleteAssessmentRequest'
+        required: true
+        x-position: 3
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments auto complete
+      x-summary-source: derived
+  /v1/governance/assets/{assetAggregateId}/assessments/{id}/rerun:
+    post:
+      tags:
+      - AssetAssessments
+      operationId: AssetAssessments_Rerun
+      parameters:
+      - name: assetAggregateId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoCompleteAssessmentRequest'
+        required: true
+        x-position: 3
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Asset assessments rerun
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfAssessmentListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentListDto'
+        totalCount:
+          type: integer
+          format: int32
+    AssessmentTemplateCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Exploratory
+      - Attestation
+      enum:
+      - Exploratory
+      - Attestation
+    AssessmentDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentListDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          parsedResponses:
+            type: array
+            items:
+              $ref: '#/components/schemas/AssessmentResponseItemDto'
+          aiAssetAggregateId:
+            type: string
+            format: guid
+    AssessmentResponseItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sectionName:
+          type: string
+        question:
+          type: string
+        questionType:
+          type: string
+        answer:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentQuestionOptionDto'
+        guidance:
+          type: string
+        clauseReference:
+          type: string
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        reasoning:
+          type: string
+        abstained:
+          type: boolean
+    CreateAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        templateId:
+          type: string
+          format: guid
+        templateVersionId:
+          type: string
+          format: guid
+        version:
+          type: string
+        approverId:
+          type: string
+          format: guid
+        fileId:
+          type:
+          - string
+          - 'null'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    AssessmentTemplateListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type: string
+          format: guid
+        frameworkName:
+          type:
+          - string
+          - 'null'
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        isSystemManaged:
+          type: boolean
+        latestPublishedVersionNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        latestPublishedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        hasDraft:
+          type: boolean
+        questionCount:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        hasAssessments:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    UpdateAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentStatus'
+        approverId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        responses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentResponseWriteItemDto'
+        fileId:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AssessmentTemplateScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Organization
+      - UseCase
+      - Asset
+      enum:
+      - Organization
+      - UseCase
+      - Asset
+    AssessmentTemplateSubCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+      enum:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+    AssessmentResponseWriteItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sectionName:
+          type: string
+        question:
+          type: string
+        questionType:
+          type: string
+        answer:
+          type: string
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        reasoning:
+          type: string
+    AssessmentQuestionOptionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        optionText:
+          type: string
+        optionValue:
+          type: string
+    AssessmentStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Pending
+      - Approved
+      - Rejected
+      - AutoComplete
+      - ReadyForReview
+      - AutoCompleteFailed
+      enum:
+      - Draft
+      - Pending
+      - Approved
+      - Rejected
+      - AutoComplete
+      - ReadyForReview
+      - AutoCompleteFailed
+    AutoCompleteAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        includeExecutionLogs:
+          type: boolean
+        logSampleSize:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        confidenceThreshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+    AssessmentListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        templateName:
+          type:
+          - string
+          - 'null'
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateCategory'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        templateId:
+          type: string
+          format: guid
+        templateVersionId:
+          type: string
+          format: guid
+        templateVersionNumber:
+          type: integer
+          format: int32
+        newerVersionAvailable:
+          type: boolean
+        version:
+          type: string
+        status:
+          $ref: '#/components/schemas/AssessmentStatus'
+        lastCompletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        needsReReview:
+          type: boolean
+        approverId:
+          type: string
+          format: guid
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        fileId:
+          type:
+          - string
+          - 'null'
+        updatedAt:
+          type: string
+          format: date-time
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

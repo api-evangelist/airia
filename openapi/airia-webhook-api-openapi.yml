@@ -1,0 +1,136 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Webhook API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Webhook
+paths:
+  /v1/Webhook/{tenantId}/{webhookId}:
+    get:
+      tags:
+      - Webhook
+      operationId: Webhook_Get
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: hub.mode
+        x-originalName: hubMode
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: hub.challenge
+        x-originalName: hubChallenge
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: hub.verify_token
+        x-originalName: hubVerifyToken
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: challenge
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: validationToken
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+        405:
+          description: ''
+        default:
+          description: ''
+      summary: Webhook get
+      x-summary-source: derived
+    post:
+      tags:
+      - Webhook
+      operationId: Webhook_Post
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: validationToken
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+        404:
+          description: ''
+        default:
+          description: ''
+      summary: Webhook post
+      x-summary-source: derived
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

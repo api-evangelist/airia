@@ -1,0 +1,470 @@
+openapi: 3.2.0
+info:
+  title: Airia Web User Prompts API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UserPrompts
+paths:
+  /v1/UserPrompts:
+    get:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_GetUserPrompts
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserPromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts get user prompts
+      x-summary-source: derived
+    post:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_CreateUserPrompt
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserPrompt'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts create user prompt
+      x-summary-source: derived
+    put:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_UpdateUserPrompt
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: userPromptDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPromptDto'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts update user prompt
+      x-summary-source: derived
+  /v1/UserPrompts/{id}:
+    get:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_GetUserPromptById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPromptDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts get user prompt by id
+      x-summary-source: derived
+  /v1/UserPrompts/{id}/usage-info:
+    get:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_GetUserPromptUsageInfo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineUsageInfoResult'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts get user prompt usage info
+      x-summary-source: derived
+  /v1/UserPrompts/{userPromptId}:
+    delete:
+      tags:
+      - UserPrompts
+      operationId: UserPrompts_DeleteUserPrompt
+      parameters:
+      - name: userPromptId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User prompts delete user prompt
+      x-summary-source: derived
+components:
+  schemas:
+    PipelineUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PipelineUsageInfoResult:
+      type: object
+      additionalProperties: false
+      properties:
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CreateUserPrompt:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - message
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        message:
+          type: string
+          maxLength: 4096
+          minLength: 1
+        description:
+          type: string
+          maxLength: 4096
+        projectId:
+          type: string
+          format: guid
+    UserPromptDto:
+      type: object
+      additionalProperties: false
+      properties:
+        userPromptId:
+          type: string
+          format: guid
+        name:
+          type: string
+          maxLength: 256
+        message:
+          type: string
+          maxLength: 4096
+        description:
+          type: string
+          maxLength: 4096
+        updatedAt:
+          type: string
+          format: date-time
+        activeDeployments:
+          type: integer
+          format: int32
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        project:
+          oneOf:
+          - $ref: '#/components/schemas/ProjectModelBase'
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

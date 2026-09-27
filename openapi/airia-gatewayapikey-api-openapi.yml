@@ -1,0 +1,411 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Gateway API Key API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GatewayApiKey
+paths:
+  /v1/GatewayApiKey:
+    post:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_CreateGatewayApiKey
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatewayApiKeyModel'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyCreatedModel'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Gateway api key create gateway api key
+      x-summary-source: derived
+  /v1/GatewayApiKey/{id}:
+    get:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_GetGatewayApiKey
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyWithId'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway api key get gateway api key
+      x-summary-source: derived
+    delete:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_DeleteGatewayApiKey
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: revocation
+        in: query
+        schema:
+          default: Natural
+          oneOf:
+          - $ref: '#/components/schemas/GatewayApiKeyRevocationMode'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway api key delete gateway api key
+      x-summary-source: derived
+  /v1/GatewayApiKey/admin/{id}:
+    get:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_GetGatewayApiKeyForAdmin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyWithId'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway api key get gateway api key for admin
+      x-summary-source: derived
+  /v1/GatewayApiKey/{id}/enable:
+    patch:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_EnableGatewayApiKey
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyWithId'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyLimitReachedError'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway api key enable gateway api key
+      x-summary-source: derived
+  /v1/GatewayApiKey/{id}/disable:
+    patch:
+      tags:
+      - GatewayApiKey
+      operationId: GatewayApiKey_DisableGatewayApiKey
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: revocation
+        in: query
+        schema:
+          default: Natural
+          oneOf:
+          - $ref: '#/components/schemas/GatewayApiKeyRevocationMode'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayApiKeyWithId'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway api key disable gateway api key
+      x-summary-source: derived
+components:
+  schemas:
+    GatewayApiKeyLimitReachedError:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        limit:
+          type: integer
+          format: int64
+        message:
+          type: string
+    GatewayApiKeyModel:
+      type: object
+      additionalProperties: false
+      required:
+      - gatewayConfigurationId
+      - type
+      properties:
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/GatewayApiKeyType2'
+        enabled:
+          type: boolean
+        resourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        agentName:
+          type:
+          - string
+          - 'null'
+          maxLength: 128
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GatewayApiKeyWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          apiKey:
+            type: string
+          updatedAt:
+            type: string
+            format: date-time
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          origin:
+            oneOf:
+            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GatewayApiKeyOrigin2:
+      type: string
+      description: ''
+      x-enumNames:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+      enum:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+    GatewayApiKeyCreatedModel:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyWithId'
+      - type: object
+        additionalProperties: false
+    GatewayApiKeyRevocationMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Natural
+      - Immediate
+      enum:
+      - Natural
+      - Immediate
+    GatewayApiKeyType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+      enum:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

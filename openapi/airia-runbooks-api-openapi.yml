@@ -1,0 +1,746 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Runbooks API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Runbooks
+paths:
+  /v1/security/runbooks:
+    get:
+      tags:
+      - Runbooks
+      operationId: Runbooks_GetRunbooks2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRunbookSummaryV1'
+        500:
+          description: ''
+      summary: Runbooks get runbooks2
+      x-summary-source: derived
+    post:
+      tags:
+      - Runbooks
+      operationId: Runbooks_CreateRunbook2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRunbookRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks create runbook2
+      x-summary-source: derived
+  /v1/security/runbooks/{id}:
+    get:
+      tags:
+      - Runbooks
+      operationId: Runbooks_GetRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks get runbook2
+      x-summary-source: derived
+    put:
+      tags:
+      - Runbooks
+      operationId: Runbooks_UpdateRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRunbookRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks update runbook2
+      x-summary-source: derived
+    delete:
+      tags:
+      - Runbooks
+      operationId: Runbooks_DeleteRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: deleteHistory
+        in: query
+        schema:
+          type: boolean
+          default: false
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks delete runbook2
+      x-summary-source: derived
+  /v1/security/runbooks/{id}/activate:
+    post:
+      tags:
+      - Runbooks
+      operationId: Runbooks_ActivateRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks activate runbook2
+      x-summary-source: derived
+  /v1/security/runbooks/{id}/pause:
+    post:
+      tags:
+      - Runbooks
+      operationId: Runbooks_PauseRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks pause runbook2
+      x-summary-source: derived
+  /v1/security/runbooks/catalog:
+    get:
+      tags:
+      - Runbooks
+      operationId: Runbooks_GetCatalog2
+      parameters:
+      - name: eventType
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RunbookCatalogItemV1'
+        500:
+          description: ''
+      summary: Runbooks get catalog2
+      x-summary-source: derived
+  /v1/security/runbooks/executions:
+    get:
+      tags:
+      - Runbooks
+      operationId: Runbooks_GetExecutions2
+      parameters:
+      - name: runbookId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 1
+      - name: sourceRecordType
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: sourceRecordId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: status
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: from
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 5
+      - name: to
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 6
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 7
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfRunbookExecutionSummaryV1'
+        500:
+          description: ''
+      summary: Runbooks get executions2
+      x-summary-source: derived
+  /v1/security/runbooks/{id}/execute:
+    post:
+      tags:
+      - Runbooks
+      operationId: Runbooks_ExecuteRunbook2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteRunbookRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunbookExecutionResultV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Runbooks execute runbook2
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfRunbookExecutionSummaryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunbookExecutionSummaryV1'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfRunbookSummaryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunbookSummaryV1'
+        totalCount:
+          type: integer
+          format: int32
+    RunbookActionV1:
+      type: object
+      additionalProperties: false
+      required:
+      - stepType
+      - parametersJson
+      properties:
+        stepType:
+          type: string
+          minLength: 1
+        parametersJson:
+          type: string
+          minLength: 1
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    RunbookCatalogItemV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        eventType:
+          type: string
+    RunbookExecutionSummaryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        runbookId:
+          type: string
+          format: guid
+        runbookName:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type: string
+          format: guid
+        sourceRecordType:
+          type: string
+        sourceRecordId:
+          type: string
+        triggerSource:
+          type: string
+        triggeredByUserId:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        httpStatus:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RunbookV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        hasHistory:
+          type: boolean
+    RunbookExecutionResultV1:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        status:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+    UpdateRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - trigger
+      - actions
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+    RunbookSummaryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CreateRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - trigger
+      - actions
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+    RunbookTriggerMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
+      enum:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
+    RunbookTriggerV1:
+      type: object
+      additionalProperties: false
+      required:
+      - eventType
+      properties:
+        eventType:
+          type: string
+          minLength: 1
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          $ref: '#/components/schemas/RunbookTriggerMode'
+    ExecuteRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - context
+      properties:
+        context:
+          type: object
+          additionalProperties: {}
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

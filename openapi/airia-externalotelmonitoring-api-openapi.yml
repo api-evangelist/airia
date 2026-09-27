@@ -1,0 +1,822 @@
+openapi: 3.2.0
+info:
+  title: Airia Web External Otel Monitoring API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ExternalOtelMonitoring
+paths:
+  /v1/ExternalOtelMonitoring/sessions:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetSessions
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: userEmail
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: surface
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalOtelMonitoringSession'
+      summary: External otel monitoring get sessions
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/stats:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetStats
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: userEmail
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: surface
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuardrailViolationStats'
+      summary: External otel monitoring get stats
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/key-health:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetKeyHealth
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaudeOtelKeyHealthResponse'
+      summary: External otel monitoring get key health
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/prompts:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetPrompts
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 2
+      - name: userEmail
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: surface
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: promptId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalOtelMonitoringPrompt'
+      summary: External otel monitoring get prompts
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/sessions/{sessionId}/events:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetEventsForSession
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalOtelMonitoringEvent'
+      summary: External otel monitoring get events for session
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/sessions/{sessionId}/conversation:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetSessionConversation
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalOtelMonitoringConversation'
+      summary: External otel monitoring get session conversation
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/sessions/{sessionId}/files/{fileId}/content:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetSessionFileContent
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: ''
+      summary: External otel monitoring get session file content
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/prompts/{promptId}/events:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetEventsForPrompt
+      parameters:
+      - name: promptId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalOtelMonitoringEvent'
+      summary: External otel monitoring get events for prompt
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/events:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetEvents
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        x-position: 1
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 2
+      - name: from
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 3
+      - name: to
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 4
+      - name: userEmail
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: surface
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: promptId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalOtelMonitoringPagedEvents'
+      summary: External otel monitoring get events
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/events/{id}:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalOtelMonitoringEvent'
+      summary: External otel monitoring get event
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/sessions/{sessionId}:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetSession
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: service
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalOtelMonitoringSession'
+      summary: External otel monitoring get session
+      x-summary-source: derived
+  /v1/ExternalOtelMonitoring/violations/{executionId}/location:
+    get:
+      tags:
+      - ExternalOtelMonitoring
+      operationId: ExternalOtelMonitoring_GetClaudeViolationLocation
+      parameters:
+      - name: executionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaudeViolationLocation'
+      summary: External otel monitoring get claude violation location
+      x-summary-source: derived
+components:
+  schemas:
+    InferenceHooksEventOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - Allow
+      - Deny
+      - Failure
+      enum:
+      - Allow
+      - Deny
+      - Failure
+    ExternalOtelMonitoringSession:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        sessionId:
+          type: string
+          maxLength: 128
+        userEmail:
+          type: string
+          maxLength: 256
+        service:
+          type: string
+          maxLength: 64
+        surface:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        apiKeyId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        promptCount:
+          type: integer
+          format: int32
+        eventCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ExternalOtelMonitoringEvent:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        sessionId:
+          type: string
+          maxLength: 128
+        promptId:
+          type: string
+          maxLength: 128
+        userEmail:
+          type: string
+          maxLength: 256
+        eventType:
+          type: string
+          maxLength: 64
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/InferenceHooksEventOutcome'
+        reasonCode:
+          type:
+          - string
+          - 'null'
+        eventSequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        service:
+          type: string
+          maxLength: 64
+        surface:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        serviceVersion:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+        osType:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+        hostArch:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+        externalServiceMetadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        eventData:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        eventTimestamp:
+          type: string
+          format: date-time
+        ingestedAt:
+          type: string
+          format: date-time
+    GuardrailViolationStats:
+      type: object
+      additionalProperties: false
+      properties:
+        totalMessages:
+          type: integer
+          format: int32
+        flaggedMessages:
+          type: integer
+          format: int32
+        flaggedRate:
+          type: number
+          format: double
+    ClaudeViolationLocation:
+      type: object
+      additionalProperties: false
+      properties:
+        sessionId:
+          type: string
+        service:
+          type: string
+        messageId:
+          type: string
+        externalEventId:
+          type:
+          - string
+          - 'null'
+        direction:
+          $ref: '#/components/schemas/ClaudeGuardrailEvaluationDirection'
+    ClaudeOtelKeyHealthStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotConfigured
+      - Healthy
+      - Mismatched
+      - Silent
+      - NeverReceived
+      - Unverified
+      enum:
+      - NotConfigured
+      - Healthy
+      - Mismatched
+      - Silent
+      - NeverReceived
+      - Unverified
+    ClaudeOtelKeyMismatch:
+      type: object
+      additionalProperties: false
+      properties:
+        apiKeyId:
+          type: string
+          format: guid
+        apiKeyName:
+          type:
+          - string
+          - 'null'
+        service:
+          type: string
+        distinctUsers:
+          type: integer
+          format: int32
+        lastSeenAt:
+          type: string
+          format: date-time
+    ExternalOtelMonitoringPagedEvents:
+      type: object
+      additionalProperties: false
+      properties:
+        total:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalOtelMonitoringEvent'
+    ClaudeOtelKeyHealthResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/ClaudeOtelKeyHealthStatus'
+        mismatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaudeOtelKeyMismatch'
+        lastTelemetryAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        enforcementEnabled:
+          type: boolean
+        lookbackDays:
+          type: integer
+          format: int32
+    ClaudeGuardrailEvaluationDirection:
+      type: string
+      description: ''
+      x-enumNames:
+      - Input
+      - Output
+      enum:
+      - Input
+      - Output
+    ExternalOtelMonitoringConversationTurn:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          user: '#/components/schemas/ConversationUserTurn'
+          assistant: '#/components/schemas/ConversationAssistantTurn'
+          recap: '#/components/schemas/ConversationRecapTurn'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          type: string
+    ExternalOtelMonitoringPrompt:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        sessionId:
+          type: string
+          maxLength: 128
+        promptId:
+          type: string
+          maxLength: 128
+        userEmail:
+          type: string
+          maxLength: 256
+        service:
+          type: string
+          maxLength: 64
+        surface:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        eventCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        firstEventAt:
+          type: string
+          format: date-time
+        lastEventAt:
+          type: string
+          format: date-time
+    ExternalOtelMonitoringConversation:
+      type: object
+      additionalProperties: false
+      properties:
+        sessionId:
+          type: string
+        turns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalOtelMonitoringConversationTurn'
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

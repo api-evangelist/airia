@@ -1,0 +1,800 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Skills Repositories API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: SkillsRepositories
+paths:
+  /v1/SkillsRepositories:
+    get:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_GetRepositories2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: projectId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories get repositories2
+      x-summary-source: derived
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_CreateRepository2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSkillsRepositoryRequest'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillsRepositoryDto'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories create repository2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}:
+    get:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_GetRepositoryById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillsRepositoryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories get repository by id2
+      x-summary-source: derived
+    put:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_UpdateRepository2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSkillsRepositoryRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillsRepositoryDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories update repository2
+      x-summary-source: derived
+    delete:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_DeleteRepository2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories delete repository2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/contents:
+    get:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_ListDirectory2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories list directory2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files:
+    get:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_ReadFileContent2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories read file content2
+      x-summary-source: derived
+    put:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_WriteFileContent2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories write file content2
+      x-summary-source: derived
+    delete:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_DeletePath2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories delete path2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files/upload:
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_UploadFile2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories upload file2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files/upload-zip:
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_UploadZip2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories upload zip2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files/download:
+    get:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_DownloadFile2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories download file2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files/download-zip:
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_ExportAsZip2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportSkillsRepositoryRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories export as zip2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/directories:
+    delete:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_DeleteDirectory2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories delete directory2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/files/rename:
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_Rename2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameRequest'
+        required: true
+        x-position: 2
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories rename2
+      x-summary-source: derived
+  /v1/SkillsRepositories/{id}/folders:
+    post:
+      tags:
+      - SkillsRepositories
+      operationId: SkillsRepositories_CreateFolder2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: path
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Skills repositories create folder2
+      x-summary-source: derived
+components:
+  schemas:
+    RenameRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          minLength: 1
+        newPath:
+          type: string
+          minLength: 1
+    CreateSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      - name
+      properties:
+        projectId:
+          type: string
+          format: guid
+          minLength: 1
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+        assignedUserIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        assignedGroupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    UpdateSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+        assignedUserIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        assignedGroupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        updateAssignments:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ExportSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - paths
+      properties:
+        paths:
+          type: array
+          minItems: 1
+          items:
+            type: string
+    SkillsRepositoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

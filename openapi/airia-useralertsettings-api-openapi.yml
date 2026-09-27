@@ -1,0 +1,217 @@
+openapi: 3.2.0
+info:
+  title: Airia Web User Alert Settings API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: UserAlertSettings
+paths:
+  /v1/UserAlertSettings:
+    get:
+      tags:
+      - UserAlertSettings
+      operationId: UserAlertSettings_GetSettings2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAlertSettings'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User alert settings get settings2
+      x-summary-source: derived
+    put:
+      tags:
+      - UserAlertSettings
+      operationId: UserAlertSettings_PutSettings2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: settingsDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAlertSettingsDto'
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: User alert settings put settings2
+      x-summary-source: derived
+components:
+  schemas:
+    UserAlertSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        settings:
+          oneOf:
+          - $ref: '#/components/schemas/UserAlertSettingsProps'
+        updatedAt:
+          type: string
+          format: date-time
+    UserAlertSettingsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        settings:
+          oneOf:
+          - $ref: '#/components/schemas/UserAlertSettingsProps'
+    UserAlertSettingsProps:
+      type: object
+      additionalProperties: false
+      properties:
+        inApp:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - boolean
+          - 'null'
+        sms:
+          type:
+          - boolean
+          - 'null'
+        browser:
+          type:
+          - boolean
+          - 'null'
+        mobile:
+          type:
+          - boolean
+          - 'null'
+        aiInbox:
+          oneOf:
+          - $ref: '#/components/schemas/AiInboxNotificationSettings'
+        categoryInAppSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: boolean
+        categoryEmailSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: boolean
+        categoryBrowserSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: boolean
+        categoryMobileSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiInboxNotificationSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        browser:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - boolean
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

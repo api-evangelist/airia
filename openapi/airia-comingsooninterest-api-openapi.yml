@@ -1,0 +1,101 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Coming Soon Interest API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ComingSoonInterest
+paths:
+  /v1/ComingSoonInterest:
+    post:
+      tags:
+      - ComingSoonInterest
+      operationId: ComingSoonInterest_RecordInterest2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordComingSoonInterestRequest'
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Coming soon interest record interest2
+      x-summary-source: derived
+components:
+  schemas:
+    RecordComingSoonInterestRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - interestType
+      - itemKey
+      properties:
+        interestType:
+          $ref: '#/components/schemas/ComingSoonInterestType'
+        itemKey:
+          type: string
+          maxLength: 128
+          minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ComingSoonInterestType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Framework
+      - IntakeMethod
+      enum:
+      - Framework
+      - IntakeMethod
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

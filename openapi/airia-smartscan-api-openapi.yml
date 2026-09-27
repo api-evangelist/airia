@@ -1,0 +1,1304 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Smart Scan API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: SmartScan
+paths:
+  /v1/SmartScan:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_GetSmartScans
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SmartScanResponse'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan get smart scans
+      x-summary-source: derived
+    post:
+      tags:
+      - SmartScan
+      operationId: SmartScan_CreateSmartScan
+      parameters:
+      - name: X-PIPELINE-API-KEY
+        x-originalName: pipelineApiKey
+        in: header
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: createSmartScan
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSmartScanRequest'
+        required: true
+        x-position: 2
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScan'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan create smart scan
+      x-summary-source: derived
+    put:
+      tags:
+      - SmartScan
+      operationId: SmartScan_UpdateSmartScan
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: smartScanModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSmartScanRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan update smart scan
+      x-summary-source: derived
+  /v1/SmartScan/{id}:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_GetSmartScan
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScanResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan get smart scan
+      x-summary-source: derived
+    delete:
+      tags:
+      - SmartScan
+      operationId: SmartScan_DeleteSmartScan
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScan'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan delete smart scan
+      x-summary-source: derived
+  /v1/SmartScan/{id}/prompts:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_GetSmartScanPrompts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SmartScanPromptResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan get smart scan prompts
+      x-summary-source: derived
+  /v1/SmartScan/{id}/analysis:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_GetSmartScanFiles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SmartScanFile'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan get smart scan files
+      x-summary-source: derived
+  /v1/SmartScan/{id}/file/{fileId}/prompt/{promptId}:
+    patch:
+      tags:
+      - SmartScan
+      operationId: SmartScan_UpdateSmartScanFileResult
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: promptId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchSmartScanFileRequest'
+        required: true
+        x-position: 4
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan update smart scan file result
+      x-summary-source: derived
+  /v1/SmartScan/{id}/prompt/{promptId}:
+    patch:
+      tags:
+      - SmartScan
+      operationId: SmartScan_UpdateSmartScanPrompt
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: promptId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchSmartScanPromptRequest'
+        required: true
+        x-position: 3
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan update smart scan prompt
+      x-summary-source: derived
+  /v1/SmartScan/{id}/retry:
+    post:
+      tags:
+      - SmartScan
+      operationId: SmartScan_RetrySmartScan
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScan'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan retry smart scan
+      x-summary-source: derived
+  /v1/SmartScan/{id}/cancel:
+    post:
+      tags:
+      - SmartScan
+      operationId: SmartScan_CancelSmartScan
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartScan'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan cancel smart scan
+      x-summary-source: derived
+  /v1/SmartScan/all:
+    delete:
+      tags:
+      - SmartScan
+      operationId: SmartScan_DeleteAllUsersSmartScans
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan delete all users smart scans
+      x-summary-source: derived
+  /v1/SmartScan/prompt-names:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_GetPromptNames
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan get prompt names
+      x-summary-source: derived
+  /v1/SmartScan/add-prompt-name:
+    post:
+      tags:
+      - SmartScan
+      operationId: SmartScan_AddPromptName
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: promptName
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan add prompt name
+      x-summary-source: derived
+  /v1/SmartScan/delete-prompt-name:
+    delete:
+      tags:
+      - SmartScan
+      operationId: SmartScan_DeletePromptName
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: promptName
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+        x-position: 1
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan delete prompt name
+      x-summary-source: derived
+  /v1/SmartScan/{id}/export/csv:
+    get:
+      tags:
+      - SmartScan
+      operationId: SmartScan_ExportSmartScanFiles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: SmartScanPrompts
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        x-position: 7
+      - name: IsFileNameVisible
+        in: query
+        schema:
+          type: boolean
+        x-position: 8
+      - name: IsStatusVisible
+        in: query
+        schema:
+          type: boolean
+        x-position: 9
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfSmartScanFile'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Smart scan export smart scan files
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfSmartScanFile:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartScanFile'
+        totalCount:
+          type: integer
+          format: int32
+    SmartScan:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          status:
+            maxLength: 15
+            minLength: 0
+            oneOf:
+            - $ref: '#/components/schemas/SmartScanStatus'
+          dataStoreId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          isBookmarked:
+            type: boolean
+          metadata:
+            type: object
+            x-dictionaryKey:
+              $ref: '#/components/schemas/SmartScanCountType'
+            additionalProperties:
+              type: integer
+              format: int32
+          smartScanPrompts:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/SmartScanPrompt'
+    SmartScanFileStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+      enum:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+    SmartScanPrompt:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          sequenceNumber:
+            type: integer
+            format: int32
+          pipelineId:
+            type: string
+            format: guid
+          type:
+            $ref: '#/components/schemas/SmartScanPromptType'
+          prompt:
+            type: string
+          promptName:
+            type:
+            - string
+            - 'null'
+            maxLength: 64
+          promptLabel:
+            type:
+            - string
+            - 'null'
+            maxLength: 32
+          smartScanId:
+            type: string
+            format: guid
+          metadata:
+            type: object
+            x-dictionaryKey:
+              $ref: '#/components/schemas/SmartScanCountType'
+            additionalProperties:
+              type: integer
+              format: int32
+    PatchSmartScanPromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        promptLabel:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    SmartScanFile:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          fileId:
+            type: string
+            format: guid
+          fileName:
+            type:
+            - string
+            - 'null'
+          fileType:
+            type:
+            - string
+            - 'null'
+          fileSize:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          fileDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/UpdateSmartScanFileRequest'
+          status:
+            $ref: '#/components/schemas/SmartScanFileStatus'
+          smartScanId:
+            type: string
+            format: guid
+    SmartScanStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+      enum:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+    PatchSmartScanFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        result:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UpdateSmartScanRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 250
+          minLength: 0
+        isBookmarked:
+          type:
+          - boolean
+          - 'null'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    SmartScanCountType:
+      type: string
+      description: ''
+      x-enumNames:
+      - FilesTotal
+      - FilesProcessed
+      - FilesFailed
+      - FilesCanceled
+      - AnswersTagged
+      - AnswersExtracted
+      - AnswersSummarized
+      enum:
+      - FilesTotal
+      - FilesProcessed
+      - FilesFailed
+      - FilesCanceled
+      - AnswersTagged
+      - AnswersExtracted
+      - AnswersSummarized
+    SmartScanResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SmartScanStatus'
+        isBookmarked:
+          type: boolean
+        metadata:
+          type: object
+          x-dictionaryKey:
+            $ref: '#/components/schemas/SmartScanCountType'
+          additionalProperties:
+            type: integer
+            format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UpdateSmartScanFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        promptSequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pipelineExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          $ref: '#/components/schemas/SmartScanFileStatus'
+        result:
+          type:
+          - string
+          - 'null'
+        explanation:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+    SmartScanPromptResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          $ref: '#/components/schemas/SmartScanPromptType'
+        prompt:
+          type: string
+        promptName:
+          type:
+          - string
+          - 'null'
+        promptLabel:
+          type:
+          - string
+          - 'null'
+        metadata:
+          type: object
+          x-dictionaryKey:
+            $ref: '#/components/schemas/SmartScanCountType'
+          additionalProperties:
+            type: integer
+            format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CreateSmartScanPromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/SmartScanPromptType'
+        prompt:
+          type: string
+        promptName:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        promptLabel:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+    CreateSmartScanRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        dataStoreId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        smartScanPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateSmartScanPromptRequest'
+        fileIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    SmartScanPromptType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tag
+      - Extract
+      - Summarize
+      enum:
+      - Tag
+      - Extract
+      - Summarize
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

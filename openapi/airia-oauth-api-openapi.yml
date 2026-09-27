@@ -1,0 +1,2306 @@
+openapi: 3.2.0
+info:
+  title: Airia Web OAuth API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: OAuth
+paths:
+  /v1/OAuth/azureWebAppToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetAzureWebAppToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get azure web app token
+      x-summary-source: derived
+  /v1/OAuth/xOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetXOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get XO auth configuration
+      x-summary-source: derived
+  /v1/OAuth/azureOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetAzureOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get azure OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/azureEWSOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetAzureEWSOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureEWSOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get azure EWSO auth configuration
+      x-summary-source: derived
+  /v1/OAuth/azureEWSWebAppToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetAzureEWSWebAppToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get azure EWS web app token
+      x-summary-source: derived
+  /v1/OAuth/googleOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetGoogleOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get google OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/googleToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetGoogleToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get google token
+      x-summary-source: derived
+  /v1/OAuth/dropboxOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetDropboxOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DropboxOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get dropbox OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/dropboxToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetDropboxToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get dropbox token
+      x-summary-source: derived
+  /v1/OAuth/boxOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetBoxOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoxOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get box OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/boxToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetBoxToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get box token
+      x-summary-source: derived
+  /v1/OAuth/notionOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetNotionOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotionOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get notion OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/notionToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetNotionToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotionOAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get notion token
+      x-summary-source: derived
+  /v1/OAuth/confluenceOAuthConfiguration:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetConfluenceOAuthConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfluenceOAuthConfiguration'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get confluence OAuth configuration
+      x-summary-source: derived
+  /v1/OAuth/confluenceToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GetConfluenceToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequestBase'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get confluence token
+      x-summary-source: derived
+  /v1/OAuth/exchangeOAuthToken:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_ExchangeOAuthToken
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthTokenRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth exchange OAuth token
+      x-summary-source: derived
+  /v1/OAuth/scopes:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetScopes
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get scopes
+      x-summary-source: derived
+  /v2/OAuth/providers:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetProviderConfigurations
+      parameters:
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: Provider
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: Scopes
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 4
+      - name: ManagedBy
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/OAuthProviderManagedBy'
+        x-position: 5
+      - name: Search
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OAuthProviderDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get provider configurations
+      x-summary-source: derived
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_RegisterOwnProvider
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterOAuthProviderDto'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthProviderDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth register own provider
+      x-summary-source: derived
+  /v2/OAuth/providers/{id}:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_GetProviderConfigurationById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthProviderDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth get provider configuration by id
+      x-summary-source: derived
+    put:
+      tags:
+      - OAuth
+      operationId: OAuth_UpdateProvider
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOAuthProviderDto'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthProviderDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth update provider
+      x-summary-source: derived
+    delete:
+      tags:
+      - OAuth
+      operationId: OAuth_DeleteProvider
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth delete provider
+      x-summary-source: derived
+  /v2/OAuth/providers/generate-config:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_GenerateConfig
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateConfigRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth generate config
+      x-summary-source: derived
+  /v2/OAuth/providers/{id}/authorize:
+    post:
+      tags:
+      - OAuth
+      operationId: OAuth_AuthorizeOAuthProvider
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuthAuthorizeRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth authorize OAuth provider
+      x-summary-source: derived
+  /v2/OAuth/callback:
+    get:
+      tags:
+      - OAuth
+      operationId: OAuth_HandleCallback
+      parameters:
+      - name: state
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: code
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 2
+      - name: scopes
+        in: query
+        style: form
+        explode: true
+        schema:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        x-position: 3
+      - name: error
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: error_description
+        x-originalName: errorDescription
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+        302:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: OAuth handle callback
+      x-summary-source: derived
+components:
+  schemas:
+    CredentialType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Ai21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - CustomOpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - HuggingFace
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - TogetherAI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - XKey
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+      enum:
+      - None
+      - AI21
+      - Alibaba
+      - AlphaVantage
+      - Anthropic
+      - Asana
+      - Atlassian
+      - AtlassianApiKey
+      - AtlassianOauth
+      - Azure
+      - AzureAIStudio
+      - AzureBlob
+      - AzureML
+      - BasicAuth
+      - Bedrock
+      - BoxOauth
+      - BraveSearchApiKey
+      - Cohere
+      - Compass
+      - CustomCredential
+      - CustomAPIKey
+      - Custom OpenAI
+      - DataBricksToken
+      - DropboxOauth
+      - ElevenLabs
+      - Exa
+      - Firecrawl
+      - GenericOpenAI
+      - GithubPersonalAccessToken
+      - Google
+      - GoogleOauth
+      - GoogleServiceAccount
+      - HeaderAuth
+      - Hubspot
+      - Hugging Face
+      - ICDOauth
+      - IPAPI
+      - JinaAI
+      - LinkPreview
+      - McpAccessToken
+      - McpHeaders
+      - MicrosoftOauth
+      - MicrosoftBingSearch
+      - Mistral
+      - MongoDb
+      - MongoDbCloudId
+      - MongoDbConnectionString
+      - MsServer
+      - MySql
+      - NASA
+      - NewsAPI
+      - NotionIntegrationSecret
+      - Nutritionix
+      - Ollama
+      - OpenAI
+      - OpenVINO
+      - Perplexity
+      - PgSql
+      - Pinecone
+      - PyTorch
+      - QueryParamAuth
+      - Reddit
+      - Replicate
+      - S3
+      - SalesforceOauth
+      - ScaleFlex
+      - SendGrid
+      - Serper
+      - ServiceNow
+      - SlackBotAccessToken
+      - SlackOauth
+      - SlackUserAccessToken
+      - SnowflakeEncryptedKey
+      - SnowflakePrivateKey
+      - Spotify
+      - Stability
+      - Strava
+      - SupabasePersonalAccessToken
+      - Together AI
+      - WatsonAix
+      - Weaviate
+      - WeatherStack
+      - WolframAlpha
+      - X
+      - XAI
+      - XOauth
+      - Youtube
+      - FredApiKey
+      - GovRegulationsApiKey
+      - SecHeader
+      - PineconeApiKey
+      - LaunchDarklyApiKey
+      - PerplexityApiKey
+      - StripeApiKey
+      - AirtableApiKey
+      - SmartSheetApiKey
+      - GrafanaApiKey
+      - GenericOAuth
+      - AiriaXApiKey
+      - AzureAi
+      - BedrockArn
+      - ScaleflexMcpHeaders
+      - WhatsAppCloudApi
+      - NotionOauth
+      - SapHana
+      - BitlyApiKey
+      - CalendlyAccessToken
+      - ClickUpApiKey
+      - DiscordBotToken
+      - FreshdeskApiKey
+      - IntercomAccessToken
+      - LinearApiKey
+      - MailchimpApiKey
+      - MondayComApiKey
+      - PipedriveApiKey
+      - ShopifyAccessToken
+      - SurveyMonkeyAccessToken
+      - TelegramBotToken
+      - TodoistApiKey
+      - TrelloApiKey
+      - TwilioApiKey
+      - TypeformAccessToken
+      - ZendeskApiKey
+      - ZoomOauth
+      - QuickBooksOauth
+      - AwsAccessKey
+      - JiraOauth
+      - XeroOauth
+      - ActiveCampaignApiKey
+      - GitlabAccessToken
+      - ClockifyApiKey
+      - PagerDutyApiKey
+      - NetlifyAccessToken
+      - HelpScoutApiKey
+      - HarvestAccessToken
+      - DiscourseApiKey
+      - ConvertKitApiKey
+      - BaserowApiKey
+      - NocoDBApiKey
+      - PayPalOAuth
+      - KeapAccessToken
+      - MauticApiKey
+      - AffinityApiKey
+      - HighLevelApiKey
+      - InvoiceNinjaApiKey
+      - MagentoAccessToken
+      - CustomerIoApiKey
+      - AgileCrmApiKey
+      - PostHogApiKey
+      - OrbitApiKey
+      - SentryIoApiKey
+      - WooCommerceApiKey
+      - SpotifyOauth
+      - UptimeRobotApiKey
+      - MediumAccessToken
+      - LinkedInOauth
+      - StravaOauth
+      - SupabaseApiKey
+      - MetabaseApiKey
+      - PaddleApiKey
+      - JenkinsApiKey
+      - SalesmateApiKey
+      - ChargebeeApiKey
+      - HomeAssistantAccessToken
+      - CircleCiApiKey
+      - RedditApiOauth
+      - OktaApiKey
+      - WhatsAppAccessToken
+      - FreshserviceApiKey
+      - FreshworksCrmApiKey
+      - BrevoApiKey
+      - MailerLiteApiKey
+      - CloudflareApiKey
+      - StrapiApiKey
+      - GetResponseApiKey
+      - TwistAccessToken
+      - WekanApiKey
+      - ZulipApiKey
+      - NextCloudApiKey
+      - CodaApiKey
+      - DriftAccessToken
+      - QuickBaseApiKey
+      - TheHiveApiKey
+      - KoBoToolboxApiKey
+      - GrafanaApiApiKey
+      - ActionNetworkApiKey
+      - AdaloApiKey
+      - AirtopApiKey
+      - ApiTemplateIoApiKey
+      - AutopilotApiKey
+      - AwsLambdaApiKey
+      - BannerbearApiKey
+      - BeeminderApiKey
+      - BitwardenApiKey
+      - BrandfetchApiKey
+      - BubbleApiKey
+      - ClearbitApiKey
+      - CockpitApiKey
+      - CoinGeckoApiKey
+      - MicrosoftGraphAccessToken
+      - GcpServiceAccount
+      - GoogleCloudOAuth
+      - MsServerEntraId
+      - DemioApiKey
+      - DhlApiKey
+      - DisqusApiKey
+      - DropcontactApiKey
+      - EgoiApiKey
+      - EmeliaApiKey
+      - ErpNextApiKey
+      - FlowApiKey
+      - GhostApiKey
+      - GongApiKey
+      - GotifyApiKey
+      - GoToWebinarOAuth2
+      - GristApiKey
+      - HackerNewsApiKey
+      - HaloPsaApiKey
+      - HumanticAiApiKey
+      - HunterApiKey
+      - IterableApiKey
+      - JinaAiApiKey
+      - LemlistApiKey
+      - LingvaNexApiKey
+      - LoneScaleApiKey
+      - MailcheckApiKey
+      - MailgunApiKey
+      - MailjetApiKey
+      - MandrillApiKey
+      - MarketstackApiKey
+      - MatrixApiKey
+      - MattermostApiKey
+      - MessageBirdApiKey
+      - MindeeApiKey
+      - MispApiKey
+      - MistralAiApiKey
+      - MoceanApiKey
+      - MonicaCrmApiKey
+      - Msg91ApiKey
+      - NasaApiKey
+      - NpmApiKey
+      - OdooApiKey
+      - OneSimpleApiApiKey
+      - OnfleetApiKey
+      - OpenThesaurusApiKey
+      - OpenWeatherMapApiKey
+      - OuraApiKey
+      - PeekalinkApiKey
+      - PhantombusterApiKey
+      - PhilipsHueApiKey
+      - PlivoApiKey
+      - ProfitWellApiKey
+      - PushbulletApiKey
+      - PushcutApiKey
+      - PushoverApiKey
+      - QuickChartApiKey
+      - RaindropApiKey
+      - RocketChatApiKey
+      - RundeckApiKey
+      - SeaTableApiKey
+      - SecurityScorecardApiKey
+      - SegmentApiKey
+      - SendyApiKey
+      - Signl4ApiKey
+      - Sms77ApiKey
+      - SplunkApiKey
+      - StackbyApiKey
+      - StoryblokApiKey
+      - SyncroMspApiKey
+      - TaigaApiKey
+      - TapfiliateApiKey
+      - TravisCiApiKey
+      - TwakeApiKey
+      - UnleashedSoftwareApiKey
+      - UpleadApiKey
+      - UProcApiKey
+      - UrlScanIoApiKey
+      - VeroApiKey
+      - VonageApiKey
+      - WebflowApiKey
+      - WiseApiKey
+      - TwitterOAuth2
+      - YourlsApiKey
+      - ZammadApiKey
+      - ZohoCrmOAuth2
+      - DocuSignOAuth2
+      - AzureDevOpsPersonalAccessToken
+      - WorkdayOAuth2
+      - DatadogApiKey
+      - AmazonSESApiKey
+      - BitbucketOAuth2
+      - SAPApiKey
+      - Dynamics365OAuth2
+      - SnowflakeApiKey
+      - TwitchOAuth2
+      - FigmaPersonalAccessToken
+      - AwsCloudWatchApiKey
+      - AzureBlobStorageApiKey
+      - OneLoginOAuth2
+      - SmtpRelay
+      - WordpressApiKey
+      - ContentfulApiKey
+      - CopperApiKey
+      - DeepLApiKey
+      - CortexApiKey
+      - AzureFoundryEntraId
+      - Causeway
+      - Amazon
+      - Clerk
+      - Brightspace
+      - GenericAnthropic
+      - Cohesity
+      - AnthropicInferenceHooks
+      - AnthropicAnalytics
+      - GoogleVertexAi
+    GoogleOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      - refreshTokenUrl
+      - appId
+      - developerKey
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        refreshTokenUrl:
+          type: string
+          minLength: 1
+        appId:
+          type: string
+          minLength: 1
+        developerKey:
+          type: string
+          minLength: 1
+    OAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          isSystem:
+            type: boolean
+          usage:
+            type: array
+            items:
+              $ref: '#/components/schemas/OAuthProviderUsageItem'
+    ConfluenceOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      - tokenUrl
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        tokenUrl:
+          type: string
+          minLength: 1
+    OAuthProviderBehaviorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        authorizationParameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        tokenParameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        tokenHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        extraTokenResponseFields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tokenEndpointAuthMethod:
+          $ref: '#/components/schemas/TokenEndpointAuthMethodV1'
+        scopeSeparator:
+          type:
+          - string
+          - 'null'
+        acrValues:
+          type:
+          - string
+          - 'null'
+    DropboxOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    UpdateOAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+    XOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - clientId
+      - clientSecretId
+      - appID
+      - generateTokenURL
+      - authorizeTokenURL
+      properties:
+        clientId:
+          type: string
+          minLength: 1
+        clientSecretId:
+          type: string
+          minLength: 1
+        appID:
+          type: string
+          minLength: 1
+        generateTokenURL:
+          type: string
+          minLength: 1
+        authorizeTokenURL:
+          type: string
+          minLength: 1
+    GenerateConfigRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        providerType:
+          type: string
+    AzureOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - webAppClientId
+      - clientSecret
+      - tenantId
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        webAppClientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        tenantId:
+          type: string
+          minLength: 1
+    AzureEWSOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    ProviderAuthenticationTypeV1:
+      type: string
+      description: ''
+      x-enumNames:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+      enum:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+    OAuthTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/OAuthTokenRequestBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          codeVerifier:
+            type: string
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          domain:
+            type: string
+    TokenEndpointAuthMethodV1:
+      type: string
+      description: ''
+      x-enumNames:
+      - TokenEndpointAuthMethodUnspecified
+      - TokenEndpointAuthMethodClientSecretPost
+      - TokenEndpointAuthMethodClientSecretBasic
+      - TokenEndpointAuthMethodClientSecretJwt
+      - TokenEndpointAuthMethodPrivateKeyJwt
+      - TokenEndpointAuthMethodNone
+      enum:
+      - TokenEndpointAuthMethodUnspecified
+      - TokenEndpointAuthMethodClientSecretPost
+      - TokenEndpointAuthMethodClientSecretBasic
+      - TokenEndpointAuthMethodClientSecretJwt
+      - TokenEndpointAuthMethodPrivateKeyJwt
+      - TokenEndpointAuthMethodNone
+    OAuthProviderUsageItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        type:
+          type: string
+    OAuthProviderCapabilitiesDto:
+      type: object
+      additionalProperties: false
+      properties:
+        supportsDcr:
+          type: boolean
+        supportsPkce:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    OAuthTokenRequestBase:
+      type: object
+      additionalProperties: false
+      required:
+      - authCode
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+    RegisterOAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+    NotionOAuthTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+    BoxOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    OAuthTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        idToken:
+          type: string
+        instanceUrl:
+          type:
+          - string
+          - 'null'
+    NotionOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    BaseOAuthProviderData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        authorizationEndpoint:
+          type: string
+        tokenEndpoint:
+          type: string
+        revokeEndpoint:
+          type: string
+        registrationEndpoint:
+          type: string
+        discoveryUrl:
+          type: string
+        provider:
+          type: string
+        supportedScopes:
+          type: array
+          items:
+            type: string
+        capabilities:
+          $ref: '#/components/schemas/OAuthProviderCapabilitiesDto'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        authenticationType:
+          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
+        behaviour:
+          oneOf:
+          - $ref: '#/components/schemas/OAuthProviderBehaviorDto'
+        totalActiveCredentials:
+          type: integer
+          format: int32
+    OAuthAuthorizeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        credentialName:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        isPersonal:
+          type: boolean
+        returnUrl:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    OAuthProviderManagedBy:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - Customer
+      enum:
+      - Airia
+      - Customer
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

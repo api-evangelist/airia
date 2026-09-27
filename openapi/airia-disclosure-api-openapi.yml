@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Disclosure API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Disclosure
+paths:
+  /v1/disclosures/exec/{executionId}:
+    get:
+      tags:
+      - Disclosure
+      operationId: Disclosure_GetByExecutionId2
+      parameters:
+      - name: executionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosurePayload'
+        202:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisclosurePayload'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+      summary: Disclosure get by execution id2
+      x-summary-source: derived
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DisclosurePayload:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type: string
+        agentName:
+          type:
+          - string
+          - 'null'
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        agentType:
+          type:
+          - string
+          - 'null'
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelDisclosure'
+        primaryModel:
+          oneOf:
+          - $ref: '#/components/schemas/ModelDisclosure'
+        guardrailsApplied:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        guardrailCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        useCases:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UseCaseDisclosure'
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+        humanReviewed:
+          type:
+          - boolean
+          - 'null'
+        reviewedBy:
+          type:
+          - string
+          - 'null'
+        disclosureVersion:
+          type: string
+    UseCaseDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        stage:
+          type: string
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+    ModelDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

@@ -1,0 +1,1808 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Gateway Configuration API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: GatewayConfiguration
+paths:
+  /v1/GatewayConfiguration/batch-names:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetGatewayConfigurationNamesByIds
+      parameters:
+      - name: ids
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityNamesResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get gateway configuration names by ids
+      x-summary-source: derived
+  /v1/GatewayConfiguration:
+    post:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_CreateGatewayConfiguration
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatewayConfigurationModel'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayConfigurationWithId'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration create gateway configuration
+      x-summary-source: derived
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetGatewayConfigurations
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGatewayConfigurationWithId'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get gateway configurations
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{id}:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetGatewayConfiguration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayConfigurationWithId'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get gateway configuration
+      x-summary-source: derived
+    put:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_UpdateGatewayConfiguration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: revocation
+        in: query
+        schema:
+          default: Natural
+          oneOf:
+          - $ref: '#/components/schemas/GatewayApiKeyRevocationMode'
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatewayConfigurationModel'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayConfigurationWithId'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration update gateway configuration
+      x-summary-source: derived
+    delete:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_DeleteGatewayConfiguration
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: revocation
+        in: query
+        schema:
+          default: Natural
+          oneOf:
+          - $ref: '#/components/schemas/GatewayApiKeyRevocationMode'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration delete gateway configuration
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{id}/rejected-models:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetRejectedModels
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RejectedModelsResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get rejected models
+      x-summary-source: derived
+  /v1/GatewayConfiguration/access:
+    post:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_CreateGatewayAccess
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatewayAccessModel'
+        required: true
+        x-position: 1
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayAccessWithId'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration create gateway access
+      x-summary-source: derived
+  /v1/GatewayConfiguration/access/{id}:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetGatewayAccess
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayAccessWithId'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get gateway access
+      x-summary-source: derived
+    delete:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_DeleteGatewayAccess
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration delete gateway access
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/users-access:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetUsersAccessByConfiguration
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGatewayUserAccessDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get users access by configuration
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/groups-access:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetGroupsAccessByConfiguration
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfGatewayUserAccessDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get groups access by configuration
+      x-summary-source: derived
+  /v1/GatewayConfiguration/azure-sync/{syncParametersId}/models:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetAzureFoundryModels
+      parameters:
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AzureFoundryModelDto'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get azure foundry models
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/rules/azure-sync/{syncParametersId}:
+    post:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_CreateRulesFromAzureSync
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: endpointUrls
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        x-position: 3
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureFoundrySyncResult'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration create rules from azure sync
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/rules/azure-sync/{syncParametersId}/entra:
+    post:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_CreateRulesFromAzureSyncWithEntra
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: endpointUrls
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        x-position: 3
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureFoundrySyncResult'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration create rules from azure sync with entra
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/bedrock-sync/{syncParametersId}/models:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetBedrockModels
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BedrockModelDto'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get bedrock models
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/bedrock-sync/{syncParametersId}:
+    put:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_ConfigureBedrockProvider
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: modelIds
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        x-position: 3
+      responses:
+        204:
+          description: ''
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration configure bedrock provider
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/vertex-sync/{syncParametersId}/models:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetVertexModels
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VertexModelDto'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        502:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get vertex models
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/vertex-sync/{syncParametersId}:
+    put:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_ConfigureVertexProvider
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: syncParametersId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: modelIds
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        x-position: 3
+      responses:
+        204:
+          description: ''
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration configure vertex provider
+      x-summary-source: derived
+  /v1/GatewayConfiguration/airia-library/models:
+    get:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_GetAiriaLibraryModels
+      parameters:
+      - name: provider
+        in: query
+        schema:
+          $ref: '#/components/schemas/GatewayProviders'
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AiriaLibraryModelDto'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration get airia library models
+      x-summary-source: derived
+  /v1/GatewayConfiguration/{gatewayConfigurationId}/airia-library/{provider}:
+    put:
+      tags:
+      - GatewayConfiguration
+      operationId: GatewayConfiguration_ConfigureAiriaLibraryProvider
+      parameters:
+      - name: gatewayConfigurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/GatewayProviders'
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: modelNames
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        x-position: 3
+      responses:
+        204:
+          description: ''
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Gateway configuration configure airia library provider
+      x-summary-source: derived
+components:
+  schemas:
+    BedrockModelType:
+      type: string
+      description: ''
+      x-enumNames:
+      - FoundationModel
+      - InferenceProfile
+      - ApplicationInferenceProfile
+      - ProvisionedModel
+      - CustomModel
+      - ImportedModel
+      enum:
+      - FoundationModel
+      - InferenceProfile
+      - ApplicationInferenceProfile
+      - ProvisionedModel
+      - CustomModel
+      - ImportedModel
+    ConfiguredModelEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        modelName:
+          type: string
+        aiModelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        routeThroughAcc:
+          type: boolean
+        accGroup:
+          type:
+          - string
+          - 'null'
+          format: guid
+        url:
+          type:
+          - string
+          - 'null'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    EntityNamesResult:
+      type: object
+      additionalProperties: false
+      properties:
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    RejectedModelEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          type: string
+        count:
+          type: integer
+          format: int32
+        lastSeen:
+          type: string
+          format: date-time
+        likelyClient:
+          type:
+          - string
+          - 'null'
+        likelyUseCase:
+          type:
+          - string
+          - 'null'
+    GatewayAccessWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayAccessModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: guid
+            minLength: 1
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          updatedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    BedrockModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        modelName:
+          type: string
+        providerName:
+          type: string
+        baseUrl:
+          type: string
+        type:
+          $ref: '#/components/schemas/BedrockModelType'
+    GatewayAccessModel:
+      type: object
+      additionalProperties: false
+      required:
+      - gatewayConfigurationId
+      properties:
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    GatewayApiKeyOrigin2:
+      type: string
+      description: ''
+      x-enumNames:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+      enum:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+    ResilienceRule:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        order:
+          type: integer
+          format: int32
+        mode:
+          $ref: '#/components/schemas/ResilienceMode'
+        rule:
+          oneOf:
+          - $ref: '#/components/schemas/BaseRuleContract'
+        circuitBreaker:
+          oneOf:
+          - $ref: '#/components/schemas/CircuitBreakerConfiguration'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResilienceTarget'
+        timeoutInSeconds:
+          type: integer
+          format: int32
+        statusCodes:
+          type: array
+          items:
+            type: integer
+            format: int32
+        weight:
+          type: integer
+          format: int32
+    AzureFoundryModelKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Chat
+      - Rerank
+      - Embedding
+      enum:
+      - Unknown
+      - Chat
+      - Rerank
+      - Embedding
+    BaseRuleContract:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          provider: '#/components/schemas/ProviderRuleContract'
+          header: '#/components/schemas/HeaderRuleContract'
+          modelName: '#/components/schemas/ModelNameRuleContract'
+          endpoint: '#/components/schemas/EndpointRuleContract'
+          group: '#/components/schemas/RuleGroupContract'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        not:
+          type:
+          - boolean
+          - 'null'
+        $type:
+          type: string
+    GroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    GatewayConfigurationWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayConfigurationModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          lastUpdated:
+            type: string
+            format: date-time
+          apiKeys:
+            type: array
+            items:
+              $ref: '#/components/schemas/GatewayApiKeyWithId'
+          budgetConsumption:
+            type: array
+            items:
+              $ref: '#/components/schemas/BudgetDataDto'
+    GatewayApiKeyWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          apiKey:
+            type: string
+          updatedAt:
+            type: string
+            format: date-time
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          origin:
+            oneOf:
+            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
+    AzureFoundrySyncResult:
+      type: object
+      additionalProperties: false
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleContract'
+        deletedRuleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        allowedModelNames:
+          type: array
+          items:
+            type: string
+    BaseActionContract:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          changeProvider: '#/components/schemas/ChangeProviderActionContract'
+          changeModelName: '#/components/schemas/ChangeModelNameActionContract'
+          changeUrl: '#/components/schemas/ChangeUrlActionContract'
+          changeApiKey: '#/components/schemas/ChangeApiKeyActionContract'
+          setHeader: '#/components/schemas/SetHeaderActionContract'
+          appendQueryString: '#/components/schemas/AppendQueryStringActionContract'
+          returnStatusCode: '#/components/schemas/ReturnStatusCodeActionContract'
+          llmImpersonation: '#/components/schemas/LlmImpersonationActionContract'
+          routeByComplexity: '#/components/schemas/RouteByComplexityActionContract'
+          routeByTaskType: '#/components/schemas/RouteByTaskTypeActionContract'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        $type:
+          type: string
+    VertexModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        displayName:
+          type: string
+        publisher:
+          type: string
+        type:
+          $ref: '#/components/schemas/VertexModelType'
+        apiSurface:
+          $ref: '#/components/schemas/VertexApiSurface'
+        launchStage:
+          type: string
+    BudgetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - Gateway
+      - GatewayUserDefault
+      - GatewayUserFollowingDefault
+      - GatewayUserOverride
+      enum:
+      - Project
+      - Gateway
+      - GatewayUserDefault
+      - GatewayUserFollowingDefault
+      - GatewayUserOverride
+    VertexApiSurface:
+      type: string
+      description: ''
+      x-enumNames:
+      - GenerateContent
+      - RawPredict
+      - OpenApi
+      enum:
+      - GenerateContent
+      - RawPredict
+      - OpenApi
+    PagedResultOfGatewayConfigurationWithId:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayConfigurationWithId'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfGatewayUserAccessDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayUserAccessDto'
+        totalCount:
+          type: integer
+          format: int32
+    AzureFoundryAuthMethod:
+      type: string
+      description: ''
+      x-enumNames:
+      - ApiKey
+      - EntraId
+      - GcpServiceAccount
+      enum:
+      - ApiKey
+      - EntraId
+      - GcpServiceAccount
+    RuleContract:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        condition:
+          $ref: '#/components/schemas/BaseRuleContract'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseActionContract'
+        behavior:
+          $ref: '#/components/schemas/RuleBehaviorTypes'
+        origin:
+          type:
+          - string
+          - 'null'
+        sourceRef:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+    GatewayProviderConfigurationModel:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/GatewayProviders'
+        enabled:
+          type: boolean
+        url:
+          type:
+          - string
+          - 'null'
+        useAiriaApiKey:
+          type: boolean
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        allowedModelNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        configuredModels:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConfiguredModelEntry'
+        syncParameterId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authMethod:
+          $ref: '#/components/schemas/AzureFoundryAuthMethod'
+        enableUserImpersonation:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GatewayConfigurationModel:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type: string
+          maxLength: 512
+        enabled:
+          type: boolean
+        providerConfigurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayProviderConfigurationModel'
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleContract'
+        rulesIncludeSyncOwned:
+          type:
+          - boolean
+          - 'null'
+        complexityRoutingEnabled:
+          type:
+          - boolean
+          - 'null'
+        taskTypeRoutingEnabled:
+          type:
+          - boolean
+          - 'null'
+        conversationFloorRoutingEnabled:
+          type:
+          - boolean
+          - 'null'
+        resilienceRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResilienceRule'
+        maxActiveApiKeys:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+    AzureFoundryModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        modelName:
+          type: string
+        endpointUrl:
+          type: string
+        apiVersion:
+          type:
+          - string
+          - 'null'
+        baseUrl:
+          type: string
+        modelKind:
+          $ref: '#/components/schemas/AzureFoundryModelKind'
+        deploymentKey:
+          type: string
+    GatewayApiKeyRevocationMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Natural
+      - Immediate
+      enum:
+      - Natural
+      - Immediate
+    GatewayApiKeyType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+      enum:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+    BudgetPeriod:
+      type: string
+      description: ''
+      x-enumNames:
+      - Daily
+      - Weekly
+      - Monthly
+      enum:
+      - Daily
+      - Weekly
+      - Monthly
+    CircuitBreakerConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        failureThreshold:
+          type: integer
+          format: int32
+        timespanWindowInSeconds:
+          type: integer
+          format: int32
+        failureRateThreshold:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        cooldownSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    GatewayProviders:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - OpenAI
+      - Anthropic
+      - Gemini
+      - Ollama
+      - AzureFoundry
+      - AwsBedrock
+      - TogetherAI
+      - Replicate
+      - GoogleVertex
+      enum:
+      - Unknown
+      - OpenAI
+      - Anthropic
+      - Gemini
+      - Ollama
+      - AzureFoundry
+      - AwsBedrock
+      - TogetherAI
+      - Replicate
+      - GoogleVertex
+    ResilienceTarget:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        order:
+          type: integer
+          format: int32
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseActionContract'
+        circuitBreakerConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/CircuitBreakerConfiguration'
+        timeoutInSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        statusCodes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        weight:
+          type: integer
+          format: int32
+    BudgetDataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        budgetType:
+          $ref: '#/components/schemas/BudgetType'
+        userUuid:
+          type:
+          - string
+          - 'null'
+        budgetPeriod:
+          $ref: '#/components/schemas/BudgetPeriod'
+        usedAmount:
+          type: number
+          format: decimal
+        limitAmount:
+          type: number
+          format: decimal
+    GatewayApiKeyModel:
+      type: object
+      additionalProperties: false
+      required:
+      - gatewayConfigurationId
+      - type
+      properties:
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/GatewayApiKeyType2'
+        enabled:
+          type: boolean
+        resourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        agentName:
+          type:
+          - string
+          - 'null'
+          maxLength: 128
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    VertexModelType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gemini
+      - Partner
+      - OpenWeight
+      - SelfDeployed
+      enum:
+      - Gemini
+      - Partner
+      - OpenWeight
+      - SelfDeployed
+    RuleBehaviorTypes:
+      type: string
+      description: ''
+      x-enumNames:
+      - Continue
+      - Exit
+      enum:
+      - Continue
+      - Exit
+    AiriaLibraryModelDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - displayName
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        category:
+          type:
+          - string
+          - 'null'
+    GatewayUserAccessDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        gatewayConfigurationId:
+          type: string
+          format: guid
+        gatewayUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userFirstName:
+          type:
+          - string
+          - 'null'
+        userLastName:
+          type:
+          - string
+          - 'null'
+        userGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupDto'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RejectedModelsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        rejectedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectedModelEntry'
+    ResilienceMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Failover
+      - LoadBalance
+      - LoadBalanceWithFailover
+      enum:
+      - Failover
+      - LoadBalance
+      - LoadBalanceWithFailover
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

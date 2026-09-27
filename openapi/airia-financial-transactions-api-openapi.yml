@@ -1,0 +1,249 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Financial Transactions API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Financial Transactions
+paths:
+  /marketplace/v1/FinancialTransactions:
+    get:
+      tags:
+      - Financial Transactions
+      operationId: FinancialTransactions_GetFinancialTransactions2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: StartDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 5
+      - name: EndDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetFinancialTransactionResponseV1'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Financial transactions get financial transactions2
+      x-summary-source: derived
+  /marketplace/v1/FinancialTransactions/export/csv:
+    get:
+      tags:
+      - Financial Transactions
+      operationId: FinancialTransactions_ExportFinancialTransactionsToCsv2
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: StartDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 5
+      - name: EndDate
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Financial transactions export financial transactions to csv2
+      x-summary-source: derived
+  /marketplace/v1/FinancialTransactions/receipt/{chargeId}:
+    get:
+      tags:
+      - Financial Transactions
+      operationId: FinancialTransactions_GetReceiptPdfLink2
+      parameters:
+      - name: chargeId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      summary: Financial transactions get receipt pdf link2
+      x-summary-source: derived
+components:
+  schemas:
+    GetFinancialTransactionResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: guid
+        transactionDateTime:
+          type: string
+          format: date-time
+        transactionUser:
+          type:
+          - string
+          - 'null'
+        creditCardNumber:
+          type:
+          - string
+          - 'null'
+        creditCardVendor:
+          type:
+          - string
+          - 'null'
+        transactionAmount:
+          type: number
+          format: decimal
+        financialTransactionType:
+          $ref: '#/components/schemas/QueryFinancialTransactionType'
+        chargeId:
+          type: string
+    QueryFinancialTransactionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - OneTime
+      - Subscription
+      - AutoPay
+      - SupportHours
+      enum:
+      - OneTime
+      - Subscription
+      - AutoPay
+      - SupportHours
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

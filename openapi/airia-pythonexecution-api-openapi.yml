@@ -1,0 +1,445 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Python Execution API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PythonExecution
+paths:
+  /python/script/exec:
+    post:
+      tags:
+      - PythonExecution
+      operationId: PythonExecution_ExecutePythonScript
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PythonScriptExecutionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        408:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Python execution execute python script
+      x-summary-source: derived
+  /python/structured/exec:
+    post:
+      tags:
+      - PythonExecution
+      operationId: PythonExecution_ExecutePythonScriptStructured
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PythonScriptExecutionRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        408:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        503:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Python execution execute python script structured
+      x-summary-source: derived
+components:
+  schemas:
+    PythonCredentialEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        type:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+    PythonScriptClientData:
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_id_token:
+          type:
+          - string
+          - 'null'
+        user_input_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_name:
+          type:
+          - string
+          - 'null'
+        conversation_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_input:
+          type:
+          - string
+          - 'null'
+        images:
+          type: array
+          items:
+            type: string
+        additional_info:
+          type: array
+          items: {}
+        step_inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+        files:
+          type: array
+          items:
+            type: string
+        parsed_files:
+          type: array
+          items:
+            $ref: '#/components/schemas/PythonParsedFileEntry'
+        user_groups:
+          type: array
+          items:
+            type: string
+        user_roles:
+          type: array
+          items:
+            type: string
+        variables:
+          type: object
+          additionalProperties:
+            type: string
+    AgentBaseStepResult:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          string: '#/components/schemas/AgentStepStringResult'
+          branch: '#/components/schemas/AgentStepBranchedResult'
+          halt: '#/components/schemas/AgentStepHaltResult'
+          stopAndError: '#/components/schemas/AgentStopAndErrorResult'
+          memoryLoad: '#/components/schemas/AgentLoadMemoryStepResult'
+          memoryStore: '#/components/schemas/AgentStoreMemoryStepResult'
+          datasearch: '#/components/schemas/AgentDatasearchStepResult'
+          input: '#/components/schemas/AgentInputStepResult'
+          output: '#/components/schemas/AgentOutputStepResult'
+          agent: '#/components/schemas/AgentInvocationStepResult'
+          model: '#/components/schemas/AgentModelStepResult'
+          python: '#/components/schemas/AgentPythonStepResult'
+          structuredResponsePython: '#/components/schemas/AgentPythonStructuredStepResutlt'
+          approval: '#/components/schemas/AgentApprovalStepResult'
+          toolAction: '#/components/schemas/AgentToolActionStepResult'
+          card: '#/components/schemas/AgentCardStepResult'
+          loopContainer: '#/components/schemas/AgentLoopContainerStepResult'
+          loopStart: '#/components/schemas/AgentLoopStartStepResult'
+          loopEnd: '#/components/schemas/AgentLoopEndStepResult'
+          jsonFormatter: '#/components/schemas/AgentJsonFormatterStepResult'
+          sdkStep: '#/components/schemas/AgentSdkStepResult'
+          messageFormatter: '#/components/schemas/AgentMessageFormatterStepResult'
+          passthrough: '#/components/schemas/AgentPassthroughStepResult'
+          webhookApproval: '#/components/schemas/AgentWebhookApprovalStepResult'
+          modelStructured: '#/components/schemas/AgentModelStepStructuredResult'
+          customFormApproval: '#/components/schemas/AgentCustomFormApprovalStepStructuredResult'
+          image: '#/components/schemas/AgentImageStepResult'
+          documentSplitter: '#/components/schemas/AgentDocumentSplitterStepResult'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        stepType:
+          $ref: '#/components/schemas/StepType'
+        stepId:
+          type: string
+          format: guid
+        $type:
+          type: string
+    StepType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AIOperation
+      - DataSearch
+      - ExecutePipelineStep
+      - InputStep
+      - MachineLearningOperationStep
+      - MemoryLoadStep
+      - MemoryStoreStep
+      - OutputStep
+      - PythonStep
+      - Exception
+      - RouterStep
+      - AnnotationStep
+      - ApprovalStep
+      - WebhookApprovalStep
+      - ToolActionStep
+      - AgentCardStep
+      - ConditionalBranchStep
+      - LoopContainerStep
+      - LoopStartStep
+      - LoopEndStep
+      - JsonFormatterStep
+      - SdkStep
+      - CustomFormHumanApprovalStep
+      - ImageGenerationStep
+      - DocumentSplitterStep
+      enum:
+      - AIOperation
+      - dataSearch
+      - executePipelineStep
+      - inputStep
+      - machineLearningOperationStep
+      - memoryLoadStep
+      - memoryStoreStep
+      - outputStep
+      - pythonStep
+      - exception
+      - routerStep
+      - annotationStep
+      - approvalStep
+      - webhookApprovalStep
+      - toolActionStep
+      - agentCardStep
+      - conditionalBranchStep
+      - loopContainerStep
+      - loopStartStep
+      - loopEndStep
+      - jsonFormatterStep
+      - sdkStep
+      - customFormHumanApprovalStep
+      - imageGenerationStep
+      - documentSplitterStep
+    PythonParsedFileEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        file_id:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+        content_type:
+          type: string
+        pages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PythonParsedFilePage'
+    PythonScriptExecutionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        script_input:
+          type:
+          - string
+          - 'null'
+        script_body:
+          type:
+          - string
+          - 'null'
+        client_data:
+          oneOf:
+          - $ref: '#/components/schemas/PythonScriptClientData'
+        email_data:
+          oneOf:
+          - $ref: '#/components/schemas/PythonScriptEmailData'
+        execution_parameters:
+          $ref: '#/components/schemas/PythonScriptExecutionParameters'
+        credentials:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PythonCredentialEntry'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PythonParsedFilePage:
+      type: object
+      additionalProperties: false
+      properties:
+        page_number:
+          type: integer
+          format: int32
+        content:
+          type: string
+    PythonScriptEmailData:
+      type: object
+      additionalProperties: false
+      properties:
+        user_email:
+          type:
+          - string
+          - 'null'
+        sender_email:
+          type:
+          - string
+          - 'null'
+    PythonScriptExecutionParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        execution_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        step_results_by_type:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentBaseStepResult'
+        step_results_by_name:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

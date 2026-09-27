@@ -1,0 +1,1245 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Spend Attribution Licenses API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: SpendAttributionLicenses
+paths:
+  /v1/spend-attribution/licenses/connections/anthropic-enterprise/summary:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetAnthropicEnterpriseSummary2
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnthropicEnterpriseLicenseSummary'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get anthropic enterprise summary2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/connections/anthropic-enterprise/users/daily-usage:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetAnthropicEnterpriseUserDailyUsage2
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 3
+      - name: organizationId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnthropicEnterpriseUserDailyUsage'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get anthropic enterprise user daily usage2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/connections/gateway-keys/summary:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetGatewayKeysSummary2
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayKeysLicenseSummary'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get gateway keys summary2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/invoices:
+    post:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_UploadLicenseInvoice2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type:
+                  - string
+                  - 'null'
+                  format: binary
+                organizationId:
+                  type:
+                  - string
+                  - 'null'
+                  format: guid
+        required: true
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseInvoiceDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses upload license invoice2
+      x-summary-source: derived
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetLicenseInvoices2
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LicenseInvoiceDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get license invoices2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/invoices/{id}:
+    delete:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_DeleteLicenseInvoice2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        204:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses delete license invoice2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/focus/cost-and-usage:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_ExportFocusCostAndUsage2
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: organizationId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses export focus cost and usage2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/connections/gateway-keys/users/daily-usage:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetGatewayUserDailyUsage2
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 3
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GatewayUserDailyUsage'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get gateway user daily usage2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/connections/ai-users:
+    get:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_GetAiUsersDirectory2
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 1
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiUsersDirectory'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses get ai users directory2
+      x-summary-source: derived
+  /v1/spend-attribution/licenses/connections/ai-users/recalculate:
+    post:
+      tags:
+      - SpendAttributionLicenses
+      operationId: SpendAttributionLicenses_RecalculateAiUsers2
+      parameters:
+      - name: backfillDays
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 90
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Spend attribution licenses recalculate ai users2
+      x-summary-source: derived
+components:
+  schemas:
+    AiUser:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        platformUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        department:
+          type:
+          - string
+          - 'null'
+        tier:
+          oneOf:
+          - $ref: '#/components/schemas/AiUserTier'
+        licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiUserLicense'
+        totalLicenseCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalInferenceCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalReportedCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalGatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalSeatCoveredGatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        reportedLastActiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        gatewayLastActiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        governance:
+          type:
+          - string
+          - 'null'
+        utilization:
+          oneOf:
+          - $ref: '#/components/schemas/AiUserUtilization'
+        untaggedGatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        attributes:
+          type: object
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+    LicenseInvoiceLineDto:
+      type: object
+      additionalProperties: false
+      properties:
+        kind:
+          $ref: '#/components/schemas/LicenseInvoiceLineKind'
+        lineNumber:
+          type: integer
+          format: int32
+        planName:
+          type: string
+        tier:
+          type: string
+        quantity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unitPriceCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        amountCents:
+          type: number
+          format: decimal
+        chargePeriodStart:
+          type:
+          - string
+          - 'null'
+          format: date
+        chargePeriodEnd:
+          type:
+          - string
+          - 'null'
+          format: date
+    AiUsersDirectory:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        periodDays:
+          type: integer
+          format: int32
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiUsersDirectoryOrganization'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiUser'
+        invoice:
+          oneOf:
+          - $ref: '#/components/schemas/AiUsersDirectoryInvoice'
+        lastIngestAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        tierMapping:
+          $ref: '#/components/schemas/AiUsersTierMapping'
+        gaps:
+          type: array
+          items:
+            type: string
+        workingDays:
+          type: integer
+          format: int32
+        syncedAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiUsersSyncedAttribute'
+        hasAttributeSource:
+          type: boolean
+    AiUsersDirectoryOrganization:
+      type: object
+      additionalProperties: false
+      properties:
+        organizationId:
+          type: string
+          format: guid
+        organizationName:
+          type:
+          - string
+          - 'null'
+        connectionName:
+          type:
+          - string
+          - 'null'
+        providerOrganizationId:
+          type:
+          - string
+          - 'null'
+        planType:
+          type: string
+        gatewayConfigurationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        seatPriceCentsByTier:
+          type: object
+          additionalProperties:
+            type: number
+            format: decimal
+        invoiceNumber:
+          type:
+          - string
+          - 'null'
+    AiUserLicense:
+      type: object
+      additionalProperties: false
+      properties:
+        organizationId:
+          type: string
+          format: guid
+        organizationName:
+          type:
+          - string
+          - 'null'
+        connectionName:
+          type:
+          - string
+          - 'null'
+        providerOrganizationId:
+          type:
+          - string
+          - 'null'
+        planType:
+          type: string
+        tier:
+          type:
+          - string
+          - 'null'
+        licenseCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        licenseCostGap:
+          type:
+          - string
+          - 'null'
+        inferenceCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        reportedCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        gatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        seatCoveredGatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        inferenceCostIsEstimated:
+          type: boolean
+        inferenceSource:
+          type: string
+        utilization:
+          oneOf:
+          - $ref: '#/components/schemas/AiUserUtilization'
+        lastActiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        activeDays:
+          type: integer
+          format: int32
+        billingModel:
+          type: string
+        hasTelemetry:
+          type: boolean
+        attributedUsageCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    AiUserUtilization:
+      type: object
+      additionalProperties: false
+      properties:
+        value:
+          type: number
+          format: decimal
+        basis:
+          type: string
+        partialCoverage:
+          type: boolean
+    SpendProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Anthropic
+      - OpenAI
+      - OpenRouter
+      - Azure
+      - Google
+      enum:
+      - Anthropic
+      - OpenAI
+      - OpenRouter
+      - Azure
+      - Google
+    GatewayKeyUserActivity:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        displayName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        department:
+          type:
+          - string
+          - 'null'
+        lastActiveAt:
+          type: string
+          format: date-time
+        periodCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        tier:
+          type:
+          - string
+          - 'null'
+        rawTier:
+          type:
+          - string
+          - 'null'
+        tierMonthlyCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        tierPeriodCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    LicenseInvoiceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        provider:
+          $ref: '#/components/schemas/SpendProvider'
+        invoiceNumber:
+          type: string
+        issueDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        periodStart:
+          type: string
+          format: date
+        periodEnd:
+          type: string
+          format: date
+        totalCents:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        organizationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        paymentDueDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        paymentTerms:
+          type:
+          - string
+          - 'null'
+        purchaseOrderNumber:
+          type:
+          - string
+          - 'null'
+        sourceFileName:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseInvoiceLineDto'
+    LicenseInvoiceLineKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Seat
+      - Tax
+      - Discount
+      - Credit
+      - Adjustment
+      enum:
+      - Seat
+      - Tax
+      - Discount
+      - Credit
+      - Adjustment
+    AnthropicEnterpriseUserActivity:
+      type: object
+      additionalProperties: false
+      properties:
+        email:
+          type: string
+        lastActiveDate:
+          type: string
+          format: date
+        periodCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        gatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        rawTier:
+          type:
+          - string
+          - 'null'
+        tier:
+          type:
+          - string
+          - 'null'
+        tierMonthlyCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiUsersDirectoryInvoice:
+      type: object
+      additionalProperties: false
+      properties:
+        invoiceNumber:
+          type: string
+        periodStart:
+          type: string
+          format: date
+        periodEnd:
+          type: string
+          format: date
+        invoicedSeats:
+          type: integer
+          format: int32
+        invoicedSeatCostCents:
+          type: number
+          format: decimal
+        seatPriceCentsByTier:
+          type: object
+          additionalProperties:
+            type: number
+            format: decimal
+    AiUserTier:
+      type: object
+      additionalProperties: false
+      properties:
+        value:
+          type: string
+        source:
+          type: string
+        rawValue:
+          type:
+          - string
+          - 'null'
+    AiUsersSyncedAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        usersWithValue:
+          type: integer
+          format: int32
+    GatewayKeysLicenseSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        usersWithActivity:
+          type: integer
+          format: int32
+        totalCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayKeyUserActivity'
+    AnthropicEnterpriseOrganizationLicenseSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        organizationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        organizationName:
+          type:
+          - string
+          - 'null'
+        connectionName:
+          type:
+          - string
+          - 'null'
+        providerOrganizationId:
+          type:
+          - string
+          - 'null'
+        planType:
+          type: string
+        gatewayConfigurationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        dataSource:
+          type: string
+        gatewayMeasuredCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        seatsWithActivity:
+          type: integer
+          format: int32
+        totalCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnthropicEnterpriseUserActivity'
+    AnthropicEnterpriseUserDailyUsage:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+          format: date
+        costCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        sources:
+          type: array
+          items:
+            type: string
+    AiUsersTierMapping:
+      type: object
+      additionalProperties: false
+      properties:
+        apiLabels:
+          type: integer
+          format: int32
+        invoiceTiers:
+          type: integer
+          format: int32
+        mapped:
+          type: integer
+          format: int32
+        unpricedSeats:
+          type: integer
+          format: int32
+    GatewayUserDailyUsage:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+          format: date
+        costCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        requestCount:
+          type: integer
+          format: int32
+    AnthropicEnterpriseLicenseSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnthropicEnterpriseOrganizationLicenseSummary'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

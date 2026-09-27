@@ -1,0 +1,1087 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Security API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Security
+paths:
+  /v1/Security/inventory:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetUnifiedInventory2
+      parameters:
+      - name: category
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/SecurityInventoryCategory'
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 6
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfUnifiedInventoryItemDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get unified inventory2
+      x-summary-source: derived
+  /v1/Security/inventory/{id}:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetInventoryItemById2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnifiedInventoryItemDto'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get inventory item by id2
+      x-summary-source: derived
+  /v1/Security/stats:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetSecurityStats2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityStatsDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get security stats2
+      x-summary-source: derived
+  /v1/Security/stats/trend:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetStatsTrend2
+      parameters:
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 30
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatsTrendPointDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get stats trend2
+      x-summary-source: derived
+  /v1/Security/inventory/census-trend:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetInventoryCensusTrend2
+      parameters:
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 30
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryCensusTrendPointDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get inventory census trend2
+      x-summary-source: derived
+  /v1/Security/stats/by-provider:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetStatsByProvider2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProviderStatsDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get stats by provider2
+      x-summary-source: derived
+  /v1/Security/inventory/top-risk:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetTopRiskAgents2
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TopRiskAgentDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get top risk agents2
+      x-summary-source: derived
+  /v1/Security/coverage/by-type:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetCoverageByType2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoverageByTypeDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get coverage by type2
+      x-summary-source: derived
+  /v1/Security/inventory/ownership-gap:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetOwnershipGap2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnifiedInventoryItemDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get ownership gap2
+      x-summary-source: derived
+  /v1/Security/activity:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetActivity2
+      parameters:
+      - name: maxEvents
+        in: query
+        schema:
+          type: integer
+          format: int32
+          default: 50
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpmActivityEventDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get activity2
+      x-summary-source: derived
+  /v1/Security/recommendations/summary:
+    get:
+      tags:
+      - Security
+      operationId: Security_GetRecommendationsSummary2
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationsSummaryDto'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Security get recommendations summary2
+      x-summary-source: derived
+components:
+  schemas:
+    SpmSecurityScoreStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+      enum:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+    TopRiskAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        providerName:
+          type: string
+        securedStatus:
+          $ref: '#/components/schemas/SecurePostureStatus'
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        lastRefreshedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    Scanner:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+      enum:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+    RecommendationsSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionableCount:
+          type: integer
+          format: int32
+        needsAnalysisCount:
+          type: integer
+          format: int32
+        analysisFailedCount:
+          type: integer
+          format: int32
+        ownershipGapCount:
+          type: integer
+          format: int32
+        quickWins:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopRiskAgentDto'
+    ProviderStatsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        providerName:
+          type: string
+        totalAgents:
+          type: integer
+          format: int32
+        securedAgents:
+          type: integer
+          format: int32
+        securableAgents:
+          type: integer
+          format: int32
+        highRiskAgents:
+          type: integer
+          format: int32
+        coveragePct:
+          type: integer
+          format: int32
+    StatsTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        totalAgentsCount:
+          type: integer
+          format: int32
+        securedAgentsCount:
+          type: integer
+          format: int32
+        securableAgentsCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type: integer
+          format: int32
+        highRiskAgentsCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CoverageByTypeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        componentType:
+          $ref: '#/components/schemas/SpmComponentType'
+        totalCount:
+          type: integer
+          format: int32
+        securedCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type: integer
+          format: int32
+    PagedResultOfUnifiedInventoryItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnifiedInventoryItemDto'
+        totalCount:
+          type: integer
+          format: int32
+    SecurePostureStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+      enum:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+    SpmActivityEventDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        assetName:
+          type: string
+        providerName:
+          type: string
+        eventType:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+    InventoryCensusTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        assetType:
+          type: string
+        sourceType:
+          type: string
+        securedStatus:
+          type: string
+        assetCount:
+          type: integer
+          format: int32
+        highRiskCount:
+          type: integer
+          format: int32
+        newLast7dCount:
+          type: integer
+          format: int32
+    SecurePostureProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+      enum:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+    SpmComponentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+      enum:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+    SecurityInventoryCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Agent
+      - Model
+      - McpServer
+      enum:
+      - None
+      - Agent
+      - Model
+      - McpServer
+    UnifiedInventoryItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        source:
+          $ref: '#/components/schemas/InventoryItemSource'
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        securityScore:
+          type:
+          - string
+          - 'null'
+        securityScoreStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SpmSecurityScoreStatus'
+        securityAnalysisDetails:
+          type:
+          - string
+          - 'null'
+        isSecurable:
+          type: boolean
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+        aiModelNames:
+          type:
+          - string
+          - 'null'
+        aiProviderNames:
+          type:
+          - string
+          - 'null'
+        scanner:
+          oneOf:
+          - $ref: '#/components/schemas/Scanner'
+        findingFingerprint:
+          type:
+          - string
+          - 'null'
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        externalCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        externalCreatedBy:
+          type:
+          - string
+          - 'null'
+        externalOwner:
+          type:
+          - string
+          - 'null'
+        externalModifiedBy:
+          type:
+          - string
+          - 'null'
+        externalPublishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        language:
+          type:
+          - string
+          - 'null'
+        authenticationMode:
+          type:
+          - string
+          - 'null'
+        authenticationTrigger:
+          type:
+          - string
+          - 'null'
+        accessControlPolicy:
+          type:
+          - string
+          - 'null'
+        externalStatus:
+          type:
+          - string
+          - 'null'
+        owningBusinessUnit:
+          type:
+          - string
+          - 'null'
+        externalPublishedBy:
+          type:
+          - string
+          - 'null'
+        isAutonomous:
+          type:
+          - boolean
+          - 'null'
+        platformUrl:
+          type:
+          - string
+          - 'null'
+        orgWideAccessible:
+          type:
+          - boolean
+          - 'null'
+        publiclyAccessible:
+          type:
+          - boolean
+          - 'null'
+        sharedWithUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sharedWithUsers:
+          type:
+          - string
+          - 'null'
+        resourceCategory:
+          type:
+          - string
+          - 'null'
+        resourceType:
+          type:
+          - string
+          - 'null'
+        platformResourceId:
+          type:
+          - string
+          - 'null'
+        agentAuthenticationSetting:
+          type:
+          - string
+          - 'null'
+        instructions:
+          type:
+          - string
+          - 'null'
+        schemaName:
+          type:
+          - string
+          - 'null'
+        autonomousTriggersCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        webBrowsingCapability:
+          type:
+          - boolean
+          - 'null'
+        requireUsersToSignIn:
+          type:
+          - boolean
+          - 'null'
+        generativeAiEnabled:
+          type:
+          - boolean
+          - 'null'
+        agentToAgentEnabled:
+          type:
+          - boolean
+          - 'null'
+    SecurityStatsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalAgentsCount:
+          type: integer
+          format: int32
+        highRiskAgentsCount:
+          type: integer
+          format: int32
+        blockedByBrowserExtensionCount:
+          type: integer
+          format: int32
+        lastScanFindingsCount:
+          type: integer
+          format: int32
+        securedAgentsCount:
+          type: integer
+          format: int32
+        securableAgentsCount:
+          type: integer
+          format: int32
+        statusCounts:
+          type: object
+          x-dictionaryKey:
+            $ref: '#/components/schemas/SecurePostureStatus'
+          additionalProperties:
+            type: integer
+            format: int32
+        newAgentsLast7d:
+          type: integer
+          format: int32
+    InventoryItemSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+      enum:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

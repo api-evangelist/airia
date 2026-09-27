@@ -1,0 +1,706 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Guardrail API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: Guardrail
+paths:
+  /v1/Guardrail:
+    get:
+      tags:
+      - Guardrail
+      operationId: Guardrail_GetGuardrails
+      parameters:
+      - name: Target
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailTargetType'
+        x-position: 1
+      - name: Scope
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        x-position: 2
+      - name: TargetEntityType
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        x-position: 3
+      - name: Date
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 4
+      - name: EntityId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 5
+      - name: IsException
+        in: query
+        schema:
+          type:
+          - boolean
+          - 'null'
+        x-position: 6
+      - name: Limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 7
+      - name: Offset
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 8
+      - name: TenantId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 9
+      - name: UserId
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: guid
+        x-position: 10
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail get guardrails
+      x-summary-source: derived
+    post:
+      tags:
+      - Guardrail
+      operationId: Guardrail_CreateGuardrail
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddGuardrailRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail create guardrail
+      x-summary-source: derived
+  /v1/Guardrail/{id}:
+    get:
+      tags:
+      - Guardrail
+      operationId: Guardrail_GetGuardrail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail get guardrail
+      x-summary-source: derived
+    put:
+      tags:
+      - Guardrail
+      operationId: Guardrail_UpdateGuardrail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddGuardrailRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail update guardrail
+      x-summary-source: derived
+    delete:
+      tags:
+      - Guardrail
+      operationId: Guardrail_DeleteGuardrail
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        202:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail delete guardrail
+      x-summary-source: derived
+  /v1/Guardrail/assigned:
+    get:
+      tags:
+      - Guardrail
+      operationId: Guardrail_GetAssignedGuardrailsByEntityIds
+      parameters:
+      - name: EntityIds
+        in: query
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      deprecated: true
+      summary: Guardrail get assigned guardrails by entity ids
+      x-summary-source: derived
+  /v1/Guardrail/applicable:
+    post:
+      tags:
+      - Guardrail
+      operationId: Guardrail_GetApplicableGuardrails
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetApplicableGuardrailsRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuardrailDefinitionV1'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Guardrail get applicable guardrails
+      x-summary-source: derived
+components:
+  schemas:
+    GuardrailAssignmentEntityType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Agent
+      - Model
+      - Datasource
+      - AgentStep
+      - Gateway
+      - McpGateway
+      - Claude
+      - BrowserExtension
+      - Group
+      - User
+      - InferenceHooks
+      - LiteLlm
+      enum:
+      - Tenant
+      - Project
+      - Agent
+      - Model
+      - Datasource
+      - AgentStep
+      - Gateway
+      - McpGateway
+      - Claude
+      - BrowserExtension
+      - Group
+      - User
+      - InferenceHooks
+      - LiteLlm
+    GuardrailAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        entityId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        targetEntityType:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+    GuardrailDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        applyDatasource:
+          type: boolean
+        applyToTools:
+          type: boolean
+        applyToToolCalls:
+          type: boolean
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseFilterDefinitionV1'
+        guardrailAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailAssignmentDefinitionV1'
+        guardrailTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailTargetDefinitionV1'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    FilterType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pci
+      - Pii
+      - Phi
+      - AllowList
+      - KeywordDetector
+      - CustomDetector
+      - HtmlSanitization
+      - UrlSanitization
+      - Moderation
+      - PromptInjection
+      - Secrets
+      - RateLimiting
+      - AgentAlignment
+      - PythonFilter
+      - AgentSystemPromptAdherence
+      enum:
+      - Pci
+      - Pii
+      - Phi
+      - AllowList
+      - KeywordDetector
+      - CustomDetector
+      - HtmlSanitization
+      - UrlSanitization
+      - Moderation
+      - PromptInjection
+      - Secrets
+      - RateLimiting
+      - AgentAlignment
+      - PythonFilter
+      - AgentSystemPromptAdherence
+    BaseFilterDefinitionV1:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        guardrailId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+    IFilterRequest:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+    GuardrailAssignmentDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        entityId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        targetEntityType:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+    GetApplicableGuardrailsRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      properties:
+        projectId:
+          type: string
+          format: guid
+          minLength: 1
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    GuardrailTargetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Input
+      - Output
+      - Both
+      enum:
+      - None
+      - Input
+      - Output
+      - Both
+    GuardrailTargetDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        targetType:
+          $ref: '#/components/schemas/GuardrailTargetType'
+        isException:
+          type: boolean
+    AddGuardrailRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - enabled
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        applyDatasource:
+          type: boolean
+        applyToTools:
+          type: boolean
+        applyToToolCalls:
+          type: boolean
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/IFilterRequest'
+        guardrailAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailAssignmentRequest'
+        guardrailTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailTargetRequest'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    GuardrailTargetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        targetType:
+          $ref: '#/components/schemas/GuardrailTargetType'
+        isException:
+          type: boolean
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

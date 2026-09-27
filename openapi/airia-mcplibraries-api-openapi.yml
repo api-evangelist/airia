@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  title: Airia Web MCP Libraries API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: McpLibraries
+paths:
+  /v1/McpLibraries/{libraryId}/configuration:
+    get:
+      tags:
+      - McpLibraries
+      operationId: McpLibraries_GetLibraryConfiguration
+      parameters:
+      - name: libraryId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: level
+        in: query
+        schema:
+          type: string
+          default: Tenant
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpLibraryConfigurationDto'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+      summary: Mcp libraries get library configuration
+      x-summary-source: derived
+    put:
+      tags:
+      - McpLibraries
+      operationId: McpLibraries_SaveLibraryConfiguration
+      parameters:
+      - name: libraryId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveMcpLibraryConfigurationRequest'
+        required: true
+        x-position: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpLibraryConfigurationSaveResponse'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        503:
+          description: ''
+      summary: Mcp libraries save library configuration
+      x-summary-source: derived
+components:
+  schemas:
+    McpLibraryConfigurationSaveResponse:
+      type: object
+      additionalProperties: {}
+      required:
+      - id
+      - enabled
+      - level
+      properties:
+        id:
+          type: string
+          format: guid
+        enabled:
+          type: boolean
+        level:
+          type: string
+    SaveMcpLibraryConfigurationRequest:
+      type: object
+      additionalProperties: {}
+      required:
+      - authType
+      properties:
+        authType:
+          type: string
+          maxLength: 64
+          minLength: 1
+        level:
+          type: string
+        enabled:
+          type: boolean
+        properties:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    McpLibraryConfigurationDto:
+      type: object
+      additionalProperties: {}
+      required:
+      - id
+      - libraryId
+      - enabled
+      - level
+      properties:
+        id:
+          type: string
+          format: guid
+        libraryId:
+          type: string
+          format: guid
+        enabled:
+          type: boolean
+        level:
+          type: string
+        authType:
+          type:
+          - string
+          - 'null'
+        properties:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

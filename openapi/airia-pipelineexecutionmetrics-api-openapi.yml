@@ -1,0 +1,382 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Pipeline Execution Metrics API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: PipelineExecutionMetrics
+paths:
+  /v1/PipelineExecutionMetrics/count:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetYearlyPipelineExecutionLogsCount2
+      parameters:
+      - name: range
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PipelineExecutionCount'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get yearly pipeline execution logs count2
+      x-summary-source: derived
+  /v1/PipelineExecutionMetrics/count-range:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetYearlyPipelineExecutionLogsCount4
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PipelineExecutionCount'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get yearly pipeline execution logs count4
+      x-summary-source: derived
+  /v1/PipelineExecutionMetrics/error-rate:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetYearlyPipelineExecutionErrorRate2
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get yearly pipeline execution error rate2
+      x-summary-source: derived
+  /v1/PipelineExecutionMetrics/latency:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetPipelineExecutionLatency2
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get pipeline execution latency2
+      x-summary-source: derived
+  /v1/PipelineExecutionMetrics/model/usage:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetPipelineExecutionModelUsage2
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get pipeline execution model usage2
+      x-summary-source: derived
+  /v1/PipelineExecutionMetrics/model/count:
+    get:
+      tags:
+      - PipelineExecutionMetrics
+      operationId: PipelineExecutionMetrics_GetPipelineExecutionCountByModel2
+      parameters:
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 1
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Pipeline execution metrics get pipeline execution count by model2
+      x-summary-source: derived
+components:
+  schemas:
+    PipelineExecutionCount:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        timePeriod:
+          type: string
+          format: date-time
+        executionCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

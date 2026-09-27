@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Hub Spot Auth API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: HubSpotAuth
+paths:
+  /v1/Auth/HubSpotPkceInit:
+    post:
+      tags:
+      - HubSpotAuth
+      operationId: HubSpotAuth_HubSpotPkceInit
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HubSpotPkceInitRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Hub spot auth hub spot pkce init
+      x-summary-source: derived
+  /v1/Auth/HubSpotCallback:
+    post:
+      tags:
+      - HubSpotAuth
+      operationId: HubSpotAuth_HubSpotCallback
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HubSpotCallbackRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Hub spot auth hub spot callback
+      x-summary-source: derived
+  /v1/Auth/HubSpotToken:
+    get:
+      tags:
+      - HubSpotAuth
+      operationId: HubSpotAuth_GetHubSpotToken
+      parameters:
+      - name: state
+        in: query
+        schema:
+          type: string
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HubSpotTokenResponse'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        410:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Hub spot auth get hub spot token
+      x-summary-source: derived
+components:
+  schemas:
+    HubSpotTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        email:
+          type: string
+    HubSpotPkceInitRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        state:
+          type: string
+        codeVerifier:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    HubSpotCallbackRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        state:
+          type: string
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))

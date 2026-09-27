@@ -1,0 +1,1309 @@
+openapi: 3.2.0
+info:
+  title: Airia Web Chat Spaces API
+  version: 1.0.0
+servers:
+- url: https://api.airia.ai
+tags:
+- name: ChatSpaces
+paths:
+  /v1/ChatSpaces/PaginatedSpaces:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_PaginatedSpaces
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: Statuses
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: StartArchivedAt
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 6
+      - name: EndArchivedAt
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 7
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChatSpaceResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces paginated spaces
+      x-summary-source: derived
+  /v1/ChatSpaces/PaginatedInvitedSpaces:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_PaginatedInvitedSpaces
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: Statuses
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: StartArchivedAt
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 6
+      - name: EndArchivedAt
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        x-position: 7
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 8
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChatSpaceResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces paginated invited spaces
+      x-summary-source: derived
+  /v1/ChatSpaces/PaginatedSpacesByTenant:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_PaginatedSpacesByTenant
+      parameters:
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 1
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 3
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 4
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 5
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChatSpaceResult'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces paginated spaces by tenant
+      x-summary-source: derived
+  /v1/ChatSpaces/Space:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_Space
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces space
+      x-summary-source: derived
+  /v1/ChatSpaces/GetChatSpaceForGuest:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_GetChatSpaceForGuest
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces get chat space for guest
+      x-summary-source: derived
+  /v1/ChatSpaces/NewSpace:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_NewSpace
+      parameters:
+      - name: deploymentsId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        500:
+          description: ''
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces new space
+      x-summary-source: derived
+  /v1/ChatSpaces/CreateSpace:
+    post:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_CreateSpace
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: chatSpaceCreateRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatSpaceCreateRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceResult'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces create space
+      x-summary-source: derived
+  /v1/ChatSpaces/register-user:
+    post:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_RegisterUser
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces register user
+      x-summary-source: derived
+  /v1/ChatSpaces/register-airia-user:
+    post:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_RegisterAiriaUser
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAiriaUserRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces register airia user
+      x-summary-source: derived
+  /v1/ChatSpaces/register-airia-group:
+    post:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_RegisterAiriaGroup
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAiriaGroupRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces register airia group
+      x-summary-source: derived
+  /v1/ChatSpaces/UpdateSpace:
+    put:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_UpdateSpace
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        x-name: chatSpaceUpdateRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatSpaceUpdateRequest'
+        required: true
+        x-position: 1
+      responses:
+        200:
+          description: ''
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces update space
+      x-summary-source: derived
+  /v1/ChatSpaces/DeleteSpace:
+    delete:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_DeleteSpace
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces delete space
+      x-summary-source: derived
+  /v1/ChatSpaces/SpaceStatus:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_SpaceStatus
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces space status
+      x-summary-source: derived
+  /v1/ChatSpaces/SpaceUserStatus:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_GetSpaceUserStatus
+      parameters:
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces get space user status
+      x-summary-source: derived
+  /v1/ChatSpaces/SpaceUserStatusById/{id}:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_GetSpaceUserStatusById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces get space user status by id
+      x-summary-source: derived
+  /v1/ChatSpaces/SetSpaceStatus:
+    put:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_SetSpaceStatus
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: status
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces set space status
+      x-summary-source: derived
+  /v1/ChatSpaces/SetSpaceUserStatus:
+    put:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_SetSpaceUserStatus
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: userStatus
+        in: query
+        schema:
+          type: string
+        x-position: 2
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSpaceUserResult'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces set space user status
+      x-summary-source: derived
+  /v1/ChatSpaces/PaginatedUsers:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_PaginatedUsers
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: PageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 2
+      - name: PageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: SortBy
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 4
+      - name: SortDirection
+        in: query
+        schema:
+          type: string
+        x-position: 5
+      - name: Status
+        in: query
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ChatSpaceUserStatus'
+        x-position: 6
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+        x-position: 7
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedResultOfChatSpaceUserResult'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces paginated users
+      x-summary-source: derived
+  /v1/ChatSpaces/PaginatedChat:
+    get:
+      tags:
+      - ChatSpaces
+      operationId: ChatSpaces_PaginatedChat
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 1
+      - name: chatSpaceUsersId
+        in: query
+        schema:
+          type: string
+          format: guid
+        x-position: 2
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 3
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          format: int32
+        x-position: 4
+      - name: x-correlation-id
+        in: header
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      summary: Chat spaces paginated chat
+      x-summary-source: derived
+components:
+  schemas:
+    PagedResultOfChatSpaceUserResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatSpaceUserResult'
+        totalCount:
+          type: integer
+          format: int32
+    RegisterAiriaUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type: string
+          format: guid
+        spaceId:
+          type: string
+          format: guid
+    ChatSpaceCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        deploymentsId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        code:
+          type:
+          - string
+          - 'null'
+    ChatSpaceUserStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Inactive
+      - Active
+      - Paused
+      - Removed
+      - Archived
+      - Invited
+      - Accepted
+      - Declined
+      enum:
+      - Inactive
+      - Active
+      - Paused
+      - Removed
+      - Archived
+      - Invited
+      - Accepted
+      - Declined
+    ChatSpaceResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        deploymentsId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        chatSpaceUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        code:
+          type: string
+        status:
+          $ref: '#/components/schemas/ChatSpaceStatus'
+        lastActivatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activeSeconds:
+          type: integer
+          format: int32
+        archivedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        usersCount:
+          type: integer
+          format: int32
+        agentId:
+          type: string
+          format: guid
+        conversationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ChatSpaceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Inactive
+      - Active
+      - Paused
+      - Archived
+      enum:
+      - Inactive
+      - Active
+      - Paused
+      - Archived
+    ChatSpaceUserResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        chatSpacesId:
+          type: string
+          format: guid
+        loginUserName:
+          type: string
+        loginUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          $ref: '#/components/schemas/ChatSpaceUserStatus'
+        createdAt:
+          type: string
+          format: date-time
+        lastLoginAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastMessageAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastMessage:
+          type:
+          - string
+          - 'null'
+        lastMessageResponse:
+          type:
+          - string
+          - 'null'
+        messageCount:
+          type: integer
+          format: int32
+        violationCount:
+          type: integer
+          format: int32
+        conversationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        profileImageUrl:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ChatSpaceUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfChatSpaceResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatSpaceResult'
+        totalCount:
+          type: integer
+          format: int32
+    RegisterUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        spaceCode:
+          type: string
+        username:
+          type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    RegisterAiriaGroupRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        groupId:
+          type: string
+          format: guid
+        spaceId:
+          type: string
+          format: guid
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      description: API Key Authentication
+      name: X-API-Key
+      in: header
+    Cookies:
+      type: apiKey
+      description: Cookie based Authentication
+      name: Cookie
+      in: header
+x-generator: NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))
