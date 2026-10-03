@@ -760,16 +760,41 @@ components:
       properties:
         timeoutSettings:
           $ref: '#/components/schemas/ResilienceTimeoutSettingsRequest'
-    ResilienceTimeoutSettingsRequest:
+    FailedJobTaskBehavior:
+      type: string
+      description: ''
+      x-enumNames:
+      - Continue
+      - StopJob
+      enum:
+      - Continue
+      - StopJob
+    ProblemDetails:
       type: object
-      additionalProperties: false
+      additionalProperties: {}
       properties:
-        enabled:
-          type: boolean
-        timeoutMilliseconds:
-          type: integer
-          format: int64
-    CreateJobRequest:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RenameJobRequest:
       type: object
       additionalProperties: false
       required:
@@ -778,52 +803,24 @@ components:
         name:
           type: string
           minLength: 1
-        externalId:
-          type:
-          - string
-          - 'null'
-        jobType:
-          $ref: '#/components/schemas/JobType'
-        source:
-          $ref: '#/components/schemas/JobSource'
-        jobExecutionSettings:
+    JobTaskResilienceSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        timeoutSettings:
+          $ref: '#/components/schemas/ResilienceTimeoutSettingsRequest'
+        retrySettings:
           oneOf:
-          - $ref: '#/components/schemas/JobExecutionSettingsRequest'
-        jobResilienceSettings:
-          oneOf:
-          - $ref: '#/components/schemas/JobResilienceSettingsRequest'
-        jobTaskResilienceSettings:
-          oneOf:
-          - $ref: '#/components/schemas/JobTaskResilienceSettingsRequest'
-        jobParameters:
-          type: string
-        pollingEnabled:
-          type: boolean
-    JobTaskStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-      enum:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
+          - $ref: '#/components/schemas/ResilienceRetrySettingsRequest'
+    JobExecutionSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        maxDegreeOfParallelism:
+          type: integer
+          format: int32
+        failedJobTaskBehavior:
+          $ref: '#/components/schemas/FailedJobTaskBehavior'
     JobTaskLogResult:
       type: object
       additionalProperties: false
@@ -856,15 +853,129 @@ components:
         createdAt:
           type: string
           format: date-time
-    FailedJobTaskBehavior:
+    BackoffType:
       type: string
       description: ''
       x-enumNames:
-      - Continue
-      - StopJob
+      - Constant
+      - Linear
+      - Exponential
       enum:
-      - Continue
-      - StopJob
+      - Constant
+      - Linear
+      - Exponential
+    PagedResultOfGetJobResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetJobResult'
+        totalCount:
+          type: integer
+          format: int32
+    JobCancellationReason:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserRequested
+      - TimedOut
+      - ExecutionError
+      - SchedulerRequested
+      - UserPaused
+      - AgentExecutionLimitReached
+      enum:
+      - UserRequested
+      - TimedOut
+      - ExecutionError
+      - SchedulerRequested
+      - UserPaused
+      - AgentExecutionLimitReached
+    ResilienceRetrySettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetryAttempts:
+          type: integer
+          format: int64
+        maxInternalRetryAttempts:
+          type: integer
+          format: int64
+        shouldHandle:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        backoffType:
+          $ref: '#/components/schemas/BackoffType'
+        delayMilliseconds:
+          type: integer
+          format: int32
+        maxDelayMilliseconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        useJitter:
+          type: boolean
+    PagedResultOfJobTaskLogResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobTaskLogResult'
+        totalCount:
+          type: integer
+          format: int32
+    JobType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - SmartScan
+      - SingleFileSplitProcessing
+      - AgentExecution
+      - StorageCleanup
+      - AgentEvaluation
+      - GoalBasedRedTeaming
+      - MeetingTranscriptProcessing
+      - MemoryDataMigration
+      - ConversationMigration
+      - InitializeCassandraMigrationTracking
+      - ImageMigration
+      - AIAssetSync
+      - OwaspPromptGeneration
+      - DataSourceFileContentAgentExecution
+      - BranchCompletionReconciliation
+      - FoundryAgentEvaluation
+      - GovernanceFrameworkCatalogReconciliation
+      - UseCaseVersionBackfill
+      enum:
+      - Unknown
+      - SmartScan
+      - SingleFileSplitProcessing
+      - AgentExecution
+      - StorageCleanup
+      - AgentEvaluation
+      - GoalBasedRedTeaming
+      - MeetingTranscriptProcessing
+      - MemoryDataMigration
+      - ConversationMigration
+      - InitializeCassandraMigrationTracking
+      - ImageMigration
+      - AIAssetSync
+      - OwaspPromptGeneration
+      - DataSourceFileContentAgentExecution
+      - BranchCompletionReconciliation
+      - FoundryAgentEvaluation
+      - GovernanceFrameworkCatalogReconciliation
+      - UseCaseVersionBackfill
     GetJobResult:
       type: object
       additionalProperties: false
@@ -940,95 +1051,6 @@ components:
           - string
           - 'null'
           format: guid
-    JobCancellationReason:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserRequested
-      - TimedOut
-      - ExecutionError
-      - SchedulerRequested
-      - UserPaused
-      - AgentExecutionLimitReached
-      enum:
-      - UserRequested
-      - TimedOut
-      - ExecutionError
-      - SchedulerRequested
-      - UserPaused
-      - AgentExecutionLimitReached
-    JobSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - PlatformApi
-      - PlatformBuilder
-      - ChatWebUi
-      - ChatMobileApp
-      - AgentToAgent
-      - ScheduledTask
-      enum:
-      - Unknown
-      - PlatformApi
-      - PlatformBuilder
-      - ChatWebUi
-      - ChatMobileApp
-      - AgentToAgent
-      - ScheduledTask
-    JobStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-      enum:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedResultOfJobTaskLogResult:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobTaskLogResult'
-        totalCount:
-          type: integer
-          format: int32
     CreateJobResult:
       type: object
       additionalProperties: false
@@ -1083,50 +1105,51 @@ components:
           - string
           - 'null'
           format: guid
-    JobType:
+    JobSource:
       type: string
       description: ''
       x-enumNames:
       - Unknown
-      - SmartScan
-      - SingleFileSplitProcessing
-      - AgentExecution
-      - StorageCleanup
-      - AgentEvaluation
-      - GoalBasedRedTeaming
-      - MeetingTranscriptProcessing
-      - MemoryDataMigration
-      - ConversationMigration
-      - InitializeCassandraMigrationTracking
-      - ImageMigration
-      - AIAssetSync
-      - OwaspPromptGeneration
-      - DataSourceFileContentAgentExecution
-      - BranchCompletionReconciliation
-      - FoundryAgentEvaluation
-      - GovernanceFrameworkCatalogReconciliation
-      - UseCaseVersionBackfill
+      - PlatformApi
+      - PlatformBuilder
+      - ChatWebUi
+      - ChatMobileApp
+      - AgentToAgent
+      - ScheduledTask
       enum:
       - Unknown
-      - SmartScan
-      - SingleFileSplitProcessing
-      - AgentExecution
-      - StorageCleanup
-      - AgentEvaluation
-      - GoalBasedRedTeaming
-      - MeetingTranscriptProcessing
-      - MemoryDataMigration
-      - ConversationMigration
-      - InitializeCassandraMigrationTracking
-      - ImageMigration
-      - AIAssetSync
-      - OwaspPromptGeneration
-      - DataSourceFileContentAgentExecution
-      - BranchCompletionReconciliation
-      - FoundryAgentEvaluation
-      - GovernanceFrameworkCatalogReconciliation
-      - UseCaseVersionBackfill
-    RenameJobRequest:
+      - PlatformApi
+      - PlatformBuilder
+      - ChatWebUi
+      - ChatMobileApp
+      - AgentToAgent
+      - ScheduledTask
+    JobTaskStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+      enum:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    CreateJobRequest:
       type: object
       additionalProperties: false
       required:
@@ -1135,26 +1158,53 @@ components:
         name:
           type: string
           minLength: 1
-    JobTaskResilienceSettingsRequest:
+        externalId:
+          type:
+          - string
+          - 'null'
+        jobType:
+          $ref: '#/components/schemas/JobType'
+        source:
+          $ref: '#/components/schemas/JobSource'
+        jobExecutionSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobExecutionSettingsRequest'
+        jobResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobResilienceSettingsRequest'
+        jobTaskResilienceSettings:
+          oneOf:
+          - $ref: '#/components/schemas/JobTaskResilienceSettingsRequest'
+        jobParameters:
+          type: string
+        pollingEnabled:
+          type: boolean
+    ResilienceTimeoutSettingsRequest:
       type: object
       additionalProperties: false
       properties:
-        timeoutSettings:
-          $ref: '#/components/schemas/ResilienceTimeoutSettingsRequest'
-        retrySettings:
-          oneOf:
-          - $ref: '#/components/schemas/ResilienceRetrySettingsRequest'
-    BackoffType:
+        enabled:
+          type: boolean
+        timeoutMilliseconds:
+          type: integer
+          format: int64
+    JobStatus:
       type: string
       description: ''
       x-enumNames:
-      - Constant
-      - Linear
-      - Exponential
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
       enum:
-      - Constant
-      - Linear
-      - Exponential
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
     JsonDocument:
       type: object
       additionalProperties: false
@@ -1162,56 +1212,6 @@ components:
         isDisposable:
           type: boolean
         rootElement: {}
-    PagedResultOfGetJobResult:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetJobResult'
-        totalCount:
-          type: integer
-          format: int32
-    ResilienceRetrySettingsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        maxRetryAttempts:
-          type: integer
-          format: int64
-        maxInternalRetryAttempts:
-          type: integer
-          format: int64
-        shouldHandle:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        backoffType:
-          $ref: '#/components/schemas/BackoffType'
-        delayMilliseconds:
-          type: integer
-          format: int32
-        maxDelayMilliseconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        useJitter:
-          type: boolean
-    JobExecutionSettingsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        maxDegreeOfParallelism:
-          type: integer
-          format: int32
-        failedJobTaskBehavior:
-          $ref: '#/components/schemas/FailedJobTaskBehavior'
   securitySchemes:
     ApiKey:
       type: apiKey

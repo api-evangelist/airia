@@ -368,61 +368,49 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DiscoveryAssetDto:
+    DiscoveryFindingSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Info
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Info
+      - Medium
+      - High
+      - Critical
+    DiscoveryFindingImpactDto:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        category:
-          $ref: '#/components/schemas/DiscoveryAssetCategory'
-        provider:
-          type:
-          - string
-          - 'null'
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoverySurface'
-        riskLevel:
-          $ref: '#/components/schemas/DiscoveryRiskLevel'
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        userCount:
+        affectedAssets:
           type: integer
           format: int32
-        firstSeen:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastSeen:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        managed:
-          type:
-          - boolean
-          - 'null'
-        hasSensitiveScopes:
-          type:
-          - boolean
-          - 'null'
-        isBehindSso:
-          type:
-          - boolean
-          - 'null'
-        reviewDecision:
-          type:
-          - string
-          - 'null'
+        affectedUsers:
+          type: integer
+          format: int32
+        sharePct:
+          type: integer
+          format: int32
+        breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryCategoryCountDto'
+        topApps:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryTopAppDto'
+    AiAssetReviewDecisionAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sanction
+      - Divert
+      enum:
+      - Sanction
+      - Divert
     PagedResultV2OfDiscoveryAssetDto:
       type: object
       additionalProperties: false
@@ -440,36 +428,99 @@ components:
           type:
           - boolean
           - 'null'
-    DiscoveryUserCoverageDto:
-      type: object
-      additionalProperties: false
-      properties:
-        observedRegisteredUserCount:
-          type: integer
-          format: int32
-        registeredUserCount:
-          type: integer
-          format: int32
-        coveragePct:
-          type:
-          - number
-          - 'null'
-          format: double
-    DiscoverySurface:
+    DiscoveryRiskLevel:
       type: string
       description: ''
       x-enumNames:
-      - Identity
-      - Code
-      - Gateway
-      - Platform
-      - Endpoint
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
       enum:
-      - Identity
-      - Code
-      - Gateway
-      - Platform
-      - Endpoint
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    DiscoveryDashboardSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        kpis:
+          $ref: '#/components/schemas/DiscoveryKpisDto'
+        coverage:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryCoverageCategoryDto'
+        trend:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryTrendPointDto'
+        userCoverage:
+          $ref: '#/components/schemas/DiscoveryUserCoverageDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DiscoveryGraphEdgeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        appAssetId:
+          type: string
+          format: guid
+        personIdentifier:
+          type: string
+        sensitive:
+          type: boolean
+    DiscoveryFindingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        findingType:
+          $ref: '#/components/schemas/DiscoveryFindingType'
+        severity:
+          $ref: '#/components/schemas/DiscoveryFindingSeverity'
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoverySurface'
+        headlineValue:
+          type: integer
+          format: int32
+        headlineUnit:
+          $ref: '#/components/schemas/DiscoveryMetricUnit'
+        newThisWeek:
+          type: integer
+          format: int32
+        isNewThisWeek:
+          type: boolean
+        impact:
+          $ref: '#/components/schemas/DiscoveryFindingImpactDto'
     DiscoveryKpisDto:
       type: object
       additionalProperties: false
@@ -501,42 +552,6 @@ components:
         observedDeviceCount:
           type: integer
           format: int32
-    DiscoveryAiCallsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        totalToday:
-          type: integer
-          format: int32
-        deltaPct:
-          type:
-          - number
-          - 'null'
-          format: double
-        sparkline:
-          type: array
-          items:
-            type: integer
-            format: int32
-    DiscoveryFindingGraphDto:
-      type: object
-      additionalProperties: false
-      properties:
-        apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryGraphAppNodeDto'
-        people:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryGraphPersonNodeDto'
-        edges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryGraphEdgeDto'
-        totalPeople:
-          type: integer
-          format: int32
     DiscoveryAssetCategory:
       type: string
       description: ''
@@ -554,115 +569,6 @@ components:
       - McpTools
       - DiscoveredApps
       - SpmInventory
-    DiscoveryTopAppDto:
-      type: object
-      additionalProperties: false
-      properties:
-        assetId:
-          type: string
-          format: guid
-        name:
-          type: string
-        userCount:
-          type: integer
-          format: int32
-        sensitive:
-          type: boolean
-    DiscoveryRiskLevel:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-    DiscoveryFindingSeverity:
-      type: string
-      description: ''
-      x-enumNames:
-      - Info
-      - Medium
-      - High
-      - Critical
-      enum:
-      - Info
-      - Medium
-      - High
-      - Critical
-    DiscoveryGraphAppNodeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        assetId:
-          type: string
-          format: guid
-        name:
-          type: string
-        userCount:
-          type: integer
-          format: int32
-        sensitive:
-          type: boolean
-        riskLevel:
-          $ref: '#/components/schemas/DiscoveryRiskLevel'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    DiscoveryFindingDto:
-      type: object
-      additionalProperties: false
-      properties:
-        findingType:
-          $ref: '#/components/schemas/DiscoveryFindingType'
-        severity:
-          $ref: '#/components/schemas/DiscoveryFindingSeverity'
-        category:
-          $ref: '#/components/schemas/DiscoveryAssetCategory'
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoverySurface'
-        headlineValue:
-          type: integer
-          format: int32
-        headlineUnit:
-          $ref: '#/components/schemas/DiscoveryMetricUnit'
-        newThisWeek:
-          type: integer
-          format: int32
-        isNewThisWeek:
-          type: boolean
-        impact:
-          $ref: '#/components/schemas/DiscoveryFindingImpactDto'
     DiscoveryFindingType:
       type: string
       description: ''
@@ -678,6 +584,17 @@ components:
       - OverExposedPeople
       - RecentApps
       - WeakPosture
+    DiscoveryMetricUnit:
+      type: string
+      description: ''
+      x-enumNames:
+      - People
+      - Apps
+      - Assets
+      enum:
+      - People
+      - Apps
+      - Assets
     DiscoveryCoverageCategoryDto:
       type: object
       additionalProperties: false
@@ -694,117 +611,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DiscoverySurface'
-    DiscoveryFindingImpactDto:
-      type: object
-      additionalProperties: false
-      properties:
-        affectedAssets:
-          type: integer
-          format: int32
-        affectedUsers:
-          type: integer
-          format: int32
-        sharePct:
-          type: integer
-          format: int32
-        breakdown:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryCategoryCountDto'
-        topApps:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryTopAppDto'
-    DiscoveryGraphEdgeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        appAssetId:
-          type: string
-          format: guid
-        personIdentifier:
-          type: string
-        sensitive:
-          type: boolean
-    DiscoveryTrendPointDto:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-        assetCount:
-          type: integer
-          format: int32
-        highRiskCount:
-          type: integer
-          format: int32
-        hasData:
-          type: boolean
-    AiAssetReviewDecisionHistoryEntry:
-      type: object
-      additionalProperties: false
-      required:
-      - action
-      - value
-      - createdAt
-      properties:
-        action:
-          $ref: '#/components/schemas/AiAssetReviewDecisionAction'
-        value:
-          type: string
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        reason:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-    AiAssetReviewDecisionAction:
+    DiscoverySurface:
       type: string
       description: ''
       x-enumNames:
-      - Sanction
-      - Divert
+      - Identity
+      - Code
+      - Gateway
+      - Platform
+      - Endpoint
       enum:
-      - Sanction
-      - Divert
-    DiscoveryMetricUnit:
-      type: string
-      description: ''
-      x-enumNames:
-      - People
-      - Apps
-      - Assets
-      enum:
-      - People
-      - Apps
-      - Assets
-    DiscoveryGraphPersonNodeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        identifier:
-          type: string
-        appCount:
-          type: integer
-          format: int32
-        sensitiveAppCount:
-          type: integer
-          format: int32
-    DiscoveryCategoryCountDto:
-      type: object
-      additionalProperties: false
-      properties:
-        category:
-          $ref: '#/components/schemas/DiscoveryAssetCategory'
-        count:
-          type: integer
-          format: int32
+      - Identity
+      - Code
+      - Gateway
+      - Platform
+      - Endpoint
     DiscoveryAssetDetailDto:
       allOf:
       - $ref: '#/components/schemas/DiscoveryAssetDto'
@@ -862,22 +683,201 @@ components:
             type:
             - boolean
             - 'null'
-    DiscoveryDashboardSummaryDto:
+    DiscoveryFindingGraphDto:
       type: object
       additionalProperties: false
       properties:
-        kpis:
-          $ref: '#/components/schemas/DiscoveryKpisDto'
-        coverage:
+        apps:
           type: array
           items:
-            $ref: '#/components/schemas/DiscoveryCoverageCategoryDto'
-        trend:
+            $ref: '#/components/schemas/DiscoveryGraphAppNodeDto'
+        people:
           type: array
           items:
-            $ref: '#/components/schemas/DiscoveryTrendPointDto'
-        userCoverage:
-          $ref: '#/components/schemas/DiscoveryUserCoverageDto'
+            $ref: '#/components/schemas/DiscoveryGraphPersonNodeDto'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryGraphEdgeDto'
+        totalPeople:
+          type: integer
+          format: int32
+    DiscoveryTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        assetCount:
+          type: integer
+          format: int32
+        highRiskCount:
+          type: integer
+          format: int32
+        hasData:
+          type: boolean
+    DiscoveryTopAppDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        sensitive:
+          type: boolean
+    DiscoveryGraphAppNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        sensitive:
+          type: boolean
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+    DiscoveryGraphPersonNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        appCount:
+          type: integer
+          format: int32
+        sensitiveAppCount:
+          type: integer
+          format: int32
+    DiscoveryAiCallsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalToday:
+          type: integer
+          format: int32
+        deltaPct:
+          type:
+          - number
+          - 'null'
+          format: double
+        sparkline:
+          type: array
+          items:
+            type: integer
+            format: int32
+    DiscoveryAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        provider:
+          type:
+          - string
+          - 'null'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoverySurface'
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        userCount:
+          type: integer
+          format: int32
+        firstSeen:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSeen:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        managed:
+          type:
+          - boolean
+          - 'null'
+        hasSensitiveScopes:
+          type:
+          - boolean
+          - 'null'
+        isBehindSso:
+          type:
+          - boolean
+          - 'null'
+        reviewDecision:
+          type:
+          - string
+          - 'null'
+    DiscoveryUserCoverageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        observedRegisteredUserCount:
+          type: integer
+          format: int32
+        registeredUserCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type:
+          - number
+          - 'null'
+          format: double
+    AiAssetReviewDecisionHistoryEntry:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      - value
+      - createdAt
+      properties:
+        action:
+          $ref: '#/components/schemas/AiAssetReviewDecisionAction'
+        value:
+          type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        reason:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+    DiscoveryCategoryCountDto:
+      type: object
+      additionalProperties: false
+      properties:
+        category:
+          $ref: '#/components/schemas/DiscoveryAssetCategory'
+        count:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -528,6 +528,45 @@ components:
           - 'null'
           items:
             type: string
+    PagedMcpDeploymentResponse:
+      type: object
+      additionalProperties: {}
+      required:
+      - items
+      - totalCount
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpDeploymentDto'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     McpToolCacheDto:
       type: object
       additionalProperties: {}
@@ -588,48 +627,6 @@ components:
         isSelected:
           type: boolean
         sourceMoved:
-          type: boolean
-    CreateMcpToolCacheRequest:
-      type: object
-      additionalProperties: {}
-      required:
-      - toolName
-      properties:
-        toolName:
-          type: string
-          maxLength: 256
-          minLength: 1
-        toolDescription:
-          type:
-          - string
-          - 'null'
-        inputSchema:
-          type:
-          - string
-          - 'null'
-        outputSchema:
-          type:
-          - string
-          - 'null'
-        annotations:
-          type:
-          - string
-          - 'null'
-        isDerivedAnnotation:
-          type: boolean
-        derivedAnnotationMeta:
-          type:
-          - string
-          - 'null'
-        expectedCatalogVersion:
-          type:
-          - string
-          - 'null'
-        expectedObservationSourceRevision:
-          type:
-          - string
-          - 'null'
-        isSelected:
           type: boolean
     McpDeploymentDto:
       type: object
@@ -737,45 +734,48 @@ components:
           - string
           - 'null'
           format: date-time
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedMcpDeploymentResponse:
+    CreateMcpToolCacheRequest:
       type: object
       additionalProperties: {}
       required:
-      - items
-      - totalCount
+      - toolName
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/McpDeploymentDto'
-        totalCount:
-          type: integer
-          format: int32
+        toolName:
+          type: string
+          maxLength: 256
+          minLength: 1
+        toolDescription:
+          type:
+          - string
+          - 'null'
+        inputSchema:
+          type:
+          - string
+          - 'null'
+        outputSchema:
+          type:
+          - string
+          - 'null'
+        annotations:
+          type:
+          - string
+          - 'null'
+        isDerivedAnnotation:
+          type: boolean
+        derivedAnnotationMeta:
+          type:
+          - string
+          - 'null'
+        expectedCatalogVersion:
+          type:
+          - string
+          - 'null'
+        expectedObservationSourceRevision:
+          type:
+          - string
+          - 'null'
+        isSelected:
+          type: boolean
     ProvisionSystemMcpDeploymentRequest:
       type: object
       additionalProperties: {}

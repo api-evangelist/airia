@@ -468,6 +468,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AttachmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        imageUrl:
+          type: string
     AttachmentUrlResponse:
       type: object
       additionalProperties: false
@@ -483,14 +491,6 @@ components:
         id:
           type: string
         signedURL:
-          type: string
-    AttachmentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        imageUrl:
           type: string
   securitySchemes:
     ApiKey:

@@ -480,99 +480,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ScheduleThreadingMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - NewThread
-      - SameThread
-      enum:
-      - NewThread
-      - SameThread
-    DeploymentScheduleAdminModel:
-      allOf:
-      - $ref: '#/components/schemas/DeploymentScheduleModel'
-      - type: object
-        additionalProperties: false
-        properties:
-          ownerUserId:
-            type: string
-            format: guid
-          ownerUserName:
-            type:
-            - string
-            - 'null'
-          ownerUserEmail:
-            type:
-            - string
-            - 'null'
-          userInput:
-            type:
-            - string
-            - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
     ScheduleModel:
       type: object
       additionalProperties: false
@@ -643,6 +550,71 @@ components:
           - string
           - 'null'
           format: date-time
+    DeploymentScheduleAdminModel:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentScheduleModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          ownerUserId:
+            type: string
+            format: guid
+          ownerUserName:
+            type:
+            - string
+            - 'null'
+          ownerUserEmail:
+            type:
+            - string
+            - 'null'
+          userInput:
+            type:
+            - string
+            - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
     DeploymentScheduleModel:
       allOf:
       - $ref: '#/components/schemas/ScheduleModel'
@@ -701,6 +673,34 @@ components:
       - Third
       - Fourth
       - Last
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    ScheduleThreadingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - NewThread
+      - SameThread
+      enum:
+      - NewThread
+      - SameThread
   securitySchemes:
     ApiKey:
       type: apiKey

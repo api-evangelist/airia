@@ -1005,6 +1005,54 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    RegisterAiriaGroupRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        groupId:
+          type: string
+          format: guid
+        spaceId:
+          type: string
+          format: guid
+    ChatSpaceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Inactive
+      - Active
+      - Paused
+      - Archived
+      enum:
+      - Inactive
+      - Active
+      - Paused
+      - Archived
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     PagedResultOfChatSpaceUserResult:
       type: object
       additionalProperties: false
@@ -1016,66 +1064,6 @@ components:
         totalCount:
           type: integer
           format: int32
-    RegisterAiriaUserRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type: string
-          format: guid
-        spaceId:
-          type: string
-          format: guid
-    ChatSpaceCreateRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        deploymentsId:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-        iconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        code:
-          type:
-          - string
-          - 'null'
-    ChatSpaceUserStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Inactive
-      - Active
-      - Paused
-      - Removed
-      - Archived
-      - Invited
-      - Accepted
-      - Declined
-      enum:
-      - Inactive
-      - Active
-      - Paused
-      - Removed
-      - Archived
-      - Invited
-      - Accepted
-      - Declined
     ChatSpaceResult:
       type: object
       additionalProperties: false
@@ -1141,19 +1129,102 @@ components:
           - string
           - 'null'
           format: guid
-    ChatSpaceStatus:
+    ChatSpaceUserStatus:
       type: string
       description: ''
       x-enumNames:
       - Inactive
       - Active
       - Paused
+      - Removed
       - Archived
+      - Invited
+      - Accepted
+      - Declined
       enum:
       - Inactive
       - Active
       - Paused
+      - Removed
       - Archived
+      - Invited
+      - Accepted
+      - Declined
+    ChatSpaceUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfChatSpaceResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatSpaceResult'
+        totalCount:
+          type: integer
+          format: int32
+    RegisterUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        spaceCode:
+          type: string
+        username:
+          type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ChatSpaceCreateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        deploymentsId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        code:
+          type:
+          - string
+          - 'null'
     ChatSpaceUserResult:
       type: object
       additionalProperties: false
@@ -1214,82 +1285,11 @@ components:
           type:
           - string
           - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ChatSpaceUpdateRequest:
+    RegisterAiriaUserRequest:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-        iconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    PagedResultOfChatSpaceResult:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatSpaceResult'
-        totalCount:
-          type: integer
-          format: int32
-    RegisterUserRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        spaceCode:
-          type: string
-        username:
-          type: string
         userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    RegisterAiriaGroupRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        groupId:
           type: string
           format: guid
         spaceId:

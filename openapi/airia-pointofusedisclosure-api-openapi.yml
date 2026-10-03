@@ -315,46 +315,47 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PointOfUseDisclosureDto:
+    CreatePointOfUseDisclosureRequest:
       type: object
       additionalProperties: false
+      required:
+      - useCaseId
       properties:
-        id:
-          type: string
-          format: guid
         useCaseId:
           type: string
           format: guid
+          minLength: 1
         name:
-          type: string
-        useCaseName:
-          type: string
-        useCaseStage:
-          type: string
-        useCaseOwner:
-          type: string
-        shareToken:
-          type: string
-          format: guid
-        isActive:
-          type: boolean
-        createdAt:
           type:
           - string
           - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
+          maxLength: 200
         disclosureTemplateId:
           type:
           - string
           - 'null'
           format: guid
-        audience:
-          $ref: '#/components/schemas/DisclosureAudience'
+        attributeOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
+    UpdatePointOfUseDisclosureRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        isActive:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        disclosureTemplateId:
+          type:
+          - string
+          - 'null'
+          format: guid
         attributeOverrides:
           oneOf:
           - $ref: '#/components/schemas/DisclosureAttributeOverrides'
@@ -398,6 +399,41 @@ components:
           type:
           - boolean
           - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PublicRiskClassificationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKey:
+          type: string
+        frameworkName:
+          type: string
+        level:
+          type: string
     PublicGovernanceDto:
       type: object
       additionalProperties: false
@@ -479,64 +515,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/PublicRiskClassificationDto'
-    CreatePointOfUseDisclosureRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseId
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-          minLength: 1
-        name:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        disclosureTemplateId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        attributeOverrides:
-          oneOf:
-          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
-    PublicRiskClassificationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        frameworkKey:
-          type: string
-        frameworkName:
-          type: string
-        level:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     DisclosureAudience:
       type: string
       description: ''
@@ -558,6 +536,49 @@ components:
           type:
           - string
           - 'null'
+    PointOfUseDisclosureDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        useCaseName:
+          type: string
+        useCaseStage:
+          type: string
+        useCaseOwner:
+          type: string
+        shareToken:
+          type: string
+          format: guid
+        isActive:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        disclosureTemplateId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        audience:
+          $ref: '#/components/schemas/DisclosureAudience'
+        attributeOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
     PublicAssetDto:
       type: object
       additionalProperties: false
@@ -566,27 +587,6 @@ components:
           type: string
         type:
           type: string
-    UpdatePointOfUseDisclosureRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        isActive:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        disclosureTemplateId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        attributeOverrides:
-          oneOf:
-          - $ref: '#/components/schemas/DisclosureAttributeOverrides'
   securitySchemes:
     ApiKey:
       type: apiKey

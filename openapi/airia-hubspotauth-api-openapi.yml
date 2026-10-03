@@ -127,6 +127,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    HubSpotPkceInitRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        state:
+          type: string
+        codeVerifier:
+          type: string
+    HubSpotCallbackRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+        state:
+          type: string
     HubSpotTokenResponse:
       type: object
       additionalProperties: false
@@ -136,14 +152,6 @@ components:
         refresh_token:
           type: string
         email:
-          type: string
-    HubSpotPkceInitRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        state:
-          type: string
-        codeVerifier:
           type: string
     ProblemDetails:
       type: object
@@ -170,14 +178,6 @@ components:
           type:
           - string
           - 'null'
-    HubSpotCallbackRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        code:
-          type: string
-        state:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

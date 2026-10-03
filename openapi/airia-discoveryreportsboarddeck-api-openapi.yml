@@ -109,19 +109,23 @@ components:
         requestId:
           type: string
           format: guid
-    BoardDeckGenerationStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Running
-      - Completed
-      - Failed
-      enum:
-      - Pending
-      - Running
-      - Completed
-      - Failed
+    BoardDeckGenerationStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        requestId:
+          type: string
+          format: guid
+        status:
+          $ref: '#/components/schemas/BoardDeckGenerationStatus'
+        attachmentDownloadUrl:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -147,23 +151,19 @@ components:
           type:
           - string
           - 'null'
-    BoardDeckGenerationStatusResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        requestId:
-          type: string
-          format: guid
-        status:
-          $ref: '#/components/schemas/BoardDeckGenerationStatus'
-        attachmentDownloadUrl:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
+    BoardDeckGenerationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
   securitySchemes:
     ApiKey:
       type: apiKey

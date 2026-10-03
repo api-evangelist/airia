@@ -108,13 +108,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    UserAlertSettingsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        settings:
-          oneOf:
-          - $ref: '#/components/schemas/UserAlertSettingsProps'
     UserAlertSettingsProps:
       type: object
       additionalProperties: false
@@ -166,6 +159,13 @@ components:
           - 'null'
           additionalProperties:
             type: boolean
+    UserAlertSettingsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        settings:
+          oneOf:
+          - $ref: '#/components/schemas/UserAlertSettingsProps'
     ProblemDetails:
       type: object
       additionalProperties: {}

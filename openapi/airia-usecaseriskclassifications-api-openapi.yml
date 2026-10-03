@@ -69,22 +69,37 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    NistAiRmfTier:
+    Iso42001Level:
       type: string
       description: ''
       x-enumNames:
-      - Tier1
-      - Tier2
-      - Tier3
-      - Tier4
-      - Tier5
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
       - NotApplicable
       enum:
-      - Tier1
-      - Tier2
-      - Tier3
-      - Tier4
-      - Tier5
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
       - NotApplicable
     ProblemDetails:
       type: object
@@ -111,38 +126,6 @@ components:
           type:
           - string
           - 'null'
-    EuAiActCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-      enum:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-    Iso42001Level:
-      type: string
-      description: ''
-      x-enumNames:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-      enum:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
     UseCaseRiskClassificationDto:
       type: object
       additionalProperties: false
@@ -208,6 +191,23 @@ components:
           - string
           - 'null'
           format: guid
+    NistAiRmfTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+      enum:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
   securitySchemes:
     ApiKey:
       type: apiKey

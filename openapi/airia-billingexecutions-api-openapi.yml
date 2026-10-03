@@ -387,6 +387,332 @@ components:
           format: int32
         aggregatedTotals:
           $ref: '#/components/schemas/BillingAggregatedTotalsResponseV1'
+    TotalConsumptionPagedResultV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TotalConsumptionItemV1'
+        nextPageCursor:
+          type:
+          - string
+          - 'null'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    TotalConsumptionItemV1:
+      type: object
+      additionalProperties: false
+      properties:
+        executionSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/QuerySourceType'
+        executionId:
+          type: string
+          format: guid
+        executionDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        providerType:
+          type:
+          - string
+          - 'null'
+        modelName:
+          type:
+          - string
+          - 'null'
+        modelDisplayName:
+          type:
+          - string
+          - 'null'
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        pipelineVersion:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        userEmail:
+          type:
+          - string
+          - 'null'
+        userFirstName:
+          type:
+          - string
+          - 'null'
+        userLastName:
+          type:
+          - string
+          - 'null'
+        totalTokenCountConsumed:
+          type: integer
+          format: int32
+        inputTokenCountConsumed:
+          type: integer
+          format: int32
+        outputTokenCountConsumed:
+          type: integer
+          format: int32
+        totalTokenAmountConsumed:
+          type:
+          - string
+          - 'null'
+        balanceUsed:
+          type:
+          - string
+          - 'null'
+        cachedInputTokenCountConsumed:
+          type: integer
+          format: int32
+        additionalCharges:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: number
+            format: decimal
+    QuerySourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pipeline
+      - Gateway
+      - Datasource
+      - Playground
+      - Voice
+      - Meeting
+      - Guardrail
+      enum:
+      - Pipeline
+      - Gateway
+      - Data Source
+      - Playground
+      - Voice
+      - Meeting
+      - Guardrail
+    BillingSummaryResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        executionCount:
+          type: integer
+          format: int64
+        totalInputTokens:
+          type: integer
+          format: int64
+        totalOutputTokens:
+          type: integer
+          format: int64
+        totalCachedInputTokens:
+          type: integer
+          format: int64
+        totalTokenCost:
+          type: number
+          format: decimal
+        totalAdditionalChargesCost:
+          type: number
+          format: decimal
+        totalCost:
+          type: number
+          format: decimal
+        executionSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/QuerySourceType'
+        modelBreakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingModelBreakdownV1'
+    BillingSummaryPagedResultV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingSummaryResponseV1'
+        nextPageCursor:
+          type:
+          - string
+          - 'null'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        aggregatedTotals:
+          $ref: '#/components/schemas/BillingAggregatedTotalsResponseV1'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BillingAggregatedTotalsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        totalInputTokens:
+          type: integer
+          format: int64
+        totalOutputTokens:
+          type: integer
+          format: int64
+        totalCachedInputTokens:
+          type: integer
+          format: int64
+        totalTokenCost:
+          type: number
+          format: decimal
+        totalAdditionalChargesCost:
+          type: number
+          format: decimal
+        totalCost:
+          type: number
+          format: decimal
+        totalExecutions:
+          type: integer
+          format: int64
+    BillingModelBreakdownV1:
+      type: object
+      additionalProperties: false
+      properties:
+        modelName:
+          type: string
+        provider:
+          $ref: '#/components/schemas/QueryProviderType'
+        executionCount:
+          type: integer
+          format: int64
+        totalInputTokens:
+          type: integer
+          format: int64
+        totalOutputTokens:
+          type: integer
+          format: int64
+        totalCachedInputTokens:
+          type: integer
+          format: int64
+        totalTokenCost:
+          type: number
+          format: decimal
+        totalAdditionalChargesCost:
+          type: number
+          format: decimal
+        totalCost:
+          type: number
+          format: decimal
+    BillingExecutionResponseV2:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineName:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type: string
+          format: guid
+        executionSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/QuerySourceType'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        duration:
+          type: string
+        success:
+          type:
+          - boolean
+          - 'null'
+        inputTokens:
+          type: integer
+          format: int32
+        outputTokens:
+          type: integer
+          format: int32
+        totalTokens:
+          type: integer
+          format: int32
+        totalCost:
+          type: number
+          format: decimal
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userName:
+          type:
+          - string
+          - 'null'
+        additionalCharges:
+          type: object
+          additionalProperties:
+            type: number
+            format: decimal
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingTokenUsageStepDetailV1'
     QueryProviderType:
       type: string
       description: ''
@@ -476,332 +802,6 @@ components:
           - string
           - 'null'
           example: 0.0
-    QuerySourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pipeline
-      - Gateway
-      - Datasource
-      - Playground
-      - Voice
-      - Meeting
-      - Guardrail
-      enum:
-      - Pipeline
-      - Gateway
-      - Data Source
-      - Playground
-      - Voice
-      - Meeting
-      - Guardrail
-    BillingExecutionResponseV2:
-      type: object
-      additionalProperties: false
-      properties:
-        executionId:
-          type: string
-          format: guid
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        pipelineName:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type: string
-          format: guid
-        executionSourceType:
-          oneOf:
-          - $ref: '#/components/schemas/QuerySourceType'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        duration:
-          type: string
-        success:
-          type:
-          - boolean
-          - 'null'
-        inputTokens:
-          type: integer
-          format: int32
-        outputTokens:
-          type: integer
-          format: int32
-        totalTokens:
-          type: integer
-          format: int32
-        totalCost:
-          type: number
-          format: decimal
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userName:
-          type:
-          - string
-          - 'null'
-        additionalCharges:
-          type: object
-          additionalProperties:
-            type: number
-            format: decimal
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingTokenUsageStepDetailV1'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    TotalConsumptionItemV1:
-      type: object
-      additionalProperties: false
-      properties:
-        executionSourceType:
-          oneOf:
-          - $ref: '#/components/schemas/QuerySourceType'
-        executionId:
-          type: string
-          format: guid
-        executionDateTime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        providerType:
-          type:
-          - string
-          - 'null'
-        modelName:
-          type:
-          - string
-          - 'null'
-        modelDisplayName:
-          type:
-          - string
-          - 'null'
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        pipelineName:
-          type:
-          - string
-          - 'null'
-        pipelineVersion:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        projectName:
-          type:
-          - string
-          - 'null'
-        userEmail:
-          type:
-          - string
-          - 'null'
-        userFirstName:
-          type:
-          - string
-          - 'null'
-        userLastName:
-          type:
-          - string
-          - 'null'
-        totalTokenCountConsumed:
-          type: integer
-          format: int32
-        inputTokenCountConsumed:
-          type: integer
-          format: int32
-        outputTokenCountConsumed:
-          type: integer
-          format: int32
-        totalTokenAmountConsumed:
-          type:
-          - string
-          - 'null'
-        balanceUsed:
-          type:
-          - string
-          - 'null'
-        cachedInputTokenCountConsumed:
-          type: integer
-          format: int32
-        additionalCharges:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: number
-            format: decimal
-    BillingSummaryPagedResultV1:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingSummaryResponseV1'
-        nextPageCursor:
-          type:
-          - string
-          - 'null'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        aggregatedTotals:
-          $ref: '#/components/schemas/BillingAggregatedTotalsResponseV1'
-    TotalConsumptionPagedResultV1:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TotalConsumptionItemV1'
-        nextPageCursor:
-          type:
-          - string
-          - 'null'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    BillingSummaryResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        pipelineName:
-          type:
-          - string
-          - 'null'
-        executionCount:
-          type: integer
-          format: int64
-        totalInputTokens:
-          type: integer
-          format: int64
-        totalOutputTokens:
-          type: integer
-          format: int64
-        totalCachedInputTokens:
-          type: integer
-          format: int64
-        totalTokenCost:
-          type: number
-          format: decimal
-        totalAdditionalChargesCost:
-          type: number
-          format: decimal
-        totalCost:
-          type: number
-          format: decimal
-        executionSourceType:
-          oneOf:
-          - $ref: '#/components/schemas/QuerySourceType'
-        modelBreakdown:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingModelBreakdownV1'
-    BillingAggregatedTotalsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        totalInputTokens:
-          type: integer
-          format: int64
-        totalOutputTokens:
-          type: integer
-          format: int64
-        totalCachedInputTokens:
-          type: integer
-          format: int64
-        totalTokenCost:
-          type: number
-          format: decimal
-        totalAdditionalChargesCost:
-          type: number
-          format: decimal
-        totalCost:
-          type: number
-          format: decimal
-        totalExecutions:
-          type: integer
-          format: int64
-    BillingModelBreakdownV1:
-      type: object
-      additionalProperties: false
-      properties:
-        modelName:
-          type: string
-        provider:
-          $ref: '#/components/schemas/QueryProviderType'
-        executionCount:
-          type: integer
-          format: int64
-        totalInputTokens:
-          type: integer
-          format: int64
-        totalOutputTokens:
-          type: integer
-          format: int64
-        totalCachedInputTokens:
-          type: integer
-          format: int64
-        totalTokenCost:
-          type: number
-          format: decimal
-        totalAdditionalChargesCost:
-          type: number
-          format: decimal
-        totalCost:
-          type: number
-          format: decimal
   securitySchemes:
     ApiKey:
       type: apiKey

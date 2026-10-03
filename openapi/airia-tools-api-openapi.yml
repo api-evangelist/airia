@@ -1262,22 +1262,31 @@ components:
       - AnthropicInferenceHooks
       - AnthropicAnalytics
       - GoogleVertexAi
-    ToolUsageInfo:
+    ProblemDetails:
       type: object
-      additionalProperties: false
+      additionalProperties: {}
       properties:
-        pipelines:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolPipelineUsageInfo'
-        usedInOtherProjects:
-          type: boolean
-        isInUse:
-          type: boolean
-        isInUseByLatestVersion:
-          type: boolean
-        isInUseByPublishedVersion:
-          type: boolean
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     ToolUsageSummary:
       type: object
       additionalProperties: false
@@ -1291,302 +1300,7 @@ components:
           type: boolean
         usedInOtherProjects:
           type: boolean
-    PagedResultOfToolDefinitionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolDefinitionResponse'
-        totalCount:
-          type: integer
-          format: int32
-    ToolHeaderModel:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        sensitive:
-          type: boolean
-    ToolsMetadataRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      - value
-      properties:
-        key:
-          type: string
-          minLength: 1
-        value:
-          type: string
-          minLength: 1
-    ToolCredentialsModel:
-      type: object
-      additionalProperties: false
-      properties:
-        toolCredentialSettings:
-          $ref: '#/components/schemas/CredentialSettings'
-        toolCredentials:
-          oneOf:
-          - $ref: '#/components/schemas/CredentialsViewModel'
-        toolCredentialsId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        authRequired:
-          type: boolean
-        useUserCredentials:
-          type: boolean
-        userCredentialConnectorId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        useUserCredentialsType:
-          type: string
-        credentialsSourceType:
-          oneOf:
-          - $ref: '#/components/schemas/SourceType'
-        useAiriaKeySupport:
-          type: boolean
-    CredentialSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        availableCredentialTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/CredentialType'
-        defaultValue:
-          type:
-          - string
-          - 'null'
-        platformSupportedOAuthTypes:
-          type: array
-          items:
-            type: string
-    ToolDefinitionModel:
-      type: object
-      additionalProperties: false
-      required:
-      - toolType
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        toolType:
-          $ref: '#/components/schemas/ToolType'
-        name:
-          type: string
-        standardizedName:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        origin:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
-        methodType:
-          type: string
-        purpose:
-          type: string
-        apiEndpoint:
-          type: string
-        provider:
-          type: string
-        toolCredentials:
-          $ref: '#/components/schemas/ToolCredentialsModel'
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolHeaderModel'
-        body:
-          type: string
-        bodyType:
-          $ref: '#/components/schemas/ToolBodyType'
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolParameterModel'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        projectName:
-          type:
-          - string
-          - 'null'
-        children:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolDefinitionModel'
-        routeThroughACC:
-          type: boolean
-        shouldRedirect:
-          type: boolean
-        aCCGroup:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        documentation:
-          type:
-          - string
-          - 'null'
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        toolMetadata:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolsMetadataRequest'
-        supportsPagination:
-          type:
-          - boolean
-          - 'null'
-        category:
-          $ref: '#/components/schemas/ToolCategory'
-        requestTimeout:
-          type: integer
-          format: int32
-        useJwtForwarding:
-          type:
-          - boolean
-          - 'null'
-        isCustomSelection:
-          type:
-          - boolean
-          - 'null'
-        enabledToolNames:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    BaseOptionalProjectEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          projectId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    CredentialsViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        binderId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        displayIdentifierName:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        type:
-          $ref: '#/components/schemas/CredentialType'
-        expired:
-          type:
-          - boolean
-          - 'null'
-        expiresOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        administrativeScope:
-          $ref: '#/components/schemas/AdministrativeScope'
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        tenantId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        credentialData:
-          type: array
-          items:
-            $ref: '#/components/schemas/CredentialEntry'
-        origin:
-          $ref: '#/components/schemas/CredentialOrigin'
-        enabledForPythonBlocks:
-          type: boolean
-        customCredentialsId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        customCredentials:
-          oneOf:
-          - $ref: '#/components/schemas/CustomCredentials'
-        sourceId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        provider:
-          type:
-          - string
-          - 'null'
-        authenticationType:
-          type:
-          - string
-          - 'null'
-    ToolDefinitionRequest:
+    ToolDefinitionResponse:
       allOf:
       - $ref: '#/components/schemas/ToolDefinitionModel'
       - type: object
@@ -1598,51 +1312,6 @@ components:
             type: string
             format: guid
             minLength: 1
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    CustomCredentials:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - name
-        properties:
-          credentialType:
-            $ref: '#/components/schemas/CredentialType'
-          name:
-            type: string
-            maxLength: 255
-            minLength: 1
-          credentialData:
-            type: string
-    CredentialOrigin:
-      type: string
-      description: ''
-      x-enumNames:
-      - Platform
-      - Chat
-      enum:
-      - Platform
-      - Chat
     ToolType:
       type: string
       description: ''
@@ -1970,6 +1639,28 @@ components:
       - McpInternalAiriaPlatformSecurity
       - McpInternalAiriaPlatformGovernance
       - GetFileLink
+    PagedResultOfToolDefinitionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolDefinitionResponse'
+        totalCount:
+          type: integer
+          format: int32
+    ToolParameterRequirement:
+      type: string
+      description: ''
+      x-enumNames:
+      - Required
+      - Optional
+      - OptionalQueryParam
+      enum:
+      - Required
+      - Optional
+      - OptionalQueryParam
     TestConnectionResult:
       type: object
       additionalProperties: false
@@ -1983,72 +1674,56 @@ components:
         statusCode:
           type: integer
           format: int32
-    AdministrativeScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Tenant
-      - Project
-      - Personal
-      enum:
-      - Tenant
-      - Project
-      - User
-    TestConnectionRequest:
+    BaseAuditEntity:
       type: object
+      x-abstract: true
       additionalProperties: false
       properties:
-        toolDefinition:
-          $ref: '#/components/schemas/ToolDefinitionRequest'
-        testConnectionParameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
+        createdAt:
           type:
           - string
           - 'null'
-        title:
+          format: date-time
+        updatedAt:
           type:
           - string
           - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ToolSummaryItem:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        projectId:
+          format: date-time
+        userId:
           type:
           - string
           - 'null'
           format: guid
-        projectName:
+    ToolCredentialsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCredentialSettings:
+          $ref: '#/components/schemas/CredentialSettings'
+        toolCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsViewModel'
+        toolCredentialsId:
           type:
           - string
           - 'null'
+          format: guid
+        authRequired:
+          type: boolean
+        useUserCredentials:
+          type: boolean
+        userCredentialConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useUserCredentialsType:
+          type: string
+        credentialsSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/SourceType'
+        useAiriaKeySupport:
+          type: boolean
     CredentialKeyField:
       type: string
       description: ''
@@ -2238,120 +1913,29 @@ components:
       - anthropicAnalyticsKey
       - gcpProjectId
       - gcpLocation
-    AiGatewayToolsResponse:
+    ToolPipelineUsageInfo:
       type: object
       additionalProperties: false
       properties:
-        tools:
-          type: array
-          items:
-            $ref: '#/components/schemas/AiGatewayTool'
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
-    ToolBodyType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Json
-      - XFormUrlEncoded
-      - None
-      - Binary
-      - MultipartFormData
-      enum:
-      - Json
-      - xFormUrlEncoded
-      - None
-      - Binary
-      - MultipartFormData
-    AiGatewayTool:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
+        pipelineId:
           type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        origin:
-          type:
-          - string
-          - 'null'
-        provider:
-          type:
-          - string
-          - 'null'
-        inputParameters:
-          type:
-          - string
-          - 'null'
-    CredentialEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          $ref: '#/components/schemas/CredentialKeyField'
-        value:
+          format: guid
+        pipelineName:
           type: string
-    ToolCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Action
-      - Airia
-      - Mcp
-      enum:
-      - Action
-      - Airia
-      - Mcp
-    ToolParameterRequirement:
-      type: string
-      description: ''
-      x-enumNames:
-      - Required
-      - Optional
-      - OptionalQueryParam
-      enum:
-      - Required
-      - Optional
-      - OptionalQueryParam
-    ToolsLimitResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        isLimitReached:
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
           type: boolean
-        limit:
+        isPublishedVersion:
+          type: boolean
+        projectId:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-    ToolDefinitionResponse:
-      allOf:
-      - $ref: '#/components/schemas/ToolDefinitionModel'
-      - type: object
-        additionalProperties: false
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: guid
-            minLength: 1
+          format: guid
     SourceType:
       type: string
       description: ''
@@ -2389,29 +1973,445 @@ components:
             $ref: '#/components/schemas/ToolParameterModel'
         requirement:
           $ref: '#/components/schemas/ToolParameterRequirement'
-    ToolPipelineUsageInfo:
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    TestConnectionRequest:
       type: object
       additionalProperties: false
       properties:
-        pipelineId:
+        toolDefinition:
+          $ref: '#/components/schemas/ToolDefinitionRequest'
+        testConnectionParameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    ToolDefinitionRequest:
+      allOf:
+      - $ref: '#/components/schemas/ToolDefinitionModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: guid
+            minLength: 1
+    CredentialSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        availableCredentialTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialType'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        platformSupportedOAuthTypes:
+          type: array
+          items:
+            type: string
+    AiGatewayToolsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiGatewayTool'
+    AiGatewayTool:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        origin:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        inputParameters:
+          type:
+          - string
+          - 'null'
+    CredentialsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
           format: guid
-        pipelineName:
-          type: string
-        pipelineVersionId:
-          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
           format: guid
-        versionNumber:
-          type: string
-        isLatest:
-          type: boolean
-        isPublishedVersion:
-          type: boolean
+        binderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
         projectId:
           type:
           - string
           - 'null'
           format: guid
+        type:
+          $ref: '#/components/schemas/CredentialType'
+        expired:
+          type:
+          - boolean
+          - 'null'
+        expiresOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        administrativeScope:
+          $ref: '#/components/schemas/AdministrativeScope'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        credentialData:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialEntry'
+        origin:
+          $ref: '#/components/schemas/CredentialOrigin'
+        enabledForPythonBlocks:
+          type: boolean
+        customCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentials'
+        sourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        provider:
+          type:
+          - string
+          - 'null'
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    CredentialEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          $ref: '#/components/schemas/CredentialKeyField'
+        value:
+          type: string
+    ToolBodyType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Json
+      - XFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+      enum:
+      - Json
+      - xFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+    CredentialOrigin:
+      type: string
+      description: ''
+      x-enumNames:
+      - Platform
+      - Chat
+      enum:
+      - Platform
+      - Chat
+    ToolsLimitResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isLimitReached:
+          type: boolean
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ToolDefinitionModel:
+      type: object
+      additionalProperties: false
+      required:
+      - toolType
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        toolType:
+          $ref: '#/components/schemas/ToolType'
+        name:
+          type: string
+        standardizedName:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        origin:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        methodType:
+          type: string
+        purpose:
+          type: string
+        apiEndpoint:
+          type: string
+        provider:
+          type: string
+        toolCredentials:
+          $ref: '#/components/schemas/ToolCredentialsModel'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolHeaderModel'
+        body:
+          type: string
+        bodyType:
+          $ref: '#/components/schemas/ToolBodyType'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolParameterModel'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+        children:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolDefinitionModel'
+        routeThroughACC:
+          type: boolean
+        shouldRedirect:
+          type: boolean
+        aCCGroup:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        documentation:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        toolMetadata:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsMetadataRequest'
+        supportsPagination:
+          type:
+          - boolean
+          - 'null'
+        category:
+          $ref: '#/components/schemas/ToolCategory'
+        requestTimeout:
+          type: integer
+          format: int32
+        useJwtForwarding:
+          type:
+          - boolean
+          - 'null'
+        isCustomSelection:
+          type:
+          - boolean
+          - 'null'
+        enabledToolNames:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    ToolHeaderModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    CustomCredentials:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          credentialData:
+            type: string
+    ToolsMetadataRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      - value
+      properties:
+        key:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+    ToolSummaryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectName:
+          type:
+          - string
+          - 'null'
+    ToolCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Action
+      - Airia
+      - Mcp
+      enum:
+      - Action
+      - Airia
+      - Mcp
+    ToolUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelines:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolPipelineUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+        isInUse:
+          type: boolean
+        isInUseByLatestVersion:
+          type: boolean
+        isInUseByPublishedVersion:
+          type: boolean
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    AdministrativeScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Personal
+      enum:
+      - Tenant
+      - Project
+      - User
   securitySchemes:
     ApiKey:
       type: apiKey

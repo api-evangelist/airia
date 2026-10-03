@@ -265,18 +265,82 @@ components:
         totalCount:
           type: integer
           format: int32
-    InternalApplicationDropdownOptionsDto:
+    InternalApplicationDto:
       type: object
       additionalProperties: false
       properties:
-        categories:
-          type: array
-          items:
-            type: string
-        providers:
-          type: array
-          items:
-            type: string
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/SourceType'
+        provider:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        complianceCerts:
+          type:
+          - string
+          - 'null'
+        aiFeaturesInScope:
+          type:
+          - string
+          - 'null'
+        aiModels:
+          type:
+          - string
+          - 'null'
+        subProcessors:
+          type:
+          - string
+          - 'null'
+        deploymentOptions:
+          type:
+          - string
+          - 'null'
+        dataSentToAi:
+          type:
+          - string
+          - 'null'
+        retention:
+          type:
+          - string
+          - 'null'
+        encryption:
+          type:
+          - string
+          - 'null'
+        trainingOnCustomerData:
+          type:
+          - string
+          - 'null'
+        riskFlags:
+          type:
+          - string
+          - 'null'
+        securityLinks:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -302,6 +366,27 @@ components:
           type:
           - string
           - 'null'
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+    InternalApplicationDropdownOptionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            type: string
     InternalApplicationRequest:
       type: object
       additionalProperties: false
@@ -386,91 +471,6 @@ components:
           - 'null'
           maxLength: 512
           minLength: 0
-    InternalApplicationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        sourceType:
-          $ref: '#/components/schemas/SourceType'
-        provider:
-          type:
-          - string
-          - 'null'
-        category:
-          type:
-          - string
-          - 'null'
-        riskLevel:
-          type:
-          - string
-          - 'null'
-        complianceCerts:
-          type:
-          - string
-          - 'null'
-        aiFeaturesInScope:
-          type:
-          - string
-          - 'null'
-        aiModels:
-          type:
-          - string
-          - 'null'
-        subProcessors:
-          type:
-          - string
-          - 'null'
-        deploymentOptions:
-          type:
-          - string
-          - 'null'
-        dataSentToAi:
-          type:
-          - string
-          - 'null'
-        retention:
-          type:
-          - string
-          - 'null'
-        encryption:
-          type:
-          - string
-          - 'null'
-        trainingOnCustomerData:
-          type:
-          - string
-          - 'null'
-        riskFlags:
-          type:
-          - string
-          - 'null'
-        securityLinks:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    SourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserProvided
-      - Library
-      enum:
-      - userProvided
-      - library
   securitySchemes:
     ApiKey:
       type: apiKey

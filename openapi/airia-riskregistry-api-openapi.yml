@@ -1145,32 +1145,227 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EndpointRoutingEnforcementResult:
+    MitigationVerificationTrigger:
+      type: string
+      description: ''
+      x-enumNames:
+      - Event
+      - Creation
+      - Manual
+      - Scheduled
+      - ResidualRecompute
+      - WorkStarted
+      enum:
+      - Event
+      - Creation
+      - Manual
+      - Scheduled
+      - ResidualRecompute
+      - WorkStarted
+    Iso42001Level:
+      type: string
+      description: ''
+      x-enumNames:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+      enum:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    RiskRegistryStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - PendingReview
+      - Mitigate
+      - Accept
+      - Transfer
+      - Avoid
+      enum:
+      - PendingReview
+      - Mitigate
+      - Accept
+      - Transfer
+      - Avoid
+    MitigationArtifactType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Guardrail
+      - Evaluation
+      - RedTeamingCampaign
+      - Assessment
+      - GatewayLimit
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - ExternalAgentRouting
+      enum:
+      - Guardrail
+      - Evaluation
+      - RedTeamingCampaign
+      - Assessment
+      - GatewayLimit
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - ExternalAgentRouting
+    MitigationArtifactChange:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Added
+      - Retained
+      - Removed
+      enum:
+      - None
+      - Added
+      - Retained
+      - Removed
+    CreateRiskTransferDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      - transferredOwner
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        transferredOwner:
+          type: string
+          maxLength: 500
+          minLength: 1
+        evidenceLink:
+          type:
+          - string
+          - 'null'
+          format: uri
+          maxLength: 200
+    UpdateAcceptanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      - residualRisk
+      properties:
+        decision:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        residualRisk:
+          $ref: '#/components/schemas/ResidualRisk'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    MitigationStepResponse:
       type: object
       additionalProperties: false
       properties:
-        endpointAppAggregateId:
+        id:
           type: string
           format: guid
-        clientId:
+        title:
           type: string
-        provider:
+        description:
           type: string
-        gatewayUrl:
-          type: string
-        policyRevision:
-          type: integer
-          format: int64
-        replacedExistingOverride:
+        status:
+          $ref: '#/components/schemas/MitigationStepStatus'
+        callToAction:
+          type:
+          - string
+          - 'null'
+        controlId:
+          type:
+          - string
+          - 'null'
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        canVerify:
           type: boolean
-        createdTenantWideProviderDefault:
+        manualCompletionAllowed:
           type: boolean
-        reachCount:
-          type: integer
-          format: int32
-        routedInstallCount:
-          type: integer
-          format: int32
+        completionSource:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepCompletionSource'
+        completedByName:
+          type:
+          - string
+          - 'null'
+        verificationEvidence:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepVerificationEvidenceResponse'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    MappedControlResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+    ResidualRisk:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
     NistAiRmfTier:
       type: string
       description: ''
@@ -1188,15 +1383,317 @@ components:
       - Tier4
       - Tier5
       - NotApplicable
-    MappedControlResult:
+    RiskTreatmentStepsResponse:
       type: object
       additionalProperties: false
       properties:
-        id:
+        riskId:
           type: string
           format: guid
-        controlId:
+        controlIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        treatmentSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskTreatmentStepResponse'
+    MitigationStepCompletionSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Manual
+      - Verified
+      enum:
+      - Manual
+      - Verified
+    MitigationMinimumCompletionProfile:
+      type: object
+      additionalProperties: false
+      properties:
+        requirementText:
+          type:
+          - string
+          - 'null'
+        requiresEnforcedGuardrail:
+          type: boolean
+        requiresDataLossPreventionFilter:
+          type: boolean
+        requiresSuccessfulExecution:
+          type: boolean
+        verifiedByEventOnly:
+          type: boolean
+        manualCompletionOnly:
+          type: boolean
+    MitigationStepVerificationEvidenceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        verifierKey:
+          $ref: '#/components/schemas/MitigationVerifierKey'
+        evidenceEntityIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
+        verifiedAt:
           type: string
+          format: date-time
+        trigger:
+          $ref: '#/components/schemas/MitigationVerificationTrigger'
+        evidenceMissingAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GroupedRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        riskName:
+          type: string
+        count:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskRegistryResponse'
+    MitigationStepEvidenceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        stepId:
+          type: string
+          format: guid
+        riskMetadataId:
+          type: string
+          format: guid
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        canVerify:
+          type: boolean
+        completionSource:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepCompletionSource'
+        outcome:
+          $ref: '#/components/schemas/MitigationVerificationOutcome'
+        detail:
+          type:
+          - string
+          - 'null'
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        evidenceMissingAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
+    CreateAcceptanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        residualRisk:
+          oneOf:
+          - $ref: '#/components/schemas/ResidualRisk'
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+    CreateMitigationStepRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - description
+      properties:
+        title:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationStepStatus'
+        callToAction:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        controlId:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    MitigationVerifierKey:
+      type: string
+      description: ''
+      x-enumNames:
+      - Guardrail
+      - Evaluation
+      - RedTeaming
+      - Gateway
+      - Assessment
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+      enum:
+      - Guardrail
+      - Evaluation
+      - RedTeaming
+      - Gateway
+      - Assessment
+      - Disclosure
+      - EndpointRouting
+      - GatewayBudget
+      - GatewayAgentConstraint
+    UpdateMitigationStepRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - description
+      - status
+      properties:
+        title:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/MitigationStepStatus'
+    MitigationActionTargetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - GatewayAssignment
+      - SpmAgent
+      - EndpointApp
+      enum:
+      - InternalAgent
+      - GatewayAssignment
+      - SpmAgent
+      - EndpointApp
+    MitigationActionEligibilityStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Eligible
+      - NotApplicable
+      - Unavailable
+      - ManualOnly
+      enum:
+      - Eligible
+      - NotApplicable
+      - Unavailable
+      - ManualOnly
+    PagedResultOfGroupedRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupedRiskRegistryResponse'
+        totalCount:
+          type: integer
+          format: int32
+    MitigationStepVerificationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        stepsChecked:
+          type: integer
+          format: int32
+        stepsCompleted:
+          type: integer
+          format: int32
+        stepsEvidencePending:
+          type: integer
+          format: int32
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationStepVerificationResultResponse'
+    MitigationActionContractsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        riskItemId:
+          type: string
+          format: guid
+        useCaseId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationActionContract'
+    MitigationSuggestion:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        kind:
+          type: string
+        suggestedName:
+          type:
+          - string
+          - 'null'
+        suggestedDescription:
+          type:
+          - string
+          - 'null'
+        candidateGatewayConfigurationIds:
+          type: array
+          items:
+            type: string
+            format: guid
     AiAssetSourceType:
       type: string
       description: ''
@@ -1276,78 +1773,219 @@ components:
       - Purview
       - AzureFunctionApps
       - GitLab
-    MitigationStepVerificationResponse:
+    MitigationArtifactEvidenceState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Qualifying
+      - Candidate
+      - Missing
+      - InProgress
+      enum:
+      - Qualifying
+      - Candidate
+      - Missing
+      - InProgress
+    MitigationStepStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - New
+      - InProgress
+      - Completed
+      - Failed
+      enum:
+      - New
+      - InProgress
+      - Completed
+      - Failed
+    MitigationArtifactEvidenceResponse:
       type: object
       additionalProperties: false
       properties:
-        stepsChecked:
-          type: integer
-          format: int32
-        stepsCompleted:
-          type: integer
-          format: int32
-        stepsEvidencePending:
-          type: integer
-          format: int32
-        results:
+        artifactType:
+          $ref: '#/components/schemas/MitigationArtifactType'
+        entityId:
+          type: string
+          format: guid
+        displayName:
+          type: string
+        state:
+          $ref: '#/components/schemas/MitigationArtifactEvidenceState'
+        change:
+          $ref: '#/components/schemas/MitigationArtifactChange'
+        status:
+          type:
+          - string
+          - 'null'
+        appliesNow:
+          type: boolean
+        dataLossPreventionCategories:
           type: array
           items:
-            $ref: '#/components/schemas/MitigationStepVerificationResultResponse'
-    MitigationActionContract:
+            type: string
+        agentPipelineIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        artifactTimestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    SecurePostureProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+      enum:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+    CreateRiskRegistryRequest:
       type: object
       additionalProperties: false
       properties:
-        mitigationStepId:
+        name:
+          type: string
+        assetId:
           type: string
           format: guid
-        mitigationStepDefinitionId:
+        assignedLabelPriority:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        riskDomainId:
           type:
           - string
           - 'null'
           format: guid
-        callToAction:
-          type:
-          - string
-          - 'null'
-        actionType:
-          $ref: '#/components/schemas/MitigationActionType'
-        eligibility:
-          $ref: '#/components/schemas/MitigationActionEligibilityStatus'
-        eligibilityReason:
-          type: string
-        uiMessage:
-          type:
-          - string
-          - 'null'
-        prerequisiteCallToAction:
-          type:
-          - string
-          - 'null'
-        prerequisiteMitigationStepId:
+        riskSubDomainId:
           type:
           - string
           - 'null'
           format: guid
-        isPrerequisite:
-          type: boolean
-        eligibleTargets:
+        controlIds:
           type: array
           items:
-            $ref: '#/components/schemas/MitigationActionTarget'
-        blockedTargets:
+            type: string
+            format: guid
+        riskProfileId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        catalogVersion:
+          type:
+          - string
+          - 'null'
+        requireTaxonomy:
+          type: boolean
+    MitigationVerificationOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - Satisfied
+      - NotSatisfied
+      - AgentMismatch
+      - Inconclusive
+      enum:
+      - Satisfied
+      - NotSatisfied
+      - AgentMismatch
+      - Inconclusive
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+    PagedResultOfRiskRegistryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/MitigationBlockedTarget'
-        suggestedCreatePayload:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationSuggestion'
-        minimumCompletionProfile:
-          $ref: '#/components/schemas/MitigationMinimumCompletionProfile'
-        verifierKey:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationVerifierKey'
-        supportsAutomaticVerification:
-          type: boolean
+            $ref: '#/components/schemas/RiskRegistryResponse'
+        totalCount:
+          type: integer
+          format: int32
     MitigationActionTarget:
       type: object
       additionalProperties: false
@@ -1414,370 +2052,6 @@ components:
           format: int32
         verifierValidatable:
           type: boolean
-    CreateRiskTransferDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - justification
-      - transferredOwner
-      properties:
-        justification:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        transferredOwner:
-          type: string
-          maxLength: 500
-          minLength: 1
-        evidenceLink:
-          type:
-          - string
-          - 'null'
-          format: uri
-          maxLength: 200
-    PagedResultOfGroupedRiskRegistryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupedRiskRegistryResponse'
-        totalCount:
-          type: integer
-          format: int32
-    RouteEndpointThroughGatewayRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - endpointAppAggregateId
-      - provider
-      properties:
-        endpointAppAggregateId:
-          type: string
-          format: guid
-        provider:
-          type: string
-          maxLength: 128
-          minLength: 1
-        gatewayConfigurationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    MitigationMinimumCompletionProfile:
-      type: object
-      additionalProperties: false
-      properties:
-        requirementText:
-          type:
-          - string
-          - 'null'
-        requiresEnforcedGuardrail:
-          type: boolean
-        requiresDataLossPreventionFilter:
-          type: boolean
-        requiresSuccessfulExecution:
-          type: boolean
-        verifiedByEventOnly:
-          type: boolean
-        manualCompletionOnly:
-          type: boolean
-    MitigationCapabilityAssetFamily:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
-      enum:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
-    MitigationActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Guardrail
-      - DataLossPrevention
-      - Evaluation
-      - RedTeaming
-      - GatewayBudget
-      - GatewayAgentConstraint
-      - Assessment
-      - Disclosure
-      - EndpointGatewayRouting
-      - Navigation
-      enum:
-      - Guardrail
-      - DataLossPrevention
-      - Evaluation
-      - RedTeaming
-      - GatewayBudget
-      - GatewayAgentConstraint
-      - Assessment
-      - Disclosure
-      - EndpointGatewayRouting
-      - Navigation
-    CreateAcceptanceDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - decision
-      properties:
-        decision:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        residualRisk:
-          oneOf:
-          - $ref: '#/components/schemas/ResidualRisk'
-    MitigationArtifactEvidenceState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Qualifying
-      - Candidate
-      - Missing
-      - InProgress
-      enum:
-      - Qualifying
-      - Candidate
-      - Missing
-      - InProgress
-    MitigationArtifactEvidenceResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        artifactType:
-          $ref: '#/components/schemas/MitigationArtifactType'
-        entityId:
-          type: string
-          format: guid
-        displayName:
-          type: string
-        state:
-          $ref: '#/components/schemas/MitigationArtifactEvidenceState'
-        change:
-          $ref: '#/components/schemas/MitigationArtifactChange'
-        status:
-          type:
-          - string
-          - 'null'
-        appliesNow:
-          type: boolean
-        dataLossPreventionCategories:
-          type: array
-          items:
-            type: string
-        agentPipelineIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        artifactTimestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    MitigationActionContractsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        riskItemId:
-          type: string
-          format: guid
-        useCaseId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationActionContract'
-    MitigationStepVerificationEvidenceResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        verifierKey:
-          $ref: '#/components/schemas/MitigationVerifierKey'
-        evidenceEntityIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        artifacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
-        verifiedAt:
-          type: string
-          format: date-time
-        trigger:
-          $ref: '#/components/schemas/MitigationVerificationTrigger'
-        evidenceMissingAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    RiskRegistryType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UseCase
-      enum:
-      - UseCase
-    RiskRegistryStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - PendingReview
-      - Mitigate
-      - Accept
-      - Transfer
-      - Avoid
-      enum:
-      - PendingReview
-      - Mitigate
-      - Accept
-      - Transfer
-      - Avoid
-    RiskTreatmentStepsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        riskId:
-          type: string
-          format: guid
-        controlIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        treatmentSteps:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskTreatmentStepResponse'
-    MitigationSuggestion:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        kind:
-          type: string
-        suggestedName:
-          type:
-          - string
-          - 'null'
-        suggestedDescription:
-          type:
-          - string
-          - 'null'
-        candidateGatewayConfigurationIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    MitigationArtifactType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Guardrail
-      - Evaluation
-      - RedTeamingCampaign
-      - Assessment
-      - GatewayLimit
-      - Disclosure
-      - EndpointRouting
-      - GatewayBudget
-      - GatewayAgentConstraint
-      - ExternalAgentRouting
-      enum:
-      - Guardrail
-      - Evaluation
-      - RedTeamingCampaign
-      - Assessment
-      - GatewayLimit
-      - Disclosure
-      - EndpointRouting
-      - GatewayBudget
-      - GatewayAgentConstraint
-      - ExternalAgentRouting
-    MitigationVerificationOutcome:
-      type: string
-      description: ''
-      x-enumNames:
-      - Satisfied
-      - NotSatisfied
-      - AgentMismatch
-      - Inconclusive
-      enum:
-      - Satisfied
-      - NotSatisfied
-      - AgentMismatch
-      - Inconclusive
-    PagedResultOfRiskRegistryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskRegistryResponse'
-        totalCount:
-          type: integer
-          format: int32
-    AcceptanceDecisionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        decision:
-          type: string
-        residualRisk:
-          oneOf:
-          - $ref: '#/components/schemas/ResidualRisk'
-        createdById:
-          type:
-          - string
-          - 'null'
-          format: guid
-        createdByName:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ResidualRisk:
-      type: string
-      description: ''
-      x-enumNames:
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - Low
-      - Medium
-      - High
-      - Critical
     UpdateRiskRegistryRequest:
       type: object
       additionalProperties: false
@@ -1826,139 +2100,156 @@ components:
           type:
           - string
           - 'null'
-    MitigationVerificationTrigger:
+    MitigationActionType:
       type: string
       description: ''
       x-enumNames:
-      - Event
-      - Creation
-      - Manual
-      - Scheduled
-      - ResidualRecompute
-      - WorkStarted
+      - Guardrail
+      - DataLossPrevention
+      - Evaluation
+      - RedTeaming
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - Assessment
+      - Disclosure
+      - EndpointGatewayRouting
+      - Navigation
       enum:
-      - Event
-      - Creation
-      - Manual
-      - Scheduled
-      - ResidualRecompute
-      - WorkStarted
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    GroupedRiskRegistryResponse:
+      - Guardrail
+      - DataLossPrevention
+      - Evaluation
+      - RedTeaming
+      - GatewayBudget
+      - GatewayAgentConstraint
+      - Assessment
+      - Disclosure
+      - EndpointGatewayRouting
+      - Navigation
+    UpdateRiskTransferDecisionRequest:
       type: object
       additionalProperties: false
+      required:
+      - justification
+      - transferredOwner
       properties:
-        riskName:
-          type: string
-        count:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskRegistryResponse'
-    MitigationActionEligibilityStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Eligible
-      - NotApplicable
-      - Unavailable
-      - ManualOnly
-      enum:
-      - Eligible
-      - NotApplicable
-      - Unavailable
-      - ManualOnly
-    RiskTransferDecisionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
         justification:
           type: string
+          maxLength: 2000
+          minLength: 1
         transferredOwner:
           type: string
+          maxLength: 500
+          minLength: 1
         evidenceLink:
           type:
           - string
           - 'null'
-        createdByName:
+          format: uri
+          maxLength: 200
+    RouteEndpointThroughGatewayRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointAppAggregateId
+      - provider
+      properties:
+        endpointAppAggregateId:
+          type: string
+          format: guid
+        provider:
+          type: string
+          maxLength: 128
+          minLength: 1
+        gatewayConfigurationId:
           type:
           - string
           - 'null'
-        createdAt:
+          format: guid
+    UpdateRiskAvoidanceDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - justification
+      properties:
+        justification:
+          type: string
+          maxLength: 2000
+          minLength: 1
+    MitigationBlockedTarget:
+      type: object
+      additionalProperties: false
+      properties:
+        assetAggregateId:
+          type: string
+          format: guid
+        displayName:
           type:
           - string
           - 'null'
-          format: date-time
-        updatedAt:
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        prerequisiteCallToAction:
           type:
           - string
           - 'null'
-          format: date-time
-    MitigationVerifierKey:
-      type: string
-      description: ''
-      x-enumNames:
-      - Guardrail
-      - Evaluation
-      - RedTeaming
-      - Gateway
-      - Assessment
-      - Disclosure
-      - EndpointRouting
-      - GatewayBudget
-      - GatewayAgentConstraint
-      enum:
-      - Guardrail
-      - Evaluation
-      - RedTeaming
-      - Gateway
-      - Assessment
-      - Disclosure
-      - EndpointRouting
-      - GatewayBudget
-      - GatewayAgentConstraint
-    MitigationActionTargetType:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalAgent
-      - GatewayAssignment
-      - SpmAgent
-      - EndpointApp
-      enum:
-      - InternalAgent
-      - GatewayAssignment
-      - SpmAgent
-      - EndpointApp
+        prerequisiteMitigationStepId:
+          type: string
+          format: guid
+    MitigationActionContract:
+      type: object
+      additionalProperties: false
+      properties:
+        mitigationStepId:
+          type: string
+          format: guid
+        mitigationStepDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        callToAction:
+          type:
+          - string
+          - 'null'
+        actionType:
+          $ref: '#/components/schemas/MitigationActionType'
+        eligibility:
+          $ref: '#/components/schemas/MitigationActionEligibilityStatus'
+        eligibilityReason:
+          type: string
+        uiMessage:
+          type:
+          - string
+          - 'null'
+        prerequisiteCallToAction:
+          type:
+          - string
+          - 'null'
+        prerequisiteMitigationStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isPrerequisite:
+          type: boolean
+        eligibleTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationActionTarget'
+        blockedTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationBlockedTarget'
+        suggestedCreatePayload:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationSuggestion'
+        minimumCompletionProfile:
+          $ref: '#/components/schemas/MitigationMinimumCompletionProfile'
+        verifierKey:
+          oneOf:
+          - $ref: '#/components/schemas/MitigationVerifierKey'
+        supportsAutomaticVerification:
+          type: boolean
     MitigationStepVerificationResultResponse:
       type: object
       additionalProperties: false
@@ -1991,49 +2282,25 @@ components:
           type:
           - string
           - 'null'
-    MitigationStepResponse:
+    RiskTransferDecisionResponse:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        title:
+        justification:
           type: string
-        description:
+        transferredOwner:
           type: string
-        status:
-          $ref: '#/components/schemas/MitigationStepStatus'
-        callToAction:
+        evidenceLink:
           type:
           - string
           - 'null'
-        controlId:
+        createdByName:
           type:
           - string
           - 'null'
-        mitigationStepDefinitionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        verifierKey:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationVerifierKey'
-        canVerify:
-          type: boolean
-        manualCompletionAllowed:
-          type: boolean
-        completionSource:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationStepCompletionSource'
-        completedByName:
-          type:
-          - string
-          - 'null'
-        verificationEvidence:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationStepVerificationEvidenceResponse'
         createdAt:
           type:
           - string
@@ -2044,192 +2311,6 @@ components:
           - string
           - 'null'
           format: date-time
-    RiskTreatmentStepResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        title:
-          type: string
-        description:
-          type: string
-        callToAction:
-          type: string
-        mappedControls:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappedControlResult'
-    EuAiActCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-      enum:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-    MitigationStepStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - New
-      - InProgress
-      - Completed
-      - Failed
-      enum:
-      - New
-      - InProgress
-      - Completed
-      - Failed
-    Iso42001Level:
-      type: string
-      description: ''
-      x-enumNames:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-      enum:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-    CreateRiskRegistryRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        assetId:
-          type: string
-          format: guid
-        assignedLabelPriority:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        riskDomainId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        riskSubDomainId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        controlIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        riskProfileId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        catalogVersion:
-          type:
-          - string
-          - 'null'
-        requireTaxonomy:
-          type: boolean
-    UpdateRiskTransferDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - justification
-      - transferredOwner
-      properties:
-        justification:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        transferredOwner:
-          type: string
-          maxLength: 500
-          minLength: 1
-        evidenceLink:
-          type:
-          - string
-          - 'null'
-          format: uri
-          maxLength: 200
-    RiskRegistryDetailResponse:
-      allOf:
-      - $ref: '#/components/schemas/RiskRegistryResponse'
-      - type: object
-        additionalProperties: false
-        properties:
-          classificationAssignmentId:
-            type: string
-            format: guid
-          description:
-            type:
-            - string
-            - 'null'
-          mitigationSteps:
-            type: array
-            items:
-              $ref: '#/components/schemas/MitigationStepResponse'
-          catalogVersion:
-            type:
-            - string
-            - 'null'
-          acceptanceDecision:
-            oneOf:
-            - $ref: '#/components/schemas/AcceptanceDecisionResponse'
-          avoidanceDecision:
-            oneOf:
-            - $ref: '#/components/schemas/RiskAvoidanceDecisionResponse'
-          transferDecision:
-            oneOf:
-            - $ref: '#/components/schemas/RiskTransferDecisionResponse'
-    MitigationBlockedTarget:
-      type: object
-      additionalProperties: false
-      properties:
-        assetAggregateId:
-          type: string
-          format: guid
-        displayName:
-          type:
-          - string
-          - 'null'
-        assetFamily:
-          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
-        prerequisiteCallToAction:
-          type:
-          - string
-          - 'null'
-        prerequisiteMitigationStepId:
-          type: string
-          format: guid
-    UpdateAcceptanceDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - decision
-      - residualRisk
-      properties:
-        decision:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        residualRisk:
-          $ref: '#/components/schemas/ResidualRisk'
     RiskAvoidanceDecisionResponse:
       type: object
       additionalProperties: false
@@ -2253,108 +2334,44 @@ components:
           - string
           - 'null'
           format: date-time
-    CreateMitigationStepRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - title
-      - description
-      properties:
-        title:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationStepStatus'
-        callToAction:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        controlId:
-          type:
-          - string
-          - 'null'
-          maxLength: 50
-        mitigationStepDefinitionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    UpdateRiskAvoidanceDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - justification
-      properties:
-        justification:
-          type: string
-          maxLength: 2000
-          minLength: 1
-    RiskControlResponse:
+    RiskRegistryType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UseCase
+      enum:
+      - UseCase
+    AcceptanceDecisionResponse:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        controlId:
+        decision:
           type: string
-        name:
-          type: string
-    CreateRiskAvoidanceDecisionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - justification
-      properties:
-        justification:
-          type: string
-          maxLength: 2000
-          minLength: 1
-    MitigationStepEvidenceResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        stepId:
-          type: string
-          format: guid
-        riskMetadataId:
-          type: string
-          format: guid
-        verifierKey:
+        residualRisk:
           oneOf:
-          - $ref: '#/components/schemas/MitigationVerifierKey'
-        canVerify:
-          type: boolean
-        completionSource:
-          oneOf:
-          - $ref: '#/components/schemas/MitigationStepCompletionSource'
-        outcome:
-          $ref: '#/components/schemas/MitigationVerificationOutcome'
-        detail:
+          - $ref: '#/components/schemas/ResidualRisk'
+        createdById:
           type:
           - string
           - 'null'
-        verifiedAt:
+          format: guid
+        createdByName:
+          type:
+          - string
+          - 'null'
+        createdAt:
           type:
           - string
           - 'null'
           format: date-time
-        evidenceMissingAt:
+        updatedAt:
           type:
           - string
           - 'null'
           format: date-time
-        artifacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationArtifactEvidenceResponse'
     RiskRegistryResponse:
       type: object
       additionalProperties: false
@@ -2459,117 +2476,100 @@ components:
           type:
           - string
           - 'null'
-    MitigationStepCompletionSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Manual
-      - Verified
-      enum:
-      - Manual
-      - Verified
-    UpdateMitigationStepRequest:
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
+    EndpointRoutingEnforcementResult:
+      type: object
+      additionalProperties: false
+      properties:
+        endpointAppAggregateId:
+          type: string
+          format: guid
+        clientId:
+          type: string
+        provider:
+          type: string
+        gatewayUrl:
+          type: string
+        policyRevision:
+          type: integer
+          format: int64
+        replacedExistingOverride:
+          type: boolean
+        createdTenantWideProviderDefault:
+          type: boolean
+        reachCount:
+          type: integer
+          format: int32
+        routedInstallCount:
+          type: integer
+          format: int32
+    RiskRegistryDetailResponse:
+      allOf:
+      - $ref: '#/components/schemas/RiskRegistryResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          classificationAssignmentId:
+            type: string
+            format: guid
+          description:
+            type:
+            - string
+            - 'null'
+          mitigationSteps:
+            type: array
+            items:
+              $ref: '#/components/schemas/MitigationStepResponse'
+          catalogVersion:
+            type:
+            - string
+            - 'null'
+          acceptanceDecision:
+            oneOf:
+            - $ref: '#/components/schemas/AcceptanceDecisionResponse'
+          avoidanceDecision:
+            oneOf:
+            - $ref: '#/components/schemas/RiskAvoidanceDecisionResponse'
+          transferDecision:
+            oneOf:
+            - $ref: '#/components/schemas/RiskTransferDecisionResponse'
+    RiskTreatmentStepResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type: string
+        mappedControls:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappedControlResult'
+    CreateRiskAvoidanceDecisionRequest:
       type: object
       additionalProperties: false
       required:
-      - title
-      - description
-      - status
+      - justification
       properties:
-        title:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
+        justification:
           type: string
           maxLength: 2000
           minLength: 1
-        status:
-          $ref: '#/components/schemas/MitigationStepStatus'
-    SecurePostureProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-      enum:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-    MitigationArtifactChange:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Added
-      - Retained
-      - Removed
-      enum:
-      - None
-      - Added
-      - Retained
-      - Removed
   securitySchemes:
     ApiKey:
       type: apiKey

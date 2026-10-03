@@ -117,40 +117,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RiskSubDomainDetailResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        code:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        domainId:
-          type: string
-          format: guid
-        domainName:
-          type: string
-        domainColor:
-          type:
-          - string
-          - 'null'
-        mitigations:
-          type: array
-          items:
-            type: string
-        frameworks:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskFrameworkControlsResponse'
     RiskFrameworkControlsResponse:
       type: object
       additionalProperties: false
@@ -167,7 +133,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskControlResponse'
-    RiskSubDomainResponse:
+    RiskDomainResponse:
       type: object
       additionalProperties: false
       properties:
@@ -176,32 +142,13 @@ components:
           format: guid
         name:
           type: string
-        code:
-          type:
-          - string
-          - 'null'
-        description:
+        color:
           type:
           - string
           - 'null'
         displayOrder:
           type: integer
           format: int32
-        mitigations:
-          type: array
-          items:
-            type: string
-    RiskControlResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        controlId:
-          type: string
-        name:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -247,7 +194,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskSubDomainResponse'
-    RiskDomainResponse:
+    RiskSubDomainResponse:
       type: object
       additionalProperties: false
       properties:
@@ -256,13 +203,66 @@ components:
           format: guid
         name:
           type: string
-        color:
+        code:
+          type:
+          - string
+          - 'null'
+        description:
           type:
           - string
           - 'null'
         displayOrder:
           type: integer
           format: int32
+        mitigations:
+          type: array
+          items:
+            type: string
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
+    RiskSubDomainDetailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        domainId:
+          type: string
+          format: guid
+        domainName:
+          type: string
+        domainColor:
+          type:
+          - string
+          - 'null'
+        mitigations:
+          type: array
+          items:
+            type: string
+        frameworks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskFrameworkControlsResponse'
   securitySchemes:
     ApiKey:
       type: apiKey

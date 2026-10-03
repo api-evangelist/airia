@@ -298,37 +298,6 @@ components:
           type:
           - string
           - 'null'
-    DisclosureAudience:
-      type: string
-      description: ''
-      x-enumNames:
-      - Internal
-      - External
-      enum:
-      - Internal
-      - External
-    DisclosureLockedAttributes:
-      type: object
-      additionalProperties: false
-      properties:
-        includeAssetIdentity:
-          type: boolean
-        includeModelDetails:
-          type: boolean
-        includeModelNames:
-          type: boolean
-        includeGuardrails:
-          type: boolean
-        includeGuardrailNames:
-          type: boolean
-        includeRiskClassification:
-          type: boolean
-        includeUseCaseDetails:
-          type: boolean
-        includeHumanReview:
-          type: boolean
-        includeDisclaimer:
-          type: boolean
     CreateDisclosureTemplateRequest:
       type: object
       additionalProperties: false
@@ -399,6 +368,37 @@ components:
           - string
           - 'null'
           maxLength: 200
+    DisclosureLockedAttributes:
+      type: object
+      additionalProperties: false
+      properties:
+        includeAssetIdentity:
+          type: boolean
+        includeModelDetails:
+          type: boolean
+        includeModelNames:
+          type: boolean
+        includeGuardrails:
+          type: boolean
+        includeGuardrailNames:
+          type: boolean
+        includeRiskClassification:
+          type: boolean
+        includeUseCaseDetails:
+          type: boolean
+        includeHumanReview:
+          type: boolean
+        includeDisclaimer:
+          type: boolean
+    DisclosureAudience:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
     DisclosureTemplateDto:
       type: object
       additionalProperties: false

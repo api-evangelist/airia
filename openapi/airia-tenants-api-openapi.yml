@@ -158,6 +158,31 @@ components:
         organizationExternalId:
           type: string
           minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     TenantPermissionsDto:
       type: object
       additionalProperties: false
@@ -205,31 +230,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/TenantPermissionsDto'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

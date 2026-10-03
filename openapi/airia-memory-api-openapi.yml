@@ -541,48 +541,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PipelineReferenceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineName:
-          type: string
-        versionDisplay:
-          type: string
-        isLatest:
-          type: boolean
-        pipelineId:
-          type: string
-          format: guid
-        pipelineVersionId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-    PipelineUsageInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type: string
-          format: guid
-        pipelineName:
-          type: string
-        pipelineVersionId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-        isLatest:
-          type: boolean
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
     PipelineUsageInfoResult:
       type: object
       additionalProperties: false
@@ -593,52 +551,6 @@ components:
             $ref: '#/components/schemas/PipelineUsageInfo'
         usedInOtherProjects:
           type: boolean
-    UserMemoryDataDto:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type:
-          - string
-          - 'null'
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    UpdateUserMemoryDataRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type:
-          - string
-          - 'null'
     MemoryDto:
       type: object
       additionalProperties: false
@@ -683,6 +595,94 @@ components:
           - integer
           - 'null'
           format: int64
+    PipelineReferenceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineName:
+          type: string
+        versionDisplay:
+          type: string
+        isLatest:
+          type: boolean
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+    PipelineUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserMemoryDataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type:
+          - string
+          - 'null'
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UpdateUserMemoryDataRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type:
+          - string
+          - 'null'
     PagedResultOfMemoryDto:
       type: object
       additionalProperties: false

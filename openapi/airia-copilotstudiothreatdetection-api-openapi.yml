@@ -100,6 +100,139 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ThreatDetectionTriggerContext:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        schemaName:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionPlannerContext:
+      type: object
+      additionalProperties: false
+      properties:
+        userMessage:
+          type:
+          - string
+          - 'null'
+        thought:
+          type:
+          - string
+          - 'null'
+        chatHistory:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionChatMessage'
+        previousToolOutputs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolExecutionOutput'
+    ThreatDetectionConversationMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        agent:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionAgentContext'
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionUserContext'
+        trigger:
+          oneOf:
+          - $ref: '#/components/schemas/ThreatDetectionTriggerContext'
+        conversationId:
+          type:
+          - string
+          - 'null'
+        planId:
+          type:
+          - string
+          - 'null'
+        planStepId:
+          type:
+          - string
+          - 'null'
+        parentAgentComponentId:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionToolDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        inputParameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolParameter'
+        outputParameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatDetectionToolParameter'
+    ThreatDetectionErrorResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+        httpStatus:
+          type: integer
+          format: int32
+        diagnostics:
+          type:
+          - string
+          - 'null'
+    ThreatDetectionValidationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isSuccessful:
+          type: boolean
+        status:
+          type: string
+    ThreatDetectionUserContext:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
     ThreatDetectionAnalyzeResponse:
       type: object
       additionalProperties: false
@@ -119,6 +252,19 @@ components:
           type:
           - string
           - 'null'
+    ThreatDetectionToolParameter:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        type: {}
     ThreatDetectionEvaluationRequest:
       type: object
       additionalProperties: false
@@ -151,18 +297,6 @@ components:
           - 'null'
         outputs: {}
         timestamp:
-          type:
-          - string
-          - 'null'
-    ThreatDetectionUserContext:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        tenantId:
           type:
           - string
           - 'null'
@@ -209,140 +343,6 @@ components:
         isPublished:
           type:
           - boolean
-          - 'null'
-    ThreatDetectionToolParameter:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        type: {}
-    ThreatDetectionValidationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        isSuccessful:
-          type: boolean
-        status:
-          type: string
-    ThreatDetectionPlannerContext:
-      type: object
-      additionalProperties: false
-      properties:
-        userMessage:
-          type:
-          - string
-          - 'null'
-        thought:
-          type:
-          - string
-          - 'null'
-        chatHistory:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ThreatDetectionChatMessage'
-        previousToolOutputs:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ThreatDetectionToolExecutionOutput'
-    ThreatDetectionTriggerContext:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        schemaName:
-          type:
-          - string
-          - 'null'
-    ThreatDetectionErrorResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-        message:
-          type: string
-        httpStatus:
-          type: integer
-          format: int32
-        diagnostics:
-          type:
-          - string
-          - 'null'
-    ThreatDetectionToolDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        inputParameters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ThreatDetectionToolParameter'
-        outputParameters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ThreatDetectionToolParameter'
-    ThreatDetectionConversationMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        agent:
-          oneOf:
-          - $ref: '#/components/schemas/ThreatDetectionAgentContext'
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/ThreatDetectionUserContext'
-        trigger:
-          oneOf:
-          - $ref: '#/components/schemas/ThreatDetectionTriggerContext'
-        conversationId:
-          type:
-          - string
-          - 'null'
-        planId:
-          type:
-          - string
-          - 'null'
-        planStepId:
-          type:
-          - string
-          - 'null'
-        parentAgentComponentId:
-          type:
-          - string
           - 'null'
   securitySchemes:
     ApiKey:

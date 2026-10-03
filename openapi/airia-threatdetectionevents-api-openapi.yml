@@ -97,41 +97,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SpmThreatDetectionVerdict:
-      type: string
-      description: ''
-      x-enumNames:
-      - Allowed
-      - Blocked
-      - Error
-      enum:
-      - Allowed
-      - Blocked
-      - Error
-    ProblemDetails:
+    PagedResultV2OfThreatDetectionEventResponse:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
       properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThreatDetectionEventResponse'
+        totalCount:
           type:
           - integer
           - 'null'
           format: int32
-        detail:
+        hasMore:
           type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
+          - boolean
           - 'null'
     ThreatDetectionEventResponse:
       type: object
@@ -198,22 +179,41 @@ components:
           type:
           - string
           - 'null'
-    PagedResultV2OfThreatDetectionEventResponse:
+    SpmThreatDetectionVerdict:
+      type: string
+      description: ''
+      x-enumNames:
+      - Allowed
+      - Blocked
+      - Error
+      enum:
+      - Allowed
+      - Blocked
+      - Error
+    ProblemDetails:
       type: object
-      additionalProperties: false
+      additionalProperties: {}
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThreatDetectionEventResponse'
-        totalCount:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
           type:
           - integer
           - 'null'
           format: int32
-        hasMore:
+        detail:
           type:
-          - boolean
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
           - 'null'
   securitySchemes:
     ApiKey:

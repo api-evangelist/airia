@@ -1204,112 +1204,53 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SimplifiedCampaignSummary:
+    PagedResultOfRedTeamingCampaignSummary:
       type: object
       additionalProperties: false
-      required:
-      - campaignId
-      - jobId
-      - executionStrategyId
-      - name
-      - campaignType
       properties:
-        campaignId:
-          type: string
-          format: guid
-        jobId:
-          type: string
-          format: guid
-        executionStrategyId:
-          type: string
-          format: guid
-        name:
-          type: string
-        campaignType:
-          $ref: '#/components/schemas/RedTeamingCampaignType'
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/JobStatus'
-        createdAt:
-          type: string
-          format: date-time
-        createdBy:
-          type: string
-          format: guid
-        targetName:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCampaignSummary'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfRedTeamingCampaignExecutionLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCampaignExecutionLogDto'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
           type:
           - string
           - 'null'
-        totalTasks:
-          type: integer
-          format: int32
-        completedTasks:
-          type: integer
-          format: int32
-        scheduleType:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleType'
-        isScheduleCancelled:
+        title:
           type:
-          - boolean
+          - string
           - 'null'
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    SecurityCheckSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        found:
-          type: integer
+        status:
+          type:
+          - integer
+          - 'null'
           format: int32
-        total:
-          type: integer
-          format: int32
-    RedTeamingExecutionStrategyType:
-      type: string
-      description: ''
-      x-enumNames:
-      - AgentEvaluation
-      - JobOrchestrator
-      enum:
-      - AgentEvaluation
-      - JobOrchestrator
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     RedTeamingExecutionStatus:
       type: string
       description: ''
@@ -1329,59 +1270,25 @@ components:
       - Failed
       - Cancelled
       - Unknown
-    CreateRedTeamingCampaignResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        campaignName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        campaignType:
-          $ref: '#/components/schemas/RedTeamingCampaignType'
-        executionStrategyType:
-          $ref: '#/components/schemas/RedTeamingExecutionStrategyType'
-        executionStrategyId:
-          type: string
-          format: guid
-        configurationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        scheduleId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        targetId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        createdAt:
-          type: string
-          format: date-time
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
     OrchestratorTypeDto:
       type: object
       additionalProperties: false
@@ -1401,86 +1308,65 @@ components:
         parameters:
           oneOf:
           - $ref: '#/components/schemas/OrchestratorParametersDto'
-    RedTeamingCampaignSummary:
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    GetAgenticAiCampaignTypesResponse:
       type: object
       additionalProperties: false
-      required:
-      - evaluationId
-      - jobId
-      - campaignId
-      - name
-      - status
-      - createdBy
       properties:
-        evaluationId:
+        converterTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConverterTypeDto'
+        orchestratorTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrchestratorTypeDto'
+    JobTaskLogResult:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
           format: guid
-        jobId:
+        taskId:
           type: string
           format: guid
-        campaignId:
+        startedAt:
           type: string
-          format: guid
-        name:
+          format: date-time
+        finishedAt:
           type: string
-        status:
-          $ref: '#/components/schemas/JobStatus'
+          format: date-time
+        previousStatus:
+          oneOf:
+          - $ref: '#/components/schemas/JobTaskStatus'
+        updatedStatus:
+          $ref: '#/components/schemas/JobTaskStatus'
+        log:
+          type:
+          - string
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
         createdAt:
           type: string
           format: date-time
-        createdBy:
-          type: string
-          format: guid
-        primaryAgentName:
-          type:
-          - string
-          - 'null'
-        asrPercentage:
-          type:
-          - number
-          - 'null'
-          format: double
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        totalTasks:
-          type: integer
-          format: int32
-        completedTasks:
-          type: integer
-          format: int32
-        cancellationReason:
-          type:
-          - string
-          - 'null'
-        jobCreatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        scheduleType:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleType'
-        isScheduleCancelled:
-          type:
-          - boolean
-          - 'null'
-    PagedResultOfRedTeamingCampaignSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingCampaignSummary'
-        totalCount:
-          type: integer
-          format: int32
     CreateAgenticAiRedTeamingCampaignRequest:
       type: object
       additionalProperties: false
@@ -1562,210 +1448,105 @@ components:
             type: string
         campaignType:
           $ref: '#/components/schemas/RedTeamingCampaignType'
-    JsonValueKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - Object
-      - Array
-      - String
-      - Number
-      - true
-      - false
-      - null
-      enum:
-      - Undefined
-      - Object
-      - Array
-      - String
-      - Number
-      - true
-      - false
-      - null
-    JobTaskLogResult:
+    GuardrailRecommendationDetails:
       type: object
       additionalProperties: false
       properties:
-        id:
+        name:
+          type: string
+        description:
+          type: string
+        filter_types:
+          type: array
+          items:
+            type: string
+        target_types:
+          type: array
+          items:
+            type: string
+        target_placement_reasoning:
+          type:
+          - string
+          - 'null'
+        action_type:
+          type: string
+        apply_to_tools:
+          type: boolean
+        apply_to_datasource:
+          type: boolean
+        filter_configuration:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        assignment_scope:
+          type: string
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RecommendedFilterConfig'
+    SimplifiedCampaignSummary:
+      type: object
+      additionalProperties: false
+      required:
+      - campaignId
+      - jobId
+      - executionStrategyId
+      - name
+      - campaignType
+      properties:
+        campaignId:
           type: string
           format: guid
-        taskId:
+        jobId:
           type: string
           format: guid
-        startedAt:
+        executionStrategyId:
           type: string
-          format: date-time
-        finishedAt:
+          format: guid
+        name:
           type: string
-          format: date-time
-        previousStatus:
+        campaignType:
+          $ref: '#/components/schemas/RedTeamingCampaignType'
+        status:
           oneOf:
-          - $ref: '#/components/schemas/JobTaskStatus'
-        updatedStatus:
-          $ref: '#/components/schemas/JobTaskStatus'
-        log:
-          type:
-          - string
-          - 'null'
-        exception:
-          type:
-          - string
-          - 'null'
+          - $ref: '#/components/schemas/JobStatus'
         createdAt:
           type: string
           format: date-time
-    JobTaskStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-      enum:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-    PagedResultOfRedTeamingJobTaskDto:
+        createdBy:
+          type: string
+          format: guid
+        targetName:
+          type:
+          - string
+          - 'null'
+        totalTasks:
+          type: integer
+          format: int32
+        completedTasks:
+          type: integer
+          format: int32
+        scheduleType:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleType'
+        isScheduleCancelled:
+          type:
+          - boolean
+          - 'null'
+    PagedResultOfAgenticAiCampaignSummary:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/RedTeamingJobTaskDto'
+            $ref: '#/components/schemas/AgenticAiCampaignSummary'
         totalCount:
           type: integer
           format: int32
-    ParameterSchemaDto:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        properties: {}
-        required:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    MonthlyWeekOccurrence:
-      type: string
-      description: ''
-      x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-    ExternalAgentHttpConfigurationDto:
-      type: object
-      additionalProperties: false
-      required:
-      - endpointUrl
-      - httpMethod
-      properties:
-        endpointUrl:
-          type: string
-          format: uri
-          maxLength: 2000
-          minLength: 1
-        httpMethod:
-          type: string
-          maxLength: 10
-          minLength: 1
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        headersJson:
-          type:
-          - string
-          - 'null'
-        bodyTemplate:
-          type:
-          - string
-          - 'null'
-        responseJsonPath:
-          type:
-          - string
-          - 'null'
-          maxLength: 500
-        timeoutMs:
-          type: integer
-          format: int32
-          maximum: 60000
-          minimum: 1000
-        queryStringsJson:
-          type:
-          - string
-          - 'null'
-        ignoreSslErrors:
-          type: boolean
-        bodyType:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    ConverterTypeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        title:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-    JobStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-      enum:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
     AgenticAiCampaignSummary:
       type: object
       additionalProperties: false
@@ -1842,98 +1623,28 @@ components:
           type:
           - boolean
           - 'null'
-    PagedResultOfAgenticAiCampaignSummary:
+    ParameterSchemaDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        properties: {}
+        required:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PagedResultOfRedTeamingJobTaskDto:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/AgenticAiCampaignSummary'
+            $ref: '#/components/schemas/RedTeamingJobTaskDto'
         totalCount:
-          type: integer
-          format: int32
-    RedTeamingCampaignType:
-      type: string
-      description: ''
-      x-enumNames:
-      - DatasetBased
-      - AgenticAI
-      enum:
-      - DatasetBased
-      - AgenticAI
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    OrchestratorParametersDto:
-      type: object
-      additionalProperties: false
-      properties:
-        schema:
-          $ref: '#/components/schemas/ParameterSchemaDto'
-        uiSchema: {}
-    GuardrailRecommendationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        recommendation_text:
-          type: string
-        severity:
-          type: string
-        evidence_turns:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-        related_vulnerabilities:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        guardrail_details:
-          oneOf:
-          - $ref: '#/components/schemas/GuardrailRecommendationDetails'
-        is_applied:
-          type: boolean
-        applied_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        applied_entity_id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        order_index:
           type: integer
           format: int32
     ModelIdentifierType:
@@ -1947,262 +1658,6 @@ components:
       - None
       - Library
       - Project
-    PagedResultOfSimplifiedCampaignSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimplifiedCampaignSummary'
-        totalCount:
-          type: integer
-          format: int32
-    RecommendedFilterConfig:
-      type: object
-      additionalProperties: false
-      properties:
-        filter_type:
-          type: string
-        filter_action:
-          type: string
-        config:
-          type:
-          - string
-          - 'null'
-    PagedResultOfRedTeamingCampaignExecutionLogDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingCampaignExecutionLogDto'
-        totalCount:
-          type: integer
-          format: int32
-    GetAgenticAiCampaignTypesResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        converterTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConverterTypeDto'
-        orchestratorTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrchestratorTypeDto'
-    RedTeamingJobTaskDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        jobId:
-          type: string
-          format: guid
-        status:
-          $ref: '#/components/schemas/JobTaskStatus'
-        sequenceNumber:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        failuresCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        logs:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/JobTaskLogResult'
-        errorSummary:
-          type:
-          - string
-          - 'null'
-        totalInputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        totalOutputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        totalCost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        totalModelCallDurationSeconds:
-          type:
-          - number
-          - 'null'
-          format: double
-        agentExecutionSuccess:
-          type:
-          - boolean
-          - 'null'
-        agentExecutionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        agentExecutionDurationSeconds:
-          type:
-          - number
-          - 'null'
-          format: double
-        pipelineVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        agentName:
-          type:
-          - string
-          - 'null'
-        attackCategory:
-          type:
-          - string
-          - 'null'
-        verdict:
-          type:
-          - string
-          - 'null'
-        verdictReason:
-          type:
-          - string
-          - 'null'
-        severity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        evaluationModelName:
-          type:
-          - string
-          - 'null'
-    GuardrailRecommendationDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        filter_types:
-          type: array
-          items:
-            type: string
-        target_types:
-          type: array
-          items:
-            type: string
-        target_placement_reasoning:
-          type:
-          - string
-          - 'null'
-        action_type:
-          type: string
-        apply_to_tools:
-          type: boolean
-        apply_to_datasource:
-          type: boolean
-        filter_configuration:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        assignment_scope:
-          type: string
-        filters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RecommendedFilterConfig'
-    ScheduleModel:
-      type: object
-      additionalProperties: false
-      properties:
-        second:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        minute:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        hour:
-          type: integer
-          format: int32
-          maximum: 23
-          minimum: 0
-        executionHour:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 23
-          minimum: 0
-        day:
-          type: integer
-          format: int32
-          maximum: 31
-          minimum: 1
-        month:
-          type: integer
-          format: int32
-          maximum: 12
-          minimum: 1
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        daysOfWeek:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DayOfWeek'
-        monthlyWeekOccurrence:
-          oneOf:
-          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
-        timeZoneId:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          minLength: 0
-        year:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 2099
-          minimum: 1970
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
     RedTeamingCampaignExecutionLogDto:
       type: object
       additionalProperties: false
@@ -2341,6 +1796,20 @@ components:
           - number
           - 'null'
           format: double
+    ConverterTypeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
     RedTeamingFailureCategory:
       type: string
       description: ''
@@ -2360,6 +1829,537 @@ components:
       - ApiError
       - EvaluationError
       - Unknown
+    RecommendedFilterConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        filter_type:
+          type: string
+        filter_action:
+          type: string
+        config:
+          type:
+          - string
+          - 'null'
+    GuardrailRecommendationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        recommendation_text:
+          type: string
+        severity:
+          type: string
+        evidence_turns:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        related_vulnerabilities:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        guardrail_details:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailRecommendationDetails'
+        is_applied:
+          type: boolean
+        applied_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        applied_entity_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        order_index:
+          type: integer
+          format: int32
+    CreateRedTeamingCampaignResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        campaignName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        campaignType:
+          $ref: '#/components/schemas/RedTeamingCampaignType'
+        executionStrategyType:
+          $ref: '#/components/schemas/RedTeamingExecutionStrategyType'
+        executionStrategyId:
+          type: string
+          format: guid
+        configurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        scheduleId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        targetId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    RedTeamingExecutionStrategyType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AgentEvaluation
+      - JobOrchestrator
+      enum:
+      - AgentEvaluation
+      - JobOrchestrator
+    RedTeamingCampaignType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DatasetBased
+      - AgenticAI
+      enum:
+      - DatasetBased
+      - AgenticAI
+    ScheduleModel:
+      type: object
+      additionalProperties: false
+      properties:
+        second:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    SecurityCheckSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        found:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int32
+    RedTeamingJobTaskDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        jobId:
+          type: string
+          format: guid
+        status:
+          $ref: '#/components/schemas/JobTaskStatus'
+        sequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        failuresCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        logs:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/JobTaskLogResult'
+        errorSummary:
+          type:
+          - string
+          - 'null'
+        totalInputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalOutputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalModelCallDurationSeconds:
+          type:
+          - number
+          - 'null'
+          format: double
+        agentExecutionSuccess:
+          type:
+          - boolean
+          - 'null'
+        agentExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentExecutionDurationSeconds:
+          type:
+          - number
+          - 'null'
+          format: double
+        pipelineVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentName:
+          type:
+          - string
+          - 'null'
+        attackCategory:
+          type:
+          - string
+          - 'null'
+        verdict:
+          type:
+          - string
+          - 'null'
+        verdictReason:
+          type:
+          - string
+          - 'null'
+        severity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        evaluationModelName:
+          type:
+          - string
+          - 'null'
+    PagedResultOfSimplifiedCampaignSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimplifiedCampaignSummary'
+        totalCount:
+          type: integer
+          format: int32
+    RedTeamingCampaignSummary:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - jobId
+      - campaignId
+      - name
+      - status
+      - createdBy
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        jobId:
+          type: string
+          format: guid
+        campaignId:
+          type: string
+          format: guid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          format: guid
+        primaryAgentName:
+          type:
+          - string
+          - 'null'
+        asrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        totalTasks:
+          type: integer
+          format: int32
+        completedTasks:
+          type: integer
+          format: int32
+        cancellationReason:
+          type:
+          - string
+          - 'null'
+        jobCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        scheduleType:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleType'
+        isScheduleCancelled:
+          type:
+          - boolean
+          - 'null'
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    JobTaskStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+      enum:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    JsonValueKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - Object
+      - Array
+      - String
+      - Number
+      - true
+      - false
+      - null
+      enum:
+      - Undefined
+      - Object
+      - Array
+      - String
+      - Number
+      - true
+      - false
+      - null
+    OrchestratorParametersDto:
+      type: object
+      additionalProperties: false
+      properties:
+        schema:
+          $ref: '#/components/schemas/ParameterSchemaDto'
+        uiSchema: {}
+    ExternalAgentHttpConfigurationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointUrl
+      - httpMethod
+      properties:
+        endpointUrl:
+          type: string
+          format: uri
+          maxLength: 2000
+          minLength: 1
+        httpMethod:
+          type: string
+          maxLength: 10
+          minLength: 1
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        headersJson:
+          type:
+          - string
+          - 'null'
+        bodyTemplate:
+          type:
+          - string
+          - 'null'
+        responseJsonPath:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+        timeoutMs:
+          type: integer
+          format: int32
+          maximum: 60000
+          minimum: 1000
+        queryStringsJson:
+          type:
+          - string
+          - 'null'
+        ignoreSslErrors:
+          type: boolean
+        bodyType:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

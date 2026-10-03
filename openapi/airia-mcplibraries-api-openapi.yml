@@ -123,26 +123,31 @@ components:
           type: boolean
         level:
           type: string
-    SaveMcpLibraryConfigurationRequest:
+    ProblemDetails:
       type: object
       additionalProperties: {}
-      required:
-      - authType
       properties:
-        authType:
-          type: string
-          maxLength: 64
-          minLength: 1
-        level:
-          type: string
-        enabled:
-          type: boolean
-        properties:
+        type:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
-            type: string
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     McpLibraryConfigurationDto:
       type: object
       additionalProperties: {}
@@ -172,31 +177,26 @@ components:
           - 'null'
           additionalProperties:
             type: string
-    ProblemDetails:
+    SaveMcpLibraryConfigurationRequest:
       type: object
       additionalProperties: {}
+      required:
+      - authType
       properties:
-        type:
+        authType:
+          type: string
+          maxLength: 64
+          minLength: 1
+        level:
+          type: string
+        enabled:
+          type: boolean
+        properties:
           type:
-          - string
+          - object
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+          additionalProperties:
+            type: string
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -1150,516 +1150,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - ResetPassword
-      - ResendCredentials
-      enum:
-      - ResetPassword
-      - ResendCredentials
-    DataSourceFiles:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-    UserCredentials:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        type:
-          type: string
-        value:
-          type: string
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type: string
-          format: guid
-        currentPassword:
-          type: string
-    ConversationMessagePreviewDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        message:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        role:
-          type:
-          - string
-          - 'null'
-        userId:
-          type: string
-          format: guid
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    EntityNamesResult:
-      type: object
-      additionalProperties: false
-      properties:
-        names:
-          type: object
-          additionalProperties:
-            type: string
-    ConversationOverviewDto:
-      type: object
-      additionalProperties: false
-      properties:
-        conversationId:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        title:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        messages:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ConversationMessage'
-        latestMessage:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationMessageDto'
-        deploymentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dataSourceFiles:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DataSourceFiles'
-        isBookmarked:
-          type: boolean
-        requiresRedactionReprocessing:
-          type: boolean
-        lastExecutionStatus:
-          oneOf:
-          - $ref: '#/components/schemas/LastExecutionStatus'
-        lastExecutionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        inputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        outputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        totalTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        cost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        policyRedactions:
-          oneOf:
-          - $ref: '#/components/schemas/RedactionStoreData'
-        username:
-          type:
-          - string
-          - 'null'
-        agentName:
-          type:
-          - string
-          - 'null'
-        violationCount:
-          type: integer
-          format: int32
-        isEndUserPrivate:
-          type: boolean
-        lastComputeEnvironmentId:
-          type:
-          - string
-          - 'null'
-        lastComputeEnvironmentType:
-          oneOf:
-          - $ref: '#/components/schemas/ComputeEnvironmentType'
-    ConversationSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        conversationId:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        title:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        deploymentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isBookmarked:
-          type: boolean
-        lastExecutionStatus:
-          oneOf:
-          - $ref: '#/components/schemas/LastExecutionStatus'
-        latestMessage:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationMessagePreviewDto'
-    GroupType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-      enum:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-    TriggerPasswordResetRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - userIdentifier
-      - actionType
-      properties:
-        userIdentifier:
-          type: string
-          minLength: 1
-        actionType:
-          $ref: '#/components/schemas/UserActionType'
-        redirectUrl:
-          type:
-          - string
-          - 'null'
-    ConversationMessageDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        message:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        imageAttachmentIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        fileContextMessages:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        files:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        role:
-          type: string
-        userId:
-          type: string
-          format: guid
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationMessageUserDto'
-        isSummary:
-          type: boolean
-        extractedMemories:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        originStepId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originStepTitle:
-          type:
-          - string
-          - 'null'
-        toolCalls:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolCallData'
-        toolResponses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolResponseData'
-    UpdateUserViewModel:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          format: guid
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-        isActive:
-          type: boolean
-        groupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        roleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        isIdpProvisioned:
-          type: boolean
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        departmentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    RoleViewModelV2:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    ExternalIdentityMappingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        externalSystem:
-          type: string
-        externalUserId:
-          type: string
-        verifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastSyncedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    RoleViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    TriggerPasswordResetResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-    CreateUserViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        identityServerUserId:
-          type:
-          - string
-          - 'null'
-        firstName:
-          type: string
-        lastName:
-          type:
-          - string
-          - 'null'
-        email:
-          type: string
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-        isActive:
-          type: boolean
-        isCurrentLoggedInUser:
-          type: boolean
-        isTemporaryPassword:
-          type:
-          - boolean
-          - 'null'
-        password:
-          type:
-          - string
-          - 'null'
-        enterprise:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupViewModel'
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleViewModel'
-        projectType:
-          type:
-          - string
-          - 'null'
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        sendInvitationEmail:
-          type: boolean
-        departmentId:
-          type:
-          - string
-          - 'null'
-          format: guid
     UserViewModelV2:
       type: object
       additionalProperties: false
@@ -1758,114 +1248,25 @@ components:
           type:
           - string
           - 'null'
-    ConversationMessageUserDto:
+    AssignUserRoleViewModel:
       type: object
       additionalProperties: false
       properties:
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-    ComputeEnvironmentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sandbox
-      - BrowserAgent
-      enum:
-      - Sandbox
-      - BrowserAgent
-    PagedResultV2OfConversationSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
+        userId:
+          type: string
+          format: guid
+        roleIds:
           type: array
           items:
-            $ref: '#/components/schemas/ConversationSummaryDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    LastExecutionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-      enum:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-    ConversationsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        conversations:
+            type: string
+            format: guid
+        projectIds:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ConversationOverviewDto'
-    CreateExternalIdentityMappingRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - externalSystem
-      - externalUserId
-      properties:
-        externalSystem:
-          type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[A-Za-z][A-Za-z0-9]*$
-        externalUserId:
-          type: string
-          maxLength: 255
-          minLength: 1
-    RedactionRecordData:
-      type: object
-      additionalProperties: false
-      properties:
-        violatingText:
-          type: string
-        confidenceScore:
-          type: number
-          format: double
-        startOffset:
-          type: integer
-          format: int32
-        length:
-          type: integer
-          format: int32
-        placeholderBase:
-          type: string
-        placeholderIndex:
-          type: integer
-          format: int32
-        contexts:
-          type: array
-          items:
             type: string
-        violatingSubIndex:
-          type: integer
-          format: int32
+            format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -1891,57 +1292,6 @@ components:
           type:
           - string
           - 'null'
-    GroupViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        parentId:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        identityServerGroupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        groupType:
-          $ref: '#/components/schemas/GroupType'
-        users:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UserViewModel'
-        totalUsers:
-          type: integer
-          format: int32
-        rolesList:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleViewModel'
-        isIdpProvisioned:
-          type: boolean
-        groupLeader:
-          oneOf:
-          - $ref: '#/components/schemas/UserViewModel'
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
     UserViewModel:
       type: object
       additionalProperties: false
@@ -2051,45 +1401,265 @@ components:
           type:
           - string
           - 'null'
-    FederatedIdentityRepresentation:
+    DataSourceFiles:
       type: object
       additionalProperties: false
       properties:
-        identityProvider:
+        key:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    UserCredentials:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        value:
+          type: string
+        createdAt:
           type:
           - string
           - 'null'
+          format: date-time
         userId:
-          type:
-          - string
-          - 'null'
-        userName:
-          type:
-          - string
-          - 'null'
-    RedactionStoreData:
+          type: string
+          format: guid
+        currentPassword:
+          type: string
+    RoleViewModel:
       type: object
       additionalProperties: false
       properties:
-        messageRedactions:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/RedactionRecordData'
-        contextIndex:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-              format: guid
-        version:
-          type: integer
-          format: int32
-        lastModified:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ConversationsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        conversations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConversationOverviewDto'
+    GroupViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        parentId:
+          type:
+          - string
+          - 'null'
+        createdAt:
           type: string
           format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        identityServerGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalUsers:
+          type: integer
+          format: int32
+        rolesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        isIdpProvisioned:
+          type: boolean
+        groupLeader:
+          oneOf:
+          - $ref: '#/components/schemas/UserViewModel'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    TriggerPasswordResetResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    LastExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+      enum:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+    ExternalIdentityMappingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        externalSystem:
+          type: string
+        externalUserId:
+          type: string
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ConversationOverviewDto:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        messages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConversationMessage'
+        latestMessage:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMessageDto'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSourceFiles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourceFiles'
+        isBookmarked:
+          type: boolean
+        requiresRedactionReprocessing:
+          type: boolean
+        lastExecutionStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LastExecutionStatus'
+        lastExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        policyRedactions:
+          oneOf:
+          - $ref: '#/components/schemas/RedactionStoreData'
+        username:
+          type:
+          - string
+          - 'null'
+        agentName:
+          type:
+          - string
+          - 'null'
+        violationCount:
+          type: integer
+          format: int32
+        isEndUserPrivate:
+          type: boolean
+        lastComputeEnvironmentId:
+          type:
+          - string
+          - 'null'
+        lastComputeEnvironmentType:
+          oneOf:
+          - $ref: '#/components/schemas/ComputeEnvironmentType'
     MagicLinkResponseDto:
       type: object
       additionalProperties: false
@@ -2108,44 +1678,23 @@ components:
           type:
           - string
           - 'null'
-    PagedResultOfUserViewModel:
+    UserActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - ResetPassword
+      - ResendCredentials
+      enum:
+      - ResetPassword
+      - ResendCredentials
+    PagedResultV2OfConversationSummaryDto:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/UserViewModel'
-        totalCount:
-          type: integer
-          format: int32
-    AssignUserRoleViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type: string
-          format: guid
-        roleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        projectIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-    PagedResultV2OfConversationOverviewDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversationOverviewDto'
+            $ref: '#/components/schemas/ConversationSummaryDto'
         totalCount:
           type:
           - integer
@@ -2154,6 +1703,293 @@ components:
         hasMore:
           type:
           - boolean
+          - 'null'
+    TriggerPasswordResetRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - userIdentifier
+      - actionType
+      properties:
+        userIdentifier:
+          type: string
+          minLength: 1
+        actionType:
+          $ref: '#/components/schemas/UserActionType'
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+    ConversationMessagePreviewDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        role:
+          type:
+          - string
+          - 'null'
+        userId:
+          type: string
+          format: guid
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    FederatedIdentityRepresentation:
+      type: object
+      additionalProperties: false
+      properties:
+        identityProvider:
+          type:
+          - string
+          - 'null'
+        userId:
+          type:
+          - string
+          - 'null'
+        userName:
+          type:
+          - string
+          - 'null'
+    ConversationMessageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        imageAttachmentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        fileContextMessages:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        role:
+          type: string
+        userId:
+          type: string
+          format: guid
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMessageUserDto'
+        isSummary:
+          type: boolean
+        extractedMemories:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        originStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originStepTitle:
+          type:
+          - string
+          - 'null'
+        toolCalls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCallData'
+        toolResponses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolResponseData'
+    ConversationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isBookmarked:
+          type: boolean
+        lastExecutionStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LastExecutionStatus'
+        latestMessage:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMessagePreviewDto'
+    EntityNamesResult:
+      type: object
+      additionalProperties: false
+      properties:
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    UpdateUserViewModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: guid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        roleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        isIdpProvisioned:
+          type: boolean
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        departmentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ToolCallData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        parameters:
+          type:
+          - string
+          - 'null'
+    RedactionRecordData:
+      type: object
+      additionalProperties: false
+      properties:
+        violatingText:
+          type: string
+        confidenceScore:
+          type: number
+          format: double
+        startOffset:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        placeholderBase:
+          type: string
+        placeholderIndex:
+          type: integer
+          format: int32
+        contexts:
+          type: array
+          items:
+            type: string
+        violatingSubIndex:
+          type: integer
+          format: int32
+    ToolResponseData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        response:
+          type:
+          - string
           - 'null'
     ConversationMessage:
       type: object
@@ -2230,36 +2066,200 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ToolResponseData'
-    ToolResponseData:
+    PagedResultOfUserViewModel:
       type: object
       additionalProperties: false
-      required:
-      - toolCallId
-      - toolName
       properties:
-        toolCallId:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+    PagedResultV2OfConversationOverviewDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationOverviewDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    ComputeEnvironmentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sandbox
+      - BrowserAgent
+      enum:
+      - Sandbox
+      - BrowserAgent
+    RedactionStoreData:
+      type: object
+      additionalProperties: false
+      properties:
+        messageRedactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/RedactionRecordData'
+        contextIndex:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              format: guid
+        version:
+          type: integer
+          format: int32
+        lastModified:
           type: string
-        toolName:
+          format: date-time
+    CreateUserViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
-        response:
+          format: guid
+        identityServerUserId:
           type:
           - string
           - 'null'
-    ToolCallData:
-      type: object
-      additionalProperties: false
-      required:
-      - toolCallId
-      - toolName
-      properties:
-        toolCallId:
+        firstName:
           type: string
-        toolName:
-          type: string
-        parameters:
+        lastName:
           type:
           - string
           - 'null'
+        email:
+          type: string
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        isCurrentLoggedInUser:
+          type: boolean
+        isTemporaryPassword:
+          type:
+          - boolean
+          - 'null'
+        password:
+          type:
+          - string
+          - 'null'
+        enterprise:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupViewModel'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        projectType:
+          type:
+          - string
+          - 'null'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        sendInvitationEmail:
+          type: boolean
+        departmentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ConversationMessageUserDto:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+    CreateExternalIdentityMappingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - externalSystem
+      - externalUserId
+      properties:
+        externalSystem:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[A-Za-z][A-Za-z0-9]*$
+        externalUserId:
+          type: string
+          maxLength: 255
+          minLength: 1
+    RoleViewModelV2:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

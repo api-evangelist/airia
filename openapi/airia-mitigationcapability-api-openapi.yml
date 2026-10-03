@@ -30,27 +30,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MitigationCapability:
-      type: string
-      description: ''
-      x-enumNames:
-      - Invocable
-      - TrafficInterposed
-      - ConfigControlledLlmRouting
-      - ConfigControlledMcpRouting
-      - ConfigControlledMcpSanction
-      - ConfigControlledGateway
-      - Observed
-      - Declared
-      enum:
-      - Invocable
-      - TrafficInterposed
-      - ConfigControlledLlmRouting
-      - ConfigControlledMcpRouting
-      - ConfigControlledMcpSanction
-      - ConfigControlledGateway
-      - Observed
-      - Declared
     ConditionalCapabilityGrantResponse:
       type: object
       additionalProperties: false
@@ -105,6 +84,27 @@ components:
       - EndpointAppWithoutAgent
       - EndpointMcpServer
       - Other
+    MitigationCapability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+      enum:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
   securitySchemes:
     ApiKey:
       type: apiKey

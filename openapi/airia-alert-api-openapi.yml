@@ -531,46 +531,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    HasUnreadResult:
-      type: object
-      additionalProperties: false
-      properties:
-        hasUnread:
-          type: boolean
-    DeletedCountResult:
-      type: object
-      additionalProperties: false
-      properties:
-        deletedCount:
-          type: integer
-          format: int32
-    StatsResult:
-      type: object
-      additionalProperties: false
-      properties:
-        alertsCount:
-          type: integer
-          format: int32
-        alertsMaxByUserCount:
-          type: integer
-          format: int32
-        alertsMaxByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        archivedCount:
-          type: integer
-          format: int32
-    TabCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Alert
-      - Approval
-      enum:
-      - Alert
-      - Approval
     PagedResultOfAlert:
       type: object
       additionalProperties: false
@@ -582,6 +542,76 @@ components:
         totalCount:
           type: integer
           format: int32
+    HasUnreadResult:
+      type: object
+      additionalProperties: false
+      properties:
+        hasUnread:
+          type: boolean
+    ArchivedCountResult:
+      type: object
+      additionalProperties: false
+      properties:
+        archivedCount:
+          type: integer
+          format: int32
+    Alert:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        eventId:
+          type: string
+          format: guid
+        alertType:
+          $ref: '#/components/schemas/AlertType'
+        tabCategory:
+          $ref: '#/components/schemas/TabCategory'
+        relatedId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        relatedTable:
+          type:
+          - string
+          - 'null'
+        relatedGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        placeholdersJson:
+          type:
+          - string
+          - 'null'
+        isRead:
+          type: boolean
+        actionReport:
+          type:
+          - string
+          - 'null'
+        actedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        dismissedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -637,6 +667,39 @@ components:
             type:
             - string
             - 'null'
+    DeletedCountResult:
+      type: object
+      additionalProperties: false
+      properties:
+        deletedCount:
+          type: integer
+          format: int32
+    TabCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Alert
+      - Approval
+      enum:
+      - Alert
+      - Approval
+    PagedByCategoryResult:
+      type: object
+      additionalProperties: false
+      properties:
+        totalCount:
+          type: integer
+          format: int32
+        count1:
+          type: integer
+          format: int32
+        count2:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertResult'
     AlertType:
       type: string
       description: ''
@@ -766,87 +829,24 @@ components:
       - BoardDeckGenerationCompleted
       - BoardDeckGenerationFailed
       - GovernanceMonitorTriggered
-    Alert:
+    StatsResult:
       type: object
       additionalProperties: false
       properties:
-        id:
+        alertsCount:
           type: integer
-          format: int64
-        userId:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        eventId:
-          type: string
-          format: guid
-        alertType:
-          $ref: '#/components/schemas/AlertType'
-        tabCategory:
-          $ref: '#/components/schemas/TabCategory'
-        relatedId:
+          format: int32
+        alertsMaxByUserCount:
+          type: integer
+          format: int32
+        alertsMaxByUserId:
           type:
           - string
           - 'null'
           format: guid
-        relatedTable:
-          type:
-          - string
-          - 'null'
-        relatedGroupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        placeholdersJson:
-          type:
-          - string
-          - 'null'
-        isRead:
-          type: boolean
-        actionReport:
-          type:
-          - string
-          - 'null'
-        actedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        dismissedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ArchivedCountResult:
-      type: object
-      additionalProperties: false
-      properties:
         archivedCount:
           type: integer
           format: int32
-    PagedByCategoryResult:
-      type: object
-      additionalProperties: false
-      properties:
-        totalCount:
-          type: integer
-          format: int32
-        count1:
-          type: integer
-          format: int32
-        count2:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertResult'
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -860,7 +860,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BlockingEntityInfo'
-    RoleViewModel:
+    BlockingEntityInfo:
       type: object
       additionalProperties: false
       properties:
@@ -869,19 +869,6 @@ components:
           format: guid
         name:
           type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
     ProjectDto:
       allOf:
       - $ref: '#/components/schemas/ProjectModelBase'
@@ -990,30 +977,6 @@ components:
               - string
               - 'null'
               format: guid
-    DatasourceSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    PagedResultOfUserViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserViewModel'
-        totalCount:
-          type: integer
-          format: int32
     GroupViewModel:
       type: object
       additionalProperties: false
@@ -1065,51 +1028,32 @@ components:
           items:
             type: string
             format: guid
-    ListingProjectDto:
-      allOf:
-      - $ref: '#/components/schemas/ProjectModelBase'
-      - type: object
-        additionalProperties: false
-        properties:
-          tenantId:
-            type: string
-            format: guid
-          createdAt:
-            type: string
-            format: date-time
-          updatedAt:
-            type: string
-            format: date-time
-          description:
-            type:
-            - string
-            - 'null'
-          projectIconId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          projectIcon:
-            type:
-            - string
-            - 'null'
-          projectType:
-            $ref: '#/components/schemas/ProjectType'
-    ProjectType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Standard
-      - Frontline
-      - Legal
-      - FieldService
-      - BrainFreeze
-      enum:
-      - Standard
-      - Frontline
-      - Legal
-      - FieldService
-      - BrainFreeze
+    ProjectDeletionBlockedDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type: string
+        blockingEntities:
+          $ref: '#/components/schemas/ProjectDeletionBlockingEntities'
+    PipelineSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -1135,54 +1079,6 @@ components:
           type:
           - string
           - 'null'
-    GroupType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-      enum:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-    BlockingEntityInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-    PipelineSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    ProjectDeletionBlockedDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        message:
-          type: string
-        projectId:
-          type: string
-          format: guid
-        projectName:
-          type: string
-        blockingEntities:
-          $ref: '#/components/schemas/ProjectDeletionBlockingEntities'
     UserViewModel:
       type: object
       additionalProperties: false
@@ -1292,6 +1188,110 @@ components:
           type:
           - string
           - 'null'
+    ListingProjectDto:
+      allOf:
+      - $ref: '#/components/schemas/ProjectModelBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          tenantId:
+            type: string
+            format: guid
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+          description:
+            type:
+            - string
+            - 'null'
+          projectIconId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          projectIcon:
+            type:
+            - string
+            - 'null'
+          projectType:
+            $ref: '#/components/schemas/ProjectType'
+    DatasourceSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    ProjectType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
+      enum:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfUserViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
     ProjectModelBase:
       type: object
       additionalProperties: false

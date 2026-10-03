@@ -253,55 +253,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateAiAssetMetadataAssignmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetMetadataDefinitionId:
-          type: string
-          format: guid
-        aiAssetMetadataDefinitionOptionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        value:
-          type:
-          - string
-          - 'null'
-        version:
-          type:
-          - string
-          - 'null'
-    AiAssetMetadataDefinitionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        metadataName:
-          type: string
-        metadataType:
-          $ref: '#/components/schemas/AiAssetMetadataType'
-        valueType:
-          $ref: '#/components/schemas/AiAssetMetadataValueType'
-        isPredefined:
-          type: boolean
-        isRequired:
-          type: boolean
-        isSystemGenerated:
-          type: boolean
-        defaultValue:
-          type:
-          - string
-          - 'null'
-        assetType:
-          $ref: '#/components/schemas/AiAssetType'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
     AiAssetType:
       type: string
       description: ''
@@ -337,6 +288,26 @@ components:
       - EndpointApp
       - EndpointMcpServer
       - ExternalDataSource
+    CreateAiAssetMetadataAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetMetadataDefinitionId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinitionOptionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
     AiAssetMetadataAssignmentResponse:
       type: object
       additionalProperties: false
@@ -408,6 +379,35 @@ components:
           type:
           - string
           - 'null'
+    AiAssetMetadataDefinitionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        metadataName:
+          type: string
+        metadataType:
+          $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isPredefined:
+          type: boolean
+        isRequired:
+          type: boolean
+        isSystemGenerated:
+          type: boolean
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
     AiAssetMetadataDefinitionOptionResponse:
       type: object
       additionalProperties: false

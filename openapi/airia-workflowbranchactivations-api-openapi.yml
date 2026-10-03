@@ -125,79 +125,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DocumentSlot:
-      type: object
-      additionalProperties: false
-      properties:
-        slotKey:
-          type: string
-        label:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        required:
-          type: boolean
-        acceptedFileTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    ExecutionUsageMetrics:
-      type: object
-      additionalProperties: false
-      properties:
-        promptTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        completionTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        totalTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        cachedInputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        cost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        modelName:
-          type:
-          - string
-          - 'null'
-        modelProvider:
-          type:
-          - string
-          - 'null'
-    RiskLevel:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-    StageAutomationConfig:
+    WorkflowTrigger:
       type: object
       x-abstract: true
       additionalProperties: false
@@ -207,18 +135,89 @@ components:
           format: guid
         type:
           type: string
-        timing:
-          type: string
-        condition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-    GovernanceAction:
+        enabled:
+          type: boolean
+    WorkflowVersionChangeType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Changed
+      - Added
+      - Removed
+      enum:
+      - Changed
+      - Added
+      - Removed
+    ProblemDetails:
       type: object
-      x-abstract: true
-      additionalProperties: false
+      additionalProperties: {}
       properties:
         type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    StageType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sequential
+      - Parallel
+      enum:
+      - Sequential
+      - Parallel
+    WorkflowUsageSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        totalTokens:
+          type: integer
+          format: int32
+        totalPromptTokens:
+          type: integer
+          format: int32
+        totalCompletionTokens:
+          type: integer
+          format: int32
+        totalCost:
+          type: number
+          format: decimal
+        automationExecutionCount:
+          type: integer
+          format: int32
+        evaluationCount:
+          type: integer
+          format: int32
+        lastUpdatedAt:
           type: string
+          format: date-time
+    WorkflowType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Governance
+      - Security
+      - WhatIfScenarios
+      enum:
+      - Governance
+      - Security
+      - WhatIfScenarios
     ScheduleType:
       type: string
       description: ''
@@ -238,66 +237,30 @@ components:
       - OneTime
       - Monthly
       - Quarterly
-    ActionOutput:
-      type: object
-      discriminator:
-        propertyName: $type
-        mapping:
-          WebhookOutput: '#/components/schemas/WebhookOutput'
-          RunEvaluationOutput: '#/components/schemas/RunEvaluationOutput'
-          RunRedTeamOutput: '#/components/schemas/RunRedTeamOutput'
-          HttpRequestOutput: '#/components/schemas/HttpRequestOutput'
-          AddGateRequirementOutput: '#/components/schemas/AddGateRequirementOutput'
-          RemoveGateRequirementOutput: '#/components/schemas/RemoveGateRequirementOutput'
-          RegressToStageOutput: '#/components/schemas/RegressToStageOutput'
-          SdkStepOutput: '#/components/schemas/SdkStepOutput'
-          RunAutomationOutput: '#/components/schemas/RunAutomationOutput'
-          RunSystemAgentOutput: '#/components/schemas/RunSystemAgentOutput'
-          GenerateNutritionLabelOutput: '#/components/schemas/GenerateNutritionLabelOutput'
-          GenerateReceiptOutput: '#/components/schemas/GenerateReceiptOutput'
-          SealNutritionLabelOutput: '#/components/schemas/SealNutritionLabelOutput'
-          RunInitialRiskAnalysisOutput: '#/components/schemas/RunInitialRiskAnalysisOutput'
-          RunInherentRiskAnalysisOutput: '#/components/schemas/RunInherentRiskAnalysisOutput'
-          RunResidualRiskAnalysisOutput: '#/components/schemas/RunResidualRiskAnalysisOutput'
-          RunAssessmentOutput: '#/components/schemas/RunAssessmentOutput'
-          NotifyOutput: '#/components/schemas/NotifyOutput'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - $type
-      properties:
-        outcome:
-          $ref: '#/components/schemas/ExecutionOutcome'
-        message:
-          type:
-          - string
-          - 'null'
-        externalJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        $type:
-          type: string
-    WorkflowVersionChangeType:
+    StageFailurePolicy:
       type: string
       description: ''
       x-enumNames:
-      - Changed
-      - Added
-      - Removed
+      - FailWorkflow
+      - RouteTo
+      - PauseForUser
       enum:
-      - Changed
-      - Added
-      - Removed
-    WorkflowSettings:
+      - FailWorkflow
+      - RouteTo
+      - PauseForUser
+    WorkflowChangeClassification:
       type: object
       additionalProperties: false
       properties:
-        autoProgress:
+        analyzerVersion:
+          type: integer
+          format: int32
+        isMaterial:
           type: boolean
-        autoApplyMajorUpdates:
-          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowChangeClassificationItem'
     ApprovalDecision:
       type: string
       description: ''
@@ -311,56 +274,266 @@ components:
       - Rejected
       - Deferred
       - Bypassed
-    BaseOptionalTenantEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    WorkflowOutput:
+    WorkflowMonitor:
       type: object
       additionalProperties: false
+      required:
+      - name
+      - sensor
+      - action
       properties:
-        decision:
-          $ref: '#/components/schemas/WorkflowDecision'
-        decisionReason:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
           type:
           - string
           - 'null'
-        startedAt:
+          maxLength: 1000
+        sensor:
           type: string
-          format: date-time
-        completedAt:
-          type: string
-          format: date-time
-        totalDurationMs:
+          maxLength: 100
+          minLength: 1
+        condition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        action:
+          $ref: '#/components/schemas/GovernanceAction'
+        stageName:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        priority:
           type: integer
-          format: int64
-        stages:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageOutputSummary'
-    BaseOptionalProjectEntity:
+          format: int32
+        enabled:
+          type: boolean
+    ExecutionOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - Success
+      - Skipped
+      - Failed
+      - InProgress
+      enum:
+      - Success
+      - Skipped
+      - Failed
+      - InProgress
+    StagePolicy:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - condition
+      - action
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+          minLength: 1
+        condition:
+          $ref: '#/components/schemas/ConditionNode'
+        action:
+          $ref: '#/components/schemas/GovernanceAction'
+        source:
+          type: string
+        enforced:
+          type: boolean
+        priority:
+          type: integer
+          format: int32
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/RuleSchedule'
+    GovernanceRequest:
       allOf:
-      - $ref: '#/components/schemas/BaseEntity'
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
       - type: object
-        x-abstract: true
         additionalProperties: false
+        required:
+        - workflowInstanceId
+        - stageInstanceId
+        - actionType
+        - actionPayload
+        - status
+        - requestedByUserId
+        - requestedAt
         properties:
-          projectId:
+          workflowInstanceId:
+            type: string
+            format: guid
+            minLength: 1
+          stageInstanceId:
+            type: string
+            format: guid
+            minLength: 1
+          stageEntryExecutionId:
             type:
             - string
             - 'null'
             format: guid
+          actionType:
+            type: string
+            maxLength: 100
+            minLength: 1
+          actionPayload:
+            type: string
+            minLength: 1
+          status:
+            type: string
+            maxLength: 50
+            minLength: 1
+          requestedByUserId:
+            type: string
+            format: guid
+            minLength: 1
+          requestedAt:
+            type: string
+            format: date-time
+          completedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          executionError:
+            type:
+            - string
+            - 'null'
+          rowVersion:
+            type: integer
+          workflowInstance:
+            $ref: '#/components/schemas/WorkflowInstance'
+          stageInstance:
+            $ref: '#/components/schemas/StageInstance'
+    GovernanceAction:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    AutomationExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      - Skipped
+    ApprovalRecord:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - stageInstanceId
+        - approverUserId
+        - decision
+        - decidedAt
+        properties:
+          stageInstanceId:
+            type: string
+            format: guid
+            minLength: 1
+          approverUserId:
+            type: string
+            format: guid
+            minLength: 1
+          decision:
+            $ref: '#/components/schemas/ApprovalDecision'
+          comments:
+            type:
+            - string
+            - 'null'
+            maxLength: 2000
+          decidedAt:
+            type: string
+            format: date-time
+          invalidatedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          invalidatedByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          stageInstance:
+            $ref: '#/components/schemas/StageInstance'
+    AttestationRecord:
+      type: object
+      additionalProperties: false
+      properties:
+        attested:
+          type: boolean
+        attestedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    WorkflowBranchActivationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - Completed
+      - Failed
+      - Cancelled
+      enum:
+      - Active
+      - Completed
+      - Failed
+      - Cancelled
+    WorkflowSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        autoProgress:
+          type: boolean
+        autoApplyMajorUpdates:
+          type: boolean
     WorkflowInstance:
       allOf:
       - $ref: '#/components/schemas/BaseOptionalProjectEntity'
@@ -452,160 +625,167 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/StageInstance'
-    StageType:
+    StageDisplayMode:
       type: string
       description: ''
       x-enumNames:
-      - Sequential
-      - Parallel
+      - Requirement
+      - Summary
+      - Informational
       enum:
-      - Sequential
-      - Parallel
-    WorkflowUsageSummary:
+      - Requirement
+      - Summary
+      - Informational
+    AutomationOutputSummary:
       type: object
       additionalProperties: false
       properties:
-        totalTokens:
-          type: integer
-          format: int32
-        totalPromptTokens:
-          type: integer
-          format: int32
-        totalCompletionTokens:
-          type: integer
-          format: int32
-        totalCost:
-          type: number
-          format: decimal
-        automationExecutionCount:
-          type: integer
-          format: int32
-        evaluationCount:
-          type: integer
-          format: int32
-        lastUpdatedAt:
+        automationType:
           type: string
-          format: date-time
-    JoinMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - All
-      - Any
-      - Majority
-      enum:
-      - All
-      - Any
-      - Majority
-    StageDisplaySection:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
+        timing:
           type: string
-        mode:
-          $ref: '#/components/schemas/StageDisplayMode'
-        systemRequirement:
-          type: boolean
-        order:
-          type: integer
-          format: int32
-        visibleWhen:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        options:
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        durationMs:
           type:
-          - object
+          - integer
           - 'null'
-          additionalProperties: {}
-    BaseAuditEntity:
+          format: int64
+        output:
+          oneOf:
+          - $ref: '#/components/schemas/ActionOutput'
+    WorkflowDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Cancelled
+      - Failed
+      enum:
+      - Approved
+      - Cancelled
+      - Failed
+    WorkflowInstanceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - Completed
+      - Suspended
+      - Cancelled
+      - Failed
+      enum:
+      - Active
+      - Completed
+      - Suspended
+      - Cancelled
+      - Failed
+    StageAutomationConfig:
       type: object
       x-abstract: true
       additionalProperties: false
       properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    ArtifactCriterion:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
+        id:
           type: string
-        category:
-          type:
-          - string
-          - 'null'
-        subCategories:
-          type: array
-          items:
+          format: guid
+        type:
+          type: string
+        timing:
+          type: string
+        condition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
             type: string
-    StageOutcome:
-      type: string
-      description: ''
-      x-enumNames:
-      - NoDecision
-      - Approved
-      - Rejected
-      - FlaggedForReview
-      enum:
-      - NoDecision
-      - Approved
-      - Rejected
-      - FlaggedForReview
-    ApprovalRecord:
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    StageInstance:
       allOf:
       - $ref: '#/components/schemas/BaseOptionalProjectEntity'
       - type: object
         additionalProperties: false
         required:
-        - stageInstanceId
-        - approverUserId
-        - decision
-        - decidedAt
+        - workflowInstanceId
+        - stageId
+        - status
         properties:
-          stageInstanceId:
+          workflowInstanceId:
             type: string
             format: guid
             minLength: 1
-          approverUserId:
+          stageId:
             type: string
             format: guid
             minLength: 1
-          decision:
-            $ref: '#/components/schemas/ApprovalDecision'
-          comments:
+          branchActivationId:
             type:
             - string
             - 'null'
-            maxLength: 2000
-          decidedAt:
-            type: string
-            format: date-time
-          invalidatedAt:
+            format: guid
+          status:
+            $ref: '#/components/schemas/StageInstanceStatus'
+          enteredAt:
             type:
             - string
             - 'null'
             format: date-time
-          invalidatedByUserId:
+          completedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          gateSlaDeadline:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          requirementStatus:
+            oneOf:
+            - $ref: '#/components/schemas/StageRequirementStatus'
+          outcome:
+            oneOf:
+            - $ref: '#/components/schemas/StageOutcome'
+          automationExecutions:
+            type: array
+            items:
+              $ref: '#/components/schemas/AutomationExecutionRecord'
+          currentEntryExecutionId:
             type:
             - string
             - 'null'
             format: guid
-          stageInstance:
-            $ref: '#/components/schemas/StageInstance'
+          rowVersion:
+            type: integer
+          gateEvaluationRevision:
+            type: integer
+            format: int64
+          gateRequestRevision:
+            type: integer
+            format: int64
+          workflowInstance:
+            $ref: '#/components/schemas/WorkflowInstance'
+          stage:
+            $ref: '#/components/schemas/WorkflowStage'
+          approvals:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApprovalRecord'
+          governanceRequests:
+            type: array
+            items:
+              $ref: '#/components/schemas/GovernanceRequest'
     AutomationExecutionRecord:
       type: object
       additionalProperties: false
@@ -677,6 +857,118 @@ components:
           - string
           - 'null'
           format: date-time
+    WorkflowChangeClassificationItem:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        changeType:
+          $ref: '#/components/schemas/WorkflowVersionChangeType'
+        isMaterial:
+          type: boolean
+    ForceBranchActivationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - reason
+      properties:
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 1
+    DocumentSlot:
+      type: object
+      additionalProperties: false
+      properties:
+        slotKey:
+          type: string
+        label:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type: boolean
+        acceptedFileTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    RuleSchedule:
+      type: object
+      additionalProperties: false
+      required:
+      - scheduleType
+      properties:
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        daysOfWeek:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    WorkflowHistoryEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        eventType:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        stageOrder:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        stageName:
+          type:
+          - string
+          - 'null'
+        details:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
     GovernanceWorkflow:
       allOf:
       - $ref: '#/components/schemas/BaseOptionalTenantEntity'
@@ -787,695 +1079,6 @@ components:
               $ref: '#/components/schemas/WorkflowStage'
           rowVersion:
             type: integer
-    WorkflowBranchActivationStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Active
-      - Completed
-      - Failed
-      - Cancelled
-      enum:
-      - Active
-      - Completed
-      - Failed
-      - Cancelled
-    AutomationExecutionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Running
-      - Completed
-      - Failed
-      - Skipped
-      enum:
-      - Pending
-      - Running
-      - Completed
-      - Failed
-      - Skipped
-    RuleSchedule:
-      type: object
-      additionalProperties: false
-      required:
-      - scheduleType
-      properties:
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        minute:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        hour:
-          type: integer
-          format: int32
-          maximum: 23
-          minimum: 0
-        day:
-          type: integer
-          format: int32
-          maximum: 31
-          minimum: 1
-        month:
-          type: integer
-          format: int32
-          maximum: 12
-          minimum: 1
-        daysOfWeek:
-          type:
-          - string
-          - 'null'
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    WorkflowDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Approved
-      - Cancelled
-      - Failed
-      enum:
-      - Approved
-      - Cancelled
-      - Failed
-    StageDisplayMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Requirement
-      - Summary
-      - Informational
-      enum:
-      - Requirement
-      - Summary
-      - Informational
-    AttestationRecord:
-      type: object
-      additionalProperties: false
-      properties:
-        attested:
-          type: boolean
-        attestedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        attestedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    WorkflowHistoryEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        eventType:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        stageOrder:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        stageName:
-          type:
-          - string
-          - 'null'
-        details:
-          type: string
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    GovernanceRequest:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - workflowInstanceId
-        - stageInstanceId
-        - actionType
-        - actionPayload
-        - status
-        - requestedByUserId
-        - requestedAt
-        properties:
-          workflowInstanceId:
-            type: string
-            format: guid
-            minLength: 1
-          stageInstanceId:
-            type: string
-            format: guid
-            minLength: 1
-          stageEntryExecutionId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          actionType:
-            type: string
-            maxLength: 100
-            minLength: 1
-          actionPayload:
-            type: string
-            minLength: 1
-          status:
-            type: string
-            maxLength: 50
-            minLength: 1
-          requestedByUserId:
-            type: string
-            format: guid
-            minLength: 1
-          requestedAt:
-            type: string
-            format: date-time
-          completedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          executionError:
-            type:
-            - string
-            - 'null'
-          rowVersion:
-            type: integer
-          workflowInstance:
-            $ref: '#/components/schemas/WorkflowInstance'
-          stageInstance:
-            $ref: '#/components/schemas/StageInstance'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ForceBranchActivationRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - reason
-      properties:
-        reason:
-          type: string
-          maxLength: 500
-          minLength: 1
-    StageRequirementStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        approvalResolution:
-          type:
-          - string
-          - 'null'
-        approvalsReceived:
-          type: integer
-          format: int32
-        approvalsRequired:
-          type: integer
-          format: int32
-        evaluationResults:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ThresholdResult'
-        artifactStatus:
-          type: object
-          additionalProperties:
-            type: boolean
-        documentSlotStatus:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        artifactRequirementReasons:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        attestationStatus:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AttestationRecord'
-        approvalNotificationSentAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        defaultApprovalResolution:
-          type:
-          - string
-          - 'null'
-        defaultApprovalsReceived:
-          type: integer
-          format: int32
-        defaultApprovalsRequired:
-          type: integer
-          format: int32
-        requiresApprovalOverride:
-          type:
-          - boolean
-          - 'null'
-    ThresholdResult:
-      type: object
-      additionalProperties: false
-      properties:
-        actualValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        requiredValue:
-          type: number
-          format: double
-        passed:
-          type: boolean
-        evaluationJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        evaluatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    WorkflowVersionState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Draft
-      - Published
-      - Archived
-      enum:
-      - Draft
-      - Published
-      - Archived
-    WorkflowInstanceStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Active
-      - Completed
-      - Suspended
-      - Cancelled
-      - Failed
-      enum:
-      - Active
-      - Completed
-      - Suspended
-      - Cancelled
-      - Failed
-    WorkflowType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Governance
-      - Security
-      - WhatIfScenarios
-      enum:
-      - Governance
-      - Security
-      - WhatIfScenarios
-    StageOutputSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        stageName:
-          type: string
-        stageOrder:
-          type: integer
-          format: int32
-        finalStatus:
-          $ref: '#/components/schemas/StageInstanceStatus'
-        outcome:
-          oneOf:
-          - $ref: '#/components/schemas/StageOutcome'
-        enteredAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        durationMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        automations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationOutputSummary'
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
-    AutomationOutputSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        automationType:
-          type: string
-        timing:
-          type: string
-        status:
-          $ref: '#/components/schemas/AutomationExecutionStatus'
-        durationMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        output:
-          oneOf:
-          - $ref: '#/components/schemas/ActionOutput'
-    ConditionNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-    WorkflowChangeClassification:
-      type: object
-      additionalProperties: false
-      properties:
-        analyzerVersion:
-          type: integer
-          format: int32
-        isMaterial:
-          type: boolean
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowChangeClassificationItem'
-    WorkflowChangeClassificationItem:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        changeType:
-          $ref: '#/components/schemas/WorkflowVersionChangeType'
-        isMaterial:
-          type: boolean
-    ExecutionOutcome:
-      type: string
-      description: ''
-      x-enumNames:
-      - Success
-      - Skipped
-      - Failed
-      - InProgress
-      enum:
-      - Success
-      - Skipped
-      - Failed
-      - InProgress
-    StageInstanceStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - AwaitingSchedule
-      - Active
-      - AwaitingGate
-      - AwaitingAutomation
-      - Completed
-      - Skipped
-      - Regressed
-      - Bypassed
-      - Failed
-      - AwaitingUserReview
-      enum:
-      - Pending
-      - AwaitingSchedule
-      - Active
-      - AwaitingGate
-      - AwaitingAutomation
-      - Completed
-      - Skipped
-      - Regressed
-      - Bypassed
-      - Failed
-      - AwaitingUserReview
-    WorkflowBranchActivation:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - workflowInstanceId
-        - branchGroup
-        - status
-        - startedAt
-        properties:
-          workflowInstanceId:
-            type: string
-            format: guid
-            minLength: 1
-          branchGroup:
-            type: string
-            maxLength: 200
-            minLength: 1
-          status:
-            $ref: '#/components/schemas/WorkflowBranchActivationStatus'
-          triggerPayload:
-            type:
-            - object
-            - 'null'
-            additionalProperties: {}
-          initiatedByUserId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          startedAt:
-            type: string
-            format: date-time
-          completedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          idempotencyKey:
-            type:
-            - string
-            - 'null'
-            maxLength: 200
-          activeStageInstanceIds:
-            type: array
-            items:
-              type: string
-              format: guid
-          rowVersion:
-            type: integer
-          workflowInstance:
-            $ref: '#/components/schemas/WorkflowInstance'
-    PendingAction:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        type:
-          type: string
-        message:
-          type: string
-        targetStageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        createdAt:
-          type: string
-          format: date-time
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    StageFailurePolicy:
-      type: string
-      description: ''
-      x-enumNames:
-      - FailWorkflow
-      - RouteTo
-      - PauseForUser
-      enum:
-      - FailWorkflow
-      - RouteTo
-      - PauseForUser
-    WorkflowMonitor:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - sensor
-      - action
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        sensor:
-          type: string
-          maxLength: 100
-          minLength: 1
-        condition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        action:
-          $ref: '#/components/schemas/GovernanceAction'
-        stageName:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        priority:
-          type: integer
-          format: int32
-        enabled:
-          type: boolean
-    StageInstance:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - workflowInstanceId
-        - stageId
-        - status
-        properties:
-          workflowInstanceId:
-            type: string
-            format: guid
-            minLength: 1
-          stageId:
-            type: string
-            format: guid
-            minLength: 1
-          branchActivationId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          status:
-            $ref: '#/components/schemas/StageInstanceStatus'
-          enteredAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          completedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          gateSlaDeadline:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          requirementStatus:
-            oneOf:
-            - $ref: '#/components/schemas/StageRequirementStatus'
-          outcome:
-            oneOf:
-            - $ref: '#/components/schemas/StageOutcome'
-          automationExecutions:
-            type: array
-            items:
-              $ref: '#/components/schemas/AutomationExecutionRecord'
-          currentEntryExecutionId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          rowVersion:
-            type: integer
-          gateEvaluationRevision:
-            type: integer
-            format: int64
-          gateRequestRevision:
-            type: integer
-            format: int64
-          workflowInstance:
-            $ref: '#/components/schemas/WorkflowInstance'
-          stage:
-            $ref: '#/components/schemas/WorkflowStage'
-          approvals:
-            type: array
-            items:
-              $ref: '#/components/schemas/ApprovalRecord'
-          governanceRequests:
-            type: array
-            items:
-              $ref: '#/components/schemas/GovernanceRequest'
     StageGateConfig:
       type: object
       additionalProperties: false
@@ -1539,18 +1142,81 @@ components:
           - $ref: '#/components/schemas/ConditionNode'
         regressOnSatisfied:
           type: boolean
-    WorkflowTrigger:
+    JoinMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - All
+      - Any
+      - Majority
+      enum:
+      - All
+      - Any
+      - Majority
+    ConditionNode:
       type: object
       x-abstract: true
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
         type:
           type: string
-        enabled:
-          type: boolean
+    StageRequirementStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        approvalResolution:
+          type:
+          - string
+          - 'null'
+        approvalsReceived:
+          type: integer
+          format: int32
+        approvalsRequired:
+          type: integer
+          format: int32
+        evaluationResults:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ThresholdResult'
+        artifactStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        documentSlotStatus:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        artifactRequirementReasons:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        attestationStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttestationRecord'
+        approvalNotificationSentAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        defaultApprovalResolution:
+          type:
+          - string
+          - 'null'
+        defaultApprovalsReceived:
+          type: integer
+          format: int32
+        defaultApprovalsRequired:
+          type: integer
+          format: int32
+        requiresApprovalOverride:
+          type:
+          - boolean
+          - 'null'
     WorkflowStage:
       allOf:
       - $ref: '#/components/schemas/BaseOptionalTenantEntity'
@@ -1647,34 +1313,368 @@ components:
               $ref: '#/components/schemas/StageDisplaySection'
           workflow:
             $ref: '#/components/schemas/GovernanceWorkflow'
-    StagePolicy:
+    StageOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+      enum:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+    PendingAction:
       type: object
       additionalProperties: false
-      required:
-      - name
-      - condition
-      - action
       properties:
         id:
           type: string
           format: guid
-        name:
+        type:
           type: string
-          minLength: 1
-        condition:
-          $ref: '#/components/schemas/ConditionNode'
-        action:
-          $ref: '#/components/schemas/GovernanceAction'
-        source:
+        message:
           type: string
-        enforced:
+        targetStageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    StageDisplaySection:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        mode:
+          $ref: '#/components/schemas/StageDisplayMode'
+        systemRequirement:
           type: boolean
-        priority:
+        order:
           type: integer
           format: int32
-        schedule:
+        visibleWhen:
           oneOf:
-          - $ref: '#/components/schemas/RuleSchedule'
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    RiskLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    WorkflowOutput:
+      type: object
+      additionalProperties: false
+      properties:
+        decision:
+          $ref: '#/components/schemas/WorkflowDecision'
+        decisionReason:
+          type:
+          - string
+          - 'null'
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        totalDurationMs:
+          type: integer
+          format: int64
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageOutputSummary'
+    ActionOutput:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          WebhookOutput: '#/components/schemas/WebhookOutput'
+          RunEvaluationOutput: '#/components/schemas/RunEvaluationOutput'
+          RunRedTeamOutput: '#/components/schemas/RunRedTeamOutput'
+          HttpRequestOutput: '#/components/schemas/HttpRequestOutput'
+          AddGateRequirementOutput: '#/components/schemas/AddGateRequirementOutput'
+          RemoveGateRequirementOutput: '#/components/schemas/RemoveGateRequirementOutput'
+          RegressToStageOutput: '#/components/schemas/RegressToStageOutput'
+          SdkStepOutput: '#/components/schemas/SdkStepOutput'
+          RunAutomationOutput: '#/components/schemas/RunAutomationOutput'
+          RunSystemAgentOutput: '#/components/schemas/RunSystemAgentOutput'
+          GenerateNutritionLabelOutput: '#/components/schemas/GenerateNutritionLabelOutput'
+          GenerateReceiptOutput: '#/components/schemas/GenerateReceiptOutput'
+          SealNutritionLabelOutput: '#/components/schemas/SealNutritionLabelOutput'
+          RunInitialRiskAnalysisOutput: '#/components/schemas/RunInitialRiskAnalysisOutput'
+          RunInherentRiskAnalysisOutput: '#/components/schemas/RunInherentRiskAnalysisOutput'
+          RunResidualRiskAnalysisOutput: '#/components/schemas/RunResidualRiskAnalysisOutput'
+          RunAssessmentOutput: '#/components/schemas/RunAssessmentOutput'
+          NotifyOutput: '#/components/schemas/NotifyOutput'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        outcome:
+          $ref: '#/components/schemas/ExecutionOutcome'
+        message:
+          type:
+          - string
+          - 'null'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        $type:
+          type: string
+    WorkflowVersionState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Published
+      - Archived
+      enum:
+      - Draft
+      - Published
+      - Archived
+    StageOutputSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        stageName:
+          type: string
+        stageOrder:
+          type: integer
+          format: int32
+        finalStatus:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/StageOutcome'
+        enteredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationOutputSummary'
+    ArtifactCriterion:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        category:
+          type:
+          - string
+          - 'null'
+        subCategories:
+          type: array
+          items:
+            type: string
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    WorkflowBranchActivation:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - workflowInstanceId
+        - branchGroup
+        - status
+        - startedAt
+        properties:
+          workflowInstanceId:
+            type: string
+            format: guid
+            minLength: 1
+          branchGroup:
+            type: string
+            maxLength: 200
+            minLength: 1
+          status:
+            $ref: '#/components/schemas/WorkflowBranchActivationStatus'
+          triggerPayload:
+            type:
+            - object
+            - 'null'
+            additionalProperties: {}
+          initiatedByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          startedAt:
+            type: string
+            format: date-time
+          completedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          idempotencyKey:
+            type:
+            - string
+            - 'null'
+            maxLength: 200
+          activeStageInstanceIds:
+            type: array
+            items:
+              type: string
+              format: guid
+          rowVersion:
+            type: integer
+          workflowInstance:
+            $ref: '#/components/schemas/WorkflowInstance'
+    BaseOptionalTenantEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    StageInstanceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+      enum:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+    ExecutionUsageMetrics:
+      type: object
+      additionalProperties: false
+      properties:
+        promptTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        completionTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cachedInputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelName:
+          type:
+          - string
+          - 'null'
+        modelProvider:
+          type:
+          - string
+          - 'null'
+    ThresholdResult:
+      type: object
+      additionalProperties: false
+      properties:
+        actualValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        requiredValue:
+          type: number
+          format: double
+        passed:
+          type: boolean
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

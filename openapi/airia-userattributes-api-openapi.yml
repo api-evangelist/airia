@@ -706,109 +706,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserAttributeConnectionRequestModel:
+    UserAttributeConnectionTestCheckDto:
       type: object
       additionalProperties: false
       required:
-      - name
-      - provider
+      - key
+      - status
+      - message
       properties:
-        name:
+        key:
           type: string
-          maxLength: 256
-          minLength: 1
-        provider:
-          $ref: '#/components/schemas/UserAttributeSourceProvider'
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isEnabled:
-          type: boolean
-        syncIntervalHours:
-          type: integer
-          format: int32
-          maximum: 168
-          minimum: 1
-    UserAttributeValueCountDto:
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      properties:
-        value:
-          type: string
-        userCount:
-          type: integer
-          format: int32
-        linkedUserCount:
-          type: integer
-          format: int32
-    UserAttributeConnectionResponseModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        provider:
-          $ref: '#/components/schemas/UserAttributeSourceProvider'
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isEnabled:
-          type: boolean
-        syncIntervalHours:
-          type: integer
-          format: int32
-        lastSyncedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastSyncStatus:
-          $ref: '#/components/schemas/UserAttributeSyncStatus'
-        lastSyncError:
-          type:
-          - string
-          - 'null'
-        lastSyncSourceUserCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lastSyncMatchedUserCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
         status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
+          type: string
+        message:
+          type: string
+        remediation:
           type:
           - string
           - 'null'
@@ -860,48 +772,16 @@ components:
           type: array
           items:
             type: string
-    UserAttributeDimensionMappingModel:
+    DiscoveredUserAttributeDto:
       type: object
       additionalProperties: false
       required:
-      - dimension
-      - attributeKey
+      - key
       properties:
-        dimension:
+        key:
           type: string
-          maxLength: 128
-          minLength: 1
-        attributeKey:
-          type: string
-          maxLength: 256
-          minLength: 1
-    UserAttributeStatDto:
-      type: object
-      additionalProperties: false
-      required:
-      - attributeKey
-      properties:
-        attributeKey:
-          type: string
-        usersWithValue:
-          type: integer
-          format: int32
-        linkedUsersWithValue:
-          type: integer
-          format: int32
-        totalUsers:
-          type: integer
-          format: int32
-        coveragePercent:
-          type: number
-          format: double
-        distinctValueCount:
-          type: integer
-          format: int32
-        exampleValue:
-          type:
-          - string
-          - 'null'
+        isCustom:
+          type: boolean
     UserAttributeImportResponseModel:
       type: object
       additionalProperties: false
@@ -941,31 +821,6 @@ components:
           type: array
           items:
             type: string
-    UserAttributeCsvRowError:
-      type: object
-      additionalProperties: false
-      required:
-      - rowNumber
-      - message
-      properties:
-        rowNumber:
-          type: integer
-          format: int32
-        message:
-          type: string
-    UserAttributeSyncStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NeverSynced
-      - Running
-      - Succeeded
-      - Failed
-      enum:
-      - NeverSynced
-      - Running
-      - Succeeded
-      - Failed
     UserAttributeCsvColumn:
       type: object
       additionalProperties: false
@@ -985,24 +840,6 @@ components:
           type: integer
           format: int32
         sample:
-          type:
-          - string
-          - 'null'
-    UserAttributeConnectionTestCheckDto:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      - status
-      - message
-      properties:
-        key:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        remediation:
           type:
           - string
           - 'null'
@@ -1030,16 +867,179 @@ components:
       - Undefined
       - EntraId
       - CsvUpload
-    DiscoveredUserAttributeDto:
+    UserAttributeStatDto:
       type: object
       additionalProperties: false
       required:
-      - key
+      - attributeKey
       properties:
-        key:
+        attributeKey:
           type: string
-        isCustom:
+        usersWithValue:
+          type: integer
+          format: int32
+        linkedUsersWithValue:
+          type: integer
+          format: int32
+        totalUsers:
+          type: integer
+          format: int32
+        coveragePercent:
+          type: number
+          format: double
+        distinctValueCount:
+          type: integer
+          format: int32
+        exampleValue:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserAttributeDimensionMappingModel:
+      type: object
+      additionalProperties: false
+      required:
+      - dimension
+      - attributeKey
+      properties:
+        dimension:
+          type: string
+          maxLength: 128
+          minLength: 1
+        attributeKey:
+          type: string
+          maxLength: 256
+          minLength: 1
+    UserAttributeCsvRowError:
+      type: object
+      additionalProperties: false
+      required:
+      - rowNumber
+      - message
+      properties:
+        rowNumber:
+          type: integer
+          format: int32
+        message:
+          type: string
+    UserAttributeConnectionRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - provider
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        provider:
+          $ref: '#/components/schemas/UserAttributeSourceProvider'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
           type: boolean
+        syncIntervalHours:
+          type: integer
+          format: int32
+          maximum: 168
+          minimum: 1
+    UserAttributeSyncStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
+      enum:
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
+    UserAttributeConnectionResponseModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          $ref: '#/components/schemas/UserAttributeSourceProvider'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        syncIntervalHours:
+          type: integer
+          format: int32
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncStatus:
+          $ref: '#/components/schemas/UserAttributeSyncStatus'
+        lastSyncError:
+          type:
+          - string
+          - 'null'
+        lastSyncSourceUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lastSyncMatchedUserCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UserAttributeValueCountDto:
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      properties:
+        value:
+          type: string
+        userCount:
+          type: integer
+          format: int32
+        linkedUserCount:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -1385,6 +1385,156 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    FoundryComparisonEvaluator:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      - scoreType
+      properties:
+        key:
+          type: string
+        scoreType:
+          $ref: '#/components/schemas/EvaluatorScoreType'
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    AgentProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          type: string
+        url:
+          type: string
+    PagedResultOfAgentEvaluationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationDto'
+        totalCount:
+          type: integer
+          format: int32
+    EvaluatorRunResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - agentEvaluationId
+      - source
+      - status
+      properties:
+        id:
+          type: string
+          format: guid
+        agentEvaluationId:
+          type: string
+          format: guid
+        source:
+          $ref: '#/components/schemas/EvaluatorSource'
+        status:
+          $ref: '#/components/schemas/EvaluatorRunStatus'
+        providerRunId:
+          type:
+          - string
+          - 'null'
+        providerEvalId:
+          type:
+          - string
+          - 'null'
+        submittedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        attemptNumber:
+          type: integer
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        agentEvaluationTargetId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        target:
+          oneOf:
+          - $ref: '#/components/schemas/AgentEvaluationTargetSummary'
+        metricResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatorMetricResultResponse'
+    ScenarioOverrideKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
+    EvaluatorSelectionView:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluatorKey
+      properties:
+        evalSuiteEvaluatorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluatorSource'
+        evaluatorKey:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        deploymentName:
+          type:
+          - string
+          - 'null'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: double
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
     ScenarioOverrides:
       type: object
       discriminator:
@@ -1405,28 +1555,83 @@ components:
           - $ref: '#/components/schemas/ToolPatch'
         kind:
           type: string
-    ExternalScenarioOverrides:
-      allOf:
-      - $ref: '#/components/schemas/ScenarioOverrides'
-      - type: object
-        additionalProperties: false
-        properties:
-          overrideKind:
-            $ref: '#/components/schemas/ScenarioOverrideKind'
-          systemPromptOverride:
-            type:
-            - string
-            - 'null'
-          additionalInstructions:
-            type:
-            - string
-            - 'null'
-          configOverrides:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/JsonNode'
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    ComparisonResultRow:
+      type: object
+      additionalProperties: false
+      required:
+      - datasetId
+      - input
+      - expectedOutput
+      - comparisonResults
+      properties:
+        datasetId:
+          type: string
+          format: guid
+        input:
+          type: string
+        expectedOutput:
+          type:
+          - string
+          - 'null'
+        comparisonResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleEvaluationResult'
+    EvaluationLimitResult:
+      type: object
+      additionalProperties: false
+      properties:
+        limitReached:
+          type: boolean
+        limit:
+          type: integer
+          format: int32
+    EvaluationThresholdResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        accuracyThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        biasThreshold:
+          type:
+          - number
+          - 'null'
+          format: double
+        driftThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
     ThresholdBreachMetric:
       type: object
       additionalProperties: false
@@ -1443,6 +1648,46 @@ components:
         thresholdValue:
           type: number
           format: double
+    EvaluationTestCaseInput:
+      type: object
+      additionalProperties: false
+      properties:
+        input:
+          type: string
+        expectedOutput:
+          type: string
+    AgentEvaluationComparisonResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agents
+      - evaluations
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentDefinition'
+        evaluations:
+          $ref: '#/components/schemas/PagedResultOfComparisonResultRow'
+    EvaluatorRunStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Queued
+      - InvokingTarget
+      - Submitting
+      - Polling
+      - Succeeded
+      - Failed
+      - Cancelled
+      enum:
+      - Queued
+      - InvokingTarget
+      - Submitting
+      - Polling
+      - Succeeded
+      - Failed
+      - Cancelled
     CreateEvaluationScheduleRequest:
       type: object
       additionalProperties: false
@@ -1461,64 +1706,53 @@ components:
           - string
           - 'null'
           format: date-time
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    WhatIfVariantComparison:
-      type: object
-      additionalProperties: false
-      required:
-      - variant
-      properties:
-        variant:
-          $ref: '#/components/schemas/WhatIfVariantAggregate'
-        failed:
-          type: boolean
-        metricDeltas:
-          type: array
-          items:
-            $ref: '#/components/schemas/WhatIfMetricDelta'
-        latencyDeltaMs:
-          type:
-          - number
-          - 'null'
-          format: double
-        estimatedCostDelta:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        totalTokensDelta:
-          type:
-          - number
-          - 'null'
-          format: double
-    EvaluationType:
+    JobTaskStatus:
       type: string
       description: ''
       x-enumNames:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
       enum:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    AgentEvaluationDatasetDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - input
+      - expectedOutput
+      - context
+      properties:
+        id:
+          type: string
+          format: guid
+        input:
+          type: string
+        expectedOutput:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - string
+          - 'null'
     AgentEvaluationJobTaskResult:
       type: object
       additionalProperties: false
@@ -1690,6 +1924,168 @@ components:
           - integer
           - 'null'
           format: int64
+    ExternalScenarioOverrides:
+      allOf:
+      - $ref: '#/components/schemas/ScenarioOverrides'
+      - type: object
+        additionalProperties: false
+        properties:
+          overrideKind:
+            $ref: '#/components/schemas/ScenarioOverrideKind'
+          systemPromptOverride:
+            type:
+            - string
+            - 'null'
+          additionalInstructions:
+            type:
+            - string
+            - 'null'
+          configOverrides:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/JsonNode'
+    SecurityRequirement:
+      type: object
+      additionalProperties: false
+      properties:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    CampaignTargetKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - PublishedPipelineVersion
+      - ChangeScenario
+      - ExternalHttp
+      - SpmAgent
+      - GatewayRoute
+      enum:
+      - PublishedPipelineVersion
+      - ChangeScenario
+      - ExternalHttp
+      - SpmAgent
+      - GatewayRoute
+    FoundryComparisonCell:
+      type: object
+      additionalProperties: false
+      required:
+      - targetId
+      properties:
+        targetId:
+          type: string
+          format: guid
+        response:
+          type:
+          - string
+          - 'null'
+        evaluatorScores:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FoundryComparisonScore'
+    ModelOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    EvaluatorSelectionInput:
+      type: object
+      additionalProperties: false
+      required:
+      - evalSuiteEvaluatorId
+      properties:
+        evalSuiteEvaluatorId:
+          type: string
+          format: guid
+          minLength: 1
+        initParamsJson:
+          type:
+          - string
+          - 'null'
+    FoundryComparisonScore:
+      type: object
+      additionalProperties: false
+      required:
+      - score
+      - scoreType
+      properties:
+        score:
+          type: number
+          format: double
+        scoreType:
+          $ref: '#/components/schemas/EvaluatorScoreType'
+        passed:
+          type:
+          - boolean
+          - 'null'
+        reasonText:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+    WhatIfVariantComparison:
+      type: object
+      additionalProperties: false
+      required:
+      - variant
+      properties:
+        variant:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        failed:
+          type: boolean
+        metricDeltas:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfMetricDelta'
+        latencyDeltaMs:
+          type:
+          - number
+          - 'null'
+          format: double
+        estimatedCostDelta:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        totalTokensDelta:
+          type:
+          - number
+          - 'null'
+          format: double
+    WhatIfMetricDelta:
+      type: object
+      additionalProperties: false
+      required:
+      - metricName
+      - baselineValue
+      - variantValue
+      - delta
+      - isImprovement
+      properties:
+        metricName:
+          type: string
+        baselineValue:
+          type: number
+          format: double
+        variantValue:
+          type: number
+          format: double
+        delta:
+          type: number
+          format: double
+        isImprovement:
+          type: boolean
     SingleEvaluationResult:
       type: object
       additionalProperties: false
@@ -1723,1051 +2119,6 @@ components:
           format: double
         detailedRationale:
           type: string
-    RunAgentEvaluationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        evaluatorRunId:
-          type: string
-          format: guid
-    EvaluatorRunResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - agentEvaluationId
-      - source
-      - status
-      properties:
-        id:
-          type: string
-          format: guid
-        agentEvaluationId:
-          type: string
-          format: guid
-        source:
-          $ref: '#/components/schemas/EvaluatorSource'
-        status:
-          $ref: '#/components/schemas/EvaluatorRunStatus'
-        providerRunId:
-          type:
-          - string
-          - 'null'
-        providerEvalId:
-          type:
-          - string
-          - 'null'
-        submittedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        attemptNumber:
-          type: integer
-          format: int32
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        agentEvaluationTargetId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        target:
-          oneOf:
-          - $ref: '#/components/schemas/AgentEvaluationTargetSummary'
-        metricResults:
-          type: array
-          items:
-            $ref: '#/components/schemas/EvaluatorMetricResultResponse'
-    SecurityRequirement:
-      type: object
-      additionalProperties: false
-      properties:
-        schemes:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    WhatIfVariantAggregate:
-      type: object
-      additionalProperties: false
-      properties:
-        variantId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isBaseline:
-          type: boolean
-        runCount:
-          type: integer
-          format: int32
-        metrics:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-        averageLatencyMs:
-          type:
-          - number
-          - 'null'
-          format: double
-        averageEstimatedCost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        averageTotalTokens:
-          type:
-          - number
-          - 'null'
-          format: double
-    EvaluatorSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Airia
-      - AzureFoundry
-      enum:
-      - Airia
-      - AzureFoundry
-    AgentCapabilities:
-      type: object
-      additionalProperties: false
-      properties:
-        streaming:
-          type:
-          - boolean
-          - 'null'
-        pushNotifications:
-          type:
-          - boolean
-          - 'null'
-        extendedAgentCard:
-          type:
-          - boolean
-          - 'null'
-        extensions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentExtension'
-    PagedResultOfAgentEvaluationDatasetDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationDatasetDto'
-        totalCount:
-          type: integer
-          format: int32
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-    UpdateEvaluationScheduleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - scheduleType
-      - startDate
-      properties:
-        scheduleType:
-          type: string
-          minLength: 1
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        isCancelled:
-          type:
-          - boolean
-          - 'null'
-    FoundryComparisonScore:
-      type: object
-      additionalProperties: false
-      required:
-      - score
-      - scoreType
-      properties:
-        score:
-          type: number
-          format: double
-        scoreType:
-          $ref: '#/components/schemas/EvaluatorScoreType'
-        passed:
-          type:
-          - boolean
-          - 'null'
-        reasonText:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-    CampaignTargetKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - PublishedPipelineVersion
-      - ChangeScenario
-      - ExternalHttp
-      - SpmAgent
-      - GatewayRoute
-      enum:
-      - PublishedPipelineVersion
-      - ChangeScenario
-      - ExternalHttp
-      - SpmAgent
-      - GatewayRoute
-    EvaluationScheduleResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - scheduleId
-      - scheduleType
-      - startDate
-      properties:
-        scheduleId:
-          type: string
-          format: guid
-        scheduleType:
-          type: string
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        nextEvaluationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        isCancelled:
-          type: boolean
-    MonthlyWeekOccurrence:
-      type: string
-      description: ''
-      x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-    WhatIfComparisonSection:
-      type: object
-      additionalProperties: false
-      required:
-      - comparisonSetId
-      - variantResults
-      properties:
-        comparisonSetId:
-          type: string
-          format: guid
-        variantResults:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationJobTaskResult'
-        comparison:
-          oneOf:
-          - $ref: '#/components/schemas/WhatIfComparisonResult'
-    AgentEvaluationVariant:
-      type: object
-      additionalProperties: false
-      properties:
-        variantId:
-          type: string
-          format: guid
-        label:
-          type: string
-        isBaseline:
-          type: boolean
-        overrides:
-          oneOf:
-          - $ref: '#/components/schemas/ExternalScenarioOverrides'
-    EvaluatorMetricResultResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - source
-      - evaluatorKey
-      - score
-      - scoreType
-      properties:
-        id:
-          type: string
-          format: guid
-        source:
-          $ref: '#/components/schemas/EvaluatorSource'
-        evaluatorKey:
-          type: string
-        score:
-          type: number
-          format: double
-        scoreType:
-          $ref: '#/components/schemas/EvaluatorScoreType'
-        reasonText:
-          type:
-          - string
-          - 'null'
-    ModelOverride:
-      type: object
-      additionalProperties: false
-      properties:
-        modelId:
-          type: string
-        identifierType:
-          $ref: '#/components/schemas/ModelIdentifierType'
-    ToolPatch:
-      type: object
-      additionalProperties: false
-      properties:
-        add:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        remove:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        modify:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-    FoundryComparisonCell:
-      type: object
-      additionalProperties: false
-      required:
-      - targetId
-      properties:
-        targetId:
-          type: string
-          format: guid
-        response:
-          type:
-          - string
-          - 'null'
-        evaluatorScores:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/FoundryComparisonScore'
-    AgentEvaluationAggregatedResultDto:
-      type: object
-      additionalProperties: false
-      required:
-      - agentVersionId
-      - agentName
-      - agentVersion
-      - averageAccuracy
-      - averageAgentExecutionDurationMs
-      - averageModelCallCost
-      - averageTokens
-      - averageModelCallDurationMs
-      properties:
-        agentVersionId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        agentVersion:
-          type: string
-        agentIcon:
-          type:
-          - string
-          - 'null'
-        agentIconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        averageAccuracy:
-          type: number
-          format: double
-        averageAgentExecutionDurationMs:
-          type: integer
-          format: int32
-        averageModelCallCost:
-          type: number
-          format: decimal
-        averageTokens:
-          type: number
-          format: double
-        averageModelCallDurationMs:
-          type: integer
-          format: int32
-        averageBias:
-          type:
-          - number
-          - 'null'
-          format: double
-        averageDrift:
-          type:
-          - number
-          - 'null'
-          format: double
-        averageConsistency:
-          type:
-          - number
-          - 'null'
-          format: double
-        evaluatorCost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        evaluatorTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        evaluatorLatencyMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        runsPerTestCase:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        thresholdBreach:
-          oneOf:
-          - $ref: '#/components/schemas/ThresholdBreachStatus'
-    AgentCardSignature:
-      type: object
-      additionalProperties: false
-      properties:
-        protected:
-          type: string
-        signature:
-          type: string
-        header:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    EvaluatorSelectionView:
-      type: object
-      additionalProperties: false
-      required:
-      - evaluatorKey
-      properties:
-        evalSuiteEvaluatorId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/EvaluatorSource'
-        evaluatorKey:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        deploymentName:
-          type:
-          - string
-          - 'null'
-        threshold:
-          type:
-          - number
-          - 'null'
-          format: double
-    AgentEvaluationDetailedResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - agent
-      - summary
-      - evaluations
-      properties:
-        agent:
-          $ref: '#/components/schemas/AgentDefinition'
-        summary:
-          $ref: '#/components/schemas/AgentEvaluationSummaryDto'
-        evaluations:
-          $ref: '#/components/schemas/PagedResultOfAgentEvaluationDetailedResultDto'
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    AgentEvaluationTargetSummary:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - kind
-      - name
-      properties:
-        id:
-          type: string
-          format: guid
-        kind:
-          $ref: '#/components/schemas/CampaignTargetKind'
-        pipelineVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type: string
-        latestRunCompletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    CreateAgentEvaluationResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - evaluationName
-      - agentVersionIds
-      properties:
-        id:
-          type: string
-          format: guid
-        evaluationName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        agentVersionIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        modelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        datasetIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleModel'
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-    AgentCardModel:
-      type: object
-      additionalProperties: false
-      required:
-      - projectId
-      properties:
-        projectId:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        supportedInterfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentInterface'
-        provider:
-          oneOf:
-          - $ref: '#/components/schemas/AgentProvider'
-        version:
-          type: string
-        documentationUrl:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        capabilities:
-          $ref: '#/components/schemas/AgentCapabilities'
-        securitySchemes:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SecurityScheme'
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement'
-        signatures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentCardSignature'
-        defaultInputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        defaultOutputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentSkill'
-    AgentEvaluationTargetSummaryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - completedCount
-      - totalCount
-      properties:
-        completedCount:
-          type: integer
-          format: int32
-        totalCount:
-          type: integer
-          format: int32
-    AgentDefinition:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - versionId
-      - name
-      - version
-      properties:
-        id:
-          type: string
-          format: guid
-        versionId:
-          type: string
-          format: guid
-        name:
-          type: string
-        version:
-          type: string
-    ComparisonResultRow:
-      type: object
-      additionalProperties: false
-      required:
-      - datasetId
-      - input
-      - expectedOutput
-      - comparisonResults
-      properties:
-        datasetId:
-          type: string
-          format: guid
-        input:
-          type: string
-        expectedOutput:
-          type:
-          - string
-          - 'null'
-        comparisonResults:
-          type: array
-          items:
-            $ref: '#/components/schemas/SingleEvaluationResult'
-    FoundryComparisonResultRow:
-      type: object
-      additionalProperties: false
-      required:
-      - rowIndex
-      properties:
-        datasetItemId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        rowIndex:
-          type: integer
-          format: int32
-        input:
-          type:
-          - string
-          - 'null'
-        expectedOutput:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - string
-          - 'null'
-        cells:
-          type: array
-          items:
-            $ref: '#/components/schemas/FoundryComparisonCell'
-    JobStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-      enum:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-    EvaluationResultsType:
-      type: string
-      description: ''
-      x-enumNames:
-      - FullDetails
-      - AccuracyBias
-      - Drift
-      enum:
-      - FullDetails
-      - AccuracyBias
-      - Drift
-    WhatIfMetricDelta:
-      type: object
-      additionalProperties: false
-      required:
-      - metricName
-      - baselineValue
-      - variantValue
-      - delta
-      - isImprovement
-      properties:
-        metricName:
-          type: string
-        baselineValue:
-          type: number
-          format: double
-        variantValue:
-          type: number
-          format: double
-        delta:
-          type: number
-          format: double
-        isImprovement:
-          type: boolean
-    UpsertEvaluationThresholdRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        accuracyThreshold:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 100
-          minimum: 0
-        biasThreshold:
-          type:
-          - number
-          - 'null'
-          format: double
-          maximum: 1
-          minimum: 0
-        driftThreshold:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 100
-          minimum: 0
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ConsistencyRunDto:
-      type: object
-      additionalProperties: false
-      required:
-      - actualOutput
-      - accuracy
-      properties:
-        actualOutput:
-          type: string
-        truncated:
-          type: boolean
-        accuracy:
-          type: number
-          format: double
-        latencyMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        inputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        outputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        cost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-    AgentSkill:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        examples:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        inputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        outputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement'
-    AgentEvaluationDto:
-      type: object
-      additionalProperties: false
-      required:
-      - evaluationId
-      - evaluationJobId
-      - name
-      - status
-      - agents
-      - totalTasksCount
-      - completedTasksCount
-      - evaluationModelName
-      - createdAt
-      - createdBy
-      properties:
-        evaluationId:
-          type: string
-          format: guid
-        evaluationJobId:
-          type: string
-          format: guid
-        name:
-          type: string
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentDefinition'
-        totalTasksCount:
-          type: integer
-          format: int32
-        completedTasksCount:
-          type: integer
-          format: int32
-        evaluationModelName:
-          type: string
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdBy:
-          type: string
-    EvaluationLimitResult:
-      type: object
-      additionalProperties: false
-      properties:
-        limitReached:
-          type: boolean
-        limit:
-          type: integer
-          format: int32
-    SecurityScheme:
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          apiKey: '#/components/schemas/ApiKeySecurityScheme'
-          http: '#/components/schemas/HttpSecurityScheme'
-          oauth2: '#/components/schemas/OAuth2SecurityScheme'
-          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme'
-          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        type:
-          type: string
-    AgentEvaluationComparisonResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - agents
-      - evaluations
-      properties:
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentDefinition'
-        evaluations:
-          $ref: '#/components/schemas/PagedResultOfComparisonResultRow'
-    PagedResultOfAgentEvaluationDetailedResultDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationDetailedResultDto'
-        totalCount:
-          type: integer
-          format: int32
-    ThresholdBreachStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        accuracy:
-          oneOf:
-          - $ref: '#/components/schemas/ThresholdBreachMetric'
-        bias:
-          oneOf:
-          - $ref: '#/components/schemas/ThresholdBreachMetric'
-        drift:
-          oneOf:
-          - $ref: '#/components/schemas/ThresholdBreachMetric'
     ScheduleModel:
       type: object
       additionalProperties: false
@@ -2838,56 +2189,6 @@ components:
           - string
           - 'null'
           format: date-time
-    PagedResultOfAgentEvaluationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationDto'
-        totalCount:
-          type: integer
-          format: int32
-    FoundryComparisonEvaluator:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      - scoreType
-      properties:
-        key:
-          type: string
-        scoreType:
-          $ref: '#/components/schemas/EvaluatorScoreType'
-    EvaluationConnectionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Active
-      - DeletedPureFoundry
-      - DeletedMixed
-      enum:
-      - Active
-      - DeletedPureFoundry
-      - DeletedMixed
-    WhatIfComparisonResult:
-      type: object
-      additionalProperties: false
-      required:
-      - comparisonSetId
-      - baseline
-      - variants
-      properties:
-        comparisonSetId:
-          type: string
-          format: guid
-        baseline:
-          $ref: '#/components/schemas/WhatIfVariantAggregate'
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/WhatIfVariantComparison'
     AgentInterface:
       type: object
       additionalProperties: false
@@ -2902,77 +2203,58 @@ components:
           type:
           - string
           - 'null'
-    FoundryComparisonResponse:
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    UpdateEvaluationScheduleRequest:
       type: object
       additionalProperties: false
+      required:
+      - scheduleType
+      - startDate
       properties:
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationTargetSummary'
-        evaluators:
-          type: array
-          items:
-            $ref: '#/components/schemas/FoundryComparisonEvaluator'
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/FoundryComparisonResultRow'
-        aggregates:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/FoundryComparisonScore'
-    PagedResultOfComparisonResultRow:
+        scheduleType:
+          type: string
+          minLength: 1
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isCancelled:
+          type:
+          - boolean
+          - 'null'
+    PagedResultOfAgentEvaluationDatasetDto:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ComparisonResultRow'
+            $ref: '#/components/schemas/AgentEvaluationDatasetDto'
         totalCount:
           type: integer
           format: int32
-    EvaluationTestCaseInput:
-      type: object
-      additionalProperties: false
-      properties:
-        input:
-          type: string
-        expectedOutput:
-          type: string
-    AgentEvaluationDatasetDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - input
-      - expectedOutput
-      - context
-      properties:
-        id:
-          type: string
-          format: guid
-        input:
-          type: string
-        expectedOutput:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - string
-          - 'null'
-    AgentProvider:
-      type: object
-      additionalProperties: false
-      properties:
-        organization:
-          type: string
-        url:
-          type: string
     ToolPatchEntry:
       type: object
       additionalProperties: false
@@ -2992,110 +2274,56 @@ components:
         configuration:
           oneOf:
           - $ref: '#/components/schemas/JsonNode'
-    AgentEvaluationSummaryDto:
+    UpsertEvaluationThresholdRequest:
       type: object
       additionalProperties: false
-      required:
-      - latencyMs
-      - tokenCount
-      - cost
-      - accuracy
       properties:
-        latencyMs:
-          type: number
-          format: double
-        tokenCount:
-          type: integer
-          format: int32
-        cost:
-          type: number
-          format: decimal
-        accuracy:
-          type: number
-          format: double
-        bias:
-          type:
-          - number
-          - 'null'
-          format: double
-        drift:
-          type:
-          - number
-          - 'null'
-          format: double
-        consistency:
-          type:
-          - number
-          - 'null'
-          format: double
-        evaluatorCost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        evaluatorTokens:
+        accuracyThreshold:
           type:
           - integer
           - 'null'
           format: int32
-        evaluatorLatencyMs:
+          maximum: 100
+          minimum: 0
+        biasThreshold:
           type:
           - number
           - 'null'
           format: double
-    WhatIfBaselineMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - FreshInJob
-      - ReuseExisting
-      enum:
-      - FreshInJob
-      - ReuseExisting
-    JobTaskStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-      enum:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-    AgentExtension:
+          maximum: 1
+          minimum: 0
+        driftThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 100
+          minimum: 0
+    AgentEvaluationTargetSummary:
       type: object
       additionalProperties: false
+      required:
+      - id
+      - kind
+      - name
       properties:
-        uri:
+        id:
           type: string
-        description:
+          format: guid
+        kind:
+          $ref: '#/components/schemas/CampaignTargetKind'
+        pipelineVersionId:
           type:
           - string
           - 'null'
-        required:
+          format: guid
+        name:
+          type: string
+        latestRunCompletedAt:
           type:
-          - boolean
+          - string
           - 'null'
-        params:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
+          format: date-time
     AgentEvaluationAggregatedResponse:
       type: object
       additionalProperties: false
@@ -3131,6 +2359,134 @@ components:
           format: decimal
         status:
           $ref: '#/components/schemas/JobStatus'
+    AgentCardModel:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      properties:
+        projectId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        supportedInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentInterface'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/AgentProvider'
+        version:
+          type: string
+        documentationUrl:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities'
+        securitySchemes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityScheme'
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement'
+        signatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardSignature'
+        defaultInputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        defaultOutputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSkill'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    WhatIfComparisonResult:
+      type: object
+      additionalProperties: false
+      required:
+      - comparisonSetId
+      - baseline
+      - variants
+      properties:
+        comparisonSetId:
+          type: string
+          format: guid
+        baseline:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfVariantComparison'
+    WhatIfBaselineMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FreshInJob
+      - ReuseExisting
+      enum:
+      - FreshInJob
+      - ReuseExisting
+    EvaluationConnectionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
+      enum:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
     ConsistencyRunResult:
       type: object
       additionalProperties: false
@@ -3167,17 +2523,6 @@ components:
           - number
           - 'null'
           format: decimal
-    ModelIdentifierType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Library
-      - Project
-      enum:
-      - None
-      - Library
-      - Project
     GetAgentEvaluationResponse:
       type: object
       additionalProperties: false
@@ -3268,6 +2613,334 @@ components:
         whatIf:
           oneOf:
           - $ref: '#/components/schemas/WhatIfComparisonSection'
+    EvaluationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+      enum:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+    AgentCapabilities:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension'
+    AgentEvaluationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - evaluationJobId
+      - name
+      - status
+      - agents
+      - totalTasksCount
+      - completedTasksCount
+      - evaluationModelName
+      - createdAt
+      - createdBy
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        evaluationJobId:
+          type: string
+          format: guid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentDefinition'
+        totalTasksCount:
+          type: integer
+          format: int32
+        completedTasksCount:
+          type: integer
+          format: int32
+        evaluationModelName:
+          type: string
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdBy:
+          type: string
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    EvaluationResultsType:
+      type: string
+      description: ''
+      x-enumNames:
+      - FullDetails
+      - AccuracyBias
+      - Drift
+      enum:
+      - FullDetails
+      - AccuracyBias
+      - Drift
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+    AgentEvaluationAggregatedResultDto:
+      type: object
+      additionalProperties: false
+      required:
+      - agentVersionId
+      - agentName
+      - agentVersion
+      - averageAccuracy
+      - averageAgentExecutionDurationMs
+      - averageModelCallCost
+      - averageTokens
+      - averageModelCallDurationMs
+      properties:
+        agentVersionId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentVersion:
+          type: string
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        agentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        averageAccuracy:
+          type: number
+          format: double
+        averageAgentExecutionDurationMs:
+          type: integer
+          format: int32
+        averageModelCallCost:
+          type: number
+          format: decimal
+        averageTokens:
+          type: number
+          format: double
+        averageModelCallDurationMs:
+          type: integer
+          format: int32
+        averageBias:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageDrift:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageConsistency:
+          type:
+          - number
+          - 'null'
+          format: double
+        evaluatorCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        evaluatorTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        evaluatorLatencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        runsPerTestCase:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thresholdBreach:
+          oneOf:
+          - $ref: '#/components/schemas/ThresholdBreachStatus'
+    AgentEvaluationSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - latencyMs
+      - tokenCount
+      - cost
+      - accuracy
+      properties:
+        latencyMs:
+          type: number
+          format: double
+        tokenCount:
+          type: integer
+          format: int32
+        cost:
+          type: number
+          format: decimal
+        accuracy:
+          type: number
+          format: double
+        bias:
+          type:
+          - number
+          - 'null'
+          format: double
+        drift:
+          type:
+          - number
+          - 'null'
+          format: double
+        consistency:
+          type:
+          - number
+          - 'null'
+          format: double
+        evaluatorCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        evaluatorTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        evaluatorLatencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+    PagedResultOfAgentEvaluationDetailedResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationDetailedResultDto'
+        totalCount:
+          type: integer
+          format: int32
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    FoundryComparisonResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationTargetSummary'
+        evaluators:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoundryComparisonEvaluator'
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoundryComparisonResultRow'
+        aggregates:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/FoundryComparisonScore'
+    ThresholdBreachStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        accuracy:
+          oneOf:
+          - $ref: '#/components/schemas/ThresholdBreachMetric'
+        bias:
+          oneOf:
+          - $ref: '#/components/schemas/ThresholdBreachMetric'
+        drift:
+          oneOf:
+          - $ref: '#/components/schemas/ThresholdBreachMetric'
     AgentEvaluationDetailedResultDto:
       type: object
       additionalProperties: false
@@ -3385,25 +3058,222 @@ components:
           - integer
           - 'null'
           format: int64
-    EvaluatorRunStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Queued
-      - InvokingTarget
-      - Submitting
-      - Polling
-      - Succeeded
-      - Failed
-      - Cancelled
-      enum:
-      - Queued
-      - InvokingTarget
-      - Submitting
-      - Polling
-      - Succeeded
-      - Failed
-      - Cancelled
+    AgentSkill:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        examples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        inputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement'
+    AgentExtension:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    AgentEvaluationTargetSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - completedCount
+      - totalCount
+      properties:
+        completedCount:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+    ConsistencyRunDto:
+      type: object
+      additionalProperties: false
+      required:
+      - actualOutput
+      - accuracy
+      properties:
+        actualOutput:
+          type: string
+        truncated:
+          type: boolean
+        accuracy:
+          type: number
+          format: double
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    PagedResultOfComparisonResultRow:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonResultRow'
+        totalCount:
+          type: integer
+          format: int32
+    CreateAgentEvaluationResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - evaluationName
+      - agentVersionIds
+      properties:
+        id:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        agentVersionIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datasetIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    AgentEvaluationVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        variantId:
+          type: string
+          format: guid
+        label:
+          type: string
+        isBaseline:
+          type: boolean
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ExternalScenarioOverrides'
+    SecurityScheme:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          apiKey: '#/components/schemas/ApiKeySecurityScheme'
+          http: '#/components/schemas/HttpSecurityScheme'
+          oauth2: '#/components/schemas/OAuth2SecurityScheme'
+          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme'
+          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+    AgentEvaluationDetailedResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agent
+      - summary
+      - evaluations
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentDefinition'
+        summary:
+          $ref: '#/components/schemas/AgentEvaluationSummaryDto'
+        evaluations:
+          $ref: '#/components/schemas/PagedResultOfAgentEvaluationDetailedResultDto'
     AiriaEvaluatorView:
       type: object
       additionalProperties: false
@@ -3425,15 +3295,114 @@ components:
           type: boolean
         isDefault:
           type: boolean
-    ScenarioOverrideKind:
+    EvaluatorMetricResultResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - source
+      - evaluatorKey
+      - score
+      - scoreType
+      properties:
+        id:
+          type: string
+          format: guid
+        source:
+          $ref: '#/components/schemas/EvaluatorSource'
+        evaluatorKey:
+          type: string
+        score:
+          type: number
+          format: double
+        scoreType:
+          $ref: '#/components/schemas/EvaluatorScoreType'
+        reasonText:
+          type:
+          - string
+          - 'null'
+    FoundryComparisonResultRow:
+      type: object
+      additionalProperties: false
+      required:
+      - rowIndex
+      properties:
+        datasetItemId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        rowIndex:
+          type: integer
+          format: int32
+        input:
+          type:
+          - string
+          - 'null'
+        expectedOutput:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - string
+          - 'null'
+        cells:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoundryComparisonCell'
+    WhatIfComparisonSection:
+      type: object
+      additionalProperties: false
+      required:
+      - comparisonSetId
+      - variantResults
+      properties:
+        comparisonSetId:
+          type: string
+          format: guid
+        variantResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationJobTaskResult'
+        comparison:
+          oneOf:
+          - $ref: '#/components/schemas/WhatIfComparisonResult'
+    AgentDefinition:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - versionId
+      - name
+      - version
+      properties:
+        id:
+          type: string
+          format: guid
+        versionId:
+          type: string
+          format: guid
+        name:
+          type: string
+        version:
+          type: string
+    EvaluatorSource:
       type: string
       description: ''
       x-enumNames:
-      - Internal
-      - External
+      - Airia
+      - AzureFoundry
       enum:
-      - Internal
-      - External
+      - Airia
+      - AzureFoundry
+    RunAgentEvaluationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluatorRunId:
+          type: string
+          format: guid
     EvaluatorScoreType:
       type: string
       description: ''
@@ -3449,50 +3418,81 @@ components:
       - Boolean
       - Percentage
       - Decimal
-    EvaluatorSelectionInput:
+    EvaluationScheduleResponse:
       type: object
       additionalProperties: false
       required:
-      - evalSuiteEvaluatorId
+      - scheduleId
+      - scheduleType
+      - startDate
       properties:
-        evalSuiteEvaluatorId:
+        scheduleId:
           type: string
           format: guid
-          minLength: 1
-        initParamsJson:
+        scheduleType:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
           type:
           - string
           - 'null'
-    EvaluationThresholdResponse:
+          format: date-time
+        nextEvaluationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isCancelled:
+          type: boolean
+    WhatIfVariantAggregate:
       type: object
       additionalProperties: false
-      required:
-      - evaluationId
       properties:
-        evaluationId:
-          type: string
-          format: guid
-        accuracyThreshold:
+        variantId:
           type:
-          - integer
+          - string
           - 'null'
+          format: guid
+        isBaseline:
+          type: boolean
+        runCount:
+          type: integer
           format: int32
-        biasThreshold:
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        averageLatencyMs:
           type:
           - number
           - 'null'
           format: double
-        driftThreshold:
+        averageEstimatedCost:
           type:
-          - integer
+          - number
           - 'null'
-          format: int32
-    JsonNodeOptions:
+          format: decimal
+        averageTotalTokens:
+          type:
+          - number
+          - 'null'
+          format: double
+    AgentCardSignature:
       type: object
       additionalProperties: false
       properties:
-        propertyNameCaseInsensitive:
-          type: boolean
+        protected:
+          type: string
+        signature:
+          type: string
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
   securitySchemes:
     ApiKey:
       type: apiKey

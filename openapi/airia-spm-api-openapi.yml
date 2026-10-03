@@ -3004,153 +3004,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TopAiAppByUsers:
+    AgentSecureRequest:
       type: object
       additionalProperties: false
       properties:
-        appName:
+        airiaGatewayUrl:
           type: string
-        uniqueUserCount:
-          type: integer
-          format: int32
-    SpmAppIntegrationChangeRunSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        analysisRunId:
+        gatewayConfigurationId:
           type: string
           format: guid
-        connectionId:
+        selectedComponentIds:
           type:
-          - string
+          - array
           - 'null'
-          format: guid
-        providerType:
-          $ref: '#/components/schemas/IntegrationProviderType'
-        occurredAt:
-          type: string
-          format: date-time
-        detectedCount:
-          type: integer
-          format: int32
-        scopesChangedCount:
-          type: integer
-          format: int32
-        revokedCount:
-          type: integer
-          format: int32
-        totalCount:
-          type: integer
-          format: int32
-    ExternalWorkflowStep:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        stepType:
-          type: string
-        stepTitle:
-          type:
-          - string
-          - 'null'
-        dependenciesObject:
-          type: array
           items:
-            $ref: '#/components/schemas/DependencyObject'
-        handles:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeHandle'
-        pipelineId:
-          type: string
-          format: guid
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        alignment:
-          type: string
-        position:
-          $ref: '#/components/schemas/Position'
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        metadata:
-          $ref: '#/components/schemas/ExternalNodeMetadata'
-    GetAiAppCatalogResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        catalog:
-          $ref: '#/components/schemas/PagedResultV2OfAiAppCatalogItemDto'
-        hasCustomerCloudflareConfiguration:
-          type: boolean
-    CloudflareAiAppCatalog:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalTenantEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - cloudflareAppId
-        - name
-        - categoryId
-        - categoryName
-        - sourceType
-        properties:
-          cloudflareAppId:
-            type: integer
-            format: int32
-          name:
             type: string
-            maxLength: 255
-            minLength: 1
-          categoryId:
-            type: integer
-            format: int32
-          categoryName:
-            type: string
-            maxLength: 255
-            minLength: 1
-          categoryNames:
-            type: array
-            items:
-              type: string
-          description:
-            type:
-            - string
-            - 'null'
-            maxLength: 2048
-          url:
-            type:
-            - string
-            - 'null'
-            maxLength: 512
-          sourceType:
-            $ref: '#/components/schemas/SourceType'
-          internalApplicationId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    ConnectionTestDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        systemName:
-          type: string
-        responseTimeMs:
-          type: integer
-          format: int32
     PagedResultOfAgentResponse:
       type: object
       additionalProperties: false
@@ -3162,90 +3030,81 @@ components:
         totalCount:
           type: integer
           format: int32
-    ProvidersResponse:
+    ConnectionCreateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+    PagedResultV2OfSpmAppIntegrationEventResponse:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            type: string
-    SpmAppIntegrationChange:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - tenantId
-        - providerType
-        - analysisRunId
-        - operation
-        - userIdentifier
-        - occurredAt
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-            minLength: 1
-          connectionId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          providerType:
-            $ref: '#/components/schemas/IntegrationProviderType'
-          analysisRunId:
-            type: string
-            format: guid
-            minLength: 1
-          operation:
-            $ref: '#/components/schemas/SpmAppIntegrationChangeOperation'
-          userIdentifier:
-            type: string
-            maxLength: 255
-            minLength: 1
-          clientId:
-            type:
-            - string
-            - 'null'
-            maxLength: 255
-          appName:
-            type:
-            - string
-            - 'null'
-            maxLength: 500
-          scopes:
-            type:
-            - string
-            - 'null'
-          previousScopes:
-            type:
-            - string
-            - 'null'
-          grantId:
-            type:
-            - string
-            - 'null'
-            maxLength: 500
-          isAIService:
-            type:
-            - boolean
-            - 'null'
-          aiServiceConfidence:
-            type:
-            - number
-            - 'null'
-            format: double
-          occurredAt:
-            type: string
-            format: date-time
-          isGenesisBaseline:
-            type:
-            - boolean
-            - 'null'
+            $ref: '#/components/schemas/SpmAppIntegrationEventResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    SpmAgentCapabilities:
+      type: object
+      additionalProperties: false
+      properties:
+        supportsInvocation:
+          type: boolean
+        supportsConversationHistory:
+          type: boolean
+        supportsAliases:
+          type: boolean
+    IntegrationRecordsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmAppIntegrationRecord'
+        totalCount:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    GrantDispositionState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Reviewed
+      - Sanctioned
+      - Dismissed
+      enum:
+      - Reviewed
+      - Sanctioned
+      - Dismissed
+    DependencyObject:
+      type: object
+      additionalProperties: false
+      properties:
+        parentId:
+          type: string
+        parentHandleId:
+          type: string
+        handleId:
+          type: string
     AiAppUsageTimeSeriesPoint:
       type: object
       additionalProperties: false
@@ -3260,6 +3119,33 @@ components:
           additionalProperties:
             type: integer
             format: int32
+    ConnectionAffectedEvaluationsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        total:
+          type: integer
+          format: int32
+        evaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectedEvaluationSummary'
+    ProviderConnectionSchema:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        kind:
+          type: string
+        kinds:
+          type: array
+          items:
+            type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderConnectionFieldSchema'
     SpmSettingsResponse:
       type: object
       additionalProperties: false
@@ -3290,174 +3176,135 @@ components:
           - string
           - 'null'
           format: guid
-    SecurePostureStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotSecured
-      - Secured
-      - PartiallySecured
-      - NotSecurableSecurePostureProvider
-      - NotSecurableAiProvider
-      - NotSecurableAiModel
-      - NoAiService
-      enum:
-      - NotSecured
-      - Secured
-      - PartiallySecured
-      - NotSecurableSecurePostureProvider
-      - NotSecurableAiProvider
-      - NotSecurableAiModel
-      - NoAiService
-    SpmAgentUsageEventResponse:
+    TestConnectionCommand:
       type: object
       additionalProperties: false
       properties:
         id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: guid
-        spmAgentId:
-          type: string
-          format: guid
-        securePostureProvider:
-          $ref: '#/components/schemas/SecurePostureProvider'
-        occurredAt:
-          type: string
-          format: date-time
-        actorDisplayName:
-          type:
-          - string
-          - 'null'
-        actorEmail:
-          type:
-          - string
-          - 'null'
-        channel:
-          type:
-          - string
-          - 'null'
-        transcriptStatus:
-          $ref: '#/components/schemas/SpmTranscriptStatus'
-        transcriptCollectedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        transcriptExpiresAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        transcriptExpiredAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        transcriptStatusReason:
-          type:
-          - string
-          - 'null'
-    SpmAgentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Agent
-      - Flow
-      - Workflow
-      x-enum-descriptions:
-      - A conversational AI agent that maintains context across turns. Supports multi-turn Red Teaming campaigns (e.g. AWS Bedrock Agent, Copilot Studio Bot).
-      - A deterministic automation flow. Stateless — each invocation is independent with no conversation history (e.g. AWS Bedrock Flow, Copilot Studio Power Automate flow).
-      - A workflow automation. Stateless with no conversation context support (e.g. N8n workflow).
-      enum:
-      - Agent
-      - Flow
-      - Workflow
-    ConnectionCreateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - securePostureProvider
-      - connection
-      properties:
         name:
           type: string
-          maxLength: 255
-          minLength: 0
         securePostureProvider:
           $ref: '#/components/schemas/SecurePostureProvider'
         connection:
           type: object
           additionalProperties: {}
-    PagedResultV2OfSpmTranscriptSegmentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmTranscriptSegmentResponse'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    SpmSyncRunStatus:
+    SecurePostureProvider:
       type: string
       description: ''
       x-enumNames:
-      - Success
-      - Failed
-      - Running
-      - PartialSuccess
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
       enum:
-      - Success
-      - Failed
-      - Running
-      - PartialSuccess
-    AgentSecureDetails:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+    SpmSyncChangeOperation:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Updated
+      - Deleted
+      enum:
+      - Created
+      - Updated
+      - Deleted
+    AgentRefreshResponse:
       type: object
       additionalProperties: false
       properties:
-        agentId:
+        id:
           type: string
-          format: guid
-        workflowId:
+        status:
           type: string
-        modelId:
+        message:
           type: string
-        aiProviders:
+        timestamp:
           type: string
-        aiModels:
-          type: string
-        gatewayUrl:
-          type: string
-        responseTimeMs:
-          type: integer
-          format: int32
-        credentialsCreated:
-          type: integer
-          format: int32
-        credentialNames:
-          type:
-          - string
-          - 'null'
-        bedrockAgentId:
-          type:
-          - string
-          - 'null'
-    PagedResultV2OfSpmTranscriptMessageResponse:
+          format: date-time
+        details:
+          $ref: '#/components/schemas/AgentRefreshDetails'
+    AiAppUsageOverTimeResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        dataPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiAppUsageTimeSeriesPoint'
+    PagedResultV2OfSpmProcessExecutionEventResponse:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/SpmTranscriptMessageResponse'
+            $ref: '#/components/schemas/SpmProcessExecutionEventResponse'
         totalCount:
           type:
           - integer
@@ -3467,30 +3314,114 @@ components:
           type:
           - boolean
           - 'null'
-    PagedResultV2OfSpmAppIntegrationEventResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmAppIntegrationEventResponse'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    ConnectionCreateResponse:
+    ExternalWorkflowDisplayResponse:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        provider:
+          type: string
+        isActive:
+          type: boolean
+        externalId:
+          type: string
+        externalUpdatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        workflowMetadata:
+          $ref: '#/components/schemas/WorkflowMetadata'
+        activeVersion:
+          $ref: '#/components/schemas/ExternalWorkflowVersion'
+    IntegrationChangesResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmAppIntegrationChange'
+        totalCount:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    SyncRunResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        spmConnectionId:
+          type: string
+          format: guid
+        connectionName:
+          type:
+          - string
+          - 'null'
+        securePostureProvider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        status:
+          $ref: '#/components/schemas/SpmSyncRunStatus'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        createdCount:
+          type: integer
+          format: int32
+        updatedCount:
+          type: integer
+          format: int32
+        deletedCount:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        environmentSummary:
+          oneOf:
+          - $ref: '#/components/schemas/SyncRunEnvironmentSummaryResponse'
+    TopAiAppByUsers:
+      type: object
+      additionalProperties: false
+      properties:
+        appName:
+          type: string
+        uniqueUserCount:
+          type: integer
+          format: int32
+    PagedResultOfComponentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentResponse'
+        totalCount:
+          type: integer
+          format: int32
     SpmAppIntegrationRecord:
       allOf:
       - $ref: '#/components/schemas/BaseAuditEntity'
@@ -3618,120 +3549,17 @@ components:
           integrationRecordKind:
             oneOf:
             - $ref: '#/components/schemas/SpmAppIntegrationRecordKind'
-    SpmProviderGraphNode:
+    SpmAgentGraphNode:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmAgentSummary'
-    ConnectionAffectedEvaluationsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        total:
-          type: integer
-          format: int32
-        evaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AffectedEvaluationSummary'
-    PagedResultV2OfSpmProcessExecutionEventResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmProcessExecutionEventResponse'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    SpmTranscriptMessageResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        activityId:
-          type:
-          - string
-          - 'null'
-        replyToId:
-          type:
-          - string
-          - 'null'
-        role:
-          $ref: '#/components/schemas/SpmTranscriptMessageRole'
-        timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        channel:
-          type:
-          - string
-          - 'null'
-        textFormat:
-          type:
-          - string
-          - 'null'
-        text:
-          type: string
-        isDesignMode:
-          type: boolean
-    GrantDispositionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        integrationRecordId:
-          type: string
           format: guid
-        state:
-          $ref: '#/components/schemas/GrantDispositionState'
-        previousState:
-          oneOf:
-          - $ref: '#/components/schemas/GrantDispositionState'
-        reason:
-          type:
-          - string
-          - 'null'
-        decidedAt:
-          type: string
-          format: date-time
-    PagedResultV2OfAiAppCatalogItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
+        models:
           type: array
           items:
-            $ref: '#/components/schemas/AiAppCatalogItemDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    SourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserProvided
-      - Library
-      enum:
-      - userProvided
-      - library
+            $ref: '#/components/schemas/SpmModelSummary'
     IntegrationChangeRunsResponse:
       type: object
       additionalProperties: false
@@ -3752,406 +3580,28 @@ components:
         totalPages:
           type: integer
           format: int32
-    SyncRunEnvironmentFailureResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        environmentName:
-          type: string
-        resolvedEnvironmentId:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    PagedResultOfComponentResponse:
+    PagedResultOfSyncRunResponse:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ComponentResponse'
+            $ref: '#/components/schemas/SyncRunResponse'
         totalCount:
           type: integer
           format: int32
-    ScanIntegrationAppsResponse:
+    ScanIntegrationAppsRequest:
       type: object
       additionalProperties: false
       properties:
-        analysisRunIds:
-          type: array
+        connectionIds:
+          type:
+          - array
+          - 'null'
           items:
             type: string
             format: guid
-        successCount:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectionScanError'
-        message:
-          type: string
-    PagedResultOfConnectionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectionResponse'
-        totalCount:
-          type: integer
-          format: int32
-    ExternalNodeMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        externalType:
-          type: string
-        category:
-          type: string
-        typeVersion:
-          type:
-          - number
-          - 'null'
-          format: float
-        disabled:
-          type: boolean
-        isTrigger:
-          type: boolean
-        notes:
-          type:
-          - string
-          - 'null'
-        color:
-          type:
-          - string
-          - 'null'
-        aiModelName:
-          type:
-          - string
-          - 'null'
-        aiProviderName:
-          type:
-          - string
-          - 'null'
-        securityStatus:
-          type: string
-        isSecurable:
-          type: boolean
-        flowId:
-          type:
-          - string
-          - 'null'
-    PagedResultOfConnectionAgentCountResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectionAgentCountResponse'
-        totalCount:
-          type: integer
-          format: int32
-    AgentAliasSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        aliasId:
-          type: string
-        aliasName:
-          type: string
-        isDraft:
-          type: boolean
-    ConnectionTestResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-        errorCategory:
-          type:
-          - string
-          - 'null'
-        timestamp:
-          type: string
-          format: date-time
-        details:
-          $ref: '#/components/schemas/ConnectionTestDetails'
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectionCheck'
-    ComponentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        securePostureProvider:
-          $ref: '#/components/schemas/SecurePostureProvider'
-        externalId:
-          type: string
-        externalType:
-          type:
-          - string
-          - 'null'
-        externalTypeVersion:
-          type:
-          - number
-          - 'null'
-          format: float
-        componentType:
-          $ref: '#/components/schemas/SpmComponentType'
-        category:
-          type:
-          - string
-          - 'null'
-        externalOwner:
-          type:
-          - string
-          - 'null'
-        externalCreatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        externalModifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        language:
-          type:
-          - string
-          - 'null'
-        externalCreatedBy:
-          type:
-          - string
-          - 'null'
-        externalModifiedBy:
-          type:
-          - string
-          - 'null'
-        reusePolicy:
-          type:
-          - string
-          - 'null'
-        credentialsCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        parametersCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        componentDictionary:
-          type: object
-          additionalProperties: {}
-        aiModelName:
-          type:
-          - string
-          - 'null'
-        aiProviderName:
-          type:
-          - string
-          - 'null'
-        aiSecurable:
-          type:
-          - boolean
-          - 'null'
-        securedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        secureApiKeyId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        gatewayConfigurationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        securedStatus:
-          $ref: '#/components/schemas/SecurePostureStatus'
-        securedNote:
-          type:
-          - string
-          - 'null'
-        endUserAuthenticationSetting:
-          type:
-          - string
-          - 'null'
-        knowledgeSourceType:
-          type:
-          - string
-          - 'null'
-        knowledgeSourceLocation:
-          type:
-          - string
-          - 'null'
-    SpmAppIntegrationEventResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        connectionId:
-          type: string
-          format: guid
-        clientId:
-          type:
-          - string
-          - 'null'
-        securePostureProvider:
-          $ref: '#/components/schemas/SecurePostureProvider'
-        source:
-          $ref: '#/components/schemas/SpmAppIntegrationEventSource'
-        eventType:
-          type:
-          - string
-          - 'null'
-        severity:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        occurredAt:
-          type: string
-          format: date-time
-        syncedAt:
-          type: string
-          format: date-time
-        actorDisplayName:
-          type:
-          - string
-          - 'null'
-        actorEmail:
-          type:
-          - string
-          - 'null'
-    RevokeOAuthTokenResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        integrationRecordId:
-          type: string
-          format: guid
-        providerType:
-          type: string
-        userIdentifier:
-          type:
-          - string
-          - 'null'
-        appName:
-          type:
-          - string
-          - 'null'
-        revokedAt:
-          type: string
-          format: date-time
-    ConnectionAppCountResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionId:
-          type: string
-          format: guid
-        appCount:
-          type: integer
-          format: int32
-    WorkflowMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        nodesCount:
-          type: integer
-          format: int32
-        aiNodesCount:
-          type: integer
-          format: int32
-        securableNodesCount:
-          type: integer
-          format: int32
-        securedNodesCount:
-          type: integer
-          format: int32
-        hasLoops:
-          type: boolean
-        hasMergeNodes:
-          type: boolean
-        triggerCount:
-          type: integer
-          format: int32
-        tags:
-          type: array
-          items:
-            type: string
-    UpdateSpmSettingsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        defaultGatewayConfigurationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    PagedResultOfAgentDirectoryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentDirectoryResponse'
-        totalCount:
-          type: integer
-          format: int32
     ConnectionResponse:
       type: object
       additionalProperties: false
@@ -4194,6 +3644,465 @@ components:
         y:
           type: number
           format: double
+    SpmAgentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Agent
+      - Flow
+      - Workflow
+      x-enum-descriptions:
+      - A conversational AI agent that maintains context across turns. Supports multi-turn Red Teaming campaigns (e.g. AWS Bedrock Agent, Copilot Studio Bot).
+      - A deterministic automation flow. Stateless — each invocation is independent with no conversation history (e.g. AWS Bedrock Flow, Copilot Studio Power Automate flow).
+      - A workflow automation. Stateless with no conversation context support (e.g. N8n workflow).
+      enum:
+      - Agent
+      - Flow
+      - Workflow
+    CloudflareAiAppBlockStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isBlocked:
+          type: boolean
+        cloudflareAppId:
+          type: integer
+          format: int32
+        cloudflareRuleId:
+          type:
+          - string
+          - 'null'
+        appName:
+          type:
+          - string
+          - 'null'
+    SpmModelSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        aiProvider:
+          type: string
+    AgentAliasSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aliasId:
+          type: string
+        aliasName:
+          type: string
+        isDraft:
+          type: boolean
+    PagedResultOfAgentDirectoryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentDirectoryResponse'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfConnectionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionResponse'
+        totalCount:
+          type: integer
+          format: int32
+    SpmAppIntegrationEventSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Monitor
+      - Alert
+      enum:
+      - Monitor
+      - Alert
+    SpmAppIntegrationChange:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - tenantId
+        - providerType
+        - analysisRunId
+        - operation
+        - userIdentifier
+        - occurredAt
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+            minLength: 1
+          connectionId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          providerType:
+            $ref: '#/components/schemas/IntegrationProviderType'
+          analysisRunId:
+            type: string
+            format: guid
+            minLength: 1
+          operation:
+            $ref: '#/components/schemas/SpmAppIntegrationChangeOperation'
+          userIdentifier:
+            type: string
+            maxLength: 255
+            minLength: 1
+          clientId:
+            type:
+            - string
+            - 'null'
+            maxLength: 255
+          appName:
+            type:
+            - string
+            - 'null'
+            maxLength: 500
+          scopes:
+            type:
+            - string
+            - 'null'
+          previousScopes:
+            type:
+            - string
+            - 'null'
+          grantId:
+            type:
+            - string
+            - 'null'
+            maxLength: 500
+          isAIService:
+            type:
+            - boolean
+            - 'null'
+          aiServiceConfidence:
+            type:
+            - number
+            - 'null'
+            format: double
+          occurredAt:
+            type: string
+            format: date-time
+          isGenesisBaseline:
+            type:
+            - boolean
+            - 'null'
+    SpmAgentUsageEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        spmAgentId:
+          type: string
+          format: guid
+        securePostureProvider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        occurredAt:
+          type: string
+          format: date-time
+        actorDisplayName:
+          type:
+          - string
+          - 'null'
+        actorEmail:
+          type:
+          - string
+          - 'null'
+        channel:
+          type:
+          - string
+          - 'null'
+        transcriptStatus:
+          $ref: '#/components/schemas/SpmTranscriptStatus'
+        transcriptCollectedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        transcriptExpiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        transcriptExpiredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        transcriptStatusReason:
+          type:
+          - string
+          - 'null'
+    ExternalNodeMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        externalType:
+          type: string
+        category:
+          type: string
+        typeVersion:
+          type:
+          - number
+          - 'null'
+          format: float
+        disabled:
+          type: boolean
+        isTrigger:
+          type: boolean
+        notes:
+          type:
+          - string
+          - 'null'
+        color:
+          type:
+          - string
+          - 'null'
+        aiModelName:
+          type:
+          - string
+          - 'null'
+        aiProviderName:
+          type:
+          - string
+          - 'null'
+        securityStatus:
+          type: string
+        isSecurable:
+          type: boolean
+        flowId:
+          type:
+          - string
+          - 'null'
+    AffectedEvaluationSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    ProviderConnectionSchemaResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderConnectionSchema'
+    SpmTranscriptMessageRole:
+      type: string
+      description: ''
+      x-enumNames:
+      - User
+      - Agent
+      - Unknown
+      enum:
+      - User
+      - Agent
+      - Unknown
+    SpmTranscriptMessageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        activityId:
+          type:
+          - string
+          - 'null'
+        replyToId:
+          type:
+          - string
+          - 'null'
+        role:
+          $ref: '#/components/schemas/SpmTranscriptMessageRole'
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        channel:
+          type:
+          - string
+          - 'null'
+        textFormat:
+          type:
+          - string
+          - 'null'
+        text:
+          type: string
+        isDesignMode:
+          type: boolean
+    BaseOptionalTenantEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    ConnectionTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        errorCategory:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type: string
+          format: date-time
+        details:
+          $ref: '#/components/schemas/ConnectionTestDetails'
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionCheck'
+    SyncRunEnvironmentSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        totalCount:
+          type: integer
+          format: int32
+        succeededCount:
+          type: integer
+          format: int32
+        failedCount:
+          type: integer
+          format: int32
+        skippedCount:
+          type: integer
+          format: int32
+    PagedResultOfCloudflareAiAppCatalog:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudflareAiAppCatalog'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    WorkflowMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        nodesCount:
+          type: integer
+          format: int32
+        aiNodesCount:
+          type: integer
+          format: int32
+        securableNodesCount:
+          type: integer
+          format: int32
+        securedNodesCount:
+          type: integer
+          format: int32
+        hasLoops:
+          type: boolean
+        hasMergeNodes:
+          type: boolean
+        triggerCount:
+          type: integer
+          format: int32
+        tags:
+          type: array
+          items:
+            type: string
+    PagedResultOfConnectionAgentCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionAgentCountResponse'
+        totalCount:
+          type: integer
+          format: int32
+    ProviderConnectionCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        connectionCount:
+          type: integer
+          format: int32
+    PagedResultV2OfSpmAgentUsageEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmAgentUsageEventResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
     AgentModelComponent:
       type: object
       additionalProperties: false
@@ -4218,268 +4127,55 @@ components:
           - string
           - 'null'
           format: guid
-    PagedResultOfCloudflareAiAppCatalog:
+    SetGrantDispositionRequest:
       type: object
       additionalProperties: false
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudflareAiAppCatalog'
-        totalCount:
-          type: integer
-          format: int32
-    ScanIntegrationAppsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-    AnalysisRunSummaryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionId:
+        state:
+          $ref: '#/components/schemas/GrantDispositionState'
+        reason:
           type:
           - string
           - 'null'
-          format: guid
-        connectionName:
-          type: string
-        providerType:
-          $ref: '#/components/schemas/IntegrationProviderType'
-        status:
-          $ref: '#/components/schemas/IntegrationAnalysisRunStatus'
-        startedAt:
+    SecurePostureStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+      enum:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
           type:
           - string
           - 'null'
           format: date-time
-        errors:
+        updatedAt:
           type:
           - string
           - 'null'
-    ProviderConnectionFieldSchema:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        labelKey:
-          type: string
-        type:
-          type: string
-        required:
-          type: boolean
-        isSecret:
-          type: boolean
-        hintKey:
-          type:
-          - string
-          - 'null'
-        placeholder:
-          type:
-          - string
-          - 'null'
-        options:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        credentialType:
-          type:
-          - string
-          - 'null'
-        isScopeDefining:
-          type: boolean
-        blankScopeMeaning:
-          type:
-          - string
-          - 'null'
-    PagedResultOfSyncRunResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SyncRunResponse'
-        totalCount:
-          type: integer
-          format: int32
-    SecurePostureProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-      enum:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-    SpmAppIntegrationRecordKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - OAuthGrant
-      - SsoAssignment
-      enum:
-      - OAuthGrant
-      - SsoAssignment
-    AgentRefreshDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        systemName:
-          type: string
-        responseTimeMs:
-          type: integer
-          format: int32
-        createdAgents:
-          type: integer
-          format: int32
-        updatedAgents:
-          type: integer
-          format: int32
-        deletedAgents:
-          type: integer
-          format: int32
-        refreshResults:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    SpmAgentCapabilities:
-      type: object
-      additionalProperties: false
-      properties:
-        supportsInvocation:
-          type: boolean
-        supportsConversationHistory:
-          type: boolean
-        supportsAliases:
-          type: boolean
-    DependencyObject:
-      type: object
-      additionalProperties: false
-      properties:
-        parentId:
-          type: string
-        parentHandleId:
-          type: string
-        handleId:
-          type: string
-    SpmTranscriptSegmentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        sourceRowId:
-          type: string
-          format: guid
-        batchId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sourceCreatedAt:
-          type: string
           format: date-time
-        schemaType:
+        userId:
           type:
           - string
           - 'null'
-        schemaVersion:
-          type:
-          - string
-          - 'null'
-        content:
-          type: string
-        metadata:
-          type:
-          - string
-          - 'null'
-    ConnectionUpdateRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        connection:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
+          format: guid
     ConnectionCheck:
       type: object
       additionalProperties: false
@@ -4511,108 +4207,65 @@ components:
           - integer
           - 'null'
           format: int64
-    SetGrantDispositionRequest:
+    AnalysisRunSummaryResponse:
       type: object
       additionalProperties: false
       properties:
-        state:
-          $ref: '#/components/schemas/GrantDispositionState'
-        reason:
-          type:
-          - string
-          - 'null'
-    GrantDispositionState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Reviewed
-      - Sanctioned
-      - Dismissed
-      enum:
-      - Reviewed
-      - Sanctioned
-      - Dismissed
-    PagedResultOfSyncRunChangeResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SyncRunChangeResponse'
-        totalCount:
-          type: integer
-          format: int32
-    BaseOptionalTenantEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    CloudflareAiAppBlockStatusResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        isBlocked:
-          type: boolean
-        cloudflareAppId:
-          type: integer
-          format: int32
-        cloudflareRuleId:
-          type:
-          - string
-          - 'null'
-        appName:
-          type:
-          - string
-          - 'null'
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
+        connectionId:
           type:
           - string
           - 'null'
           format: guid
-    ProviderConnectionSchemaResponse:
+        connectionName:
+          type: string
+        providerType:
+          $ref: '#/components/schemas/IntegrationProviderType'
+        status:
+          $ref: '#/components/schemas/IntegrationAnalysisRunStatus'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        errors:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfSpmTranscriptMessageResponse:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ProviderConnectionSchema'
-    SpmAppIntegrationEventSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Monitor
-      - Alert
-      enum:
-      - Monitor
-      - Alert
-    ConnectionAgentCountResponse:
+            $ref: '#/components/schemas/SpmTranscriptMessageResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    ConnectionScanError:
+      type: object
+      additionalProperties: false
+      properties:
+        connectionId:
+          type: string
+          format: guid
+        connectionName:
+          type: string
+        error:
+          type: string
+    BlockCloudflareAiAppResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        cloudflareRuleId:
+          type: string
+    AgentDirectoryResponse:
       type: object
       additionalProperties: false
       properties:
@@ -4621,103 +4274,41 @@ components:
           format: guid
         name:
           type: string
-        securePostureProvider:
-          $ref: '#/components/schemas/SecurePostureProvider'
-        agentCount:
-          type: integer
-          format: int32
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastAgentRefreshedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        healthStatus:
+        provider:
           type: string
-        connection:
-          type: object
-          additionalProperties: {}
-    DiscoveryPersonKeyKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Email
-      - Upn
-      - Opaque
-      - Synthetic
-      enum:
-      - Email
-      - Upn
-      - Opaque
-      - Synthetic
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
         status:
+          type: string
+        modelNames:
+          type: string
+        securityScore:
           type:
-          - integer
+          - number
           - 'null'
-          format: int32
-        detail:
+          format: double
+        securityScoreStatus:
+          type: string
+        securedNote:
           type:
           - string
           - 'null'
-        instance:
+        externalCreatedAt:
           type:
           - string
           - 'null'
-    SpmTranscriptMessageRole:
-      type: string
-      description: ''
-      x-enumNames:
-      - User
-      - Agent
-      - Unknown
-      enum:
-      - User
-      - Agent
-      - Unknown
-    IntegrationProviderType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Google
-      - Microsoft
-      - Okta
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - Netskope
-      - Zscaler
-      enum:
-      - Google
-      - Microsoft
-      - Okta
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - Netskope
-      - Zscaler
+          format: date-time
+        externalCreatedBy:
+          type:
+          - string
+          - 'null'
+        agentType:
+          oneOf:
+          - $ref: '#/components/schemas/SpmAgentType'
+        capabilities:
+          $ref: '#/components/schemas/SpmAgentCapabilities'
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentModelComponent'
     AgentResponse:
       type: object
       additionalProperties: false
@@ -4926,6 +4517,193 @@ components:
           type:
           - string
           - 'null'
+    PagedResultOfProviderConnectionCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderConnectionCountResponse'
+        totalCount:
+          type: integer
+          format: int32
+    NodeHandle:
+      type: object
+      additionalProperties: false
+      properties:
+        uuid:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        tooltip:
+          type: string
+    SpmTranscriptSegmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        sourceRowId:
+          type: string
+          format: guid
+        batchId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sourceCreatedAt:
+          type: string
+          format: date-time
+        schemaType:
+          type:
+          - string
+          - 'null'
+        schemaVersion:
+          type:
+          - string
+          - 'null'
+        content:
+          type: string
+        metadata:
+          type:
+          - string
+          - 'null'
+    SpmCapabilityFilter:
+      type: string
+      description: ''
+      x-enumNames:
+      - SupportsInvocation
+      - SupportsConversationHistory
+      - SupportsAliases
+      enum:
+      - SupportsInvocation
+      - SupportsConversationHistory
+      - SupportsAliases
+    ConnectionCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - securePostureProvider
+      - connection
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        securePostureProvider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        connection:
+          type: object
+          additionalProperties: {}
+    ConnectionUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        connection:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    SpmAppIntegrationRecordKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - OAuthGrant
+      - SsoAssignment
+      enum:
+      - OAuthGrant
+      - SsoAssignment
+    SpmSyncRunStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Success
+      - Failed
+      - Running
+      - PartialSuccess
+      enum:
+      - Success
+      - Failed
+      - Running
+      - PartialSuccess
+    ConnectionAgentCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        securePostureProvider:
+          $ref: '#/components/schemas/SecurePostureProvider'
+        agentCount:
+          type: integer
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastAgentRefreshedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        healthStatus:
+          type: string
+        connection:
+          type: object
+          additionalProperties: {}
+    SpmAppIntegrationChangeRunSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        analysisRunId:
+          type: string
+          format: guid
+        connectionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        providerType:
+          $ref: '#/components/schemas/IntegrationProviderType'
+        occurredAt:
+          type: string
+          format: date-time
+        detectedCount:
+          type: integer
+          format: int32
+        scopesChangedCount:
+          type: integer
+          format: int32
+        revokedCount:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+    GetAiAppCatalogResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        catalog:
+          $ref: '#/components/schemas/PagedResultV2OfAiAppCatalogItemDto'
+        hasCustomerCloudflareConfiguration:
+          type: boolean
     AgentAliasResponse:
       type: object
       additionalProperties: false
@@ -4936,25 +4714,58 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AgentAliasSummaryDto'
-    AgentSecureResponse:
+    ExternalWorkflowVersion:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-        status:
+          format: guid
+        pipelineId:
           type: string
-        message:
+          format: guid
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: integer
+          format: int32
+        versionNumber:
           type: string
-        timestamp:
+        isDraftVersion:
+          type: boolean
+        isLatest:
+          type: boolean
+        alignment:
           type: string
-          format: date-time
-        details:
-          $ref: '#/components/schemas/AgentSecureDetails'
-        errorCategory:
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalWorkflowStep'
+    SyncRunEnvironmentFailureResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        environmentName:
+          type: string
+        resolvedEnvironmentId:
           type:
           - string
           - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     SyncRunChangeResponse:
       type: object
       additionalProperties: false
@@ -5015,7 +4826,17 @@ components:
           - string
           - 'null'
           format: date-time
-    ExternalWorkflowDisplayResponse:
+    ConnectionAppCountResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        connectionId:
+          type: string
+          format: guid
+        appCount:
+          type: integer
+          format: int32
+    SpmAgentSummary:
       type: object
       additionalProperties: false
       properties:
@@ -5024,150 +4845,14 @@ components:
           format: guid
         name:
           type: string
-        description:
-          type:
-          - string
-          - 'null'
-        provider:
-          type: string
-        isActive:
-          type: boolean
-        externalId:
-          type: string
-        externalUpdatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        workflowMetadata:
-          $ref: '#/components/schemas/WorkflowMetadata'
-        activeVersion:
-          $ref: '#/components/schemas/ExternalWorkflowVersion'
-    AgentDirectoryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        provider:
-          type: string
-        status:
-          type: string
-        modelNames:
-          type: string
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        securityScoreStatus:
-          type: string
-        securedNote:
-          type:
-          - string
-          - 'null'
-        externalCreatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        externalCreatedBy:
-          type:
-          - string
-          - 'null'
-        agentType:
-          oneOf:
-          - $ref: '#/components/schemas/SpmAgentType'
-        capabilities:
-          $ref: '#/components/schemas/SpmAgentCapabilities'
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentModelComponent'
-    AffectedEvaluationSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-    AiAppUsageStatisticsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        topApps:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopAiAppByUsers'
-    GraphViewResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmProviderGraphNode'
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmAgentGraphNode'
-    AiAppUsageOverTimeResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        dataPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/AiAppUsageTimeSeriesPoint'
-    ProviderConnectionSchema:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        kind:
-          type: string
-        kinds:
-          type: array
-          items:
-            type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProviderConnectionFieldSchema'
-    IntegrationAnalysisRunStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Completed
-      - Failed
-      enum:
-      - Pending
-      - Completed
-      - Failed
-    PagedResultV2OfSpmAgentUsageEventResponse:
+    ProvidersResponse:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/SpmAgentUsageEventResponse'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
+            type: string
     SpmComponentType:
       type: string
       description: ''
@@ -5185,91 +4870,63 @@ components:
       - Tool
       - McpServer
       - Knowledge
-    SpmAgentSummary:
+    ExternalWorkflowStep:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        name:
+        stepType:
           type: string
-    SpmModelSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        aiProvider:
-          type: string
-    PagedResultOfProviderConnectionCountResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        dependenciesObject:
           type: array
           items:
-            $ref: '#/components/schemas/ProviderConnectionCountResponse'
-        totalCount:
-          type: integer
-          format: int32
-    IntegrationChangesResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        changes:
+            $ref: '#/components/schemas/DependencyObject'
+        handles:
           type: array
           items:
-            $ref: '#/components/schemas/SpmAppIntegrationChange'
-        totalCount:
-          type: integer
+            $ref: '#/components/schemas/NodeHandle'
+        pipelineId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        alignment:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+        width:
+          type:
+          - integer
+          - 'null'
           format: int32
-        pageNumber:
-          type: integer
+        height:
+          type:
+          - integer
+          - 'null'
           format: int32
-        pageSize:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-    SyncRunEnvironmentSummaryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        totalCount:
-          type: integer
-          format: int32
-        succeededCount:
-          type: integer
-          format: int32
-        failedCount:
-          type: integer
-          format: int32
-        skippedCount:
-          type: integer
-          format: int32
-    IntegrationRecordsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpmAppIntegrationRecord'
-        totalCount:
-          type: integer
-          format: int32
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-    AgentRefreshResponse:
+        metadata:
+          $ref: '#/components/schemas/ExternalNodeMetadata'
+    IntegrationAnalysisRunStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Completed
+      - Failed
+      enum:
+      - Pending
+      - Completed
+      - Failed
+    AgentSecureResponse:
       type: object
       additionalProperties: false
       properties:
@@ -5283,141 +4940,154 @@ components:
           type: string
           format: date-time
         details:
-          $ref: '#/components/schemas/AgentRefreshDetails'
-    GetCloudflareAiAppCatalogResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        catalog:
-          $ref: '#/components/schemas/PagedResultOfCloudflareAiAppCatalog'
-        hasCustomerCloudflareConfiguration:
-          type: boolean
-    ExternalWorkflowVersion:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: integer
-          format: int32
-        versionNumber:
-          type: string
-        isDraftVersion:
-          type: boolean
-        isLatest:
-          type: boolean
-        alignment:
-          type: string
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalWorkflowStep'
-    TestConnectionCommand:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
+          $ref: '#/components/schemas/AgentSecureDetails'
+        errorCategory:
           type:
           - string
           - 'null'
+    ComponentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
           format: guid
         name:
           type: string
         securePostureProvider:
           $ref: '#/components/schemas/SecurePostureProvider'
-        connection:
+        externalId:
+          type: string
+        externalType:
+          type:
+          - string
+          - 'null'
+        externalTypeVersion:
+          type:
+          - number
+          - 'null'
+          format: float
+        componentType:
+          $ref: '#/components/schemas/SpmComponentType'
+        category:
+          type:
+          - string
+          - 'null'
+        externalOwner:
+          type:
+          - string
+          - 'null'
+        externalCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        externalModifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        language:
+          type:
+          - string
+          - 'null'
+        externalCreatedBy:
+          type:
+          - string
+          - 'null'
+        externalModifiedBy:
+          type:
+          - string
+          - 'null'
+        reusePolicy:
+          type:
+          - string
+          - 'null'
+        credentialsCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        parametersCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        componentDictionary:
           type: object
           additionalProperties: {}
-    SpmTranscriptStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotCollected
-      - Pending
-      - Available
-      - Expired
-      - Unavailable
-      enum:
-      - NotCollected
-      - Pending
-      - Available
-      - Expired
-      - Unavailable
-    ConnectionScanError:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionId:
-          type: string
+        aiModelName:
+          type:
+          - string
+          - 'null'
+        aiProviderName:
+          type:
+          - string
+          - 'null'
+        aiSecurable:
+          type:
+          - boolean
+          - 'null'
+        securedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        secureApiKeyId:
+          type:
+          - string
+          - 'null'
           format: guid
-        connectionName:
-          type: string
-        error:
-          type: string
-    SpmAppIntegrationAnalysisRun:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - tenantId
-        - providerType
-        - status
-        - analyzedIdentifier
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-            minLength: 1
-          connectionId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          providerType:
-            $ref: '#/components/schemas/IntegrationProviderType'
-          status:
-            $ref: '#/components/schemas/IntegrationAnalysisRunStatus'
-          analyzedIdentifier:
-            type: string
-            maxLength: 255
-            minLength: 1
-          totalUsers:
-            type: integer
-            format: int32
-          totalIntegrations:
-            type: integer
-            format: int32
-          errors:
-            type:
-            - string
-            - 'null'
-          startedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          endedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-    BlockCloudflareAiAppResponse:
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        securedStatus:
+          $ref: '#/components/schemas/SecurePostureStatus'
+        securedNote:
+          type:
+          - string
+          - 'null'
+        endUserAuthenticationSetting:
+          type:
+          - string
+          - 'null'
+        knowledgeSourceType:
+          type:
+          - string
+          - 'null'
+        knowledgeSourceLocation:
+          type:
+          - string
+          - 'null'
+    ScanIntegrationAppsResponse:
       type: object
       additionalProperties: false
       properties:
-        cloudflareRuleId:
+        analysisRunIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        successCount:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionScanError'
+        message:
           type: string
     SpmSecurityScoreStatus:
       type: string
@@ -5432,75 +5102,48 @@ components:
       - Analyzed
       - Error
       - NotApplicable
-    ProviderConnectionCountResponse:
+    GetCloudflareAiAppCatalogResponse:
       type: object
       additionalProperties: false
       properties:
-        provider:
-          $ref: '#/components/schemas/SecurePostureProvider'
-        connectionCount:
-          type: integer
-          format: int32
-    SpmSyncChangeOperation:
+        catalog:
+          $ref: '#/components/schemas/PagedResultOfCloudflareAiAppCatalog'
+        hasCustomerCloudflareConfiguration:
+          type: boolean
+    SourceType:
       type: string
       description: ''
       x-enumNames:
-      - Created
-      - Updated
-      - Deleted
+      - UserProvided
+      - Library
       enum:
-      - Created
-      - Updated
-      - Deleted
-    NodeHandle:
+      - userProvided
+      - library
+    AiAppUsageStatisticsResponse:
       type: object
       additionalProperties: false
       properties:
-        uuid:
-          type: string
-        type:
-          type: string
-        label:
-          type: string
-        tooltip:
-          type: string
-    SpmAgentGraphNode:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        models:
+        topApps:
           type: array
           items:
-            $ref: '#/components/schemas/SpmModelSummary'
-    AgentSecureRequest:
+            $ref: '#/components/schemas/TopAiAppByUsers'
+    PagedResultV2OfAiAppCatalogItemDto:
       type: object
       additionalProperties: false
       properties:
-        airiaGatewayUrl:
-          type: string
-        gatewayConfigurationId:
-          type: string
-          format: guid
-        selectedComponentIds:
-          type:
-          - array
-          - 'null'
+        items:
+          type: array
           items:
-            type: string
-    SpmAppIntegrationChangeOperation:
-      type: string
-      description: ''
-      x-enumNames:
-      - Detected
-      - ScopesChanged
-      - Revoked
-      enum:
-      - Detected
-      - ScopesChanged
-      - Revoked
+            $ref: '#/components/schemas/AiAppCatalogItemDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
     SpmProcessExecutionEventResponse:
       type: object
       additionalProperties: false
@@ -5557,17 +5200,6 @@ components:
           type:
           - string
           - 'null'
-    SpmCapabilityFilter:
-      type: string
-      description: ''
-      x-enumNames:
-      - SupportsInvocation
-      - SupportsConversationHistory
-      - SupportsAliases
-      enum:
-      - SupportsInvocation
-      - SupportsConversationHistory
-      - SupportsAliases
     AiAppCatalogItemDto:
       type: object
       additionalProperties: false
@@ -5598,46 +5230,414 @@ components:
           - integer
           - 'null'
           format: int32
-    SyncRunResponse:
+    ProviderConnectionFieldSchema:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        labelKey:
+          type: string
+        type:
+          type: string
+        required:
+          type: boolean
+        isSecret:
+          type: boolean
+        hintKey:
+          type:
+          - string
+          - 'null'
+        placeholder:
+          type:
+          - string
+          - 'null'
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        credentialType:
+          type:
+          - string
+          - 'null'
+        isScopeDefining:
+          type: boolean
+        blankScopeMeaning:
+          type:
+          - string
+          - 'null'
+    ConnectionTestDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        systemName:
+          type: string
+        responseTimeMs:
+          type: integer
+          format: int32
+    SpmAppIntegrationAnalysisRun:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - tenantId
+        - providerType
+        - status
+        - analyzedIdentifier
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+            minLength: 1
+          connectionId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          providerType:
+            $ref: '#/components/schemas/IntegrationProviderType'
+          status:
+            $ref: '#/components/schemas/IntegrationAnalysisRunStatus'
+          analyzedIdentifier:
+            type: string
+            maxLength: 255
+            minLength: 1
+          totalUsers:
+            type: integer
+            format: int32
+          totalIntegrations:
+            type: integer
+            format: int32
+          errors:
+            type:
+            - string
+            - 'null'
+          startedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          endedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    CloudflareAiAppCatalog:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalTenantEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - cloudflareAppId
+        - name
+        - categoryId
+        - categoryName
+        - sourceType
+        properties:
+          cloudflareAppId:
+            type: integer
+            format: int32
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          categoryId:
+            type: integer
+            format: int32
+          categoryName:
+            type: string
+            maxLength: 255
+            minLength: 1
+          categoryNames:
+            type: array
+            items:
+              type: string
+          description:
+            type:
+            - string
+            - 'null'
+            maxLength: 2048
+          url:
+            type:
+            - string
+            - 'null'
+            maxLength: 512
+          sourceType:
+            $ref: '#/components/schemas/SourceType'
+          internalApplicationId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    SpmTranscriptStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotCollected
+      - Pending
+      - Available
+      - Expired
+      - Unavailable
+      enum:
+      - NotCollected
+      - Pending
+      - Available
+      - Expired
+      - Unavailable
+    AgentRefreshDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        systemName:
+          type: string
+        responseTimeMs:
+          type: integer
+          format: int32
+        createdAgents:
+          type: integer
+          format: int32
+        updatedAgents:
+          type: integer
+          format: int32
+        deletedAgents:
+          type: integer
+          format: int32
+        refreshResults:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    GrantDispositionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        integrationRecordId:
+          type: string
+          format: guid
+        state:
+          $ref: '#/components/schemas/GrantDispositionState'
+        previousState:
+          oneOf:
+          - $ref: '#/components/schemas/GrantDispositionState'
+        reason:
+          type:
+          - string
+          - 'null'
+        decidedAt:
+          type: string
+          format: date-time
+    PagedResultOfSyncRunChangeResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncRunChangeResponse'
+        totalCount:
+          type: integer
+          format: int32
+    SpmProviderGraphNode:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmAgentSummary'
+    DiscoveryPersonKeyKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+      enum:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+    GraphViewResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmProviderGraphNode'
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmAgentGraphNode'
+    UpdateSpmSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        defaultGatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    SpmAppIntegrationEventResponse:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        spmConnectionId:
+        connectionId:
           type: string
           format: guid
-        connectionName:
+        clientId:
           type:
           - string
           - 'null'
         securePostureProvider:
           $ref: '#/components/schemas/SecurePostureProvider'
-        status:
-          $ref: '#/components/schemas/SpmSyncRunStatus'
-        errorMessage:
+        source:
+          $ref: '#/components/schemas/SpmAppIntegrationEventSource'
+        eventType:
           type:
           - string
           - 'null'
-        createdCount:
-          type: integer
-          format: int32
-        updatedCount:
-          type: integer
-          format: int32
-        deletedCount:
-          type: integer
-          format: int32
-        startedAt:
+        severity:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        occurredAt:
           type: string
           format: date-time
-        completedAt:
+        syncedAt:
           type: string
           format: date-time
-        environmentSummary:
-          oneOf:
-          - $ref: '#/components/schemas/SyncRunEnvironmentSummaryResponse'
+        actorDisplayName:
+          type:
+          - string
+          - 'null'
+        actorEmail:
+          type:
+          - string
+          - 'null'
+    AgentSecureDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        agentId:
+          type: string
+          format: guid
+        workflowId:
+          type: string
+        modelId:
+          type: string
+        aiProviders:
+          type: string
+        aiModels:
+          type: string
+        gatewayUrl:
+          type: string
+        responseTimeMs:
+          type: integer
+          format: int32
+        credentialsCreated:
+          type: integer
+          format: int32
+        credentialNames:
+          type:
+          - string
+          - 'null'
+        bedrockAgentId:
+          type:
+          - string
+          - 'null'
+    RevokeOAuthTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        integrationRecordId:
+          type: string
+          format: guid
+        providerType:
+          type: string
+        userIdentifier:
+          type:
+          - string
+          - 'null'
+        appName:
+          type:
+          - string
+          - 'null'
+        revokedAt:
+          type: string
+          format: date-time
+    SpmAppIntegrationChangeOperation:
+      type: string
+      description: ''
+      x-enumNames:
+      - Detected
+      - ScopesChanged
+      - Revoked
+      enum:
+      - Detected
+      - ScopesChanged
+      - Revoked
+    PagedResultV2OfSpmTranscriptSegmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpmTranscriptSegmentResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    IntegrationProviderType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Google
+      - Microsoft
+      - Okta
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
+      enum:
+      - Google
+      - Microsoft
+      - Okta
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - Netskope
+      - Zscaler
   securitySchemes:
     ApiKey:
       type: apiKey

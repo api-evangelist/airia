@@ -1053,17 +1053,212 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ConversationType2:
+    UpdateConversationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+        dataSourceFiles:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type:
+          - boolean
+          - 'null'
+        policyRedactionsJson:
+          type:
+          - string
+          - 'null'
+        lastExecutionStatus:
+          oneOf:
+          - $ref: '#/components/schemas/LastExecutionStatus'
+        lastExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DeleteMessagesFromPointResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        fromMessageId:
+          type: string
+          format: guid
+        deletedCount:
+          type: integer
+          format: int32
+        remainingCount:
+          type: integer
+          format: int32
+    UpdateParticipantRoleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - role
+      properties:
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    ConversationParticipantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        username:
+          type:
+          - string
+          - 'null'
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+        sharedAt:
+          type: string
+          format: date-time
+        sharedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharedByUsername:
+          type:
+          - string
+          - 'null'
+    AgentAttachmentUploadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        blobId:
+          type: string
+        url:
+          type: string
+    AttachmentSource:
       type: string
       description: ''
       x-enumNames:
-      - UserConversation
-      - AgentBuilderAssistantAI
-      - PythonCodeAssistantAI
+      - User
+      - Agent
       enum:
-      - UserConversation
-      - AgentBuilderAssistantAI
-      - PythonCodeAssistantAI
+      - user
+      - agent
+    AddMessageToConversationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        imageAttachmentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        role:
+          type:
+          - string
+          - 'null'
+    CreateExternalConversationIdentityMappingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - externalSystem
+      - externalChannelId
+      - externalThreadId
+      properties:
+        externalSystem:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[A-Za-z][A-Za-z0-9]*$
+        externalChannelId:
+          type: string
+          maxLength: 255
+          minLength: 1
+        externalThreadId:
+          type: string
+          maxLength: 255
+          minLength: 1
+    ExternalConversationIdentityMappingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        externalSystem:
+          type: string
+        externalChannelId:
+          type: string
+        externalThreadId:
+          type: string
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ConversationRole:
       type: string
       description: ''
@@ -1075,6 +1270,293 @@ components:
       - Owner
       - Collaborator
       - Viewer
+    ShareConversationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - role
+      properties:
+        userId:
+          type: string
+          format: guid
+          minLength: 1
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    CreateConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        websocketUrl:
+          type: string
+        deploymentId:
+          type: string
+          format: guid
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        spaceName:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    AddMessageToConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        messageId:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+    LastExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+      enum:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+    PagedResultOfConversationFeedDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationFeedDto'
+        totalCount:
+          type: integer
+          format: int32
+    PresenceUpdateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      properties:
+        action:
+          type: string
+          minLength: 1
+          pattern: ^(joined|left)$
+    ToolCallData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        parameters:
+          type:
+          - string
+          - 'null'
+    ConversationType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+      enum:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+    TypingStatusRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - isTyping
+      properties:
+        isTyping:
+          type: boolean
+    RedactionRecordData:
+      type: object
+      additionalProperties: false
+      properties:
+        violatingText:
+          type: string
+        confidenceScore:
+          type: number
+          format: double
+        startOffset:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        placeholderBase:
+          type: string
+        placeholderIndex:
+          type: integer
+          format: int32
+        contexts:
+          type: array
+          items:
+            type: string
+        violatingSubIndex:
+          type: integer
+          format: int32
+    CreateConversationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSourceFiles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type: boolean
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userInput:
+          type:
+          - string
+          - 'null'
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationType2'
+    ConversationMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        role:
+          type: string
+        images:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        fileContextMessages:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        userId:
+          type: string
+          format: guid
+        user:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMessageUserDto'
+        isSummary:
+          type: boolean
+        extractedMemories:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        originStepId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originStepTitle:
+          type:
+          - string
+          - 'null'
+        toolCalls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCallData'
+        toolResponses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolResponseData'
+    ToolResponseData:
+      type: object
+      additionalProperties: false
+      required:
+      - toolCallId
+      - toolName
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        response:
+          type:
+          - string
+          - 'null'
     GetConversationByIdResponse:
       type: object
       additionalProperties: false
@@ -1166,78 +1648,37 @@ components:
         lastComputeEnvironmentType:
           oneOf:
           - $ref: '#/components/schemas/ComputeEnvironmentType'
-    CreateConversationRequest:
+    ConversationAttachmentDto:
       type: object
       additionalProperties: false
       properties:
-        userId:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        messageId:
           type:
           - string
           - 'null'
           format: guid
-        title:
-          type:
-          - string
-          - 'null'
-        deploymentId:
-          type:
-          - string
-          - 'null'
+        blobId:
+          type: string
           format: guid
-        dataSourceFiles:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        isBookmarked:
-          type: boolean
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userInput:
-          type:
-          - string
-          - 'null'
-        type:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationType2'
-    CreateExternalConversationIdentityMappingRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - externalSystem
-      - externalChannelId
-      - externalThreadId
-      properties:
-        externalSystem:
+        fileName:
           type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[A-Za-z][A-Za-z0-9]*$
-        externalChannelId:
+        contentType:
           type: string
-          maxLength: 255
-          minLength: 1
-        externalThreadId:
+        fileSizeBytes:
+          type: integer
+          format: int64
+        source:
+          $ref: '#/components/schemas/AttachmentSource'
+        createdAt:
           type: string
-          maxLength: 255
-          minLength: 1
-    ConversationMessageUserDto:
-      type: object
-      additionalProperties: false
-      properties:
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
+          format: date-time
+        downloadUrl:
           type:
           - string
           - 'null'
@@ -1250,185 +1691,29 @@ components:
       enum:
       - Sandbox
       - BrowserAgent
-    AgentAttachmentUploadResponse:
+    RedactionStoreData:
       type: object
       additionalProperties: false
       properties:
-        blobId:
-          type: string
-        url:
-          type: string
-    LastExecutionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-      enum:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-    UploadAgentAttachmentRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - base64Content
-      - fileName
-      - contentType
-      properties:
-        base64Content:
-          type: string
-          minLength: 1
-        fileName:
-          type: string
-          maxLength: 512
-          minLength: 1
-        contentType:
-          type: string
-          maxLength: 256
-          minLength: 1
-    UpdateParticipantRoleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - role
-      properties:
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-    AttachmentSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - User
-      - Agent
-      enum:
-      - user
-      - agent
-    RedactionRecordData:
-      type: object
-      additionalProperties: false
-      properties:
-        violatingText:
-          type: string
-        confidenceScore:
-          type: number
-          format: double
-        startOffset:
-          type: integer
-          format: int32
-        length:
-          type: integer
-          format: int32
-        placeholderBase:
-          type: string
-        placeholderIndex:
-          type: integer
-          format: int32
-        contexts:
-          type: array
-          items:
-            type: string
-        violatingSubIndex:
-          type: integer
-          format: int32
-    TypingStatusRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - isTyping
-      properties:
-        isTyping:
-          type: boolean
-    UpdateConversationRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - title
-      properties:
-        title:
-          type: string
-          minLength: 1
-        dataSourceFiles:
-          type:
-          - object
-          - 'null'
+        messageRedactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/RedactionRecordData'
+        contextIndex:
+          type: object
           additionalProperties:
             type: array
             items:
               type: string
-        isBookmarked:
-          type:
-          - boolean
-          - 'null'
-        policyRedactionsJson:
-          type:
-          - string
-          - 'null'
-        lastExecutionStatus:
-          oneOf:
-          - $ref: '#/components/schemas/LastExecutionStatus'
-        lastExecutionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
+              format: guid
+        version:
+          type: integer
           format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AddMessageToConversationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        messageId:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        createdAt:
+        lastModified:
           type: string
           format: date-time
-    DeleteMessagesFromPointResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        conversationId:
-          type: string
-          format: guid
-        fromMessageId:
-          type: string
-          format: guid
-        deletedCount:
-          type: integer
-          format: int32
-        remainingCount:
-          type: integer
-          format: int32
     ConversationFeedDto:
       type: object
       additionalProperties: false
@@ -1490,326 +1775,41 @@ components:
           format: decimal
         isEndUserPrivate:
           type: boolean
-    RedactionStoreData:
+    ConversationMessageUserDto:
       type: object
       additionalProperties: false
       properties:
-        messageRedactions:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/RedactionRecordData'
-        contextIndex:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-              format: guid
-        version:
-          type: integer
-          format: int32
-        lastModified:
-          type: string
-          format: date-time
-    ShareConversationRequest:
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+    UploadAgentAttachmentRequest:
       type: object
       additionalProperties: false
       required:
-      - userId
-      - role
+      - base64Content
+      - fileName
+      - contentType
       properties:
-        userId:
+        base64Content:
           type: string
-          format: guid
           minLength: 1
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-    ExternalConversationIdentityMappingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        externalSystem:
-          type: string
-        externalChannelId:
-          type: string
-        externalThreadId:
-          type: string
-        verifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastSyncedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ConversationAttachmentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        messageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        blobId:
-          type: string
-          format: guid
         fileName:
           type: string
+          maxLength: 512
+          minLength: 1
         contentType:
           type: string
-        fileSizeBytes:
-          type: integer
-          format: int64
-        source:
-          $ref: '#/components/schemas/AttachmentSource'
-        createdAt:
-          type: string
-          format: date-time
-        downloadUrl:
-          type:
-          - string
-          - 'null'
-    AddMessageToConversationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        message:
-          type:
-          - string
-          - 'null'
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        imageAttachmentIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        role:
-          type:
-          - string
-          - 'null'
-    ConversationMessage:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        message:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        role:
-          type: string
-        images:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        fileContextMessages:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        files:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        userId:
-          type: string
-          format: guid
-        user:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationMessageUserDto'
-        isSummary:
-          type: boolean
-        extractedMemories:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        originStepId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originStepTitle:
-          type:
-          - string
-          - 'null'
-        toolCalls:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolCallData'
-        toolResponses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolResponseData'
-    ToolResponseData:
-      type: object
-      additionalProperties: false
-      required:
-      - toolCallId
-      - toolName
-      properties:
-        toolCallId:
-          type: string
-        toolName:
-          type: string
-        response:
-          type:
-          - string
-          - 'null'
-    CreateConversationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        websocketUrl:
-          type: string
-        deploymentId:
-          type: string
-          format: guid
-        iconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        spaceName:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-    ToolCallData:
-      type: object
-      additionalProperties: false
-      required:
-      - toolCallId
-      - toolName
-      properties:
-        toolCallId:
-          type: string
-        toolName:
-          type: string
-        parameters:
-          type:
-          - string
-          - 'null'
-    ConversationParticipantDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        username:
-          type:
-          - string
-          - 'null'
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-        sharedAt:
-          type: string
-          format: date-time
-        sharedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        sharedByUsername:
-          type:
-          - string
-          - 'null'
-    PagedResultOfConversationFeedDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversationFeedDto'
-        totalCount:
-          type: integer
-          format: int32
-    PresenceUpdateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - action
-      properties:
-        action:
-          type: string
+          maxLength: 256
           minLength: 1
-          pattern: ^(joined|left)$
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -84,6 +84,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    VoiceSessionResult:
+      type: object
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+        roomName:
+          type: string
+        url:
+          type: string
     CreateVoiceSessionRequest:
       type: object
       additionalProperties: false
@@ -121,16 +131,6 @@ components:
           - string
           - 'null'
           format: guid
-    VoiceSessionResult:
-      type: object
-      additionalProperties: false
-      properties:
-        token:
-          type: string
-        roomName:
-          type: string
-        url:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}

@@ -165,100 +165,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CrossAppAccessConfigDto:
-      type: object
-      additionalProperties: false
-      properties:
-        providerConfigId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type: string
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-        tokenEndpoint:
-          type: string
-        scopes:
-          type: array
-          items:
-            type: string
-        identityProviderTokenEndpoint:
-          type: string
-        resourceAuthorizationServerIssuer:
-          type: string
-        resourceIdentifier:
-          type:
-          - string
-          - 'null'
-        resourceClientId:
-          type:
-          - string
-          - 'null'
-        resourceClientSecret:
-          type:
-          - string
-          - 'null'
-        subjectTokenType:
-          type:
-          - string
-          - 'null'
-        clientAuthenticationMethod:
-          type:
-          - string
-          - 'null'
-        sendScopeOnRedemption:
-          type: boolean
-    ExternalIdProviderDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        displayName:
-          type: string
-        issuerUrl:
-          type: string
-        jwksUrl:
-          type: string
-        audience:
-          type: string
-        claimMappings:
-          type:
-          - string
-          - 'null'
-        enableJwtPassThrough:
-          type: boolean
-        isEnabled:
-          type: boolean
-        allowedClockSkewSeconds:
-          type: integer
-          format: int32
-        validateLifetime:
-          type: boolean
-        validateIssuer:
-          type: boolean
-        validateAudience:
-          type: boolean
-        metadata:
-          type:
-          - string
-          - 'null'
-        tenantId:
-          type: string
-          format: guid
-        tokenExchangeConfigs:
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenExchangeConfigDto'
-        crossAppAccessConfigs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CrossAppAccessConfigDto'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -284,6 +190,30 @@ components:
           type:
           - string
           - 'null'
+    TokenExchangeConfigDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tokenUrl:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        resourceAudience:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        grantType:
+          type: string
     ExternalIdpConfigurationRequest:
       type: object
       additionalProperties: false
@@ -342,30 +272,100 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/CrossAppAccessConfigDto'
-    TokenExchangeConfigDto:
+    ExternalIdProviderDto:
       type: object
       additionalProperties: false
       properties:
-        name:
+        id:
           type: string
-        description:
+          format: guid
+        displayName:
+          type: string
+        issuerUrl:
+          type: string
+        jwksUrl:
+          type: string
+        audience:
+          type: string
+        claimMappings:
           type:
           - string
           - 'null'
-        tokenUrl:
+        enableJwtPassThrough:
+          type: boolean
+        isEnabled:
+          type: boolean
+        allowedClockSkewSeconds:
+          type: integer
+          format: int32
+        validateLifetime:
+          type: boolean
+        validateIssuer:
+          type: boolean
+        validateAudience:
+          type: boolean
+        metadata:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type: string
+          format: guid
+        tokenExchangeConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenExchangeConfigDto'
+        crossAppAccessConfigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CrossAppAccessConfigDto'
+    CrossAppAccessConfigDto:
+      type: object
+      additionalProperties: false
+      properties:
+        providerConfigId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
           type: string
         clientId:
           type: string
         clientSecret:
           type: string
-        resourceAudience:
+        tokenEndpoint:
           type: string
         scopes:
           type: array
           items:
             type: string
-        grantType:
+        identityProviderTokenEndpoint:
           type: string
+        resourceAuthorizationServerIssuer:
+          type: string
+        resourceIdentifier:
+          type:
+          - string
+          - 'null'
+        resourceClientId:
+          type:
+          - string
+          - 'null'
+        resourceClientSecret:
+          type:
+          - string
+          - 'null'
+        subjectTokenType:
+          type:
+          - string
+          - 'null'
+        clientAuthenticationMethod:
+          type:
+          - string
+          - 'null'
+        sendScopeOnRedemption:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

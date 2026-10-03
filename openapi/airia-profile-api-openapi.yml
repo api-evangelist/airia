@@ -153,76 +153,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TenantDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        identifier:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        accessControlGroupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TenantPermissionsDto'
-    ActiveOrganizationClaim:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    UpdateUserSettingRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      properties:
-        key:
-          $ref: '#/components/schemas/UserSettingKey'
-        value:
-          type:
-          - string
-          - 'null'
     UserSettingsModel:
       type: object
       additionalProperties: false
@@ -255,6 +185,62 @@ components:
           type:
           - boolean
           - 'null'
+    UserDetailsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        general:
+          type: string
+        workDescription:
+          type:
+          - string
+          - 'null'
+        personalPreferences:
+          type:
+          - string
+          - 'null'
+    UserSettingKey:
+      type: string
+      description: ''
+      x-enumNames:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+      enum:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     UpdateUserInfo:
       type: object
       additionalProperties: false
@@ -270,6 +256,73 @@ components:
         userSettings:
           oneOf:
           - $ref: '#/components/schemas/UserSettingsModel'
+    UpdateUserSettingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          $ref: '#/components/schemas/UserSettingKey'
+        value:
+          type:
+          - string
+          - 'null'
+    ActiveOrganizationClaim:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    TenantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        identifier:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        accessControlGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TenantPermissionsDto'
+    TenantPermissionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
     UserInfoDto:
       type: object
       additionalProperties: false
@@ -338,59 +391,6 @@ components:
         userSettings:
           oneOf:
           - $ref: '#/components/schemas/UserSettingsModel'
-    UserDetailsModel:
-      type: object
-      additionalProperties: false
-      properties:
-        general:
-          type: string
-        workDescription:
-          type:
-          - string
-          - 'null'
-        personalPreferences:
-          type:
-          - string
-          - 'null'
-    TenantPermissionsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        enabled:
-          type: boolean
-        userIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-    UserSettingKey:
-      type: string
-      description: ''
-      x-enumNames:
-      - HasSeenFileIngestionSuccessMessage
-      - Language
-      - ReadingVoice
-      - HasCompletedOnboarding
-      - IsNewNavigationEnabled
-      - HasSeenSidebarIaAdoption
-      enum:
-      - HasSeenFileIngestionSuccessMessage
-      - Language
-      - ReadingVoice
-      - HasCompletedOnboarding
-      - IsNewNavigationEnabled
-      - HasSeenSidebarIaAdoption
   securitySchemes:
     ApiKey:
       type: apiKey

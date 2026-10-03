@@ -362,17 +362,6 @@ components:
           type: string
         readonly:
           type: boolean
-    GraphDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -415,13 +404,6 @@ components:
         count:
           type: integer
           format: int32
-    JsonDocument:
-      type: object
-      additionalProperties: false
-      properties:
-        isDisposable:
-          type: boolean
-        rootElement: {}
     GraphNodeRecordsInfoDto:
       type: object
       additionalProperties: false
@@ -433,6 +415,24 @@ components:
         count:
           type: integer
           format: int32
+    GraphDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
   securitySchemes:
     ApiKey:
       type: apiKey

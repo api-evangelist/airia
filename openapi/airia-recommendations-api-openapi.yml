@@ -165,6 +165,66 @@ components:
       - Bedrock
       - AzureAI
       - AzureCopilot
+    RecommendationActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+      enum:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfRecommendationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecommendationDto'
+        totalCount:
+          type: integer
+          format: int32
+    RecommendationPriority:
+      type: string
+      description: ''
+      x-enumNames:
+      - High
+      - Medium
+      - Low
+      enum:
+      - High
+      - Medium
+      - Low
     RecommendationDto:
       type: object
       additionalProperties: false
@@ -208,55 +268,6 @@ components:
           - string
           - 'null'
           format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedResultOfRecommendationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RecommendationDto'
-        totalCount:
-          type: integer
-          format: int32
-    RecommendationActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - RunRedTeamingCampaign
-      - RouteToGateway
-      - ApplyGuardrail
-      - ApplyAgentConstraints
-      enum:
-      - RunRedTeamingCampaign
-      - RouteToGateway
-      - ApplyGuardrail
-      - ApplyAgentConstraints
     RecommendationStatus:
       type: string
       description: ''
@@ -266,17 +277,6 @@ components:
       enum:
       - Active
       - Dismissed
-    RecommendationPriority:
-      type: string
-      description: ''
-      x-enumNames:
-      - High
-      - Medium
-      - Low
-      enum:
-      - High
-      - Medium
-      - Low
   securitySchemes:
     ApiKey:
       type: apiKey

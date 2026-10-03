@@ -267,6 +267,92 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AiAssetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+      enum:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+    AiAssetMetadataValueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+      enum:
+      - Text
+      - Number
+      - Boolean
+      - DateTime
+      - User
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiAssetMetadataDefinitionOptionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type: string
     AiAssetMetadataDefinitionResponse:
       type: object
       additionalProperties: false
@@ -320,101 +406,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
-    AiAssetMetadataValueType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Text
-      - Number
-      - Boolean
-      - DateTime
-      - User
-      enum:
-      - Text
-      - Number
-      - Boolean
-      - DateTime
-      - User
-    AiAssetType:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalModel
-      - InternalDataSource
-      - InternalTools
-      - InternalAgent
-      - InternalProject
-      - InternalMcpServer
-      - ExternalModel
-      - UseCase
-      - ExternalAgent
-      - GovernanceAgent
-      - ExternalApplication
-      - InternalApplication
-      - EndpointApp
-      - EndpointMcpServer
-      - ExternalDataSource
-      enum:
-      - InternalModel
-      - InternalDataSource
-      - InternalTools
-      - InternalAgent
-      - InternalProject
-      - InternalMcpServer
-      - ExternalModel
-      - UseCase
-      - ExternalAgent
-      - GovernanceAgent
-      - ExternalApplication
-      - InternalApplication
-      - EndpointApp
-      - EndpointMcpServer
-      - ExternalDataSource
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AiAssetMetadataDefinitionOptionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        value:
-          type: string
-    AiAssetMetadataDefinitionOptionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        value:
-          type: string
     UpdateAiAssetMetadataDefinitionRequest:
       type: object
       additionalProperties: false
@@ -443,6 +434,15 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
+    AiAssetMetadataDefinitionOptionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        value:
+          type: string
     AiAssetMetadataType:
       type: string
       description: ''

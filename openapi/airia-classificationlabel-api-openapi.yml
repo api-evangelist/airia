@@ -191,23 +191,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateClassificationLabelRequest:
+    ClassificationLabelResponse:
       type: object
       additionalProperties: false
       properties:
-        classificationId:
+        id:
           type: string
           format: guid
         labelName:
           type: string
-    UpdateClassificationLabelRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        labelName:
-          type:
-          - string
-          - 'null'
+        isDefaultValue:
+          type: boolean
+        classificationId:
+          type: string
+          format: guid
+        priority:
+          type: integer
+          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -233,23 +233,23 @@ components:
           type:
           - string
           - 'null'
-    ClassificationLabelResponse:
+    UpdateClassificationLabelRequest:
       type: object
       additionalProperties: false
       properties:
-        id:
+        labelName:
+          type:
+          - string
+          - 'null'
+    CreateClassificationLabelRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        classificationId:
           type: string
           format: guid
         labelName:
           type: string
-        isDefaultValue:
-          type: boolean
-        classificationId:
-          type: string
-          format: guid
-        priority:
-          type: integer
-          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

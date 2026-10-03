@@ -409,36 +409,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EndpointDeletionResultV1:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          $ref: '#/components/schemas/EndpointDeletionStatusV1'
-        deviceId:
-          type: string
-        hostName:
-          type: string
-        removedAppCount:
-          type: integer
-          format: int32
-        retainedAppCount:
-          type: integer
-          format: int32
-    EndpointDetailV1:
-      allOf:
-      - $ref: '#/components/schemas/EndpointSummaryV1'
-      - type: object
-        additionalProperties: false
-        properties:
-          reports:
-            type: array
-            items:
-              $ref: '#/components/schemas/EndpointDeviceReportV1'
-          mcpServers:
-            type: array
-            items:
-              $ref: '#/components/schemas/McpServerV1'
     McpServerV1:
       type: object
       additionalProperties: false
@@ -469,6 +439,17 @@ components:
           type: array
           items:
             type: string
+    EndpointDeletionStatusV1:
+      type: string
+      description: ''
+      x-enumNames:
+      - Deleted
+      - NotFound
+      - ExternallySourced
+      enum:
+      - Deleted
+      - NotFound
+      - ExternallySourced
     EndpointDeviceReportV1:
       allOf:
       - $ref: '#/components/schemas/DeviceReportV1'
@@ -479,6 +460,45 @@ components:
             type: string
           appName:
             type: string
+    EndpointAgentReconcileActionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        deviceId:
+          type: string
+        clientId:
+          type: string
+        action:
+          type: string
+        configPath:
+          type: string
+        location:
+          type: string
+        logicalId:
+          type:
+          - string
+          - 'null'
+        before:
+          type:
+          - string
+          - 'null'
+        after:
+          type:
+          - string
+          - 'null'
+        applied:
+          type: boolean
+        agentVersion:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        ingestedAt:
+          type: string
+          format: date-time
     DeviceReportV1:
       type: object
       additionalProperties: false
@@ -540,6 +560,129 @@ components:
         ollama:
           oneOf:
           - $ref: '#/components/schemas/OllamaDetailV1'
+    OllamaBlobV1:
+      type: object
+      additionalProperties: false
+      properties:
+        descriptorKind:
+          type: string
+        digest:
+          type: string
+        mediaType:
+          type: string
+        path:
+          type: string
+        declaredSizeBytes:
+          type: integer
+          format: int64
+        actualSizeBytes:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    EndpointFindingRecordV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        findingId:
+          type: string
+        appId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        clientId:
+          type: string
+        kind:
+          type: string
+        configId:
+          type:
+          - string
+          - 'null'
+        configPath:
+          type:
+          - string
+          - 'null'
+        location:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        data:
+          type: object
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        deviceId:
+          type: string
+        hostName:
+          type: string
+        userName:
+          type: string
+        agentVersion:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        ingestedAt:
+          type: string
+          format: date-time
+    OllamaDetailV1:
+      type: object
+      additionalProperties: false
+      properties:
+        serverState:
+          type: string
+        serverObservedAt:
+          type: string
+          format: date-time
+        inventoryStatus:
+          type: string
+        inventoryObservedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastInventoryAttemptAt:
+          type: string
+          format: date-time
+        scanErrorCount:
+          type: integer
+          format: int32
+        omittedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedBlobCount:
+          type: integer
+          format: int32
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/OllamaModelV1'
+    EndpointDetailV1:
+      allOf:
+      - $ref: '#/components/schemas/EndpointSummaryV1'
+      - type: object
+        additionalProperties: false
+        properties:
+          reports:
+            type: array
+            items:
+              $ref: '#/components/schemas/EndpointDeviceReportV1'
+          mcpServers:
+            type: array
+            items:
+              $ref: '#/components/schemas/McpServerV1'
     EndpointSummaryV1:
       type: object
       additionalProperties: false
@@ -620,80 +763,33 @@ components:
           type: string
         cid:
           type: string
-    EndpointFindingRecordV1:
+    EndpointDeletionResultV1:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        findingId:
-          type: string
-        appId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        clientId:
-          type: string
-        kind:
-          type: string
-        configId:
-          type:
-          - string
-          - 'null'
-        configPath:
-          type:
-          - string
-          - 'null'
-        location:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-        data:
-          type: object
-          additionalProperties:
-            type:
-            - string
-            - 'null'
+        status:
+          $ref: '#/components/schemas/EndpointDeletionStatusV1'
         deviceId:
           type: string
         hostName:
           type: string
-        userName:
-          type: string
-        agentVersion:
-          type: string
-        occurredAt:
-          type: string
-          format: date-time
-        ingestedAt:
-          type: string
-          format: date-time
-    OllamaBlobV1:
+        removedAppCount:
+          type: integer
+          format: int32
+        retainedAppCount:
+          type: integer
+          format: int32
+    PagedResultOfEndpointAgentReconcileActionV1:
       type: object
       additionalProperties: false
       properties:
-        descriptorKind:
-          type: string
-        digest:
-          type: string
-        mediaType:
-          type: string
-        path:
-          type: string
-        declaredSizeBytes:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndpointAgentReconcileActionV1'
+        totalCount:
           type: integer
-          format: int64
-        actualSizeBytes:
-          type:
-          - integer
-          - 'null'
-          format: int64
+          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -719,6 +815,35 @@ components:
           type:
           - string
           - 'null'
+    EndpointAppRefV1:
+      type: object
+      additionalProperties: false
+      properties:
+        appId:
+          type: string
+        name:
+          type: string
+        mcpCount:
+          type: integer
+          format: int32
+        plaintextSecretCount:
+          type: integer
+          format: int32
+        routedThroughGateway:
+          type: boolean
+    AiApiKeyFinding:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        configPath:
+          type: string
+        line:
+          type:
+          - integer
+          - 'null'
+          format: int32
     PagedResultV2OfEndpointFindingRecordV1:
       type: object
       additionalProperties: false
@@ -763,131 +888,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OllamaBlobV1'
-    AiApiKeyFinding:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        configPath:
-          type: string
-        line:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    EndpointAgentReconcileActionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        deviceId:
-          type: string
-        clientId:
-          type: string
-        action:
-          type: string
-        configPath:
-          type: string
-        location:
-          type: string
-        logicalId:
-          type:
-          - string
-          - 'null'
-        before:
-          type:
-          - string
-          - 'null'
-        after:
-          type:
-          - string
-          - 'null'
-        applied:
-          type: boolean
-        agentVersion:
-          type: string
-        occurredAt:
-          type: string
-          format: date-time
-        ingestedAt:
-          type: string
-          format: date-time
-    EndpointAppRefV1:
-      type: object
-      additionalProperties: false
-      properties:
-        appId:
-          type: string
-        name:
-          type: string
-        mcpCount:
-          type: integer
-          format: int32
-        plaintextSecretCount:
-          type: integer
-          format: int32
-        routedThroughGateway:
-          type: boolean
-    PagedResultOfEndpointAgentReconcileActionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/EndpointAgentReconcileActionV1'
-        totalCount:
-          type: integer
-          format: int32
-    OllamaDetailV1:
-      type: object
-      additionalProperties: false
-      properties:
-        serverState:
-          type: string
-        serverObservedAt:
-          type: string
-          format: date-time
-        inventoryStatus:
-          type: string
-        inventoryObservedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastInventoryAttemptAt:
-          type: string
-          format: date-time
-        scanErrorCount:
-          type: integer
-          format: int32
-        omittedModelCount:
-          type: integer
-          format: int32
-        retentionDroppedModelCount:
-          type: integer
-          format: int32
-        retentionDroppedBlobCount:
-          type: integer
-          format: int32
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/OllamaModelV1'
-    EndpointDeletionStatusV1:
-      type: string
-      description: ''
-      x-enumNames:
-      - Deleted
-      - NotFound
-      - ExternallySourced
-      enum:
-      - Deleted
-      - NotFound
-      - ExternallySourced
     ConfigParseErrorV1:
       type: object
       additionalProperties: false

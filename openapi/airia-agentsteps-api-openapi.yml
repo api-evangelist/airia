@@ -225,190 +225,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SdkStepCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - FlowControl
-      - Actions
-      - AIModels
-      - DataSources
-      - Tools
-      - Memory
-      - Agents
-      - CodeBlocks
-      - DataFormatter
-      - Experimental
-      enum:
-      - FlowControl
-      - Actions
-      - AIModels
-      - DataSources
-      - Tools
-      - Memory
-      - Agents
-      - CodeBlocks
-      - DataFormatter
-      - Experimental
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    SdkStepValidationResult:
-      type: object
-      additionalProperties: false
-      properties:
-        isValid:
-          type: boolean
-        validationErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    JsonDocument:
-      type: object
-      additionalProperties: false
-      properties:
-        isDisposable:
-          type: boolean
-        rootElement: {}
-    SdkOptionsLoadResult:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/SdkStepOption'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-        missingFields:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    SdkStepOption:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    SdkStepDefinitionModel:
-      type: object
-      additionalProperties: false
-      properties:
-        stepType:
-          type: string
-        category:
-          $ref: '#/components/schemas/SdkStepCategory'
-        group:
-          oneOf:
-          - $ref: '#/components/schemas/SdkStepGroup'
-        subGroup:
-          type:
-          - string
-          - 'null'
-        inputHandles:
-          type: integer
-          format: int32
-        outputHandles:
-          type: integer
-          format: int32
-        enabled:
-          type: boolean
-        featureFlag:
-          type:
-          - string
-          - 'null'
-        version:
-          type: string
-        icon:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        isBranching:
-          type: boolean
-        parametersSchema:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
-        outputSchema:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
-    KeyValuePairOfStringAndJsonNode:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type:
-          - string
-          - 'null'
-        value:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-    ValidationError:
-      type: object
-      additionalProperties: false
-      properties:
-        memberNames:
-          type: array
-          items:
-            type: string
-        errorMessage:
-          type: string
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
     SdkStepValidationRequest:
       type: object
       additionalProperties: false
@@ -902,12 +718,196 @@ components:
       - ClaudeCompliance
       - Cohesity
       - MicrosoftSentinel
+    SdkOptionsLoadResult:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/SdkStepOption'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        missingFields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
     JsonNodeOptions:
       type: object
       additionalProperties: false
       properties:
         propertyNameCaseInsensitive:
           type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SdkStepDefinitionModel:
+      type: object
+      additionalProperties: false
+      properties:
+        stepType:
+          type: string
+        category:
+          $ref: '#/components/schemas/SdkStepCategory'
+        group:
+          oneOf:
+          - $ref: '#/components/schemas/SdkStepGroup'
+        subGroup:
+          type:
+          - string
+          - 'null'
+        inputHandles:
+          type: integer
+          format: int32
+        outputHandles:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+        featureFlag:
+          type:
+          - string
+          - 'null'
+        version:
+          type: string
+        icon:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isBranching:
+          type: boolean
+        parametersSchema:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+        outputSchema:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    SdkStepOption:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ValidationError:
+      type: object
+      additionalProperties: false
+      properties:
+        memberNames:
+          type: array
+          items:
+            type: string
+        errorMessage:
+          type: string
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    SdkStepCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - FlowControl
+      - Actions
+      - AIModels
+      - DataSources
+      - Tools
+      - Memory
+      - Agents
+      - CodeBlocks
+      - DataFormatter
+      - Experimental
+      enum:
+      - FlowControl
+      - Actions
+      - AIModels
+      - DataSources
+      - Tools
+      - Memory
+      - Agents
+      - CodeBlocks
+      - DataFormatter
+      - Experimental
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    SdkStepValidationResult:
+      type: object
+      additionalProperties: false
+      properties:
+        isValid:
+          type: boolean
+        validationErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
   securitySchemes:
     ApiKey:
       type: apiKey

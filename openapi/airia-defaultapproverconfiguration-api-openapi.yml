@@ -91,26 +91,6 @@ components:
               format: guid
           approvalLogic:
             type: string
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -136,6 +116,26 @@ components:
           type:
           - string
           - 'null'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
     UpdateDefaultApproverConfigurationRequest:
       type: object
       additionalProperties: false

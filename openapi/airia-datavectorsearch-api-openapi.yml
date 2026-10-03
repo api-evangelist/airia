@@ -230,6 +230,81 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    FileContent:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type: string
+          format: guid
+        content:
+          type: string
+    ChunksPageResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        chunks:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorChunk'
+        totalCount:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    VectorSearchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        results:
+          type: string
+    VectorChunk:
+      type: object
+      additionalProperties: false
+      properties:
+        chunk:
+          type: string
+        documentId:
+          type: string
+        sequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metadata:
+          type: string
     VectorSearchGetRequest:
       type: object
       additionalProperties: false
@@ -267,81 +342,6 @@ components:
           type:
           - boolean
           - 'null'
-    VectorSearchResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        results:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ChunksPageResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        chunks:
-          type: array
-          items:
-            $ref: '#/components/schemas/VectorChunk'
-        totalCount:
-          type: integer
-          format: int64
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-    VectorChunk:
-      type: object
-      additionalProperties: false
-      properties:
-        chunk:
-          type: string
-        documentId:
-          type: string
-        sequenceNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        metadata:
-          type: string
-    FileContent:
-      type: object
-      additionalProperties: false
-      properties:
-        fileId:
-          type: string
-          format: guid
-        content:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

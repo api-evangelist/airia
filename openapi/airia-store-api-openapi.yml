@@ -972,456 +972,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    FileDownloadUrlV1:
-      type: object
-      additionalProperties: false
-      properties:
-        fileId:
-          type:
-          - string
-          - 'null'
-        url:
-          type:
-          - string
-          - 'null'
-    CheckConflictsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        hasConflicts:
-          type: boolean
-        conflicts:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileConflictInfoV1'
-        folderConflicts:
-          type: array
-          items:
-            $ref: '#/components/schemas/FolderConflictInfoV1'
-    FileV12:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/FileProcessingStatus3'
-        storeConnectorId:
-          type: string
-          format: guid
-        parentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        size:
-          type: integer
-          format: int64
-        mimeType:
-          type: string
-        path:
-          type: string
-        fileLastUpdatedAt:
-          type: string
-          format: date-time
-        additionalMetadataJson:
-          type: string
-        folderId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        processedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        ingestionProcessingStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngestionProcessingStatus2'
-        fileHash:
-          type: string
-        userErrors:
-          type: array
-          items:
-            type: string
-        systemErrors:
-          type: array
-          items:
-            type: string
-        externalId:
-          type: string
-        ingestionDuration:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        tokensConsumed:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        processingMessage:
-          type: string
-        executedParserId:
-          type: string
-        nestingDepth:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    ConflictAction:
-      type: string
-      description: ''
-      x-enumNames:
-      - Replace
-      - KeepBoth
-      enum:
-      - Replace
-      - KeepBoth
-    FileConflictInfoV1:
-      type: object
-      additionalProperties: false
-      required:
-      - fileName
-      - existingFile
-      properties:
-        fileName:
-          type: string
-        existingFile:
-          $ref: '#/components/schemas/ExistingFileInfoV1'
-    FolderConflictResolutionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        folderName:
-          type: string
-        action:
-          $ref: '#/components/schemas/ConflictAction'
-        existingFolderId:
-          type:
-          - string
-          - 'null'
-    IngestionProcessingStatusStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - Pending
-      - Downloading
-      - Downloaded
-      - DownloadFailed
-      - Processing
-      - ProcessingFailed
-      - Processed
-      - Indexing
-      - Indexed
-      - IndexingFailed
-      - Deleted
-      - Removing
-      - PartiallyFailed
-      - Aborted
-      - Parsed
-      enum:
-      - Unspecified
-      - Pending
-      - Downloading
-      - Downloaded
-      - DownloadFailed
-      - Processing
-      - ProcessingFailed
-      - Processed
-      - Indexing
-      - Indexed
-      - IndexingFailed
-      - Deleted
-      - Removing
-      - PartiallyFailed
-      - Aborted
-      - Parsed
-    TableDocumentProcessingMode2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - Semantic
-      - Sql
-      - Both
-      - Embedding
-      - Graph
-      - Labels
-      - HybridEntityRag
-      enum:
-      - Unspecified
-      - Semantic
-      - Sql
-      - Both
-      - Embedding
-      - Graph
-      - Labels
-      - HybridEntityRag
-    FileProcessingStatus3:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - Pending
-      - Downloading
-      - Downloaded
-      - DownloadFailed
-      - Processing
-      - ProcessingFailed
-      - Processed
-      - Indexing
-      - Indexed
-      - IndexingFailed
-      - Deleted
-      - Removing
-      - PartiallyFailed
-      - Aborted
-      - Parsed
-      enum:
-      - Unspecified
-      - Pending
-      - Downloading
-      - Downloaded
-      - DownloadFailed
-      - Processing
-      - ProcessingFailed
-      - Processed
-      - Indexing
-      - Indexed
-      - IndexingFailed
-      - Deleted
-      - Removing
-      - PartiallyFailed
-      - Aborted
-      - Parsed
-    ParserInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-    Timestamp:
-      type: object
-      additionalProperties: false
-      properties:
-        seconds:
-          type: integer
-          format: int64
-        nanos:
-          type: integer
-          format: int32
-    ExistingFileInfoV1:
-      type: object
-      additionalProperties: false
-      required:
-      - fileId
-      - fileName
-      - fileSize
-      - lastModified
-      properties:
-        fileId:
-          type: string
-        fileName:
-          type: string
-        fileSize:
-          type: integer
-          format: int64
-        lastModified:
-          type: string
-          format: date-time
-    FilePreviewUrl:
-      type: object
-      additionalProperties: false
-      properties:
-        previewUrl:
-          type:
-          - string
-          - 'null'
-        lastModifiedDateTimeDrive:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        connectorTypeId:
-          type:
-          - string
-          - 'null'
-        connectorTypeName:
-          type:
-          - string
-          - 'null'
-    ExistingFolderInfoV1:
-      type: object
-      additionalProperties: false
-      required:
-      - folderId
-      - folderName
-      properties:
-        folderId:
-          type: string
-        folderName:
-          type: string
-        fileCount:
-          type: integer
-          format: int32
-        subFolderCount:
-          type: integer
-          format: int32
-    CreatedFolderInfoV1:
+    FolderConflictInfoV1:
       type: object
       additionalProperties: false
       required:
       - folderName
-      - folderId
+      - existingFolder
       properties:
         folderName:
           type: string
-        folderId:
-          type: string
-    GraphDto2:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    PipelineReferenceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineName:
-          type: string
-        versionDisplay:
-          type: string
-        isLatest:
-          type: boolean
-        pipelineId:
-          type: string
-          format: guid
-        pipelineVersionId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-    GraphNodeRecordsInfoDto2:
-      type: object
-      additionalProperties: false
-      properties:
-        labels:
-          type: array
-          items:
-            type: string
-        count:
-          type: integer
-          format: int32
-    CypherQueryDto2:
-      type: object
-      additionalProperties: false
-      properties:
-        query:
-          type: string
-    GraphRelationshipRecordsInfoDto2:
-      type: object
-      additionalProperties: false
-      properties:
-        from:
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-        to:
-          type: array
-          items:
-            type: string
-        count:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    IngestionProcessingStatusTableDocumentProcessingMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - Semantic
-      - Sql
-      - Both
-      - Embedding
-      - Graph
-      - Labels
-      - HybridEntityRag
-      enum:
-      - Unspecified
-      - Semantic
-      - Sql
-      - Both
-      - Embedding
-      - Graph
-      - Labels
-      - HybridEntityRag
-    GetAllFilesResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        files:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FileV1'
-        downloadInfos:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FileDownloadUrlV1'
-        totalCount:
-          type: integer
-          format: int32
+        existingFolder:
+          $ref: '#/components/schemas/ExistingFolderInfoV1'
     CheckConflictsRequestV1:
       type: object
       additionalProperties: false
@@ -1452,6 +1013,233 @@ components:
           - 'null'
           items:
             type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GraphNodeRecordsInfoDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+    FilePreviewUrl:
+      type: object
+      additionalProperties: false
+      properties:
+        previewUrl:
+          type:
+          - string
+          - 'null'
+        lastModifiedDateTimeDrive:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        connectorTypeId:
+          type:
+          - string
+          - 'null'
+        connectorTypeName:
+          type:
+          - string
+          - 'null'
+    GraphDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    IngestionProcessingStatusTableDocumentProcessingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+      enum:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+    FileDownloadUrlV1:
+      type: object
+      additionalProperties: false
+      properties:
+        fileId:
+          type:
+          - string
+          - 'null'
+        url:
+          type:
+          - string
+          - 'null'
+    Timestamp:
+      type: object
+      additionalProperties: false
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
+    FolderConflictResolutionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        folderName:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConflictAction'
+        existingFolderId:
+          type:
+          - string
+          - 'null'
+    ConflictResolutionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        fileName:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConflictAction'
+        existingFileId:
+          type:
+          - string
+          - 'null'
+        newFile:
+          type:
+          - string
+          - 'null'
+          format: binary
+    PipelineReferenceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineName:
+          type: string
+        versionDisplay:
+          type: string
+        isLatest:
+          type: boolean
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+    GraphRelationshipRecordsInfoDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
+    GetDefaultParserIdResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        fileExtension:
+          type:
+          - string
+          - 'null'
+        parserId:
+          type:
+          - string
+          - 'null'
+        hasParserId:
+          type: boolean
+    TableDocumentProcessingMode2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+      enum:
+      - Unspecified
+      - Semantic
+      - Sql
+      - Both
+      - Embedding
+      - Graph
+      - Labels
+      - HybridEntityRag
+    CreatedFolderInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - folderName
+      - folderId
+      properties:
+        folderName:
+          type: string
+        folderId:
+          type: string
     GetFileResponseV1:
       type: object
       additionalProperties: false
@@ -1485,6 +1273,68 @@ components:
             type: string
         status:
           $ref: '#/components/schemas/FileProcessingStatus2'
+    FileConflictInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - fileName
+      - existingFile
+      properties:
+        fileName:
+          type: string
+        existingFile:
+          $ref: '#/components/schemas/ExistingFileInfoV1'
+    GetAllFilesResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FileV1'
+        downloadInfos:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FileDownloadUrlV1'
+        totalCount:
+          type: integer
+          format: int32
+    ConflictAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Replace
+      - KeepBoth
+      enum:
+      - Replace
+      - KeepBoth
+    CypherQueryDto2:
+      type: object
+      additionalProperties: false
+      properties:
+        query:
+          type: string
+    ExistingFolderInfoV1:
+      type: object
+      additionalProperties: false
+      required:
+      - folderId
+      - folderName
+      properties:
+        folderId:
+          type: string
+        folderName:
+          type: string
+        fileCount:
+          type: integer
+          format: int32
+        subFolderCount:
+          type: integer
+          format: int32
     FileV1:
       type: object
       additionalProperties: false
@@ -1595,23 +1445,6 @@ components:
           - 'null'
         hasAcquisitionJobId:
           type: boolean
-    ConflictResolutionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        fileName:
-          type: string
-        action:
-          $ref: '#/components/schemas/ConflictAction'
-        existingFileId:
-          type:
-          - string
-          - 'null'
-        newFile:
-          type:
-          - string
-          - 'null'
-          format: binary
     FileProcessingStatus2:
       type: string
       description: ''
@@ -1649,18 +1482,6 @@ components:
       - PartiallyFailed
       - Aborted
       - Parsed
-    ResolveConflictsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileV12'
-        folders:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreatedFolderInfoV1'
     IngestionProcessingStatus2:
       type: object
       additionalProperties: false
@@ -1679,13 +1500,43 @@ components:
           type: array
           items:
             type: string
-    JsonDocument:
-      type: object
-      additionalProperties: false
-      properties:
-        isDisposable:
-          type: boolean
-        rootElement: {}
+    IngestionProcessingStatusStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+      enum:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
     GetAvailableParsersResponse:
       type: object
       additionalProperties: false
@@ -1696,31 +1547,180 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ParserInfo'
-    FolderConflictInfoV1:
+    ResolveConflictsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileV12'
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedFolderInfoV1'
+    FileV12:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/FileProcessingStatus3'
+        storeConnectorId:
+          type: string
+          format: guid
+        parentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+        mimeType:
+          type: string
+        path:
+          type: string
+        fileLastUpdatedAt:
+          type: string
+          format: date-time
+        additionalMetadataJson:
+          type: string
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        processedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ingestionProcessingStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngestionProcessingStatus2'
+        fileHash:
+          type: string
+        userErrors:
+          type: array
+          items:
+            type: string
+        systemErrors:
+          type: array
+          items:
+            type: string
+        externalId:
+          type: string
+        ingestionDuration:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        tokensConsumed:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        processingMessage:
+          type: string
+        executedParserId:
+          type: string
+        nestingDepth:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FileProcessingStatus3:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+      enum:
+      - Unspecified
+      - Pending
+      - Downloading
+      - Downloaded
+      - DownloadFailed
+      - Processing
+      - ProcessingFailed
+      - Processed
+      - Indexing
+      - Indexed
+      - IndexingFailed
+      - Deleted
+      - Removing
+      - PartiallyFailed
+      - Aborted
+      - Parsed
+    ParserInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+    CheckConflictsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        hasConflicts:
+          type: boolean
+        conflicts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileConflictInfoV1'
+        folderConflicts:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderConflictInfoV1'
+    JsonDocument:
+      type: object
+      additionalProperties: false
+      properties:
+        isDisposable:
+          type: boolean
+        rootElement: {}
+    ExistingFileInfoV1:
       type: object
       additionalProperties: false
       required:
-      - folderName
-      - existingFolder
+      - fileId
+      - fileName
+      - fileSize
+      - lastModified
       properties:
-        folderName:
+        fileId:
           type: string
-        existingFolder:
-          $ref: '#/components/schemas/ExistingFolderInfoV1'
-    GetDefaultParserIdResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        fileExtension:
-          type:
-          - string
-          - 'null'
-        parserId:
-          type:
-          - string
-          - 'null'
-        hasParserId:
-          type: boolean
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        lastModified:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

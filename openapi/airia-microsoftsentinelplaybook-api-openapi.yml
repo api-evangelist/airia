@@ -128,119 +128,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultV2OfMicrosoftSentinelPlaybookEventResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MicrosoftSentinelPlaybookEventResponse'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    MicrosoftSentinelPlaybookCallbackResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        eventId:
-          type: string
-          format: guid
-        accepted:
-          type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    MicrosoftSentinelPlaybookTargetEntity:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - identifier
-      properties:
-        type:
-          type: string
-          maxLength: 256
-          minLength: 0
-        identifier:
-          type: string
-          maxLength: 512
-          minLength: 0
-    MicrosoftSentinelPlaybookEventResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        playbookRunId:
-          type: string
-        playbookName:
-          type: string
-        incidentId:
-          type:
-          - string
-          - 'null'
-        action:
-          type: string
-        targetEntityType:
-          type:
-          - string
-          - 'null'
-        targetEntityIdentifier:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        occurredAt:
-          type: string
-          format: date-time
-        details:
-          type:
-          - string
-          - 'null'
-        correlationId:
-          type:
-          - string
-          - 'null'
-        payloadJson:
-          type:
-          - string
-          - 'null'
     MicrosoftSentinelPlaybookCallbackRequest:
       type: object
       additionalProperties: false
@@ -291,6 +178,119 @@ components:
           - 'null'
           maxLength: 256
           minLength: 0
+    MicrosoftSentinelPlaybookCallbackResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        eventId:
+          type: string
+          format: guid
+        accepted:
+          type: boolean
+    MicrosoftSentinelPlaybookTargetEntity:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - identifier
+      properties:
+        type:
+          type: string
+          maxLength: 256
+          minLength: 0
+        identifier:
+          type: string
+          maxLength: 512
+          minLength: 0
+    PagedResultV2OfMicrosoftSentinelPlaybookEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MicrosoftSentinelPlaybookEventResponse'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    MicrosoftSentinelPlaybookEventResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        playbookRunId:
+          type: string
+        playbookName:
+          type: string
+        incidentId:
+          type:
+          - string
+          - 'null'
+        action:
+          type: string
+        targetEntityType:
+          type:
+          - string
+          - 'null'
+        targetEntityIdentifier:
+          type:
+          - string
+          - 'null'
+        status:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        details:
+          type:
+          - string
+          - 'null'
+        correlationId:
+          type:
+          - string
+          - 'null'
+        payloadJson:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

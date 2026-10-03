@@ -114,46 +114,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    StepExecutionLogDto:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type: string
-          format: guid
-        stepId:
-          type: string
-          format: guid
-        stepType:
-          oneOf:
-          - $ref: '#/components/schemas/StepType'
-        stepTitle:
-          type:
-          - string
-          - 'null'
-        duration:
-          type:
-          - string
-          - 'null'
-          example: 0.0
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        finishedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        success:
-          type:
-          - boolean
-          - 'null'
-        exception:
-          type:
-          - string
-          - 'null'
     StepType:
       type: string
       description: ''
@@ -209,6 +169,55 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
+    GetPipelineExecutionResult:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        logRecordDetails:
+          $ref: '#/components/schemas/PipelineExecutionLogDetailsDto'
+        stepExecutionLogRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StepExecutionLogDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     PipelineExecutionLogDetailsDto:
       type: object
       additionalProperties: false
@@ -236,55 +245,46 @@ components:
           type:
           - string
           - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    GetPipelineExecutionResult:
+    StepExecutionLogDto:
       type: object
       additionalProperties: false
       properties:
-        executionId:
-          type: string
-          format: guid
         pipelineId:
           type: string
           format: guid
-        tenantId:
+        stepId:
           type: string
           format: guid
-        projectId:
-          type: string
-          format: guid
-        logRecordDetails:
-          $ref: '#/components/schemas/PipelineExecutionLogDetailsDto'
-        stepExecutionLogRecords:
+        stepType:
+          oneOf:
+          - $ref: '#/components/schemas/StepType'
+        stepTitle:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/StepExecutionLogDto'
+        duration:
+          type:
+          - string
+          - 'null'
+          example: 0.0
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        success:
+          type:
+          - boolean
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

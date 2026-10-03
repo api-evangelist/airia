@@ -91,6 +91,32 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UserOAuthProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        providerId:
+          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/OAuthProviderStatus'
+        providerScopes:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        authenticationType:
+          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -143,6 +169,17 @@ components:
       - StaticAwsStsExternalId
       - ClerkM2MOauth
       - IdJagCrossAppAccess
+    OAuthProviderStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Connected
+      - Error
+      - NotConnected
+      enum:
+      - Connected
+      - Error
+      - NotConnected
     PagedResultV2OfUserOAuthProvider:
       type: object
       additionalProperties: false
@@ -160,43 +197,6 @@ components:
           type:
           - boolean
           - 'null'
-    UserOAuthProvider:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        provider:
-          type: string
-        providerId:
-          type: string
-        credentialId:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/OAuthProviderStatus'
-        providerScopes:
-          type: array
-          items:
-            type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        authenticationType:
-          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
-    OAuthProviderStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Connected
-      - Error
-      - NotConnected
-      enum:
-      - Connected
-      - Error
-      - NotConnected
   securitySchemes:
     ApiKey:
       type: apiKey

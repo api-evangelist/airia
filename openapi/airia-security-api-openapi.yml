@@ -514,83 +514,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SpmSecurityScoreStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotAnalyzed
-      - Analyzed
-      - Error
-      - NotApplicable
-      enum:
-      - NotAnalyzed
-      - Analyzed
-      - Error
-      - NotApplicable
-    TopRiskAgentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        providerName:
-          type: string
-        securedStatus:
-          $ref: '#/components/schemas/SecurePostureStatus'
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        lastRefreshedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    Scanner:
-      type: string
-      description: ''
-      x-enumNames:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-      enum:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-    RecommendationsSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        actionableCount:
-          type: integer
-          format: int32
-        needsAnalysisCount:
-          type: integer
-          format: int32
-        analysisFailedCount:
-          type: integer
-          format: int32
-        ownershipGapCount:
-          type: integer
-          format: int32
-        quickWins:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopRiskAgentDto'
     ProviderStatsDto:
       type: object
       additionalProperties: false
@@ -614,78 +537,6 @@ components:
         coveragePct:
           type: integer
           format: int32
-    StatsTrendPointDto:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-        totalAgentsCount:
-          type: integer
-          format: int32
-        securedAgentsCount:
-          type: integer
-          format: int32
-        securableAgentsCount:
-          type: integer
-          format: int32
-        coveragePct:
-          type: integer
-          format: int32
-        highRiskAgentsCount:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    CoverageByTypeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        componentType:
-          $ref: '#/components/schemas/SpmComponentType'
-        totalCount:
-          type: integer
-          format: int32
-        securedCount:
-          type: integer
-          format: int32
-        coveragePct:
-          type: integer
-          format: int32
-    PagedResultOfUnifiedInventoryItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UnifiedInventoryItemDto'
-        totalCount:
-          type: integer
-          format: int32
     SecurePostureStatus:
       type: string
       description: ''
@@ -705,144 +556,17 @@ components:
       - NotSecurableAiProvider
       - NotSecurableAiModel
       - NoAiService
-    SpmActivityEventDto:
+    PagedResultOfUnifiedInventoryItemDto:
       type: object
       additionalProperties: false
       properties:
-        assetId:
-          type: string
-          format: guid
-        assetName:
-          type: string
-        providerName:
-          type: string
-        eventType:
-          type: string
-        occurredAt:
-          type: string
-          format: date-time
-    InventoryCensusTrendPointDto:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-        assetType:
-          type: string
-        sourceType:
-          type: string
-        securedStatus:
-          type: string
-        assetCount:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnifiedInventoryItemDto'
+        totalCount:
           type: integer
           format: int32
-        highRiskCount:
-          type: integer
-          format: int32
-        newLast7dCount:
-          type: integer
-          format: int32
-    SecurePostureProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-      enum:
-      - Undefined
-      - N8n
-      - Airia
-      - AwsBedrock
-      - AzureFoundry
-      - LangGraph
-      - CopilotStudio
-      - MicrosoftGraph
-      - GoogleWorkspace
-      - GitHubRepository
-      - Cloudflare
-      - GoogleAgentPlatform
-      - Glean
-      - Atlan
-      - Okta
-      - Databricks
-      - Purview
-      - ServiceNow
-      - GeminiEnterprise
-      - SalesforceAgentforce
-      - AzurePowerApps
-      - CrewAi
-      - CrowdStrike
-      - MicrosoftDefenderCloudApps
-      - MicrosoftDefenderXdr
-      - SentinelOne
-      - OpenAi
-      - Netskope
-      - Zscaler
-      - Snowflake
-      - AzureFunctionApps
-      - AzureDevOpsRepository
-      - GitLabRepository
-    SpmComponentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - AiModel
-      - SpmAgent
-      - Tool
-      - McpServer
-      - Knowledge
-      enum:
-      - Undefined
-      - AiModel
-      - SpmAgent
-      - Tool
-      - McpServer
-      - Knowledge
-    SecurityInventoryCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Agent
-      - Model
-      - McpServer
-      enum:
-      - None
-      - Agent
-      - Model
-      - McpServer
     UnifiedInventoryItemDto:
       type: object
       additionalProperties: false
@@ -1028,6 +752,274 @@ components:
           type:
           - boolean
           - 'null'
+    SecurePostureProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+      enum:
+      - Undefined
+      - N8n
+      - Airia
+      - AwsBedrock
+      - AzureFoundry
+      - LangGraph
+      - CopilotStudio
+      - MicrosoftGraph
+      - GoogleWorkspace
+      - GitHubRepository
+      - Cloudflare
+      - GoogleAgentPlatform
+      - Glean
+      - Atlan
+      - Okta
+      - Databricks
+      - Purview
+      - ServiceNow
+      - GeminiEnterprise
+      - SalesforceAgentforce
+      - AzurePowerApps
+      - CrewAi
+      - CrowdStrike
+      - MicrosoftDefenderCloudApps
+      - MicrosoftDefenderXdr
+      - SentinelOne
+      - OpenAi
+      - Netskope
+      - Zscaler
+      - Snowflake
+      - AzureFunctionApps
+      - AzureDevOpsRepository
+      - GitLabRepository
+    RecommendationsSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionableCount:
+          type: integer
+          format: int32
+        needsAnalysisCount:
+          type: integer
+          format: int32
+        analysisFailedCount:
+          type: integer
+          format: int32
+        ownershipGapCount:
+          type: integer
+          format: int32
+        quickWins:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopRiskAgentDto'
+    CoverageByTypeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        componentType:
+          $ref: '#/components/schemas/SpmComponentType'
+        totalCount:
+          type: integer
+          format: int32
+        securedCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type: integer
+          format: int32
+    SpmSecurityScoreStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+      enum:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SecurityInventoryCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Agent
+      - Model
+      - McpServer
+      enum:
+      - None
+      - Agent
+      - Model
+      - McpServer
+    SpmActivityEventDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        assetName:
+          type: string
+        providerName:
+          type: string
+        eventType:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+    InventoryCensusTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        assetType:
+          type: string
+        sourceType:
+          type: string
+        securedStatus:
+          type: string
+        assetCount:
+          type: integer
+          format: int32
+        highRiskCount:
+          type: integer
+          format: int32
+        newLast7dCount:
+          type: integer
+          format: int32
+    InventoryItemSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+      enum:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+    SpmComponentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+      enum:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+    StatsTrendPointDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        totalAgentsCount:
+          type: integer
+          format: int32
+        securedAgentsCount:
+          type: integer
+          format: int32
+        securableAgentsCount:
+          type: integer
+          format: int32
+        coveragePct:
+          type: integer
+          format: int32
+        highRiskAgentsCount:
+          type: integer
+          format: int32
+    TopRiskAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        providerName:
+          type: string
+        securedStatus:
+          $ref: '#/components/schemas/SecurePostureStatus'
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        lastRefreshedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     SecurityStatsDto:
       type: object
       additionalProperties: false
@@ -1060,19 +1052,27 @@ components:
         newAgentsLast7d:
           type: integer
           format: int32
-    InventoryItemSource:
+    Scanner:
       type: string
       description: ''
       x-enumNames:
-      - SpmAgent
-      - SpmComponent
-      - CodeScanFinding
-      - EndpointAgent
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
       enum:
-      - SpmAgent
-      - SpmComponent
-      - CodeScanFinding
-      - EndpointAgent
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
   securitySchemes:
     ApiKey:
       type: apiKey

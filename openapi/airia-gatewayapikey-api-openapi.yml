@@ -261,17 +261,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GatewayApiKeyLimitReachedError:
-      type: object
-      additionalProperties: false
-      properties:
-        code:
-          type: string
-        limit:
-          type: integer
-          format: int64
-        message:
-          type: string
+    GatewayApiKeyCreatedModel:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyWithId'
+      - type: object
+        additionalProperties: false
     GatewayApiKeyModel:
       type: object
       additionalProperties: false
@@ -307,6 +301,53 @@ components:
           - string
           - 'null'
           format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GatewayApiKeyType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+      enum:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+    GatewayApiKeyRevocationMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Natural
+      - Immediate
+      enum:
+      - Natural
+      - Immediate
     GatewayApiKeyWithId:
       allOf:
       - $ref: '#/components/schemas/GatewayApiKeyModel'
@@ -334,31 +375,17 @@ components:
           origin:
             oneOf:
             - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
-    ProblemDetails:
+    GatewayApiKeyLimitReachedError:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
       properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+        code:
+          type: string
+        limit:
+          type: integer
+          format: int64
+        message:
+          type: string
     GatewayApiKeyOrigin2:
       type: string
       description: ''
@@ -370,33 +397,6 @@ components:
       - SelfServe
       - EndpointAgent
       - SecurePosture
-    GatewayApiKeyCreatedModel:
-      allOf:
-      - $ref: '#/components/schemas/GatewayApiKeyWithId'
-      - type: object
-        additionalProperties: false
-    GatewayApiKeyRevocationMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Natural
-      - Immediate
-      enum:
-      - Natural
-      - Immediate
-    GatewayApiKeyType2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
-      enum:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
   securitySchemes:
     ApiKey:
       type: apiKey

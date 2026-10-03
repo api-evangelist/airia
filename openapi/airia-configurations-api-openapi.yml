@@ -258,13 +258,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AIGatewayRegionDto:
+    SupportedVectorDbTypesResponse:
       type: object
       additionalProperties: false
       properties:
-        regionName:
+        airiaHostedEngine:
           type: string
-        regionalEndpoint:
+        postgresHybrid:
+          type: boolean
+    AWSConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - accountNumber
+      - accountUser
+      - externalId
+      properties:
+        accountNumber:
+          type: string
+          minLength: 1
+        accountUser:
+          type: string
+          minLength: 1
+        externalId:
+          type: string
+          minLength: 1
+    OAuthCallbackUrlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
           type: string
     ProblemDetails:
       type: object
@@ -291,23 +314,33 @@ components:
           type:
           - string
           - 'null'
-    AWSConfiguration:
+    AIGatewayResponse:
       type: object
       additionalProperties: false
-      required:
-      - accountNumber
-      - accountUser
-      - externalId
       properties:
-        accountNumber:
+        url:
           type: string
-          minLength: 1
-        accountUser:
+        homeRegion:
           type: string
-          minLength: 1
-        externalId:
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIGatewayRegionDto'
+    AIGatewayRegionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        regionName:
           type: string
-          minLength: 1
+        regionalEndpoint:
+          type: string
+    SasExpiryConfigurationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        defaultExpiryMinutes:
+          type: number
+          format: double
     EmbeddingConfigurationResponse:
       type: object
       additionalProperties: false
@@ -331,39 +364,6 @@ components:
           items:
             type: integer
             format: int32
-    AIGatewayResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        homeRegion:
-          type: string
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIGatewayRegionDto'
-    SupportedVectorDbTypesResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        airiaHostedEngine:
-          type: string
-        postgresHybrid:
-          type: boolean
-    OAuthCallbackUrlResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-    SasExpiryConfigurationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        defaultExpiryMinutes:
-          type: number
-          format: double
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -216,29 +216,80 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GovernanceSlaAtRiskEntryDto:
+    HeatmapDataPointDto:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - useCaseName
+      - axisY
+      - axisX
+      - bubbleSize
+      - executionCount
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        axisY:
+          type: integer
+          format: int32
+        axisX:
+          type: integer
+          format: int32
+        bubbleSize:
+          type: string
+        executionCount:
+          type: integer
+          format: int32
+        riskLevel:
+          type:
+          - string
+          - 'null'
+    RiskAlertResourceDto:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
         name:
           type: string
-        stage:
+        type:
           type: string
-        blocker:
+        tenantId:
           type: string
-        detail:
+    GovernanceSlaAtRiskResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceSlaAtRiskEntryDto'
+        totalCount:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        overdueCount:
+          type: integer
+          format: int32
+        approachingCount:
+          type: integer
+          format: int32
+    RiskAlertActorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
-        status:
+        name:
           type: string
-        gateSlaDeadline:
-          type: string
-          format: date-time
     DashboardMetricDto:
       type: object
       additionalProperties: false
@@ -252,94 +303,16 @@ components:
         diffValue:
           type: number
           format: double
-    RiskAlertResourceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        tenantId:
-          type: string
-    GovernanceDashboardAdditionalDetailsDto:
+    GovernanceDashboardRiskDomainSummaryDto:
       type: object
       additionalProperties: false
       required:
-      - totalAgents
-      - internalAgentsCount
-      - externalAgentsCount
-      - modelsCount
-      - appsCount
-      - noEvaluations
-      - biasThresholdExceeded
-      - noRedTeamTests
-      - agentsDeployedWithoutGuardrails
+      - domains
       properties:
-        totalAgents:
-          type: integer
-          format: int32
-        internalAgentsCount:
-          type: integer
-          format: int32
-        externalAgentsCount:
-          type: integer
-          format: int32
-        modelsCount:
-          type: integer
-          format: int32
-        appsCount:
-          type: integer
-          format: int32
-        noEvaluations:
-          type: integer
-          format: int32
-        biasThresholdExceeded:
-          type: integer
-          format: int32
-        noRedTeamTests:
-          type: integer
-          format: int32
-        agentsDeployedWithoutGuardrails:
-          type: integer
-          format: int32
-    RiskAlertsResponseDto:
-      type: object
-      additionalProperties: false
-      properties:
-        entries:
+        domains:
           type: array
           items:
-            $ref: '#/components/schemas/RiskAlertEntryDto'
-        totalCount:
-          type: integer
-          format: int32
-        page:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-    RiskAlertActorDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    GovernanceDashboardHeatmapDto:
-      type: object
-      additionalProperties: false
-      required:
-      - dataPoints
-      properties:
-        dataPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/HeatmapDataPointDto'
+            $ref: '#/components/schemas/RiskDomainCountDto'
     RiskDomainCountDto:
       type: object
       additionalProperties: false
@@ -381,24 +354,37 @@ components:
           type:
           - string
           - 'null'
-    GovernanceDashboardRiskDomainSummaryDto:
+    GovernanceSlaAtRiskEntryDto:
       type: object
       additionalProperties: false
-      required:
-      - domains
       properties:
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskDomainCountDto'
-    GovernanceSlaAtRiskResponseDto:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        blocker:
+          type: string
+        detail:
+          type: string
+        status:
+          type: string
+        gateSlaDeadline:
+          type: string
+          format: date-time
+    RiskAlertsResponseDto:
       type: object
       additionalProperties: false
       properties:
         entries:
           type: array
           items:
-            $ref: '#/components/schemas/GovernanceSlaAtRiskEntryDto'
+            $ref: '#/components/schemas/RiskAlertEntryDto'
         totalCount:
           type: integer
           format: int32
@@ -408,64 +394,6 @@ components:
         pageSize:
           type: integer
           format: int32
-        overdueCount:
-          type: integer
-          format: int32
-        approachingCount:
-          type: integer
-          format: int32
-    GovernanceScoreMetricDto:
-      allOf:
-      - $ref: '#/components/schemas/DashboardMetricDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          riskClassificationDiscipline:
-            type: number
-            format: double
-          controlCoverage:
-            type: number
-            format: double
-          agentIntegrityHealth:
-            type: number
-            format: double
-          riskGovernance:
-            type: number
-            format: double
-          oversightEffectiveness:
-            type: number
-            format: double
-    HeatmapDataPointDto:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseId
-      - useCaseName
-      - axisY
-      - axisX
-      - bubbleSize
-      - executionCount
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        useCaseName:
-          type: string
-        axisY:
-          type: integer
-          format: int32
-        axisX:
-          type: integer
-          format: int32
-        bubbleSize:
-          type: string
-        executionCount:
-          type: integer
-          format: int32
-        riskLevel:
-          type:
-          - string
-          - 'null'
     GovernanceDashboardSummaryDto:
       type: object
       additionalProperties: false
@@ -489,6 +417,16 @@ components:
           $ref: '#/components/schemas/DashboardMetricDto'
         pendingHumanReviews:
           $ref: '#/components/schemas/DashboardMetricDto'
+    GovernanceDashboardHeatmapDto:
+      type: object
+      additionalProperties: false
+      required:
+      - dataPoints
+      properties:
+        dataPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeatmapDataPointDto'
     RiskAlertEntryDto:
       type: object
       additionalProperties: false
@@ -517,6 +455,68 @@ components:
           type:
           - string
           - 'null'
+    GovernanceDashboardAdditionalDetailsDto:
+      type: object
+      additionalProperties: false
+      required:
+      - totalAgents
+      - internalAgentsCount
+      - externalAgentsCount
+      - modelsCount
+      - appsCount
+      - noEvaluations
+      - biasThresholdExceeded
+      - noRedTeamTests
+      - agentsDeployedWithoutGuardrails
+      properties:
+        totalAgents:
+          type: integer
+          format: int32
+        internalAgentsCount:
+          type: integer
+          format: int32
+        externalAgentsCount:
+          type: integer
+          format: int32
+        modelsCount:
+          type: integer
+          format: int32
+        appsCount:
+          type: integer
+          format: int32
+        noEvaluations:
+          type: integer
+          format: int32
+        biasThresholdExceeded:
+          type: integer
+          format: int32
+        noRedTeamTests:
+          type: integer
+          format: int32
+        agentsDeployedWithoutGuardrails:
+          type: integer
+          format: int32
+    GovernanceScoreMetricDto:
+      allOf:
+      - $ref: '#/components/schemas/DashboardMetricDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          riskClassificationDiscipline:
+            type: number
+            format: double
+          controlCoverage:
+            type: number
+            format: double
+          agentIntegrityHealth:
+            type: number
+            format: double
+          riskGovernance:
+            type: number
+            format: double
+          oversightEffectiveness:
+            type: number
+            format: double
   securitySchemes:
     ApiKey:
       type: apiKey

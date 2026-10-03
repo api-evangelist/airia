@@ -1012,1043 +1012,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GetLibraryAgentsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        agents:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentsResponseV1'
-        totalCount:
-          type: integer
-          format: int32
-    AgentToolAnnotationsDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        destructiveHint:
-          type:
-          - boolean
-          - 'null'
-        idempotentHint:
-          type:
-          - boolean
-          - 'null'
-        openWorldHint:
-          type:
-          - boolean
-          - 'null'
-        readOnlyHint:
-          type:
-          - boolean
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-    ToolsMetadataRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      - value
-      properties:
-        key:
-          type: string
-          minLength: 1
-        value:
-          type: string
-          minLength: 1
-    AgentCapabilities2:
-      type: object
-      additionalProperties: false
-      properties:
-        streaming:
-          type:
-          - boolean
-          - 'null'
-        pushNotifications:
-          type:
-          - boolean
-          - 'null'
-        extendedAgentCard:
-          type:
-          - boolean
-          - 'null'
-        extensions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentExtension2'
-    PromptsResponseV1:
-      type: object
-      additionalProperties: false
-      required:
-      - source
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        prompt:
-          type: string
-        recommendedProvider:
-          oneOf:
-          - $ref: '#/components/schemas/ProviderType3'
-        recommendedModels:
-          type: array
-          items:
-            type: string
-        tags:
-          type: array
-          items:
-            type: string
-        industry:
-          type: string
-        activeVersion:
-          type: integer
-          format: int32
-        latestVersion:
-          type: integer
-          format: int32
-        modifiedOn:
-          type: string
-          format: date-time
-        source:
-          type: string
-        category:
-          oneOf:
-          - $ref: '#/components/schemas/PromptCategory'
-    JsonFormatterStepConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        template:
-          type: string
-        fallbackToRawResultOnUnresolvedPath:
-          type: boolean
-    LoopStepConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        stopOnError:
-          type: boolean
-        retryOnError:
-          type: boolean
-        retryOnErrorCount:
-          type: integer
-          format: int32
-        maxIterations:
-          type: integer
-          format: int32
-        executionMode:
-          type: string
-        parallelConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/LoopStepParallelConfigurationDefinition'
-        batchConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/LoopStepBatchConfigurationDefinition'
-        inputExpression:
-          type:
-          - string
-          - 'null'
-    ToolDefinitionModel:
-      type: object
-      additionalProperties: false
-      required:
-      - toolType
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        toolType:
-          $ref: '#/components/schemas/ToolType'
-        name:
-          type: string
-        standardizedName:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        origin:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
-        methodType:
-          type: string
-        purpose:
-          type: string
-        apiEndpoint:
-          type: string
-        provider:
-          type: string
-        toolCredentials:
-          $ref: '#/components/schemas/ToolCredentialsModel'
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolHeaderModel'
-        body:
-          type: string
-        bodyType:
-          $ref: '#/components/schemas/ToolBodyType'
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolParameterModel'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        projectName:
-          type:
-          - string
-          - 'null'
-        children:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolDefinitionModel'
-        routeThroughACC:
-          type: boolean
-        shouldRedirect:
-          type: boolean
-        aCCGroup:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        documentation:
-          type:
-          - string
-          - 'null'
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        toolMetadata:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolsMetadataRequest'
-        supportsPagination:
-          type:
-          - boolean
-          - 'null'
-        category:
-          $ref: '#/components/schemas/ToolCategory'
-        requestTimeout:
-          type: integer
-          format: int32
-        useJwtForwarding:
-          type:
-          - boolean
-          - 'null'
-        isCustomSelection:
-          type:
-          - boolean
-          - 'null'
-        enabledToolNames:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    BaseOptionalProjectEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          projectId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    AgentCardDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        agentCardId:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        supportedInterfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentInterface2'
-        provider:
-          oneOf:
-          - $ref: '#/components/schemas/AgentProvider2'
-        version:
-          type: string
-        documentationUrl:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        capabilities:
-          $ref: '#/components/schemas/AgentCapabilities2'
-        securitySchemes:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SecurityScheme2'
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement2'
-        signatures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentCardSignature2'
-        defaultInputModes:
-          type: array
-          items:
-            type: string
-        defaultOutputModes:
-          type: array
-          items:
-            type: string
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentSkill2'
-    HandleDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        uuid:
-          type: string
-          format: guid
-        type:
-          type: string
-          maxLength: 6
-        label:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-        tooltip:
-          type:
-          - string
-          - 'null'
-        x:
-          type: number
-          format: float
-        y:
-          type: number
-          format: float
-    RetryConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        maxRetries:
-          type: integer
-          format: int32
-        delay:
-          type: integer
-          format: int32
-        maxDelay:
-          type: integer
-          format: int32
-        backoffMultiplier:
-          type: number
-          format: double
-        useJitter:
-          type: boolean
-    AgentEventTriggerDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        eventTypeName:
-          type:
-          - string
-          - 'null'
-        filters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        triggerMode:
-          type:
-          - string
-          - 'null'
-    ToolType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Custom
-      - Calculator
-      - LoadMemory
-      - StoreMemory
-      - Jira
-      - Firecrawl
-      - GoogleGmail
-      - XrecentSearch
-      - AlphaVantageStocks
-      - ArvixResearch
-      - ArsanaGetProject
-      - ArsanaGetWorkspace
-      - ArsanaCreateTicket
-      - ConfluenceContentSearch
-      - ExaSearch
-      - SerperGoogleSearch
-      - GoogleSlidesUpdate
-      - GoogleSlidesCreate
-      - GoogleDocUpdate
-      - GoogleDocCreate
-      - GoogleCalendarCreate
-      - JinaAISearch
-      - LinkPreview
-      - MicrosoftBingSearch
-      - OutlookContactsCreate
-      - OutlookFindMeetingTime
-      - OutlookEventCreate
-      - TeamsGetChannels
-      - TeamsSendMessage
-      - TeamsGroupChannels
-      - OutlookSendEmail
-      - NasaSolarEvents
-      - NasaGeolocation
-      - NasaSearchNearEarth
-      - NutritionixSearch
-      - OpenAiDalleImage
-      - RedditGetComments
-      - RedditSearch
-      - RedditGetPosts
-      - SendGridSendEmail
-      - SpotifyGetTrack
-      - SpotifySearchTracks
-      - StravaCreateWorkout
-      - StravaGetActivity
-      - StravaGetActivities
-      - WeatherStackGet
-      - NewsApiGet
-      - WolframAlphaCompute
-      - JiraUserSearch
-      - ConfluenceBundle
-      - ConfluenceContentRead
-      - TwitterArchiveSearch
-      - HubspotCreateContact
-      - SalesforceAccountDetails
-      - SalesforceCreateLead
-      - SalesforceGetOpportunityFields
-      - SalesforceSoqlQuery
-      - SalesforceRetrieveAccount
-      - SalesforceCreateContactInAccount
-      - SalesforceSfdcQuote
-      - MongoDbFind
-      - MongoDbAggregate
-      - MongoDbMetadata
-      - Icd
-      - IcdSearch
-      - YoutubeSearch
-      - YoutubeChannelBundle
-      - YoutubeSearchChannel
-      - YoutubeLatestVideos
-      - AgentExecution
-      - MsServerQuery
-      - MsServerMetadata
-      - MySqlQuery
-      - MySqlMetadata
-      - PgSqlQuery
-      - PgSqlMetadata
-      - SnowflakeQuery
-      - SnowflakeMetadata
-      - JiraCreateIssue
-      - JiraAddComment
-      - JiraGetProjects
-      - JiraGetIssueDetails
-      - ServiceNowSearchIncidents
-      - ServiceNowGetIncidentDetails
-      - ServiceNowUpdateIncident
-      - ServiceNowCreateIncident
-      - ServiceNowGetUserInfo
-      - ServiceNowSearchRequests
-      - ServiceNowGetRequestDetails
-      - ServiceNowUpdateRequest
-      - ServiceNowCreateRequest
-      - DataBricksQuery
-      - DocGenGenerate
-      - DocGenTemplates
-      - IcdEntity
-      - McpSseServer
-      - GraphCypherQuery
-      - McpZapier
-      - McpStdioGithub
-      - McpStdioHubspot
-      - McpStdioNotion
-      - McpStdioElevenLabs
-      - McpStdioTerraform
-      - McpStdioSequentialThinking
-      - McpStdioMongoDb
-      - McpStdioSupabase
-      - McpStdioBraveSearch
-      - McpInternalSlack
-      - McpInternalGoogleSuite
-      - McpInternalAtlassian
-      - McpDataCenterAtlassian
-      - VectorSearch
-      - SlackUserList
-      - SlackSearchMessages
-      - SlackUserInfo
-      - OutlookSearchMailbox
-      - OutlookReadMessage
-      - McpInternalMicrosoftSuite
-      - FredObservations
-      - RegulationsGov
-      - SECRecentFilings
-      - SECCompanyTickers
-      - SECCompanyFacts
-      - SECSubmissions
-      - AlphaVantageSector
-      - SalesforceReport
-      - WolframAlphaCloudCompute
-      - RetrieveAgentRequest
-      - McpStdioPinecone
-      - McpStdioLaunchDarkly
-      - McpStdioPerplexity
-      - McpStdioStripe
-      - GoogleSheetsCreate
-      - GoogleSheetsUpdate
-      - McpStdioAirtable
-      - McpStdioSmartSheet
-      - McpAccAgentTools
-      - McpStdioGrafana
-      - McpInternalAiriaPlatform
-      - MetadataSearch
-      - FileContentRetrieval
-      - McpGateway
-      - BinderContentRetrieval
-      - PythonCodeExecution
-      - ListBinderArtifacts
-      - ListBinderFolders
-      - McpSseScaleflex
-      - BraveWebSearch
-      - AgentToolInterface
-      - McpStdioSapHana
-      - MultiDataStoreMetadataSearch
-      - MultiDataStoreVectorSearch
-      - MultiDataStoreGraphCypherQuery
-      - MultiDataStoreSqlQuery
-      - MultiDataStoreSqlCompactMetadata
-      - MultiDataStoreSqlDetailedMetadata
-      - AgentDelegate
-      - McpOmniSandbox
-      - McpInternalAiriaPlatformSecurity
-      - McpInternalAiriaPlatformGovernance
-      - GetFileLink
-      enum:
-      - custom
-      - calculator
-      - LoadMemory
-      - StoreMemory
-      - Jira
-      - Firecrawl
-      - GoogleGmail
-      - XrecentSearch
-      - AlphaVantageStocks
-      - ArvixResearch
-      - ArsanaGetProject
-      - ArsanaGetWorkspace
-      - ArsanaCreateTicket
-      - ConfluenceContentSearch
-      - ExaSearch
-      - SerperGoogleSearch
-      - GoogleSlidesUpdate
-      - GoogleSlidesCreate
-      - GoogleDocUpdate
-      - GoogleDocCreate
-      - GoogleCalendarCreate
-      - JinaAISearch
-      - LinkPreview
-      - MicrosoftBingSearch
-      - OutlookContactsCreate
-      - OutlookFindMeetingTime
-      - OutlookEventCreate
-      - TeamsGetChannels
-      - TeamsSendMessage
-      - TeamsGroupChannels
-      - OutlookSendEmail
-      - NasaSolarEvents
-      - NasaGeolocation
-      - NasaSearchNearEarth
-      - NutritionixSearch
-      - OpenAiDalleImage
-      - RedditGetComments
-      - RedditSearch
-      - RedditGetPosts
-      - SendGridSendEmail
-      - SpotifyGetTrack
-      - SpotifySearchTracks
-      - StravaCreateWorkout
-      - StravaGetActivity
-      - StravaGetActivities
-      - WeatherStackGet
-      - NewsApiGet
-      - WolframAlphaCompute
-      - JiraUserSearch
-      - ConfluenceBundle
-      - ConfluenceContentRead
-      - TwitterArchiveSearch
-      - HubspotCreateContact
-      - SalesforceAccountDetails
-      - SalesforceCreateLead
-      - SalesforceGetOpportunityFields
-      - SalesforceSoqlQuery
-      - SalesforceRetrieveAccount
-      - SalesforceCreateContactInAccount
-      - SalesforceSfdcQuote
-      - MongoDbFind
-      - MongoDbAggregate
-      - MongoDbMetadata
-      - Icd
-      - IcdSearch
-      - YoutubeSearch
-      - YoutubeChannelBundle
-      - YoutubeSearchChannel
-      - YoutubeLatestVideos
-      - AgentExecution
-      - MsServerQuery
-      - MsServerMetadata
-      - MySqlQuery
-      - MySqlMetadata
-      - PgSqlQuery
-      - PgSqlMetadata
-      - SnowflakeQuery
-      - SnowflakeMetadata
-      - JiraCreateIssue
-      - JiraAddComment
-      - JiraGetProjects
-      - JiraGetIssueDetails
-      - ServiceNowSearchIncidents
-      - ServiceNowGetIncidentDetails
-      - ServiceNowUpdateIncident
-      - ServiceNowCreateIncident
-      - ServiceNowGetUserInfo
-      - ServiceNowSearchRequests
-      - ServiceNowGetRequestDetails
-      - ServiceNowUpdateRequest
-      - ServiceNowCreateRequest
-      - DataBricksQuery
-      - DocGenGenerate
-      - DocGenTemplates
-      - IcdEntity
-      - McpSseServer
-      - GraphCypherQuery
-      - McpZapier
-      - McpStdioGithub
-      - McpStdioHubspot
-      - McpStdioNotion
-      - McpStdioElevenLabs
-      - McpStdioTerraform
-      - McpStdioSequentialThinking
-      - McpStdioMongoDb
-      - McpStdioSupabase
-      - McpStdioBraveSearch
-      - McpInternalSlack
-      - McpInternalGoogleSuite
-      - McpInternalAtlassian
-      - McpDataCenterAtlassian
-      - VectorSearch
-      - SlackUserList
-      - SlackSearchMessages
-      - SlackUserInfo
-      - OutlookSearchMailbox
-      - OutlookReadMessage
-      - McpInternalMicrosoftSuite
-      - FredObservations
-      - RegulationsGov
-      - SECRecentFilings
-      - SECCompanyTickers
-      - SECCompanyFacts
-      - SECSubmissions
-      - AlphaVantageSector
-      - SalesforceReport
-      - WolframAlphaCloudCompute
-      - RetrieveAgentRequest
-      - McpStdioPinecone
-      - McpStdioLaunchDarkly
-      - McpStdioPerplexity
-      - McpStdioStripe
-      - GoogleSheetsCreate
-      - GoogleSheetsUpdate
-      - McpStdioAirtable
-      - McpStdioSmartSheet
-      - McpAccAgentTools
-      - McpStdioGrafana
-      - McpInternalAiriaPlatform
-      - MetadataSearch
-      - FileContentRetrieval
-      - McpGateway
-      - BinderContentRetrieval
-      - PythonCodeExecution
-      - ListBinderArtifacts
-      - ListBinderFolders
-      - McpSseScaleflex
-      - BraveWebSearch
-      - AgentToolInterface
-      - McpStdioSapHana
-      - MultiDataStoreMetadataSearch
-      - MultiDataStoreVectorSearch
-      - MultiDataStoreGraphCypherQuery
-      - MultiDataStoreSqlQuery
-      - MultiDataStoreSqlCompactMetadata
-      - MultiDataStoreSqlDetailedMetadata
-      - AgentDelegate
-      - McpOmniSandbox
-      - McpInternalAiriaPlatformSecurity
-      - McpInternalAiriaPlatformGovernance
-      - GetFileLink
-    AdministrativeScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Tenant
-      - Project
-      - Personal
-      enum:
-      - Tenant
-      - Project
-      - User
-    PipelineStepDependencyDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        parentId:
-          type: string
-          format: guid
-        parentHandleId:
-          type: string
-          format: guid
-        handleId:
-          type: string
-          format: guid
-    ConditionalBranchConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        label:
-          type:
-          - string
-          - 'null'
-    AssignedAgentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        deploymentId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        agentUrl:
-          type: string
-        isConfigurable:
-          type: boolean
-    AgentTriggersDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        allowedType:
-          type:
-          - string
-          - 'null'
-        emailAction:
-          type:
-          - string
-          - 'null'
-    SdkStepCredentialReference:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyName:
-          type: string
-        originalCredentialId:
-          type: string
-          format: guid
-        credentialsDefinition:
-          $ref: '#/components/schemas/CredentialsDefinition'
-        required:
-          type: boolean
-        supportedTypes:
-          type: array
-          items:
-            type: string
-    SecurityRequirement2:
-      type: object
-      additionalProperties: false
-      properties:
-        schemes:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    CredentialEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          $ref: '#/components/schemas/CredentialKeyField'
-        value:
-          type: string
-    ToolCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Action
-      - Airia
-      - Mcp
-      enum:
-      - Action
-      - Airia
-      - Mcp
-    AgentsResponseV1:
-      type: object
-      additionalProperties: false
-      required:
-      - state
-      properties:
-        id:
-          type: string
-          format: guid
-        providers:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        name:
-          type:
-          - string
-          - 'null'
-        agentDescription:
-          type:
-          - string
-          - 'null'
-        tagLine:
-          type:
-          - string
-          - 'null'
-        industry:
-          type:
-          - string
-          - 'null'
-        tasks:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        state:
-          type: string
-    CustomFormApprovalRequestDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        emailNotification:
-          type: boolean
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomFormActionDefinition'
-        structuredOutputSchema: {}
-        useCustomFields:
-          type: boolean
-    RouterConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        prompt:
-          type: string
-        isDefault:
-          type:
-          - boolean
-          - 'null'
-    PipelineDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        executionName:
-          type:
-          - string
-          - 'null'
-        agentIcon:
-          type:
-          - string
-          - 'null'
-        agentDescription:
-          type: string
-        markdownDescription:
-          type:
-          - string
-          - 'null'
-        tagline:
-          type:
-          - string
-          - 'null'
-        videoLink:
-          type:
-          - string
-          - 'null'
-        industry:
-          type:
-          - string
-          - 'null'
-        subIndustries:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        agentDetails:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/AgentDetailItemDefinition'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStepDefinition'
-        behaviours:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        agentUnicodeIcon:
-          type:
-          - string
-          - 'null'
-        agentIconBase64:
-          type:
-          - string
-          - 'null'
-        alignment:
-          type: string
-        saveToolResponsesToHistory:
-          type:
-          - boolean
-          - 'null'
-    SourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserProvided
-      - Library
-      enum:
-      - userProvided
-      - library
-    ToolParameterModel:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        default:
-          type: string
-        validOptions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        arrayItemType:
-          type:
-          - string
-          - 'null'
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolParameterModel'
-        requirement:
-          $ref: '#/components/schemas/ToolParameterRequirement'
-    GetLibraryModelsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelsResponseV1'
-        totalCount:
-          type: integer
-          format: int32
     CredentialType:
       type: string
       description: ''
@@ -2684,6 +1647,85 @@ components:
       - AnthropicInferenceHooks
       - AnthropicAnalytics
       - GoogleVertexAi
+    PipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        executionName:
+          type:
+          - string
+          - 'null'
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        agentDescription:
+          type: string
+        markdownDescription:
+          type:
+          - string
+          - 'null'
+        tagline:
+          type:
+          - string
+          - 'null'
+        videoLink:
+          type:
+          - string
+          - 'null'
+        industry:
+          type:
+          - string
+          - 'null'
+        subIndustries:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentDetailItemDefinition'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStepDefinition'
+        behaviours:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        agentIconBase64:
+          type:
+          - string
+          - 'null'
+        alignment:
+          type: string
+        saveToolResponsesToHistory:
+          type:
+          - boolean
+          - 'null'
     AgentDetailItemDefinition:
       type: object
       additionalProperties: false
@@ -2700,6 +1742,201 @@ components:
           - 'null'
           items:
             type: string
+    AgentToolInterfaceDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        inputSchema:
+          type: string
+        outputSchema:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type: boolean
+        annotations:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolAnnotationsDefinition'
+    AgentTriggersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedType:
+          type:
+          - string
+          - 'null'
+        emailAction:
+          type:
+          - string
+          - 'null'
+    ToolParameterRequirement:
+      type: string
+      description: ''
+      x-enumNames:
+      - Required
+      - Optional
+      - OptionalQueryParam
+      enum:
+      - Required
+      - Optional
+      - OptionalQueryParam
+    LicenseType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Afl30
+      - AGPL_3_0
+      - Apache20
+      - Artistic20
+      - BigCodeOpenRailM
+      - BigScienceBloomRail10
+      - BigScienceOpenRailM
+      - BSD
+      - BSD2_Clause
+      - BSD3_Clause
+      - BSD3_ClauseClear
+      - BSL_1_0
+      - CC
+      - CC0_1_0
+      - CC_BY_2_0
+      - CC_BY_2_5
+      - CC_BY_3_0
+      - CC_BY_4_0
+      - CC_BY_NC_2_0
+      - CC_BY_NC_3_0
+      - CC_BY_NC_4_0
+      - CC_BY_NC_ND_3_0
+      - CC_BY_NC_ND_4_0
+      - CC_BY_NC_SA_2_0
+      - CC_BY_NC_SA_3_0
+      - CC_BY_NC_SA_4_0
+      - CC_BY_ND_4_0
+      - CC_BY_SA_3_0
+      - CC_BY_SA_4_0
+      - CDLA_Permissive_1_0
+      - CDLA_Permissive_2_0
+      - CDLA_Sharing_1_0
+      - CreativeMlOpenRailM
+      - C_UDA
+      - ECL_2_0
+      - EPL_1_0
+      - EPL_2_0
+      - Etalab_2_0
+      - EUPL_1_1
+      - GFDL
+      - GPL
+      - LGPL
+      - LPPL_1_3c
+      - MIT
+      - MPL_2_0
+      - MSPL
+      - ODbL_1_0
+      - OpenRail
+      - PDDL_1_0
+      - Perl_Artistic_2_0
+      - Unlicense
+      - WTFPL
+      - Zlib
+      - LLAMA_3_1
+      - MistralResearch
+      - JambaOpenModelLicense
+      - Unlicensed
+      - LLAMA_2
+      - LLAMA_3
+      - LLAMA_3_2
+      - TongyiQianwen
+      - AiriaModelLicense
+      - AnthropicCommercialTermsOfService
+      - CohereTermsOfUse
+      - MistralAINonProductionLicense
+      - OpenAITermsOfUse
+      - PerplexityApiTermsOfService
+      - Stable_Diffusion_3_5
+      - XAITermsOfService
+      - AnthropicOnBedrockTermsOfService
+      - LLAMA_3_3
+      - LLAMA_4
+      enum:
+      - Afl30
+      - AGPL_3_0
+      - Apache20
+      - Artistic20
+      - BigCodeOpenRailM
+      - BigScienceBloomRail10
+      - BigScienceOpenRailM
+      - BSD
+      - BSD2_Clause
+      - BSD3_Clause
+      - BSD3_ClauseClear
+      - BSL_1_0
+      - CC
+      - CC0_1_0
+      - CC_BY_2_0
+      - CC_BY_2_5
+      - CC_BY_3_0
+      - CC_BY_4_0
+      - CC_BY_NC_2_0
+      - CC_BY_NC_3_0
+      - CC_BY_NC_4_0
+      - CC_BY_NC_ND_3_0
+      - CC_BY_NC_ND_4_0
+      - CC_BY_NC_SA_2_0
+      - CC_BY_NC_SA_3_0
+      - CC_BY_NC_SA_4_0
+      - CC_BY_ND_4_0
+      - CC_BY_SA_3_0
+      - CC_BY_SA_4_0
+      - CDLA_Permissive_1_0
+      - CDLA_Permissive_2_0
+      - CDLA_Sharing_1_0
+      - CreativeMlOpenRailM
+      - C_UDA
+      - ECL_2_0
+      - EPL_1_0
+      - EPL_2_0
+      - Etalab_2_0
+      - EUPL_1_1
+      - GFDL
+      - GPL
+      - LGPL
+      - LPPL_1_3c
+      - MIT
+      - MPL_2_0
+      - MSPL
+      - ODbL_1_0
+      - OpenRail
+      - PDDL_1_0
+      - Perl_Artistic_2_0
+      - Unlicense
+      - WTFPL
+      - Zlib
+      - LLAMA_3_1
+      - MistralResearch
+      - JambaOpenModelLicense
+      - Unlicensed
+      - LLAMA_2
+      - LLAMA_3
+      - LLAMA_3_2
+      - TongyiQianwen
+      - AiriaModelLicense
+      - AnthropicCommercialTermsOfService
+      - CohereTermsOfUse
+      - MistralAINonProductionLicense
+      - OpenAITermsOfUse
+      - PerplexityApiTermsOfService
+      - Stable_Diffusion_3_5
+      - XAITermsOfService
+      - AnthropicOnBedrockTermsOfService
+      - LLAMA_3_3
+      - LLAMA_4
     LoopStepBatchConfigurationDefinition:
       type: object
       additionalProperties: false
@@ -2710,36 +1947,347 @@ components:
         batchDelaySeconds:
           type: integer
           format: int32
-    ToolCredentialsModel:
+    PriceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - AITextOutputModelPrice
+      - AIImageOutputModelPrice
+      enum:
+      - Unknown
+      - AITextOutputModelPrice
+      - AIImageOutputModelPrice
+    CredentialKeyField:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAIAPIKey
+      - AzureAPIKey
+      - OllamaAPIKey
+      - HuggingFaceAPIKey
+      - AnthropicAPIKey
+      - AzureAIStudioApiKey
+      - ReplicateAPIKey
+      - StabilityAPIKey
+      - MistralAPIKey
+      - PerplexityAPIKey
+      - WatsonAPIKey
+      - Ai21APIKey
+      - CohereAPIKey
+      - GoogleAPIKey
+      - TogetherAIAPIKey
+      - PineconeAPIKey
+      - WeaviateAPIKey
+      - CustomOpenAIAPIKey
+      - XAIAPIKey
+      - XAPIKey
+      - FirecrawlAPIKey
+      - YoutubeAPIKey
+      - MicrosoftBingSearchAPIKey
+      - BedrockAPIKey
+      - AWSSecretKey
+      - AwsAccessKey
+      - AWSRegion
+      - CustomApiKey
+      - ConvertKitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - CompassAPIKey
+      - SnowflakePrivateKey
+      - SnowflakePasswordPhrase
+      - AzureMLAPIKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - AzureClientId
+      - AzureClientSecret
+      - AzureTenantId
+      - AlibabaApiKey
+      - GenericOpenAIAPIKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - ServiceAccountCredentials
+      - ApplicationName
+      - ImpersonateUser
+      - AzureAiAPIKey
+      - BedrockAccountNumber
+      - BedrockExternalId
+      - BedrockIamRole
+      - BedrockUseIRSA
+      - FilerobotToken
+      - XFilerobotKey
+      - WhatsAppAccessToken
+      - WhatsAppPhoneNumberId
+      - WhatsAppAppSecret
+      - Host
+      - Port
+      - Database
+      - Schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - HanaConnectionType
+      - HanaInstanceNumber
+      - ConfluenceUrl
+      - JiraUrl
+      - ContentfulSpaceId
+      - ContentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - CohesityApiKey
+      - CohesityEndpoint
+      - AnthropicInferenceHooksSigningSecret
+      - AnthropicAdminKey
+      - AnthropicAnalyticsKey
+      - GcpProjectId
+      - GcpLocation
+      enum:
+      - openaiApiKey
+      - azureApiKey
+      - ollamaApiKey
+      - huggingFaceApiKey
+      - anthropicApiKey
+      - azureAIStudioApiKey
+      - replicateApiKey
+      - stabilityApiKey
+      - mistralApiKey
+      - perplexityApiKey
+      - watsonApiKey
+      - ai21ApiKey
+      - cohereApiKey
+      - googleApiKey
+      - togetherAiApiKey
+      - pineconeApiKey
+      - weaviateApiKey
+      - customOpenAiApiKey
+      - xAiApiKey
+      - xApiKey
+      - firecrawlApiKey
+      - youtubeApiKey
+      - microsoftBingSearchAPIKey
+      - bedrockApiKey
+      - awsSecretKey
+      - awsAccessKey
+      - awsRegion
+      - CustomAPIKey
+      - convertkitApiSecret
+      - AccessToken
+      - RefreshToken
+      - Scope
+      - Domain
+      - Username
+      - Password
+      - Header
+      - HeaderValue
+      - Key
+      - QueryParam
+      - compassApiKey
+      - snowflakePrivateKey
+      - snowflakePasswordPhrase
+      - azureMLApiKey
+      - OpenVinoAPIKey
+      - PyTorchAPIKey
+      - azureClientId
+      - azureClientSecret
+      - azureTenantId
+      - AlibabaApiKey
+      - genericOpenAiApiKey
+      - ClientId
+      - ClientSecret
+      - ConnectionString
+      - WolframAlphaAppId
+      - serviceAccountCredentials
+      - applicationName
+      - impersonateUser
+      - azureAiApiKey
+      - bedrockAccountNumber
+      - bedrockExternalId
+      - bedrockIamRole
+      - bedrockUseIRSA
+      - filerobotToken
+      - xFilerobotKey
+      - whatsAppAccessToken
+      - whatsAppPhoneNumberId
+      - whatsAppAppSecret
+      - host
+      - port
+      - database
+      - schema
+      - Ssl
+      - Encrypt
+      - ValidateCert
+      - hanaConnectionType
+      - hanaInstanceNumber
+      - confluenceUrl
+      - jiraUrl
+      - contentfulSpaceId
+      - contentfulPreviewApiKey
+      - AccessKeyId
+      - SecretAccessKey
+      - SessionToken
+      - Expiration
+      - SlackSigningSecret
+      - cohesityApiKey
+      - cohesityEndpoint
+      - anthropicInferenceHooksSigningSecret
+      - anthropicAdminKey
+      - anthropicAnalyticsKey
+      - gcpProjectId
+      - gcpLocation
+    LoopStepConfigurationDefinition:
       type: object
       additionalProperties: false
       properties:
-        toolCredentialSettings:
-          $ref: '#/components/schemas/CredentialSettings'
-        toolCredentials:
-          oneOf:
-          - $ref: '#/components/schemas/CredentialsViewModel'
-        toolCredentialsId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        authRequired:
+        stopOnError:
           type: boolean
-        useUserCredentials:
+        retryOnError:
           type: boolean
-        userCredentialConnectorId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        useUserCredentialsType:
+        retryOnErrorCount:
+          type: integer
+          format: int32
+        maxIterations:
+          type: integer
+          format: int32
+        executionMode:
           type: string
-        credentialsSourceType:
+        parallelConfiguration:
           oneOf:
-          - $ref: '#/components/schemas/SourceType'
-        useAiriaKeySupport:
+          - $ref: '#/components/schemas/LoopStepParallelConfigurationDefinition'
+        batchConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepBatchConfigurationDefinition'
+        inputExpression:
+          type:
+          - string
+          - 'null'
+    ProviderType3:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAI
+      - Ollama
+      - Azure
+      - HuggingFace
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - Ai21
+      - Cohere
+      - Google
+      - TogetherAI
+      - XAI
+      - Bedrock
+      - Compass
+      - Alibaba
+      enum:
+      - OpenAI
+      - Ollama
+      - Azure
+      - Hugging Face
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - Watson
+      - AI21
+      - Cohere
+      - Google
+      - Together AI
+      - xAI
+      - Amazon Bedrock
+      - Compass
+      - Alibaba
+    ApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        emailNotification:
           type: boolean
+        approvalDescription:
+          type:
+          - string
+          - 'null'
+        denialDescription:
+          type:
+          - string
+          - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    ToolParameterModel:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        default:
+          type: string
+        validOptions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        arrayItemType:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolParameterModel'
+        requirement:
+          $ref: '#/components/schemas/ToolParameterRequirement'
+    QuickActionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        quickActionType:
+          type: string
+        assignedAgent:
+          oneOf:
+          - $ref: '#/components/schemas/AssignedAgentDefinition'
     ModelsResponseV1:
       type: object
       additionalProperties: false
@@ -2881,26 +2429,184 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OutputModality'
-    TokenPriceConversion:
+    AgentInterface2:
       type: object
       additionalProperties: false
       properties:
-        inputTokenPrice1K:
+        url:
+          type: string
+        protocolBinding:
+          type: string
+        protocolVersion:
+          type: string
+        tenant:
           type:
           - string
           - 'null'
-        outputTokenPrice1K:
+    HandleDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        uuid:
+          type: string
+          format: guid
+        type:
+          type: string
+          maxLength: 6
+        label:
           type:
           - string
           - 'null'
-        inputTokenPrice1M:
+          maxLength: 100
+        tooltip:
           type:
           - string
           - 'null'
-        outputTokenPrice1M:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+    ToolBodyType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Json
+      - XFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+      enum:
+      - Json
+      - xFormUrlEncoded
+      - None
+      - Binary
+      - MultipartFormData
+    CredentialOrigin:
+      type: string
+      description: ''
+      x-enumNames:
+      - Platform
+      - Chat
+      enum:
+      - Platform
+      - Chat
+    PythonCodeBlockDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        code:
+          type: string
+        credentialIds:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        oAuthProviderConfigIds:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        isStructuredOutputEnabled:
+          type:
+          - boolean
+          - 'null'
+        includeParsedFiles:
+          type:
+          - boolean
+          - 'null'
+        credentialsDefinitions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CredentialsDefinition'
+    ToolsMetadataRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      - value
+      properties:
+        key:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+    WebhookApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        webhookUrl:
+          type: string
+        timeoutSeconds:
+          type: integer
+          format: int32
+        maxRetryAttempts:
+          type: integer
+          format: int32
+        message:
           type:
           - string
           - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    PromptsResponseV1:
+      type: object
+      additionalProperties: false
+      required:
+      - source
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        prompt:
+          type: string
+        recommendedProvider:
+          oneOf:
+          - $ref: '#/components/schemas/ProviderType3'
+        recommendedModels:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        industry:
+          type: string
+        activeVersion:
+          type: integer
+          format: int32
+        latestVersion:
+          type: integer
+          format: int32
+        modifiedOn:
+          type: string
+          format: date-time
+        source:
+          type: string
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/PromptCategory'
     ChunkingConfigDefinition:
       type: object
       additionalProperties: false
@@ -2916,6 +2622,679 @@ components:
           format: int32
         strategyType:
           type: string
+    PipelineDefinitionMetadata:
+      type: object
+      additionalProperties: false
+      required:
+      - state
+      properties:
+        id:
+          type: string
+          format: guid
+        exportVersion:
+          type:
+          - string
+          - 'null'
+        tagline:
+          type: string
+        agentDescription:
+          type: string
+        industry:
+          type: string
+        tasks:
+          type: string
+        credentialExportOption:
+          type: string
+        dataSourceExportOption:
+          type: string
+        versionInformation:
+          type: string
+        state:
+          type: string
+        contributorId:
+          type:
+          - string
+          - 'null'
+        contributorGivenName:
+          type:
+          - string
+          - 'null'
+        contributorSurname:
+          type:
+          - string
+          - 'null'
+        videoLink:
+          type:
+          - string
+          - 'null'
+        readiness:
+          type:
+          - string
+          - 'null'
+        department:
+          type:
+          - string
+          - 'null'
+        agentLastUpdated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        country:
+          type:
+          - string
+          - 'null'
+    AgentsResponseV1:
+      type: object
+      additionalProperties: false
+      required:
+      - state
+      properties:
+        id:
+          type: string
+          format: guid
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        name:
+          type:
+          - string
+          - 'null'
+        agentDescription:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+        industry:
+          type:
+          - string
+          - 'null'
+        tasks:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        state:
+          type: string
+    AgentToolAnnotationsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        destructiveHint:
+          type:
+          - boolean
+          - 'null'
+        idempotentHint:
+          type:
+          - boolean
+          - 'null'
+        openWorldHint:
+          type:
+          - boolean
+          - 'null'
+        readOnlyHint:
+          type:
+          - boolean
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    DeploymentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        deploymentIcon:
+          type:
+          - string
+          - 'null'
+        deploymentDescription:
+          type: string
+        userPrompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserPromptDefinition'
+        deploymentPrompt:
+          type:
+          - string
+          - 'null'
+        isRecommended:
+          type: boolean
+        deploymentType:
+          type: string
+        conversationType:
+          type: string
+        aboutJson:
+          type:
+          - string
+          - 'null'
+        supportedInputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfigDefinition'
+        displayConsumptionInfo:
+          type: boolean
+    DataSourceFileDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        dataSourceId:
+          type: string
+          format: guid
+        filePath:
+          type:
+          - string
+          - 'null'
+        inputToken:
+          type:
+          - string
+          - 'null'
+    AdministrativeScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Personal
+      enum:
+      - Tenant
+      - Project
+      - User
+    InputType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Text
+      - Image
+      - Audio
+      - Video
+      enum:
+      - text
+      - image
+      - audio
+      - video
+    MemoryDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        isUserSpecific:
+          type: boolean
+        isConversationScoped:
+          type:
+          - boolean
+          - 'null'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+    CredentialsDataListDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    SdkStepDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        sdkStepType:
+          type: string
+        category:
+          type: string
+        group:
+          type: string
+        version:
+          type: string
+        stepParameters:
+          type: string
+        credentialReferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/SdkStepCredentialReference'
+        supportedCredentialTypes:
+          type: array
+          items:
+            type: string
+    ConditionalBranchConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        label:
+          type:
+          - string
+          - 'null'
+    McpHydrationFailurePolicyDefinition:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
+      enum:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
+    PositionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        x:
+          type: string
+        y:
+          type: string
+    DateTimeTimezoneSettingsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    ToolHeaderModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    PromptSegmentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        promptId:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    PromptCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Aggregate
+      - Analyze
+      - Assess
+      - Assist
+      - Craft
+      - Create
+      - Design
+      - Develop
+      - Draft
+      - Enhance
+      - Estimate
+      - Evaluate
+      - Examine
+      - Generate
+      - Grade
+      - Modify
+      - Monitor
+      - Narrate
+      - Organize
+      - Plan
+      - Provide
+      - Recommend
+      - Respond
+      - Review
+      - Screen
+      - Search
+      - Suggest
+      - Summarize
+      - Track
+      - Use
+      - Write
+      enum:
+      - None
+      - Aggregate
+      - Analyze
+      - Assess
+      - Assist
+      - Craft
+      - Create
+      - Design
+      - Develop
+      - Draft
+      - Enhance
+      - Estimate
+      - Evaluate
+      - Examine
+      - Generate
+      - Grade
+      - Modify
+      - Monitor
+      - Narrate
+      - Organize
+      - Plan
+      - Provide
+      - Recommend
+      - Respond
+      - Review
+      - Screen
+      - Search
+      - Suggest
+      - Summarize
+      - Track
+      - Use
+      - Write
+    SdkStepCredentialReference:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyName:
+          type: string
+        originalCredentialId:
+          type: string
+          format: guid
+        credentialsDefinition:
+          $ref: '#/components/schemas/CredentialsDefinition'
+        required:
+          type: boolean
+        supportedTypes:
+          type: array
+          items:
+            type: string
+    UserPromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        promptDescription:
+          type: string
+    CustomFormActionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        label:
+          type: string
+        handleId:
+          type: string
+          format: guid
+        style:
+          type: string
+        confirmationText:
+          type:
+          - string
+          - 'null'
+        requiresComment:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ExportPipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        available:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/PipelineDefinitionMetadata'
+        agent:
+          $ref: '#/components/schemas/PipelineDefinition'
+        dataSources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourcesDefinition'
+        prompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptDefinition'
+        tools:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsExportDefinition'
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelDefinition'
+        memories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MemoryDefinition'
+        pythonCodeBlocks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PythonCodeBlockDefinition'
+        routers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RouterDefinition'
+        approvalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApprovalRequestDefinition'
+        webhookApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WebhookApprovalRequestDefinition'
+        customFormApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormApprovalRequestDefinition'
+        agentCards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardDefinition'
+        subAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineDefinition'
+        subAgentInterfaces:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/InterfacesDefinition'
+        deployment:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentDefinition'
+        interfaces:
+          oneOf:
+          - $ref: '#/components/schemas/InterfacesDefinition'
+        eventTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentEventTriggerDefinition'
+        sdkSteps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SdkStepDefinition'
+        mcpServerPlaceholders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/McpServerPlaceholderDefinition'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ToolCredentialsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCredentialSettings:
+          $ref: '#/components/schemas/CredentialSettings'
+        toolCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsViewModel'
+        toolCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authRequired:
+          type: boolean
+        useUserCredentials:
+          type: boolean
+        userCredentialConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useUserCredentialsType:
+          type: string
+        credentialsSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/SourceType'
+        useAiriaKeySupport:
+          type: boolean
+    ModelCategory2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Multimodal
+      - ComputerVision
+      - NLP
+      - ReinforcementLearning
+      - Embedding
+      - ImageGeneration
+      - MachineLearning
+      - Voice
+      - Reranker
+      - VideoGeneration
+      enum:
+      - Multimodal
+      - ComputerVision
+      - NLP
+      - ReinforcementLearning
+      - Embedding
+      - ImageGeneration
+      - MachineLearning
+      - Voice
+      - Reranker
+      - VideoGeneration
+    InterfacesDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        emailInbox:
+          oneOf:
+          - $ref: '#/components/schemas/AgentTriggersDefinition'
+        toolInterface:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolInterfaceDefinition'
     ToolsExportDefinition:
       type: object
       additionalProperties: false
@@ -3021,112 +3400,6 @@ components:
           - string
           - 'null'
           format: guid
-    DataSourceFileDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        dataSourceId:
-          type: string
-          format: guid
-        filePath:
-          type:
-          - string
-          - 'null'
-        inputToken:
-          type:
-          - string
-          - 'null'
-    DataSourcesDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        executionName:
-          type:
-          - string
-          - 'null'
-        chunkingConfig:
-          oneOf:
-          - $ref: '#/components/schemas/ChunkingConfigDefinition'
-        dataSourceType:
-          type: string
-        databaseType:
-          type:
-          - string
-          - 'null'
-        embeddingProvider:
-          type:
-          - string
-          - 'null'
-        isUserSpecific:
-          type: boolean
-        files:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DataSourceFileDefinition'
-        fileCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        configurationJson:
-          type:
-          - string
-          - 'null'
-        credentials:
-          oneOf:
-          - $ref: '#/components/schemas/CredentialsDefinition'
-        isImageProcessingEnabled:
-          type: boolean
-        description:
-          type:
-          - string
-          - 'null'
-        vectorStore:
-          oneOf:
-          - $ref: '#/components/schemas/VectorStoreDefinition'
-        scanDocumentForImages:
-          type: boolean
-        imageProcessingPrompt:
-          type:
-          - string
-          - 'null'
-        storeType:
-          type:
-          - string
-          - 'null'
-        tableDocumentProcessingMode:
-          type:
-          - string
-          - 'null'
-        parserConfigurationJson:
-          type:
-          - string
-          - 'null'
-    CustomCredentials:
-      allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - name
-        properties:
-          credentialType:
-            $ref: '#/components/schemas/CredentialType'
-          name:
-            type: string
-            maxLength: 255
-            minLength: 1
-          credentialData:
-            type: string
     PipelineStepDefinition:
       type: object
       additionalProperties: false
@@ -3466,317 +3739,6 @@ components:
           type:
           - string
           - 'null'
-    AgentExtension2:
-      type: object
-      additionalProperties: false
-      properties:
-        uri:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        required:
-          type:
-          - boolean
-          - 'null'
-        params:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    InputType2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Text
-      - Image
-      - Audio
-      - Video
-      enum:
-      - text
-      - image
-      - audio
-      - video
-    DateTimeTimezoneSettingsDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        mode:
-          type:
-          - string
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-    ToolHeadersDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        sensitive:
-          type: boolean
-    WebhookApprovalRequestDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        webhookUrl:
-          type: string
-        timeoutSeconds:
-          type: integer
-          format: int32
-        maxRetryAttempts:
-          type: integer
-          format: int32
-        message:
-          type:
-          - string
-          - 'null'
-        approvedHandleId:
-          type: string
-          format: guid
-        deniedHandleId:
-          type: string
-          format: guid
-    SdkStepDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        sdkStepType:
-          type: string
-        category:
-          type: string
-        group:
-          type: string
-        version:
-          type: string
-        stepParameters:
-          type: string
-        credentialReferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/SdkStepCredentialReference'
-        supportedCredentialTypes:
-          type: array
-          items:
-            type: string
-    SecurityScheme2:
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          apiKey: '#/components/schemas/ApiKeySecurityScheme2'
-          http: '#/components/schemas/HttpSecurityScheme2'
-          oauth2: '#/components/schemas/OAuth2SecurityScheme2'
-          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme2'
-          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme2'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        type:
-          type: string
-    ExportPipelineDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        available:
-          type: boolean
-        metadata:
-          $ref: '#/components/schemas/PipelineDefinitionMetadata'
-        agent:
-          $ref: '#/components/schemas/PipelineDefinition'
-        dataSources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DataSourcesDefinition'
-        prompts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PromptDefinition'
-        tools:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolsExportDefinition'
-        models:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModelDefinition'
-        memories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/MemoryDefinition'
-        pythonCodeBlocks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PythonCodeBlockDefinition'
-        routers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RouterDefinition'
-        approvalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ApprovalRequestDefinition'
-        webhookApprovalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WebhookApprovalRequestDefinition'
-        customFormApprovalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomFormApprovalRequestDefinition'
-        agentCards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentCardDefinition'
-        subAgents:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineDefinition'
-        subAgentInterfaces:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/InterfacesDefinition'
-        deployment:
-          oneOf:
-          - $ref: '#/components/schemas/DeploymentDefinition'
-        interfaces:
-          oneOf:
-          - $ref: '#/components/schemas/InterfacesDefinition'
-        eventTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentEventTriggerDefinition'
-        sdkSteps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SdkStepDefinition'
-        mcpServerPlaceholders:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/McpServerPlaceholderDefinition'
-    BatchToolsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        tools:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolDefinitionModel'
-        totalCount:
-          type: integer
-          format: int32
-    PromptDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        versionChangeDescription:
-          type: string
-        promptMessage:
-          type:
-          - string
-          - 'null'
-        isAgentSpecific:
-          type:
-          - boolean
-          - 'null'
-        isGlobal:
-          type:
-          - boolean
-          - 'null'
-        id:
-          type: string
-          format: guid
-    PromptSegmentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        promptId:
-          type: string
-          format: guid
-        order:
-          type: integer
-          format: int32
-    OutputModality:
-      type: string
-      description: ''
-      x-enumNames:
-      - Text
-      - Image
-      enum:
-      - Text
-      - Image
-    ToolParameterRequirement:
-      type: string
-      description: ''
-      x-enumNames:
-      - Required
-      - Optional
-      - OptionalQueryParam
-      enum:
-      - Required
-      - Optional
-      - OptionalQueryParam
-    AgentProvider2:
-      type: object
-      additionalProperties: false
-      properties:
-        organization:
-          type: string
-        url:
-          type: string
     RouterDefinition:
       type: object
       additionalProperties: false
@@ -3803,186 +3765,251 @@ components:
           - 'null'
         includeChatHistory:
           type: boolean
-    ToolHeaderModel:
+    CredentialSettings:
       type: object
       additionalProperties: false
       properties:
-        key:
-          type: string
-        value:
-          type: string
-        sensitive:
+        availableCredentialTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialType'
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        platformSupportedOAuthTypes:
+          type: array
+          items:
+            type: string
+    RetryConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
           type: boolean
-    CredentialsDataListDefinition:
+        maxRetries:
+          type: integer
+          format: int32
+        delay:
+          type: integer
+          format: int32
+        maxDelay:
+          type: integer
+          format: int32
+        backoffMultiplier:
+          type: number
+          format: double
+        useJitter:
+          type: boolean
+    AssignedAgentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentUrl:
+          type: string
+        isConfigurable:
+          type: boolean
+    CredentialEntry:
       type: object
       additionalProperties: false
       properties:
         key:
-          type: string
+          $ref: '#/components/schemas/CredentialKeyField'
         value:
           type: string
-    QuickActionDefinition:
+    CustomFormApprovalRequestDefinition:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-        displayName:
-          type: string
-        quickActionType:
-          type: string
-        assignedAgent:
-          oneOf:
-          - $ref: '#/components/schemas/AssignedAgentDefinition'
-    PipelineDefinitionMetadata:
+          format: guid
+        emailNotification:
+          type: boolean
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormActionDefinition'
+        structuredOutputSchema: {}
+        useCustomFields:
+          type: boolean
+    LoopStepParallelConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        maxDegreeOfParallelism:
+          type: integer
+          format: int32
+    ToolDefinitionModel:
       type: object
       additionalProperties: false
       required:
-      - state
+      - toolType
       properties:
-        id:
-          type: string
-          format: guid
-        exportVersion:
-          type:
-          - string
-          - 'null'
-        tagline:
-          type: string
-        agentDescription:
-          type: string
-        industry:
-          type: string
-        tasks:
-          type: string
-        credentialExportOption:
-          type: string
-        dataSourceExportOption:
-          type: string
-        versionInformation:
-          type: string
-        state:
-          type: string
-        contributorId:
-          type:
-          - string
-          - 'null'
-        contributorGivenName:
-          type:
-          - string
-          - 'null'
-        contributorSurname:
-          type:
-          - string
-          - 'null'
-        videoLink:
-          type:
-          - string
-          - 'null'
-        readiness:
-          type:
-          - string
-          - 'null'
-        department:
-          type:
-          - string
-          - 'null'
-        agentLastUpdated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        country:
-          type:
-          - string
-          - 'null'
-    CredentialsViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        binderId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        displayIdentifierName:
-          type:
-          - string
-          - 'null'
         createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        toolType:
+          $ref: '#/components/schemas/ToolType'
+        name:
+          type: string
+        standardizedName:
+          type: string
+        displayName:
           type:
           - string
           - 'null'
-          format: date-time
+        origin:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        methodType:
+          type: string
+        purpose:
+          type: string
+        apiEndpoint:
+          type: string
+        provider:
+          type: string
+        toolCredentials:
+          $ref: '#/components/schemas/ToolCredentialsModel'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolHeaderModel'
+        body:
+          type: string
+        bodyType:
+          $ref: '#/components/schemas/ToolBodyType'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolParameterModel'
         projectId:
           type:
           - string
           - 'null'
           format: guid
-        type:
-          $ref: '#/components/schemas/CredentialType'
-        expired:
+        projectName:
+          type:
+          - string
+          - 'null'
+        children:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolDefinitionModel'
+        routeThroughACC:
+          type: boolean
+        shouldRedirect:
+          type: boolean
+        aCCGroup:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        documentation:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        toolMetadata:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsMetadataRequest'
+        supportsPagination:
           type:
           - boolean
           - 'null'
-        expiresOn:
+        category:
+          $ref: '#/components/schemas/ToolCategory'
+        requestTimeout:
+          type: integer
+          format: int32
+        useJwtForwarding:
           type:
-          - string
+          - boolean
           - 'null'
-          format: date-time
-        administrativeScope:
-          $ref: '#/components/schemas/AdministrativeScope'
-        userId:
+        isCustomSelection:
           type:
-          - string
+          - boolean
           - 'null'
-          format: guid
-        tenantId:
+        enabledToolNames:
           type:
-          - string
+          - array
           - 'null'
-          format: guid
-        credentialData:
-          type: array
           items:
-            $ref: '#/components/schemas/CredentialEntry'
-        origin:
-          $ref: '#/components/schemas/CredentialOrigin'
-        enabledForPythonBlocks:
-          type: boolean
-        customCredentialsId:
-          type:
-          - string
-          - 'null'
+            type: string
+    SecurityRequirement2:
+      type: object
+      additionalProperties: false
+      properties:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    CustomCredentials:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          credentialData:
+            type: string
+    PipelineStepDependencyDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        parentId:
+          type: string
           format: guid
-        customCredentials:
-          oneOf:
-          - $ref: '#/components/schemas/CustomCredentials'
-        sourceId:
-          type:
-          - string
-          - 'null'
+        parentHandleId:
+          type: string
           format: guid
-        provider:
-          type:
-          - string
-          - 'null'
-        authenticationType:
-          type:
-          - string
-          - 'null'
+        handleId:
+          type: string
+          format: guid
     ModelDefinition:
       type: object
       additionalProperties: false
@@ -4097,62 +4124,865 @@ components:
           - integer
           - 'null'
           format: int32
-    BaseAuditEntity:
+    GetLibraryPromptsResponseV1:
       type: object
-      x-abstract: true
       additionalProperties: false
       properties:
-        createdAt:
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromptsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    McpServerPlaceholderDefinition:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
           type:
           - string
           - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
+        gatewayLibraryId:
           type:
           - string
           - 'null'
           format: guid
-    CredentialOrigin:
+        selectedTools:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    OutputModality:
       type: string
       description: ''
       x-enumNames:
-      - Platform
-      - Chat
+      - Text
+      - Image
       enum:
-      - Platform
-      - Chat
-    PositionDefinition:
+      - Text
+      - Image
+    BatchToolsResponse:
       type: object
       additionalProperties: false
       properties:
-        x:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolDefinitionModel'
+        totalCount:
+          type: integer
+          format: int32
+    ModelCertificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - SOC2
+      - ISO_27001
+      - ISO_27017
+      - ISO_27018
+      - ISO_27701
+      - HIPAA
+      enum:
+      - SOC2
+      - ISO 27001
+      - ISO 27017
+      - ISO 27018
+      - ISO 27701
+      - HIPAA
+    AgentEventTriggerDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        eventTypeName:
+          type:
+          - string
+          - 'null'
+        filters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          type:
+          - string
+          - 'null'
+    AgentCardSignature2:
+      type: object
+      additionalProperties: false
+      properties:
+        protected:
           type: string
-        y:
+        signature:
           type: string
-    CustomFormActionDefinition:
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ToolHeadersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    BrowserExtensionConfigDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        browserType:
+          type: string
+        quickActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickActionDefinition'
+    AgentCardDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        agentCardId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        supportedInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentInterface2'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/AgentProvider2'
+        version:
+          type: string
+        documentationUrl:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities2'
+        securitySchemes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityScheme2'
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
+        signatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardSignature2'
+        defaultInputModes:
+          type: array
+          items:
+            type: string
+        defaultOutputModes:
+          type: array
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSkill2'
+    AgentProvider2:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          type: string
+        url:
+          type: string
+    ToolType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Custom
+      - Calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+      enum:
+      - custom
+      - calculator
+      - LoadMemory
+      - StoreMemory
+      - Jira
+      - Firecrawl
+      - GoogleGmail
+      - XrecentSearch
+      - AlphaVantageStocks
+      - ArvixResearch
+      - ArsanaGetProject
+      - ArsanaGetWorkspace
+      - ArsanaCreateTicket
+      - ConfluenceContentSearch
+      - ExaSearch
+      - SerperGoogleSearch
+      - GoogleSlidesUpdate
+      - GoogleSlidesCreate
+      - GoogleDocUpdate
+      - GoogleDocCreate
+      - GoogleCalendarCreate
+      - JinaAISearch
+      - LinkPreview
+      - MicrosoftBingSearch
+      - OutlookContactsCreate
+      - OutlookFindMeetingTime
+      - OutlookEventCreate
+      - TeamsGetChannels
+      - TeamsSendMessage
+      - TeamsGroupChannels
+      - OutlookSendEmail
+      - NasaSolarEvents
+      - NasaGeolocation
+      - NasaSearchNearEarth
+      - NutritionixSearch
+      - OpenAiDalleImage
+      - RedditGetComments
+      - RedditSearch
+      - RedditGetPosts
+      - SendGridSendEmail
+      - SpotifyGetTrack
+      - SpotifySearchTracks
+      - StravaCreateWorkout
+      - StravaGetActivity
+      - StravaGetActivities
+      - WeatherStackGet
+      - NewsApiGet
+      - WolframAlphaCompute
+      - JiraUserSearch
+      - ConfluenceBundle
+      - ConfluenceContentRead
+      - TwitterArchiveSearch
+      - HubspotCreateContact
+      - SalesforceAccountDetails
+      - SalesforceCreateLead
+      - SalesforceGetOpportunityFields
+      - SalesforceSoqlQuery
+      - SalesforceRetrieveAccount
+      - SalesforceCreateContactInAccount
+      - SalesforceSfdcQuote
+      - MongoDbFind
+      - MongoDbAggregate
+      - MongoDbMetadata
+      - Icd
+      - IcdSearch
+      - YoutubeSearch
+      - YoutubeChannelBundle
+      - YoutubeSearchChannel
+      - YoutubeLatestVideos
+      - AgentExecution
+      - MsServerQuery
+      - MsServerMetadata
+      - MySqlQuery
+      - MySqlMetadata
+      - PgSqlQuery
+      - PgSqlMetadata
+      - SnowflakeQuery
+      - SnowflakeMetadata
+      - JiraCreateIssue
+      - JiraAddComment
+      - JiraGetProjects
+      - JiraGetIssueDetails
+      - ServiceNowSearchIncidents
+      - ServiceNowGetIncidentDetails
+      - ServiceNowUpdateIncident
+      - ServiceNowCreateIncident
+      - ServiceNowGetUserInfo
+      - ServiceNowSearchRequests
+      - ServiceNowGetRequestDetails
+      - ServiceNowUpdateRequest
+      - ServiceNowCreateRequest
+      - DataBricksQuery
+      - DocGenGenerate
+      - DocGenTemplates
+      - IcdEntity
+      - McpSseServer
+      - GraphCypherQuery
+      - McpZapier
+      - McpStdioGithub
+      - McpStdioHubspot
+      - McpStdioNotion
+      - McpStdioElevenLabs
+      - McpStdioTerraform
+      - McpStdioSequentialThinking
+      - McpStdioMongoDb
+      - McpStdioSupabase
+      - McpStdioBraveSearch
+      - McpInternalSlack
+      - McpInternalGoogleSuite
+      - McpInternalAtlassian
+      - McpDataCenterAtlassian
+      - VectorSearch
+      - SlackUserList
+      - SlackSearchMessages
+      - SlackUserInfo
+      - OutlookSearchMailbox
+      - OutlookReadMessage
+      - McpInternalMicrosoftSuite
+      - FredObservations
+      - RegulationsGov
+      - SECRecentFilings
+      - SECCompanyTickers
+      - SECCompanyFacts
+      - SECSubmissions
+      - AlphaVantageSector
+      - SalesforceReport
+      - WolframAlphaCloudCompute
+      - RetrieveAgentRequest
+      - McpStdioPinecone
+      - McpStdioLaunchDarkly
+      - McpStdioPerplexity
+      - McpStdioStripe
+      - GoogleSheetsCreate
+      - GoogleSheetsUpdate
+      - McpStdioAirtable
+      - McpStdioSmartSheet
+      - McpAccAgentTools
+      - McpStdioGrafana
+      - McpInternalAiriaPlatform
+      - MetadataSearch
+      - FileContentRetrieval
+      - McpGateway
+      - BinderContentRetrieval
+      - PythonCodeExecution
+      - ListBinderArtifacts
+      - ListBinderFolders
+      - McpSseScaleflex
+      - BraveWebSearch
+      - AgentToolInterface
+      - McpStdioSapHana
+      - MultiDataStoreMetadataSearch
+      - MultiDataStoreVectorSearch
+      - MultiDataStoreGraphCypherQuery
+      - MultiDataStoreSqlQuery
+      - MultiDataStoreSqlCompactMetadata
+      - MultiDataStoreSqlDetailedMetadata
+      - AgentDelegate
+      - McpOmniSandbox
+      - McpInternalAiriaPlatformSecurity
+      - McpInternalAiriaPlatformGovernance
+      - GetFileLink
+    AgentCapabilities2:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension2'
+    DataSourcesDefinition:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        label:
-          type: string
-        handleId:
-          type: string
-          format: guid
-        style:
-          type: string
-        confirmationText:
+        name:
           type:
           - string
           - 'null'
-        requiresComment:
+        executionName:
+          type:
+          - string
+          - 'null'
+        chunkingConfig:
+          oneOf:
+          - $ref: '#/components/schemas/ChunkingConfigDefinition'
+        dataSourceType:
+          type: string
+        databaseType:
+          type:
+          - string
+          - 'null'
+        embeddingProvider:
+          type:
+          - string
+          - 'null'
+        isUserSpecific:
+          type: boolean
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourceFileDefinition'
+        fileCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        configurationJson:
+          type:
+          - string
+          - 'null'
+        credentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsDefinition'
+        isImageProcessingEnabled:
+          type: boolean
+        description:
+          type:
+          - string
+          - 'null'
+        vectorStore:
+          oneOf:
+          - $ref: '#/components/schemas/VectorStoreDefinition'
+        scanDocumentForImages:
+          type: boolean
+        imageProcessingPrompt:
+          type:
+          - string
+          - 'null'
+        storeType:
+          type:
+          - string
+          - 'null'
+        tableDocumentProcessingMode:
+          type:
+          - string
+          - 'null'
+        parserConfigurationJson:
+          type:
+          - string
+          - 'null'
+    PromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        versionChangeDescription:
+          type: string
+        promptMessage:
+          type:
+          - string
+          - 'null'
+        isAgentSpecific:
+          type:
+          - boolean
+          - 'null'
+        isGlobal:
+          type:
+          - boolean
+          - 'null'
+        id:
+          type: string
+          format: guid
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
+    AgentSkill2:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        examples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        inputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
+    GetLibraryModelsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    GetLibraryAgentsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        agents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentsResponseV1'
+        totalCount:
+          type: integer
+          format: int32
+    RouterConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        isDefault:
+          type:
+          - boolean
+          - 'null'
+    SecurityScheme2:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          apiKey: '#/components/schemas/ApiKeySecurityScheme2'
+          http: '#/components/schemas/HttpSecurityScheme2'
+          oauth2: '#/components/schemas/OAuth2SecurityScheme2'
+          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme2'
+          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme2'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    CredentialsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        binderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        type:
+          $ref: '#/components/schemas/CredentialType'
+        expired:
+          type:
+          - boolean
+          - 'null'
+        expiresOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        administrativeScope:
+          $ref: '#/components/schemas/AdministrativeScope'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        tenantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        credentialData:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialEntry'
+        origin:
+          $ref: '#/components/schemas/CredentialOrigin'
+        enabledForPythonBlocks:
+          type: boolean
+        customCredentialsId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentials'
+        sourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        provider:
+          type:
+          - string
+          - 'null'
+        authenticationType:
+          type:
+          - string
+          - 'null'
+    JsonFormatterStepConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        template:
+          type: string
+        fallbackToRawResultOnUnresolvedPath:
           type: boolean
     VectorStoreDefinition:
       type: object
@@ -4192,563 +5022,25 @@ components:
           type:
           - string
           - 'null'
-    McpServerPlaceholderDefinition:
+    AgentExtension2:
       type: object
       additionalProperties: false
-      required:
-      - name
       properties:
-        id:
-          type: string
-          format: guid
-        name:
+        uri:
           type: string
         description:
           type:
           - string
           - 'null'
-        gatewayLibraryId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        selectedTools:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        authenticationType:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PythonCodeBlockDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        code:
-          type: string
-        credentialIds:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        oAuthProviderConfigIds:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        isStructuredOutputEnabled:
+        required:
           type:
           - boolean
           - 'null'
-        includeParsedFiles:
-          type:
-          - boolean
-          - 'null'
-        credentialsDefinitions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CredentialsDefinition'
-    LicenseType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Afl30
-      - AGPL_3_0
-      - Apache20
-      - Artistic20
-      - BigCodeOpenRailM
-      - BigScienceBloomRail10
-      - BigScienceOpenRailM
-      - BSD
-      - BSD2_Clause
-      - BSD3_Clause
-      - BSD3_ClauseClear
-      - BSL_1_0
-      - CC
-      - CC0_1_0
-      - CC_BY_2_0
-      - CC_BY_2_5
-      - CC_BY_3_0
-      - CC_BY_4_0
-      - CC_BY_NC_2_0
-      - CC_BY_NC_3_0
-      - CC_BY_NC_4_0
-      - CC_BY_NC_ND_3_0
-      - CC_BY_NC_ND_4_0
-      - CC_BY_NC_SA_2_0
-      - CC_BY_NC_SA_3_0
-      - CC_BY_NC_SA_4_0
-      - CC_BY_ND_4_0
-      - CC_BY_SA_3_0
-      - CC_BY_SA_4_0
-      - CDLA_Permissive_1_0
-      - CDLA_Permissive_2_0
-      - CDLA_Sharing_1_0
-      - CreativeMlOpenRailM
-      - C_UDA
-      - ECL_2_0
-      - EPL_1_0
-      - EPL_2_0
-      - Etalab_2_0
-      - EUPL_1_1
-      - GFDL
-      - GPL
-      - LGPL
-      - LPPL_1_3c
-      - MIT
-      - MPL_2_0
-      - MSPL
-      - ODbL_1_0
-      - OpenRail
-      - PDDL_1_0
-      - Perl_Artistic_2_0
-      - Unlicense
-      - WTFPL
-      - Zlib
-      - LLAMA_3_1
-      - MistralResearch
-      - JambaOpenModelLicense
-      - Unlicensed
-      - LLAMA_2
-      - LLAMA_3
-      - LLAMA_3_2
-      - TongyiQianwen
-      - AiriaModelLicense
-      - AnthropicCommercialTermsOfService
-      - CohereTermsOfUse
-      - MistralAINonProductionLicense
-      - OpenAITermsOfUse
-      - PerplexityApiTermsOfService
-      - Stable_Diffusion_3_5
-      - XAITermsOfService
-      - AnthropicOnBedrockTermsOfService
-      - LLAMA_3_3
-      - LLAMA_4
-      enum:
-      - Afl30
-      - AGPL_3_0
-      - Apache20
-      - Artistic20
-      - BigCodeOpenRailM
-      - BigScienceBloomRail10
-      - BigScienceOpenRailM
-      - BSD
-      - BSD2_Clause
-      - BSD3_Clause
-      - BSD3_ClauseClear
-      - BSL_1_0
-      - CC
-      - CC0_1_0
-      - CC_BY_2_0
-      - CC_BY_2_5
-      - CC_BY_3_0
-      - CC_BY_4_0
-      - CC_BY_NC_2_0
-      - CC_BY_NC_3_0
-      - CC_BY_NC_4_0
-      - CC_BY_NC_ND_3_0
-      - CC_BY_NC_ND_4_0
-      - CC_BY_NC_SA_2_0
-      - CC_BY_NC_SA_3_0
-      - CC_BY_NC_SA_4_0
-      - CC_BY_ND_4_0
-      - CC_BY_SA_3_0
-      - CC_BY_SA_4_0
-      - CDLA_Permissive_1_0
-      - CDLA_Permissive_2_0
-      - CDLA_Sharing_1_0
-      - CreativeMlOpenRailM
-      - C_UDA
-      - ECL_2_0
-      - EPL_1_0
-      - EPL_2_0
-      - Etalab_2_0
-      - EUPL_1_1
-      - GFDL
-      - GPL
-      - LGPL
-      - LPPL_1_3c
-      - MIT
-      - MPL_2_0
-      - MSPL
-      - ODbL_1_0
-      - OpenRail
-      - PDDL_1_0
-      - Perl_Artistic_2_0
-      - Unlicense
-      - WTFPL
-      - Zlib
-      - LLAMA_3_1
-      - MistralResearch
-      - JambaOpenModelLicense
-      - Unlicensed
-      - LLAMA_2
-      - LLAMA_3
-      - LLAMA_3_2
-      - TongyiQianwen
-      - AiriaModelLicense
-      - AnthropicCommercialTermsOfService
-      - CohereTermsOfUse
-      - MistralAINonProductionLicense
-      - OpenAITermsOfUse
-      - PerplexityApiTermsOfService
-      - Stable_Diffusion_3_5
-      - XAITermsOfService
-      - AnthropicOnBedrockTermsOfService
-      - LLAMA_3_3
-      - LLAMA_4
-    ModelCategory2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Multimodal
-      - ComputerVision
-      - NLP
-      - ReinforcementLearning
-      - Embedding
-      - ImageGeneration
-      - MachineLearning
-      - Voice
-      - Reranker
-      - VideoGeneration
-      enum:
-      - Multimodal
-      - ComputerVision
-      - NLP
-      - ReinforcementLearning
-      - Embedding
-      - ImageGeneration
-      - MachineLearning
-      - Voice
-      - Reranker
-      - VideoGeneration
-    ToolBodyType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Json
-      - XFormUrlEncoded
-      - None
-      - Binary
-      - MultipartFormData
-      enum:
-      - Json
-      - xFormUrlEncoded
-      - None
-      - Binary
-      - MultipartFormData
-    ApprovalRequestDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        message:
-          type:
-          - string
-          - 'null'
-        emailNotification:
-          type: boolean
-        approvalDescription:
-          type:
-          - string
-          - 'null'
-        denialDescription:
-          type:
-          - string
-          - 'null'
-        approvedHandleId:
-          type: string
-          format: guid
-        deniedHandleId:
-          type: string
-          format: guid
-    GetLibraryPromptsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        prompts:
-          type: array
-          items:
-            $ref: '#/components/schemas/PromptsResponseV1'
-        totalCount:
-          type: integer
-          format: int32
-    DeploymentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        deploymentIcon:
-          type:
-          - string
-          - 'null'
-        deploymentDescription:
-          type: string
-        userPrompts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UserPromptDefinition'
-        deploymentPrompt:
-          type:
-          - string
-          - 'null'
-        isRecommended:
-          type: boolean
-        deploymentType:
-          type: string
-        conversationType:
-          type: string
-        aboutJson:
-          type:
-          - string
-          - 'null'
-        supportedInputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        browserExtensionConfig:
-          oneOf:
-          - $ref: '#/components/schemas/BrowserExtensionConfigDefinition'
-        displayConsumptionInfo:
-          type: boolean
-    McpHydrationFailurePolicyDefinition:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - ContinueWithoutUnavailableTools
-      - FailExecution
-      enum:
-      - Unspecified
-      - ContinueWithoutUnavailableTools
-      - FailExecution
-    ProviderType3:
-      type: string
-      description: ''
-      x-enumNames:
-      - OpenAI
-      - Ollama
-      - Azure
-      - HuggingFace
-      - Anthropic
-      - AzureAIStudio
-      - OpenVINO
-      - PyTorch
-      - Replicate
-      - Stability
-      - Mistral
-      - Perplexity
-      - WatsonAix
-      - Ai21
-      - Cohere
-      - Google
-      - TogetherAI
-      - XAI
-      - Bedrock
-      - Compass
-      - Alibaba
-      enum:
-      - OpenAI
-      - Ollama
-      - Azure
-      - Hugging Face
-      - Anthropic
-      - AzureAIStudio
-      - OpenVINO
-      - PyTorch
-      - Replicate
-      - Stability
-      - Mistral
-      - Perplexity
-      - Watson
-      - AI21
-      - Cohere
-      - Google
-      - Together AI
-      - xAI
-      - Amazon Bedrock
-      - Compass
-      - Alibaba
-    CredentialSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        availableCredentialTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/CredentialType'
-        defaultValue:
-          type:
-          - string
-          - 'null'
-        platformSupportedOAuthTypes:
-          type: array
-          items:
-            type: string
-    AgentInterface2:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        protocolBinding:
-          type: string
-        protocolVersion:
-          type: string
-        tenant:
-          type:
-          - string
-          - 'null'
-    AgentCardSignature2:
-      type: object
-      additionalProperties: false
-      properties:
-        protected:
-          type: string
-        signature:
-          type: string
-        header:
+        params:
           type:
           - object
           - 'null'
           additionalProperties: {}
-    AgentSkill2:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        examples:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        inputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        outputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement2'
-    AgentToolInterfaceDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
-        inputSchema:
-          type: string
-        outputSchema:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type: boolean
-        annotations:
-          oneOf:
-          - $ref: '#/components/schemas/AgentToolAnnotationsDefinition'
-    LoopStepParallelConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        maxDegreeOfParallelism:
-          type: integer
-          format: int32
-    PriceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - AITextOutputModelPrice
-      - AIImageOutputModelPrice
-      enum:
-      - Unknown
-      - AITextOutputModelPrice
-      - AIImageOutputModelPrice
-    ModelCertificationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - SOC2
-      - ISO_27001
-      - ISO_27017
-      - ISO_27018
-      - ISO_27701
-      - HIPAA
-      enum:
-      - SOC2
-      - ISO 27001
-      - ISO 27017
-      - ISO 27018
-      - ISO 27701
-      - HIPAA
     ToolParametersDefinition:
       type: object
       additionalProperties: false
@@ -4779,264 +5071,17 @@ components:
             $ref: '#/components/schemas/ToolParametersDefinition'
         requirement:
           type: string
-    CredentialKeyField:
+    ToolCategory:
       type: string
       description: ''
       x-enumNames:
-      - OpenAIAPIKey
-      - AzureAPIKey
-      - OllamaAPIKey
-      - HuggingFaceAPIKey
-      - AnthropicAPIKey
-      - AzureAIStudioApiKey
-      - ReplicateAPIKey
-      - StabilityAPIKey
-      - MistralAPIKey
-      - PerplexityAPIKey
-      - WatsonAPIKey
-      - Ai21APIKey
-      - CohereAPIKey
-      - GoogleAPIKey
-      - TogetherAIAPIKey
-      - PineconeAPIKey
-      - WeaviateAPIKey
-      - CustomOpenAIAPIKey
-      - XAIAPIKey
-      - XAPIKey
-      - FirecrawlAPIKey
-      - YoutubeAPIKey
-      - MicrosoftBingSearchAPIKey
-      - BedrockAPIKey
-      - AWSSecretKey
-      - AwsAccessKey
-      - AWSRegion
-      - CustomApiKey
-      - ConvertKitApiSecret
-      - AccessToken
-      - RefreshToken
-      - Scope
-      - Domain
-      - Username
-      - Password
-      - Header
-      - HeaderValue
-      - Key
-      - QueryParam
-      - CompassAPIKey
-      - SnowflakePrivateKey
-      - SnowflakePasswordPhrase
-      - AzureMLAPIKey
-      - OpenVinoAPIKey
-      - PyTorchAPIKey
-      - AzureClientId
-      - AzureClientSecret
-      - AzureTenantId
-      - AlibabaApiKey
-      - GenericOpenAIAPIKey
-      - ClientId
-      - ClientSecret
-      - ConnectionString
-      - WolframAlphaAppId
-      - ServiceAccountCredentials
-      - ApplicationName
-      - ImpersonateUser
-      - AzureAiAPIKey
-      - BedrockAccountNumber
-      - BedrockExternalId
-      - BedrockIamRole
-      - BedrockUseIRSA
-      - FilerobotToken
-      - XFilerobotKey
-      - WhatsAppAccessToken
-      - WhatsAppPhoneNumberId
-      - WhatsAppAppSecret
-      - Host
-      - Port
-      - Database
-      - Schema
-      - Ssl
-      - Encrypt
-      - ValidateCert
-      - HanaConnectionType
-      - HanaInstanceNumber
-      - ConfluenceUrl
-      - JiraUrl
-      - ContentfulSpaceId
-      - ContentfulPreviewApiKey
-      - AccessKeyId
-      - SecretAccessKey
-      - SessionToken
-      - Expiration
-      - SlackSigningSecret
-      - CohesityApiKey
-      - CohesityEndpoint
-      - AnthropicInferenceHooksSigningSecret
-      - AnthropicAdminKey
-      - AnthropicAnalyticsKey
-      - GcpProjectId
-      - GcpLocation
+      - Action
+      - Airia
+      - Mcp
       enum:
-      - openaiApiKey
-      - azureApiKey
-      - ollamaApiKey
-      - huggingFaceApiKey
-      - anthropicApiKey
-      - azureAIStudioApiKey
-      - replicateApiKey
-      - stabilityApiKey
-      - mistralApiKey
-      - perplexityApiKey
-      - watsonApiKey
-      - ai21ApiKey
-      - cohereApiKey
-      - googleApiKey
-      - togetherAiApiKey
-      - pineconeApiKey
-      - weaviateApiKey
-      - customOpenAiApiKey
-      - xAiApiKey
-      - xApiKey
-      - firecrawlApiKey
-      - youtubeApiKey
-      - microsoftBingSearchAPIKey
-      - bedrockApiKey
-      - awsSecretKey
-      - awsAccessKey
-      - awsRegion
-      - CustomAPIKey
-      - convertkitApiSecret
-      - AccessToken
-      - RefreshToken
-      - Scope
-      - Domain
-      - Username
-      - Password
-      - Header
-      - HeaderValue
-      - Key
-      - QueryParam
-      - compassApiKey
-      - snowflakePrivateKey
-      - snowflakePasswordPhrase
-      - azureMLApiKey
-      - OpenVinoAPIKey
-      - PyTorchAPIKey
-      - azureClientId
-      - azureClientSecret
-      - azureTenantId
-      - AlibabaApiKey
-      - genericOpenAiApiKey
-      - ClientId
-      - ClientSecret
-      - ConnectionString
-      - WolframAlphaAppId
-      - serviceAccountCredentials
-      - applicationName
-      - impersonateUser
-      - azureAiApiKey
-      - bedrockAccountNumber
-      - bedrockExternalId
-      - bedrockIamRole
-      - bedrockUseIRSA
-      - filerobotToken
-      - xFilerobotKey
-      - whatsAppAccessToken
-      - whatsAppPhoneNumberId
-      - whatsAppAppSecret
-      - host
-      - port
-      - database
-      - schema
-      - Ssl
-      - Encrypt
-      - ValidateCert
-      - hanaConnectionType
-      - hanaInstanceNumber
-      - confluenceUrl
-      - jiraUrl
-      - contentfulSpaceId
-      - contentfulPreviewApiKey
-      - AccessKeyId
-      - SecretAccessKey
-      - SessionToken
-      - Expiration
-      - SlackSigningSecret
-      - cohesityApiKey
-      - cohesityEndpoint
-      - anthropicInferenceHooksSigningSecret
-      - anthropicAdminKey
-      - anthropicAnalyticsKey
-      - gcpProjectId
-      - gcpLocation
-    PromptCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Aggregate
-      - Analyze
-      - Assess
-      - Assist
-      - Craft
-      - Create
-      - Design
-      - Develop
-      - Draft
-      - Enhance
-      - Estimate
-      - Evaluate
-      - Examine
-      - Generate
-      - Grade
-      - Modify
-      - Monitor
-      - Narrate
-      - Organize
-      - Plan
-      - Provide
-      - Recommend
-      - Respond
-      - Review
-      - Screen
-      - Search
-      - Suggest
-      - Summarize
-      - Track
-      - Use
-      - Write
-      enum:
-      - None
-      - Aggregate
-      - Analyze
-      - Assess
-      - Assist
-      - Craft
-      - Create
-      - Design
-      - Develop
-      - Draft
-      - Enhance
-      - Estimate
-      - Evaluate
-      - Examine
-      - Generate
-      - Grade
-      - Modify
-      - Monitor
-      - Narrate
-      - Organize
-      - Plan
-      - Provide
-      - Recommend
-      - Respond
-      - Review
-      - Screen
-      - Search
-      - Suggest
-      - Summarize
-      - Track
-      - Use
-      - Write
+      - Action
+      - Airia
+      - Mcp
     CustomCredentialsDefinition:
       type: object
       additionalProperties: false
@@ -5052,22 +5097,6 @@ components:
           type:
           - string
           - 'null'
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
     CredentialsDefinition:
       type: object
       additionalProperties: false
@@ -5100,55 +5129,26 @@ components:
         id:
           type: string
           format: guid
-    MemoryDefinition:
+    TokenPriceConversion:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        isUserSpecific:
-          type: boolean
-        isConversationScoped:
-          type:
-          - boolean
-          - 'null'
-        defaultValue:
+        inputTokenPrice1K:
           type:
           - string
           - 'null'
-    InterfacesDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        emailInbox:
-          oneOf:
-          - $ref: '#/components/schemas/AgentTriggersDefinition'
-        toolInterface:
-          oneOf:
-          - $ref: '#/components/schemas/AgentToolInterfaceDefinition'
-    BrowserExtensionConfigDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        browserType:
-          type: string
-        quickActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuickActionDefinition'
-    UserPromptDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        message:
-          type: string
-        promptDescription:
-          type: string
+        outputTokenPrice1K:
+          type:
+          - string
+          - 'null'
+        inputTokenPrice1M:
+          type:
+          - string
+          - 'null'
+        outputTokenPrice1M:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

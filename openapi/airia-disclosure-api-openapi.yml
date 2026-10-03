@@ -49,6 +49,39 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UseCaseDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        stage:
+          type: string
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+    ModelDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -145,39 +178,6 @@ components:
           - 'null'
         disclosureVersion:
           type: string
-    UseCaseDisclosure:
-      type: object
-      additionalProperties: false
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        useCaseName:
-          type: string
-        stage:
-          type: string
-        riskTier:
-          type:
-          - string
-          - 'null'
-        euAiActCategory:
-          type:
-          - string
-          - 'null'
-        nistAiRmfTier:
-          type:
-          - string
-          - 'null'
-    ModelDisclosure:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        modelName:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

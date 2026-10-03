@@ -145,39 +145,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PromptMessageDto:
-      type: object
-      additionalProperties: false
-      properties:
-        text:
-          type: string
-        order:
-          type: integer
-          format: int32
-    CreatePromptVersion:
-      type: object
-      additionalProperties: false
-      properties:
-        promptId:
-          type: string
-          format: guid
-        versionChangeDescription:
-          type: string
-        messages:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
-          items:
-            $ref: '#/components/schemas/PromptMessageDto'
-        message:
-          type:
-          - string
-          - 'null'
-        versionNumber:
-          type: integer
-          format: int32
     PromptVersionDto:
       type: object
       additionalProperties: false
@@ -212,6 +179,30 @@ components:
           - string
           - 'null'
           format: date-time
+    CreatePromptVersion:
+      type: object
+      additionalProperties: false
+      properties:
+        promptId:
+          type: string
+          format: guid
+        versionChangeDescription:
+          type: string
+        messages:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        message:
+          type:
+          - string
+          - 'null'
+        versionNumber:
+          type: integer
+          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -237,6 +228,15 @@ components:
           type:
           - string
           - 'null'
+    PromptMessageDto:
+      type: object
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+        order:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

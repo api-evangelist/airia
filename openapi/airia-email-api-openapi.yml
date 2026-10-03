@@ -42,19 +42,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EmailSendResult:
-      type: object
-      additionalProperties: false
-      properties:
-        statusCode:
-          type: integer
-          format: int32
-        isSuccess:
-          type: boolean
-        errorMessage:
-          type:
-          - string
-          - 'null'
     EmailPayload:
       type: object
       additionalProperties: false
@@ -69,6 +56,19 @@ components:
         html:
           type: string
           minLength: 1
+    EmailSendResult:
+      type: object
+      additionalProperties: false
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        isSuccess:
+          type: boolean
+        errorMessage:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

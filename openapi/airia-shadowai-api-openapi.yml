@@ -593,62 +593,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateShadowAiConfigurationRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - isEnabled
-      - gatewayConfigurationId
-      properties:
-        name:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        isEnabled:
-          type: boolean
-        gatewayConfigurationId:
-          type: string
-          format: guid
-          minLength: 1
-        customSettings:
-          type:
-          - string
-          - 'null'
-          maxLength: 4096
-    ShadowAiPromptScanRuleModelV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-        endpointPatterns:
-          type: array
-          items:
-            type: string
-        methods:
-          type: array
-          items:
-            type: string
-        encoding:
-          type: string
-        bodyPaths:
-          type: array
-          items:
-            type: string
-        requireBodyContains:
-          type: array
-          items:
-            type: string
     EffectiveShadowAiPolicyResponseV1:
       type: object
       additionalProperties: false
@@ -716,6 +660,87 @@ components:
           type: array
           items:
             type: string
+    EffectiveShadowAiUnifiedPolicyResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        isEnabled:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShadowAiDomainRuleModelV1'
+        captureRequestBody:
+          type: boolean
+        maxBodySize:
+          type: integer
+          format: int32
+        pollingIntervalMinutes:
+          type: integer
+          format: int32
+        configVersion:
+          type: integer
+          format: int32
+        disableFloatingChatPanel:
+          type: boolean
+        promptScanEnabled:
+          type: boolean
+        promptScanRules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShadowAiPromptScanRuleModelV1'
+        enterpriseIdentityEnabled:
+          type: boolean
+        enterpriseIdentityApprovedDomains:
+          type: array
+          items:
+            type: string
+        enterpriseIdentityEnforcedSiteIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enterpriseIdentityFailMode:
+          type: string
+        enterpriseIdentityBlockMessage:
+          type:
+          - string
+          - 'null'
+        enterpriseIdentityApprovedAnthropicOrgIds:
+          type: array
+          items:
+            type: string
+    ShadowAiPromptScanRuleModelV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        endpointPatterns:
+          type: array
+          items:
+            type: string
+        methods:
+          type: array
+          items:
+            type: string
+        encoding:
+          type: string
+        bodyPaths:
+          type: array
+          items:
+            type: string
+        requireBodyContains:
+          type: array
+          items:
+            type: string
     ShadowAiDomainRuleModelV1:
       type: object
       additionalProperties: false
@@ -743,6 +768,31 @@ components:
           - string
           - 'null'
           maxLength: 2048
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     UpdateShadowAiConfigurationRequest:
       type: object
       additionalProperties: false
@@ -771,19 +821,6 @@ components:
           - string
           - 'null'
           maxLength: 4096
-    ShadowAiRuleAction:
-      type: string
-      description: ''
-      x-enumNames:
-      - Monitor
-      - Warn
-      - Block
-      - Redirect
-      enum:
-      - Monitor
-      - Warn
-      - Block
-      - Redirect
     UpsertShadowAiBrowserExtensionRuleRequest:
       type: object
       additionalProperties: false
@@ -894,31 +931,88 @@ components:
           type: array
           items:
             type: string
-    ProblemDetails:
+    CreateShadowAiConfigurationRequest:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
+      required:
+      - name
+      - isEnabled
+      - gatewayConfigurationId
       properties:
-        type:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
           type:
           - string
           - 'null'
-        title:
+          maxLength: 1000
+        isEnabled:
+          type: boolean
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        customSettings:
           type:
           - string
           - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
+          maxLength: 4096
+    ShadowAiRuleAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Monitor
+      - Warn
+      - Block
+      - Redirect
+      enum:
+      - Monitor
+      - Warn
+      - Block
+      - Redirect
+    ShadowAiConfigurationResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
           type:
           - string
           - 'null'
-        instance:
+        secretToken:
+          type: string
+        isEnabled:
+          type: boolean
+        gatewayConfigurationId:
+          type: string
+          format: guid
+        enabledAt:
+          type: string
+          format: date-time
+        disabledAt:
           type:
           - string
           - 'null'
+          format: date-time
+        customSettings:
+          type:
+          - string
+          - 'null'
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
     ShadowAiBrowserExtensionRuleResponseV1:
       type: object
       additionalProperties: false
@@ -1008,100 +1102,6 @@ components:
           type: array
           items:
             type: string
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-    EffectiveShadowAiUnifiedPolicyResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        isEnabled:
-          type: boolean
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShadowAiDomainRuleModelV1'
-        captureRequestBody:
-          type: boolean
-        maxBodySize:
-          type: integer
-          format: int32
-        pollingIntervalMinutes:
-          type: integer
-          format: int32
-        configVersion:
-          type: integer
-          format: int32
-        disableFloatingChatPanel:
-          type: boolean
-        promptScanEnabled:
-          type: boolean
-        promptScanRules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ShadowAiPromptScanRuleModelV1'
-        enterpriseIdentityEnabled:
-          type: boolean
-        enterpriseIdentityApprovedDomains:
-          type: array
-          items:
-            type: string
-        enterpriseIdentityEnforcedSiteIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        enterpriseIdentityFailMode:
-          type: string
-        enterpriseIdentityBlockMessage:
-          type:
-          - string
-          - 'null'
-        enterpriseIdentityApprovedAnthropicOrgIds:
-          type: array
-          items:
-            type: string
-    ShadowAiConfigurationResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        secretToken:
-          type: string
-        isEnabled:
-          type: boolean
-        gatewayConfigurationId:
-          type: string
-          format: guid
-        enabledAt:
-          type: string
-          format: date-time
-        disabledAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        customSettings:
-          type:
-          - string
-          - 'null'
         created:
           type: string
           format: date-time

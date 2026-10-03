@@ -647,19 +647,47 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RenameRequest:
+    UpdateSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+        assignedUserIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        assignedGroupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        updateAssignments:
+          type: boolean
+    ExportSkillsRepositoryRequest:
       type: object
       additionalProperties: false
       required:
-      - oldPath
-      - newPath
+      - paths
       properties:
-        oldPath:
-          type: string
-          minLength: 1
-        newPath:
-          type: string
-          minLength: 1
+        paths:
+          type: array
+          minItems: 1
+          items:
+            type: string
     CreateSkillsRepositoryRequest:
       type: object
       additionalProperties: false
@@ -694,36 +722,19 @@ components:
           items:
             type: string
             format: guid
-    UpdateSkillsRepositoryRequest:
+    RenameRequest:
       type: object
       additionalProperties: false
+      required:
+      - oldPath
+      - newPath
       properties:
-        name:
-          type:
-          - string
-          - 'null'
-          maxLength: 256
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 2048
-        assignedUserIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        assignedGroupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        updateAssignments:
-          type: boolean
+        oldPath:
+          type: string
+          minLength: 1
+        newPath:
+          type: string
+          minLength: 1
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -749,17 +760,6 @@ components:
           type:
           - string
           - 'null'
-    ExportSkillsRepositoryRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - paths
-      properties:
-        paths:
-          type: array
-          minItems: 1
-          items:
-            type: string
     SkillsRepositoryDto:
       type: object
       additionalProperties: false

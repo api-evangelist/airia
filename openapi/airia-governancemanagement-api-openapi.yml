@@ -78,17 +78,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GovernanceManagementComingSoonFrameworkDto:
+    GovernanceManagementFrameworkDto:
       type: object
       additionalProperties: false
       properties:
         key:
-          type: string
-        requestedAt:
           type:
           - string
           - 'null'
-          format: date-time
+        name:
+          type: string
     GovernanceManagementSummaryDto:
       type: object
       additionalProperties: false
@@ -116,16 +115,17 @@ components:
         windowEnd:
           type: string
           format: date-time
-    GovernanceManagementFrameworkDto:
+    GovernanceManagementComingSoonFrameworkDto:
       type: object
       additionalProperties: false
       properties:
         key:
+          type: string
+        requestedAt:
           type:
           - string
           - 'null'
-        name:
-          type: string
+          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}

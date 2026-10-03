@@ -85,17 +85,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultOfCommunityShareHistoryItem:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommunityShareHistoryItem'
-        totalCount:
-          type: integer
-          format: int32
     CommunityShareHistoryItem:
       type: object
       additionalProperties: false
@@ -149,6 +138,15 @@ components:
           type:
           - string
           - 'null'
+    CommunityShareHistoryType:
+      type: string
+      description: ''
+      x-enumNames:
+      - ShareableLink
+      - Community
+      enum:
+      - ShareableLink
+      - Community
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -174,15 +172,17 @@ components:
           type:
           - string
           - 'null'
-    CommunityShareHistoryType:
-      type: string
-      description: ''
-      x-enumNames:
-      - ShareableLink
-      - Community
-      enum:
-      - ShareableLink
-      - Community
+    PagedResultOfCommunityShareHistoryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunityShareHistoryItem'
+        totalCount:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

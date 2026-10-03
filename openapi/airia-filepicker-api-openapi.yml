@@ -123,31 +123,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DriveItemMetadataResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        path:
-          type: string
-        isRoot:
-          type: boolean
-    GetDriveItemRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - credentialId
-      properties:
-        credentialId:
-          type: string
-          format: guid
-        driveId:
-          type: string
-        itemId:
-          type:
-          - string
-          - 'null'
     GetSharePointItemRequest:
       type: object
       additionalProperties: false
@@ -161,6 +136,21 @@ components:
           type:
           - string
           - 'null'
+        driveId:
+          type: string
+        itemId:
+          type:
+          - string
+          - 'null'
+    GetDriveItemRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credentialId
+      properties:
+        credentialId:
+          type: string
+          format: guid
         driveId:
           type: string
         itemId:
@@ -192,6 +182,16 @@ components:
           type:
           - string
           - 'null'
+    DriveItemMetadataResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        isRoot:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

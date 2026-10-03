@@ -1348,53 +1348,57 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BrowserAgentInfoDto:
-      type: object
-      additionalProperties: false
-      properties:
-        tenantId:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        deviceId:
-          type: string
-        connectionId:
-          type: string
-        connectionType:
-          type: string
-        lastSeen:
-          type: string
-          format: date-time
-    RenameBrowserAgentFileRequest:
+    BrowserAgentFileRefDto:
       type: object
       additionalProperties: false
       required:
-      - from
-      - to
+      - path
       properties:
-        from:
+        path:
           type: string
-          minLength: 1
-        to:
-          type: string
-          minLength: 1
-        overwrite:
-          type:
-          - boolean
-          - 'null'
-    CloudConnectorTestResultDto:
+    CreateCloudConnectorGroupDto:
       type: object
       additionalProperties: false
       properties:
-        success:
-          type: boolean
-        message:
+        name:
+          type: string
+    CloudConnectorPlatformDownloadDto:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        checksum:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        fileName:
           type:
           - string
           - 'null'
-        details:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
           type:
           - string
           - 'null'
@@ -1415,26 +1419,92 @@ components:
       - RequestSent
       - ResponseReceived
       - Error
-    BrowserAgentFileEntryDto:
+    CloudConnectorEventFeedSummary:
       type: object
       additionalProperties: false
-      required:
-      - name
-      - path
-      - isDirectory
+      properties:
+        id:
+          type: string
+          format: guid
+        eventType:
+          $ref: '#/components/schemas/ConnectorEventType'
+        connectorId:
+          type: string
+          format: guid
+        connectorName:
+          type: string
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        siteId:
+          type:
+          - string
+          - 'null'
+        requestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        commandType:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type: string
+          format: date-time
+    CreateCloudConnectorDto:
+      type: object
+      additionalProperties: false
       properties:
         name:
           type: string
-        path:
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    CloudConnectorVersionManifestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
           type: string
-        isDirectory:
+        releaseDate:
+          type: string
+          format: date-time
+        releaseNotes:
+          type:
+          - string
+          - 'null'
+        isMandatory:
           type: boolean
-        size:
+        minimumVersion:
+          type:
+          - string
+          - 'null'
+        downloads:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CloudConnectorPlatformDownloadDto'
+    PagedResultOfCloudConnectorGroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudConnectorGroupDto'
+        totalCount:
           type: integer
-          format: int64
-        lastModified:
-          type: integer
-          format: int64
+          format: int32
     WriteBrowserAgentFileRequest:
       type: object
       additionalProperties: false
@@ -1482,176 +1552,59 @@ components:
       - GreaterThan
       - WithinRange
       - NotWithinRange
-    PagedResultOfCloudConnectorEventFeedSummary:
+    CloudConnectorTestResultDto:
       type: object
       additionalProperties: false
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudConnectorEventFeedSummary'
-        totalCount:
-          type: integer
-          format: int32
-    CloudConnectorVersionManifestDto:
-      type: object
-      additionalProperties: false
-      properties:
-        version:
-          type: string
-        releaseDate:
-          type: string
-          format: date-time
-        releaseNotes:
-          type:
-          - string
-          - 'null'
-        isMandatory:
+        success:
           type: boolean
-        minimumVersion:
+        message:
           type:
           - string
           - 'null'
-        downloads:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/CloudConnectorPlatformDownloadDto'
-    ColumnFilter:
-      type: object
-      additionalProperties: false
-      properties:
-        column:
-          type: string
-        operator:
-          $ref: '#/components/schemas/ColumnFilterOperator'
-        value:
-          type: string
-    StreamFileDownloadRequestDto:
+        details:
+          type:
+          - string
+          - 'null'
+    BrowserAgentFileEntryDto:
       type: object
       additionalProperties: false
       required:
-      - url
+      - name
+      - path
+      - isDirectory
       properties:
-        url:
+        name:
           type: string
-          format: uri
-          minLength: 1
-        chunkSize:
-          type: integer
-          format: int32
-          maximum: 1048576
-          minimum: 1024
-        accGroupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    CloudConnectorPlatformDownloadDto:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
+        path:
           type: string
-        checksum:
-          type: string
-        fileSize:
+        isDirectory:
+          type: boolean
+        size:
           type: integer
           format: int64
-        fileName:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    CreateBrowserAgentFolderRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - path
-      properties:
-        path:
-          type: string
-          minLength: 1
-    CreateCloudConnectorGroupDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-    PagedResultOfCloudConnectorGroupDto:
+        lastModified:
+          type: integer
+          format: int64
+    PagedResultOfCloudConnectorDto:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CloudConnectorGroupDto'
+            $ref: '#/components/schemas/CloudConnectorDto'
         totalCount:
           type: integer
           format: int32
-    CloudConnectorGroupDto:
+    CloudConnectorEvent:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        name:
-          type: string
-        accCount:
-          type: integer
-          format: int32
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    BrowserAgentFileRefDto:
-      type: object
-      additionalProperties: false
-      required:
-      - path
-      properties:
-        path:
-          type: string
-    CloudConnectorEventFeedSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
+        tenantId:
           type: string
           format: guid
         eventType:
@@ -1688,47 +1641,47 @@ components:
         timestamp:
           type: string
           format: date-time
-    BrowserAgentDirectoryListingDto:
+        createdAt:
+          type: string
+          format: date-time
+    StreamFileDownloadRequestDto:
       type: object
       additionalProperties: false
       required:
-      - root
-      - path
-      - entries
+      - url
       properties:
-        root:
+        url:
           type: string
-        path:
-          type: string
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/BrowserAgentFileEntryDto'
-    BrowserAgentFileContentDto:
+          format: uri
+          minLength: 1
+        chunkSize:
+          type: integer
+          format: int32
+          maximum: 1048576
+          minimum: 1024
+        accGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ColumnFilter:
       type: object
       additionalProperties: false
-      required:
-      - path
-      - contentBase64
       properties:
-        path:
+        column:
           type: string
-        size:
-          type: integer
-          format: int64
-        lastModified:
-          type: integer
-          format: int64
-        contentBase64:
+        operator:
+          $ref: '#/components/schemas/ColumnFilterOperator'
+        value:
           type: string
-    PagedResultOfCloudConnectorDto:
+    PagedResultOfCloudConnectorEventFeedSummary:
       type: object
       additionalProperties: false
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CloudConnectorDto'
+            $ref: '#/components/schemas/CloudConnectorEventFeedSummary'
         totalCount:
           type: integer
           format: int32
@@ -1778,64 +1731,111 @@ components:
           - string
           - 'null'
           format: guid
-    CreateCloudConnectorDto:
+    BrowserAgentDirectoryListingDto:
       type: object
       additionalProperties: false
+      required:
+      - root
+      - path
+      - entries
       properties:
-        name:
+        root:
           type: string
-        groupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    CloudConnectorEvent:
+        path:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrowserAgentFileEntryDto'
+    BrowserAgentFileContentDto:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      - contentBase64
+      properties:
+        path:
+          type: string
+        size:
+          type: integer
+          format: int64
+        lastModified:
+          type: integer
+          format: int64
+        contentBase64:
+          type: string
+    CloudConnectorGroupDto:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
+        name:
+          type: string
+        accCount:
+          type: integer
+          format: int32
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    RenameBrowserAgentFileRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - from
+      - to
+      properties:
+        from:
+          type: string
+          minLength: 1
+        to:
+          type: string
+          minLength: 1
+        overwrite:
+          type:
+          - boolean
+          - 'null'
+    BrowserAgentInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
         tenantId:
           type: string
           format: guid
-        eventType:
-          $ref: '#/components/schemas/ConnectorEventType'
-        connectorId:
+        userId:
           type: string
           format: guid
-        connectorName:
+        deviceId:
           type: string
-        groupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        siteId:
-          type:
-          - string
-          - 'null'
-        requestId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        commandType:
-          type:
-          - string
-          - 'null'
-        success:
-          type: boolean
-        errorMessage:
-          type:
-          - string
-          - 'null'
-        timestamp:
+        connectionId:
+          type: string
+        connectionType:
+          type: string
+        lastSeen:
           type: string
           format: date-time
-        createdAt:
+    CreateBrowserAgentFolderRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      properties:
+        path:
           type: string
-          format: date-time
+          minLength: 1
   securitySchemes:
     ApiKey:
       type: apiKey

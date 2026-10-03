@@ -194,55 +194,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EmailAction:
-      type: string
-      description: ''
-      x-enumNames:
-      - Reply
-      - ReplyAll
-      - Forward
-      - None
-      enum:
-      - Reply
-      - ReplyAll
-      - Forward
-      - None
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AgentTriggerAllowedType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unrestricted
-      - Domains
-      - Emails
-      enum:
-      - Unrestricted
-      - Domains
-      - Emails
     AgentTriggerModel:
       type: object
       additionalProperties: false
@@ -291,6 +242,55 @@ components:
           type:
           - boolean
           - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    EmailAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Reply
+      - ReplyAll
+      - Forward
+      - None
+      enum:
+      - Reply
+      - ReplyAll
+      - Forward
+      - None
+    AgentTriggerAllowedType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unrestricted
+      - Domains
+      - Emails
+      enum:
+      - Unrestricted
+      - Domains
+      - Emails
   securitySchemes:
     ApiKey:
       type: apiKey

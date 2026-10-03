@@ -137,6 +137,108 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AiAssetSanctionDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sanctioned
+      - Unsanctioned
+      - PendingReview
+      enum:
+      - Sanctioned
+      - Unsanctioned
+      - PendingReview
+    DivertAiAssetResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - createdAt
+      - auditEventEmitted
+      - historyRecorded
+      properties:
+        value:
+          type: string
+        previousValue:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        auditEventEmitted:
+          type: boolean
+        historyRecorded:
+          type: boolean
+        detail:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SanctionAiAssetRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          $ref: '#/components/schemas/AiAssetSanctionDecision'
+        reason:
+          type:
+          - string
+          - 'null'
+    SanctionAiAssetResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - createdAt
+      - auditEventEmitted
+      properties:
+        value:
+          type: string
+        previousValue:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        auditEventEmitted:
+          type: boolean
+    AiAssetDivertDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Diverted
+      - Reverted
+      enum:
+      - Diverted
+      - Reverted
     DivertAiAssetRequest:
       type: object
       additionalProperties: false
@@ -164,108 +266,6 @@ components:
           - 'null'
           items:
             type: string
-    SanctionAiAssetRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - decision
-      properties:
-        decision:
-          $ref: '#/components/schemas/AiAssetSanctionDecision'
-        reason:
-          type:
-          - string
-          - 'null'
-    AiAssetSanctionDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sanctioned
-      - Unsanctioned
-      - PendingReview
-      enum:
-      - Sanctioned
-      - Unsanctioned
-      - PendingReview
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AiAssetDivertDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Diverted
-      - Reverted
-      enum:
-      - Diverted
-      - Reverted
-    DivertAiAssetResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      - createdAt
-      - auditEventEmitted
-      - historyRecorded
-      properties:
-        value:
-          type: string
-        previousValue:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        auditEventEmitted:
-          type: boolean
-        historyRecorded:
-          type: boolean
-        detail:
-          type:
-          - string
-          - 'null'
-    SanctionAiAssetResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      - createdAt
-      - auditEventEmitted
-      properties:
-        value:
-          type: string
-        previousValue:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        auditEventEmitted:
-          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

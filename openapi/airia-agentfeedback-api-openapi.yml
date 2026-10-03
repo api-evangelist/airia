@@ -328,53 +328,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateAgentFeedbackModel:
-      type: object
-      additionalProperties: false
-      required:
-      - userId
-      - executionId
-      properties:
-        comment:
-          type: string
-        userId:
-          type: string
-          format: guid
-        executionId:
-          type: string
-          format: guid
-        agent:
-          oneOf:
-          - $ref: '#/components/schemas/AgentModel'
-        requestVersion:
-          type:
-          - string
-          - 'null'
-          format: guid
-        requestVersionNumber:
-          type:
-          - string
-          - 'null'
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/AgentFeedbackStatus'
-        sentiment:
-          $ref: '#/components/schemas/AgentFeedbackSentiment'
-    AgentFeedbackSentiment:
-      type: string
-      description: ''
-      x-enumNames:
-      - Blocked
-      - NeedsImprovement
-      - Good
-      - NotGood
-      - Great
-      enum:
-      - Blocked
-      - NeedsImprovement
-      - Good
-      - NotGood
-      - Great
     ProjectInfoModel:
       type: object
       additionalProperties: false
@@ -388,17 +341,17 @@ components:
           type:
           - string
           - 'null'
-    PagedResultOfAgentFeedbackModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentFeedbackModel'
-        totalCount:
-          type: integer
-          format: int32
+    AgentFeedbackStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Open
+      - Declined
+      - Resolved
+      enum:
+      - Open
+      - Declined
+      - Resolved
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -491,6 +444,38 @@ components:
           type:
           - string
           - 'null'
+    CreateAgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - executionId
+      properties:
+        comment:
+          type: string
+        userId:
+          type: string
+          format: guid
+        executionId:
+          type: string
+          format: guid
+        agent:
+          oneOf:
+          - $ref: '#/components/schemas/AgentModel'
+        requestVersion:
+          type:
+          - string
+          - 'null'
+          format: guid
+        requestVersionNumber:
+          type:
+          - string
+          - 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/AgentFeedbackStatus'
+        sentiment:
+          $ref: '#/components/schemas/AgentFeedbackSentiment'
     AgentModel:
       type: object
       additionalProperties: false
@@ -525,17 +510,32 @@ components:
         project:
           oneOf:
           - $ref: '#/components/schemas/ProjectInfoModel'
-    AgentFeedbackStatus:
+    PagedResultOfAgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentFeedbackModel'
+        totalCount:
+          type: integer
+          format: int32
+    AgentFeedbackSentiment:
       type: string
       description: ''
       x-enumNames:
-      - Open
-      - Declined
-      - Resolved
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
       enum:
-      - Open
-      - Declined
-      - Resolved
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -929,338 +929,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EditorLockConflictResponse:
+    PagedResultOfPipelineEditorVersionDto:
       type: object
       additionalProperties: false
       properties:
-        errorCode:
-          type: string
-        message:
-          type: string
-        expiresAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        activeEditorDisplayName:
-          type:
-          - string
-          - 'null'
-        isHeldByCaller:
-          type: boolean
-    ModelDeprecationValidationLevel:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Warning
-      - Block
-      enum:
-      - None
-      - Warning
-      - Block
-    CreatePipelineVersionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type: string
-          format: guid
-        isDraftVersion:
-          type: boolean
-        alignment:
-          oneOf:
-          - $ref: '#/components/schemas/PipelineAlignment'
-        steps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineStep'
-        description:
-          type:
-          - string
-          - 'null'
-        versionName:
-          type:
-          - string
-          - 'null'
-        setAsActive:
-          type: boolean
-        sourceVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        acknowledgeDeprecationWarnings:
-          type: boolean
-    EditorLockDto:
-      type: object
-      additionalProperties: false
-      properties:
-        isLocked:
-          type: boolean
-        isHeldByCaller:
-          type: boolean
-        activeEditorDisplayName:
-          type:
-          - string
-          - 'null'
-        acquiredAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        expiresAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        leaseToken:
-          type:
-          - string
-          - 'null'
-        heartbeatIntervalSeconds:
-          type: integer
-          format: int32
-    StepPromptSegment:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          stepId:
-            type: string
-            format: guid
-          promptId:
-            type: string
-            format: guid
-          selectedPromptVersionId:
-            type: string
-            format: guid
-          order:
-            type: integer
-            format: int32
-          isVersionPinned:
-            type: boolean
-          prompt:
-            $ref: '#/components/schemas/Prompt'
-          selectedPromptVersion:
-            $ref: '#/components/schemas/PromptVersion'
-          isAgentSpecific:
-            type: boolean
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    PipelineEditorVersionDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - pipelineId
-      - versionNumber
-      - majorVersion
-      - minorVersion
-      - isDraftVersion
-      - isLatest
-      - isDeprecated
-      - alignment
-      properties:
-        id:
-          type: string
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: integer
-          format: int32
-        isDraftVersion:
-          type: boolean
-        isLatest:
-          type: boolean
-        isDeprecated:
-          type: boolean
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        versionName:
-          type:
-          - string
-          - 'null'
-        tags:
+        items:
           type: array
           items:
-            type: string
-        description:
-          type:
-          - string
-          - 'null'
-        alignment:
-          $ref: '#/components/schemas/PipelineAlignment'
-    CreateAgentSpecificPromptRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - promptMessage
-      - order
-      properties:
-        name:
-          type: string
-          maxLength: 256
-          minLength: 0
-        promptMessage:
-          type: string
-          minLength: 1
-        order:
+            $ref: '#/components/schemas/PipelineEditorVersionDto'
+        totalCount:
           type: integer
           format: int32
-    PublishValidationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        message:
-          type: string
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelDeprecationValidationResult'
-    BaseOptionalProjectEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          projectId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    RetryConfiguration:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        maxRetries:
-          type: integer
-          format: int32
-          maximum: 100
-          minimum: 0
-        delay:
-          type: integer
-          format: int32
-          maximum: 300000
-          minimum: 1
-        maxDelay:
-          type: integer
-          format: int32
-          maximum: 600000
-          minimum: 1
-        backoffMultiplier:
-          type: number
-          format: double
-          maximum: 10
-          minimum: 1
-        useJitter:
-          type: boolean
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    UpdatePipelineVersionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - alignment
-      - steps
-      - description
-      - versionName
-      - isDeprecated
-      - modifiedStepIds
-      - positionOnlyStepIds
-      properties:
-        isDraftVersion:
-          type: boolean
-        alignment:
-          oneOf:
-          - $ref: '#/components/schemas/PipelineAlignment'
-        steps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineStep'
-        description:
-          type:
-          - string
-          - 'null'
-        versionName:
-          type:
-          - string
-          - 'null'
-        isDeprecated:
-          type: boolean
-        modifiedStepIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        positionOnlyStepIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
     PipelineVersionEditorDto:
       type: object
       additionalProperties: false
@@ -1327,35 +1006,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
-    PagedResultOfPipelineEditorVersionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineEditorVersionDto'
-        totalCount:
-          type: integer
-          format: int32
-    PipelineStepDependency:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          pipelineStepId:
-            type: string
-            format: guid
-          parentId:
-            type: string
-            format: guid
-          parentHandleId:
-            type: string
-            format: guid
-          handleId:
-            type: string
-            format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -1401,71 +1051,40 @@ components:
             minLength: 0
           promptMessage:
             type: string
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
-    PipelineStep:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          position:
-            oneOf:
-            - $ref: '#/components/schemas/PipelineStepPosition'
-          handles:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStepHandle'
-          dependenciesObject:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStepDependency'
-          stepType:
-            $ref: '#/components/schemas/StepType'
-          pipelineVersionId:
-            type: string
-            format: guid
-          stepTitle:
-            type: string
-            maxLength: 100
-            minLength: 0
-          parentId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          width:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          height:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          retryConfiguration:
-            oneOf:
-            - $ref: '#/components/schemas/RetryConfiguration'
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
     StepType:
       type: string
       description: ''
@@ -1521,6 +1140,51 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
+    StepPromptSegment:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          stepId:
+            type: string
+            format: guid
+          promptId:
+            type: string
+            format: guid
+          selectedPromptVersionId:
+            type: string
+            format: guid
+          order:
+            type: integer
+            format: int32
+          isVersionPinned:
+            type: boolean
+          prompt:
+            $ref: '#/components/schemas/Prompt'
+          selectedPromptVersion:
+            $ref: '#/components/schemas/PromptVersion'
+          isAgentSpecific:
+            type: boolean
+    EditorLockConflictResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activeEditorDisplayName:
+          type:
+          - string
+          - 'null'
+        isHeldByCaller:
+          type: boolean
     Prompt:
       allOf:
       - $ref: '#/components/schemas/BaseOptionalProjectEntity'
@@ -1551,6 +1215,186 @@ components:
             type:
             - boolean
             - 'null'
+    CreatePipelineVersionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        isDraftVersion:
+          type: boolean
+        alignment:
+          oneOf:
+          - $ref: '#/components/schemas/PipelineAlignment'
+        steps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStep'
+        description:
+          type:
+          - string
+          - 'null'
+        versionName:
+          type:
+          - string
+          - 'null'
+        setAsActive:
+          type: boolean
+        sourceVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        acknowledgeDeprecationWarnings:
+          type: boolean
+    PublishValidationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelDeprecationValidationResult'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    ModelDeprecationValidationLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Warning
+      - Block
+      enum:
+      - None
+      - Warning
+      - Block
+    CreateAgentSpecificPromptRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - promptMessage
+      - order
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 0
+        promptMessage:
+          type: string
+          minLength: 1
+        order:
+          type: integer
+          format: int32
+    UpdatePipelineVersionMetadataRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - versionName
+      - description
+      - isDeprecated
+      properties:
+        versionName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        isDeprecated:
+          type: boolean
+    PipelineAlignment:
+      type: string
+      description: ''
+      x-enumNames:
+      - Horizontal
+      - Vertical
+      enum:
+      - Horizontal
+      - Vertical
+    PipelineEditorVersionDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - pipelineId
+      - versionNumber
+      - majorVersion
+      - minorVersion
+      - isDraftVersion
+      - isLatest
+      - isDeprecated
+      - alignment
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: integer
+          format: int32
+        isDraftVersion:
+          type: boolean
+        isLatest:
+          type: boolean
+        isDeprecated:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        versionName:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        description:
+          type:
+          - string
+          - 'null'
+        alignment:
+          $ref: '#/components/schemas/PipelineAlignment'
     ModelDeprecationValidationResult:
       type: object
       additionalProperties: false
@@ -1588,6 +1432,130 @@ components:
           - string
           - 'null'
           format: guid
+    PipelineStep:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          position:
+            oneOf:
+            - $ref: '#/components/schemas/PipelineStepPosition'
+          handles:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepHandle'
+          dependenciesObject:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepDependency'
+          stepType:
+            $ref: '#/components/schemas/StepType'
+          pipelineVersionId:
+            type: string
+            format: guid
+          stepTitle:
+            type: string
+            maxLength: 100
+            minLength: 0
+          parentId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          width:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          height:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          retryConfiguration:
+            oneOf:
+            - $ref: '#/components/schemas/RetryConfiguration'
+    RetryConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetries:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        delay:
+          type: integer
+          format: int32
+          maximum: 300000
+          minimum: 1
+        maxDelay:
+          type: integer
+          format: int32
+          maximum: 600000
+          minimum: 1
+        backoffMultiplier:
+          type: number
+          format: double
+          maximum: 10
+          minimum: 1
+        useJitter:
+          type: boolean
+    EditorLockDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isLocked:
+          type: boolean
+        isHeldByCaller:
+          type: boolean
+        activeEditorDisplayName:
+          type:
+          - string
+          - 'null'
+        acquiredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        leaseToken:
+          type:
+          - string
+          - 'null'
+        heartbeatIntervalSeconds:
+          type: integer
+          format: int32
+    BaseOptionalProjectEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          projectId:
+            type:
+            - string
+            - 'null'
+            format: guid
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
     PipelineStepPosition:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -1603,44 +1571,71 @@ components:
           pipelineStepId:
             type: string
             format: guid
-    PipelineAlignment:
-      type: string
-      description: ''
-      x-enumNames:
-      - Horizontal
-      - Vertical
-      enum:
-      - Horizontal
-      - Vertical
-    UpdatePipelineVersionMetadataRequest:
+    PipelineStepDependency:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineStepId:
+            type: string
+            format: guid
+          parentId:
+            type: string
+            format: guid
+          parentHandleId:
+            type: string
+            format: guid
+          handleId:
+            type: string
+            format: guid
+    UpdatePipelineVersionRequest:
       type: object
       additionalProperties: false
       required:
-      - versionName
+      - alignment
+      - steps
       - description
+      - versionName
       - isDeprecated
+      - modifiedStepIds
+      - positionOnlyStepIds
       properties:
-        versionName:
+        isDraftVersion:
+          type: boolean
+        alignment:
+          oneOf:
+          - $ref: '#/components/schemas/PipelineAlignment'
+        steps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineStep'
+        description:
           type:
           - string
           - 'null'
-        description:
+        versionName:
           type:
           - string
           - 'null'
         isDeprecated:
           type: boolean
-    KeyValuePairOfStringAndJsonNode:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
+        modifiedStepIds:
           type:
-          - string
+          - array
           - 'null'
-        value:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
+          items:
+            type: string
+            format: guid
+        positionOnlyStepIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
     PipelineStepHandle:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -1675,12 +1670,17 @@ components:
             - number
             - 'null'
             format: float
-    JsonNodeOptions:
+    KeyValuePairOfStringAndJsonNode:
       type: object
       additionalProperties: false
       properties:
-        propertyNameCaseInsensitive:
-          type: boolean
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
   securitySchemes:
     ApiKey:
       type: apiKey

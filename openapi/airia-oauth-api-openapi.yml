@@ -1224,6 +1224,44 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    OAuthProviderBehaviorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        authorizationParameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        tokenParameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        tokenHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        extraTokenResponseFields:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tokenEndpointAuthMethod:
+          $ref: '#/components/schemas/TokenEndpointAuthMethodV1'
+        scopeSeparator:
+          type:
+          - string
+          - 'null'
+        acrValues:
+          type:
+          - string
+          - 'null'
     CredentialType:
       type: string
       description: ''
@@ -1859,239 +1897,6 @@ components:
       - AnthropicInferenceHooks
       - AnthropicAnalytics
       - GoogleVertexAi
-    GoogleOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      - refreshTokenUrl
-      - appId
-      - developerKey
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-        refreshTokenUrl:
-          type: string
-          minLength: 1
-        appId:
-          type: string
-          minLength: 1
-        developerKey:
-          type: string
-          minLength: 1
-    OAuthProviderDto:
-      allOf:
-      - $ref: '#/components/schemas/BaseOAuthProviderData'
-      - type: object
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          isSystem:
-            type: boolean
-          usage:
-            type: array
-            items:
-              $ref: '#/components/schemas/OAuthProviderUsageItem'
-    ConfluenceOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      - tokenUrl
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-        tokenUrl:
-          type: string
-          minLength: 1
-    OAuthProviderBehaviorDto:
-      type: object
-      additionalProperties: false
-      properties:
-        authorizationParameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        tokenParameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        tokenHeaders:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        extraTokenResponseFields:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        tokenEndpointAuthMethod:
-          $ref: '#/components/schemas/TokenEndpointAuthMethodV1'
-        scopeSeparator:
-          type:
-          - string
-          - 'null'
-        acrValues:
-          type:
-          - string
-          - 'null'
-    DropboxOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-    UpdateOAuthProviderDto:
-      allOf:
-      - $ref: '#/components/schemas/BaseOAuthProviderData'
-      - type: object
-        additionalProperties: false
-    XOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - clientId
-      - clientSecretId
-      - appID
-      - generateTokenURL
-      - authorizeTokenURL
-      properties:
-        clientId:
-          type: string
-          minLength: 1
-        clientSecretId:
-          type: string
-          minLength: 1
-        appID:
-          type: string
-          minLength: 1
-        generateTokenURL:
-          type: string
-          minLength: 1
-        authorizeTokenURL:
-          type: string
-          minLength: 1
-    GenerateConfigRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        providerType:
-          type: string
-    AzureOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - webAppClientId
-      - clientSecret
-      - tenantId
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        webAppClientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-        tenantId:
-          type: string
-          minLength: 1
-    AzureEWSOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-    ProviderAuthenticationTypeV1:
-      type: string
-      description: ''
-      x-enumNames:
-      - StaticUserOauth
-      - DynamicUserOauth
-      - StaticM2MOauth
-      - DynamicM2MOauth
-      - PassThroughOauth
-      - TokenExchangeOauth
-      - StaticJwtAssertion
-      - DynamicJwtAssertion
-      - StaticAwsStsExternalId
-      - ClerkM2MOauth
-      - IdJagCrossAppAccess
-      enum:
-      - StaticUserOauth
-      - DynamicUserOauth
-      - StaticM2MOauth
-      - DynamicM2MOauth
-      - PassThroughOauth
-      - TokenExchangeOauth
-      - StaticJwtAssertion
-      - DynamicJwtAssertion
-      - StaticAwsStsExternalId
-      - ClerkM2MOauth
-      - IdJagCrossAppAccess
-    OAuthTokenRequest:
-      allOf:
-      - $ref: '#/components/schemas/OAuthTokenRequestBase'
-      - type: object
-        additionalProperties: false
-        properties:
-          codeVerifier:
-            type: string
-          credentialType:
-            $ref: '#/components/schemas/CredentialType'
-          domain:
-            type: string
     TokenEndpointAuthMethodV1:
       type: string
       description: ''
@@ -2109,25 +1914,18 @@ components:
       - TokenEndpointAuthMethodClientSecretJwt
       - TokenEndpointAuthMethodPrivateKeyJwt
       - TokenEndpointAuthMethodNone
-    OAuthProviderUsageItem:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        type:
-          type: string
-    OAuthProviderCapabilitiesDto:
-      type: object
-      additionalProperties: false
-      properties:
-        supportsDcr:
-          type: boolean
-        supportsPkce:
-          type: boolean
+    OAuthTokenRequest:
+      allOf:
+      - $ref: '#/components/schemas/OAuthTokenRequestBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          codeVerifier:
+            type: string
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          domain:
+            type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -2153,78 +1951,6 @@ components:
           type:
           - string
           - 'null'
-    OAuthTokenRequestBase:
-      type: object
-      additionalProperties: false
-      required:
-      - authCode
-      properties:
-        authCode:
-          type: string
-          minLength: 1
-        redirectUrl:
-          type:
-          - string
-          - 'null'
-    RegisterOAuthProviderDto:
-      allOf:
-      - $ref: '#/components/schemas/BaseOAuthProviderData'
-      - type: object
-        additionalProperties: false
-    NotionOAuthTokenResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        accessToken:
-          type: string
-    BoxOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
-    OAuthTokenResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        accessToken:
-          type: string
-        refreshToken:
-          type: string
-        idToken:
-          type: string
-        instanceUrl:
-          type:
-          - string
-          - 'null'
-    NotionOAuthConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - baseUri
-      - clientId
-      - clientSecret
-      properties:
-        baseUri:
-          type: string
-          minLength: 1
-        clientId:
-          type: string
-          minLength: 1
-        clientSecret:
-          type: string
-          minLength: 1
     BaseOAuthProviderData:
       type: object
       additionalProperties: false
@@ -2265,6 +1991,272 @@ components:
         totalActiveCredentials:
           type: integer
           format: int32
+    UpdateOAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+    NotionOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    GoogleOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      - refreshTokenUrl
+      - appId
+      - developerKey
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        refreshTokenUrl:
+          type: string
+          minLength: 1
+        appId:
+          type: string
+          minLength: 1
+        developerKey:
+          type: string
+          minLength: 1
+    ProviderAuthenticationTypeV1:
+      type: string
+      description: ''
+      x-enumNames:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+      enum:
+      - StaticUserOauth
+      - DynamicUserOauth
+      - StaticM2MOauth
+      - DynamicM2MOauth
+      - PassThroughOauth
+      - TokenExchangeOauth
+      - StaticJwtAssertion
+      - DynamicJwtAssertion
+      - StaticAwsStsExternalId
+      - ClerkM2MOauth
+      - IdJagCrossAppAccess
+    XOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - clientId
+      - clientSecretId
+      - appID
+      - generateTokenURL
+      - authorizeTokenURL
+      properties:
+        clientId:
+          type: string
+          minLength: 1
+        clientSecretId:
+          type: string
+          minLength: 1
+        appID:
+          type: string
+          minLength: 1
+        generateTokenURL:
+          type: string
+          minLength: 1
+        authorizeTokenURL:
+          type: string
+          minLength: 1
+    BoxOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    OAuthTokenRequestBase:
+      type: object
+      additionalProperties: false
+      required:
+      - authCode
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+    ConfluenceOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      - tokenUrl
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        tokenUrl:
+          type: string
+          minLength: 1
+    RegisterOAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+    GenerateConfigRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        providerType:
+          type: string
+    OAuthProviderDto:
+      allOf:
+      - $ref: '#/components/schemas/BaseOAuthProviderData'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          isSystem:
+            type: boolean
+          usage:
+            type: array
+            items:
+              $ref: '#/components/schemas/OAuthProviderUsageItem'
+    NotionOAuthTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+    OAuthTokenResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        idToken:
+          type: string
+        instanceUrl:
+          type:
+          - string
+          - 'null'
+    AzureOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - webAppClientId
+      - clientSecret
+      - tenantId
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        webAppClientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+        tenantId:
+          type: string
+          minLength: 1
+    DropboxOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
+    OAuthProviderUsageItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        type:
+          type: string
+    OAuthProviderManagedBy:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - Customer
+      enum:
+      - Airia
+      - Customer
+    OAuthProviderCapabilitiesDto:
+      type: object
+      additionalProperties: false
+      properties:
+        supportsDcr:
+          type: boolean
+        supportsPkce:
+          type: boolean
     OAuthAuthorizeRequest:
       type: object
       additionalProperties: false
@@ -2283,15 +2275,23 @@ components:
           type: object
           additionalProperties:
             type: string
-    OAuthProviderManagedBy:
-      type: string
-      description: ''
-      x-enumNames:
-      - Airia
-      - Customer
-      enum:
-      - Airia
-      - Customer
+    AzureEWSOAuthConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - baseUri
+      - clientId
+      - clientSecret
+      properties:
+        baseUri:
+          type: string
+          minLength: 1
+        clientId:
+          type: string
+          minLength: 1
+        clientSecret:
+          type: string
+          minLength: 1
   securitySchemes:
     ApiKey:
       type: apiKey

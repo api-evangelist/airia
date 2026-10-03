@@ -984,380 +984,52 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BedrockModelType:
-      type: string
-      description: ''
-      x-enumNames:
-      - FoundationModel
-      - InferenceProfile
-      - ApplicationInferenceProfile
-      - ProvisionedModel
-      - CustomModel
-      - ImportedModel
-      enum:
-      - FoundationModel
-      - InferenceProfile
-      - ApplicationInferenceProfile
-      - ProvisionedModel
-      - CustomModel
-      - ImportedModel
-    ConfiguredModelEntry:
+    GatewayUserAccessDto:
       type: object
       additionalProperties: false
       properties:
-        modelName:
+        id:
           type: string
-        aiModelId:
-          type:
-          - string
-          - 'null'
           format: guid
-        routeThroughAcc:
-          type: boolean
-        accGroup:
-          type:
-          - string
-          - 'null'
-          format: guid
-        url:
-          type:
-          - string
-          - 'null'
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    EntityNamesResult:
-      type: object
-      additionalProperties: false
-      properties:
-        names:
-          type: object
-          additionalProperties:
-            type: string
-    RejectedModelEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        model:
-          type: string
-        count:
-          type: integer
-          format: int32
-        lastSeen:
-          type: string
-          format: date-time
-        likelyClient:
-          type:
-          - string
-          - 'null'
-        likelyUseCase:
-          type:
-          - string
-          - 'null'
-    GatewayAccessWithId:
-      allOf:
-      - $ref: '#/components/schemas/GatewayAccessModel'
-      - type: object
-        additionalProperties: false
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: guid
-            minLength: 1
-          createdAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          updatedAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-    BedrockModelDto:
-      type: object
-      additionalProperties: false
-      properties:
-        modelId:
-          type: string
-        modelName:
-          type: string
-        providerName:
-          type: string
-        baseUrl:
-          type: string
-        type:
-          $ref: '#/components/schemas/BedrockModelType'
-    GatewayAccessModel:
-      type: object
-      additionalProperties: false
-      required:
-      - gatewayConfigurationId
-      properties:
         gatewayConfigurationId:
           type: string
-          format: guid
-          minLength: 1
-        groupId:
-          type:
-          - string
-          - 'null'
           format: guid
         gatewayUserId:
           type:
           - string
           - 'null'
           format: guid
-        projectId:
+        userFirstName:
           type:
           - string
           - 'null'
-          format: guid
-    GatewayApiKeyOrigin2:
-      type: string
-      description: ''
-      x-enumNames:
-      - SelfServe
-      - EndpointAgent
-      - SecurePosture
-      enum:
-      - SelfServe
-      - EndpointAgent
-      - SecurePosture
-    ResilienceRule:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
+        userLastName:
           type:
           - string
           - 'null'
-        order:
-          type: integer
-          format: int32
-        mode:
-          $ref: '#/components/schemas/ResilienceMode'
-        rule:
-          oneOf:
-          - $ref: '#/components/schemas/BaseRuleContract'
-        circuitBreaker:
-          oneOf:
-          - $ref: '#/components/schemas/CircuitBreakerConfiguration'
-        targets:
+        userGroups:
           type: array
           items:
-            $ref: '#/components/schemas/ResilienceTarget'
-        timeoutInSeconds:
-          type: integer
-          format: int32
-        statusCodes:
-          type: array
-          items:
-            type: integer
-            format: int32
-        weight:
-          type: integer
-          format: int32
-    AzureFoundryModelKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - Chat
-      - Rerank
-      - Embedding
-      enum:
-      - Unknown
-      - Chat
-      - Rerank
-      - Embedding
-    BaseRuleContract:
-      type: object
-      discriminator:
-        propertyName: $type
-        mapping:
-          provider: '#/components/schemas/ProviderRuleContract'
-          header: '#/components/schemas/HeaderRuleContract'
-          modelName: '#/components/schemas/ModelNameRuleContract'
-          endpoint: '#/components/schemas/EndpointRuleContract'
-          group: '#/components/schemas/RuleGroupContract'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - $type
-      properties:
-        not:
+            $ref: '#/components/schemas/GroupDto'
+        createdAt:
           type:
-          - boolean
+          - string
           - 'null'
-        $type:
-          type: string
-    GroupDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-    GatewayConfigurationWithId:
-      allOf:
-      - $ref: '#/components/schemas/GatewayConfigurationModel'
-      - type: object
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          lastUpdated:
-            type: string
-            format: date-time
-          apiKeys:
-            type: array
-            items:
-              $ref: '#/components/schemas/GatewayApiKeyWithId'
-          budgetConsumption:
-            type: array
-            items:
-              $ref: '#/components/schemas/BudgetDataDto'
-    GatewayApiKeyWithId:
-      allOf:
-      - $ref: '#/components/schemas/GatewayApiKeyModel'
-      - type: object
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          apiKey:
-            type: string
-          updatedAt:
-            type: string
-            format: date-time
-          createdAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          createdByUserId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          origin:
-            oneOf:
-            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
-    AzureFoundrySyncResult:
-      type: object
-      additionalProperties: false
-      properties:
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/RuleContract'
-        deletedRuleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        allowedModelNames:
-          type: array
-          items:
-            type: string
-    BaseActionContract:
-      type: object
-      discriminator:
-        propertyName: $type
-        mapping:
-          changeProvider: '#/components/schemas/ChangeProviderActionContract'
-          changeModelName: '#/components/schemas/ChangeModelNameActionContract'
-          changeUrl: '#/components/schemas/ChangeUrlActionContract'
-          changeApiKey: '#/components/schemas/ChangeApiKeyActionContract'
-          setHeader: '#/components/schemas/SetHeaderActionContract'
-          appendQueryString: '#/components/schemas/AppendQueryStringActionContract'
-          returnStatusCode: '#/components/schemas/ReturnStatusCodeActionContract'
-          llmImpersonation: '#/components/schemas/LlmImpersonationActionContract'
-          routeByComplexity: '#/components/schemas/RouteByComplexityActionContract'
-          routeByTaskType: '#/components/schemas/RouteByTaskTypeActionContract'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - $type
-      properties:
-        $type:
-          type: string
-    VertexModelDto:
-      type: object
-      additionalProperties: false
-      properties:
-        modelId:
-          type: string
-        displayName:
-          type: string
-        publisher:
-          type: string
-        type:
-          $ref: '#/components/schemas/VertexModelType'
-        apiSurface:
-          $ref: '#/components/schemas/VertexApiSurface'
-        launchStage:
-          type: string
-    BudgetType:
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RuleBehaviorTypes:
       type: string
       description: ''
       x-enumNames:
-      - Project
-      - Gateway
-      - GatewayUserDefault
-      - GatewayUserFollowingDefault
-      - GatewayUserOverride
+      - Continue
+      - Exit
       enum:
-      - Project
-      - Gateway
-      - GatewayUserDefault
-      - GatewayUserFollowingDefault
-      - GatewayUserOverride
-    VertexApiSurface:
-      type: string
-      description: ''
-      x-enumNames:
-      - GenerateContent
-      - RawPredict
-      - OpenApi
-      enum:
-      - GenerateContent
-      - RawPredict
-      - OpenApi
-    PagedResultOfGatewayConfigurationWithId:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GatewayConfigurationWithId'
-        totalCount:
-          type: integer
-          format: int32
-    PagedResultOfGatewayUserAccessDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GatewayUserAccessDto'
-        totalCount:
-          type: integer
-          format: int32
+      - Continue
+      - Exit
     AzureFoundryAuthMethod:
       type: string
       description: ''
@@ -1369,38 +1041,6 @@ components:
       - ApiKey
       - EntraId
       - GcpServiceAccount
-    RuleContract:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        priority:
-          type: integer
-          format: int32
-        condition:
-          $ref: '#/components/schemas/BaseRuleContract'
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseActionContract'
-        behavior:
-          $ref: '#/components/schemas/RuleBehaviorTypes'
-        origin:
-          type:
-          - string
-          - 'null'
-        sourceRef:
-          type:
-          - string
-          - 'null'
-        displayName:
-          type:
-          - string
-          - 'null'
     GatewayProviderConfigurationModel:
       type: object
       additionalProperties: false
@@ -1441,6 +1081,53 @@ components:
           $ref: '#/components/schemas/AzureFoundryAuthMethod'
         enableUserImpersonation:
           type: boolean
+    GatewayProviders:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - OpenAI
+      - Anthropic
+      - Gemini
+      - Ollama
+      - AzureFoundry
+      - AwsBedrock
+      - TogetherAI
+      - Replicate
+      - GoogleVertex
+      enum:
+      - Unknown
+      - OpenAI
+      - Anthropic
+      - Gemini
+      - Ollama
+      - AzureFoundry
+      - AwsBedrock
+      - TogetherAI
+      - Replicate
+      - GoogleVertex
+    BaseActionContract:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          changeProvider: '#/components/schemas/ChangeProviderActionContract'
+          changeModelName: '#/components/schemas/ChangeModelNameActionContract'
+          changeUrl: '#/components/schemas/ChangeUrlActionContract'
+          changeApiKey: '#/components/schemas/ChangeApiKeyActionContract'
+          setHeader: '#/components/schemas/SetHeaderActionContract'
+          appendQueryString: '#/components/schemas/AppendQueryStringActionContract'
+          returnStatusCode: '#/components/schemas/ReturnStatusCodeActionContract'
+          llmImpersonation: '#/components/schemas/LlmImpersonationActionContract'
+          routeByComplexity: '#/components/schemas/RouteByComplexityActionContract'
+          routeByTaskType: '#/components/schemas/RouteByTaskTypeActionContract'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        $type:
+          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -1466,6 +1153,255 @@ components:
           type:
           - string
           - 'null'
+    RejectedModelEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        model:
+          type: string
+        count:
+          type: integer
+          format: int32
+        lastSeen:
+          type: string
+          format: date-time
+        likelyClient:
+          type:
+          - string
+          - 'null'
+        likelyUseCase:
+          type:
+          - string
+          - 'null'
+    GatewayApiKeyType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+      enum:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+    GatewayApiKeyWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          apiKey:
+            type: string
+          updatedAt:
+            type: string
+            format: date-time
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          origin:
+            oneOf:
+            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
+    GatewayConfigurationWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayConfigurationModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          lastUpdated:
+            type: string
+            format: date-time
+          apiKeys:
+            type: array
+            items:
+              $ref: '#/components/schemas/GatewayApiKeyWithId'
+          budgetConsumption:
+            type: array
+            items:
+              $ref: '#/components/schemas/BudgetDataDto'
+    BudgetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Project
+      - Gateway
+      - GatewayUserDefault
+      - GatewayUserFollowingDefault
+      - GatewayUserOverride
+      enum:
+      - Project
+      - Gateway
+      - GatewayUserDefault
+      - GatewayUserFollowingDefault
+      - GatewayUserOverride
+    AiriaLibraryModelDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - displayName
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        category:
+          type:
+          - string
+          - 'null'
+    GatewayApiKeyOrigin2:
+      type: string
+      description: ''
+      x-enumNames:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+      enum:
+      - SelfServe
+      - EndpointAgent
+      - SecurePosture
+    RejectedModelsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        rejectedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectedModelEntry'
+    ResilienceMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Failover
+      - LoadBalance
+      - LoadBalanceWithFailover
+      enum:
+      - Failover
+      - LoadBalance
+      - LoadBalanceWithFailover
+    GatewayAccessWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayAccessModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: guid
+            minLength: 1
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          updatedAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+    GatewayApiKeyModel:
+      type: object
+      additionalProperties: false
+      required:
+      - gatewayConfigurationId
+      - type
+      properties:
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/GatewayApiKeyType2'
+        enabled:
+          type: boolean
+        resourceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        agentName:
+          type:
+          - string
+          - 'null'
+          maxLength: 128
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GatewayAccessModel:
+      type: object
+      additionalProperties: false
+      required:
+      - gatewayConfigurationId
+      properties:
+        gatewayConfigurationId:
+          type: string
+          format: guid
+          minLength: 1
+        groupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        gatewayUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    BedrockModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        modelName:
+          type: string
+        providerName:
+          type: string
+        baseUrl:
+          type: string
+        type:
+          $ref: '#/components/schemas/BedrockModelType'
+    VertexModelType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gemini
+      - Partner
+      - OpenWeight
+      - SelfDeployed
+      enum:
+      - Gemini
+      - Partner
+      - OpenWeight
+      - SelfDeployed
     GatewayConfigurationModel:
       type: object
       additionalProperties: false
@@ -1516,102 +1452,100 @@ components:
           format: int32
           maximum: 2147483647
           minimum: 0
-    AzureFoundryModelDto:
+    ResilienceRule:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        order:
+          type: integer
+          format: int32
+        mode:
+          $ref: '#/components/schemas/ResilienceMode'
+        rule:
+          oneOf:
+          - $ref: '#/components/schemas/BaseRuleContract'
+        circuitBreaker:
+          oneOf:
+          - $ref: '#/components/schemas/CircuitBreakerConfiguration'
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResilienceTarget'
+        timeoutInSeconds:
+          type: integer
+          format: int32
+        statusCodes:
+          type: array
+          items:
+            type: integer
+            format: int32
+        weight:
+          type: integer
+          format: int32
+    ConfiguredModelEntry:
       type: object
       additionalProperties: false
       properties:
         modelName:
           type: string
-        endpointUrl:
-          type: string
-        apiVersion:
+        aiModelId:
           type:
           - string
           - 'null'
-        baseUrl:
-          type: string
-        modelKind:
-          $ref: '#/components/schemas/AzureFoundryModelKind'
-        deploymentKey:
-          type: string
-    GatewayApiKeyRevocationMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Natural
-      - Immediate
-      enum:
-      - Natural
-      - Immediate
-    GatewayApiKeyType2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
-      enum:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
-    BudgetPeriod:
-      type: string
-      description: ''
-      x-enumNames:
-      - Daily
-      - Weekly
-      - Monthly
-      enum:
-      - Daily
-      - Weekly
-      - Monthly
-    CircuitBreakerConfiguration:
+          format: guid
+        routeThroughAcc:
+          type: boolean
+        accGroup:
+          type:
+          - string
+          - 'null'
+          format: guid
+        url:
+          type:
+          - string
+          - 'null'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PagedResultOfGatewayConfigurationWithId:
       type: object
       additionalProperties: false
       properties:
-        failureThreshold:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayConfigurationWithId'
+        totalCount:
           type: integer
           format: int32
-        timespanWindowInSeconds:
+    EntityNamesResult:
+      type: object
+      additionalProperties: false
+      properties:
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    PagedResultOfGatewayUserAccessDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayUserAccessDto'
+        totalCount:
           type: integer
           format: int32
-        failureRateThreshold:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        cooldownSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    GatewayProviders:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - OpenAI
-      - Anthropic
-      - Gemini
-      - Ollama
-      - AzureFoundry
-      - AwsBedrock
-      - TogetherAI
-      - Replicate
-      - GoogleVertex
-      enum:
-      - Unknown
-      - OpenAI
-      - Anthropic
-      - Gemini
-      - Ollama
-      - AzureFoundry
-      - AwsBedrock
-      - TogetherAI
-      - Replicate
-      - GoogleVertex
     ResilienceTarget:
       type: object
       additionalProperties: false
@@ -1648,6 +1582,60 @@ components:
         weight:
           type: integer
           format: int32
+    AzureFoundryModelKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Chat
+      - Rerank
+      - Embedding
+      enum:
+      - Unknown
+      - Chat
+      - Rerank
+      - Embedding
+    BaseRuleContract:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          provider: '#/components/schemas/ProviderRuleContract'
+          header: '#/components/schemas/HeaderRuleContract'
+          modelName: '#/components/schemas/ModelNameRuleContract'
+          endpoint: '#/components/schemas/EndpointRuleContract'
+          group: '#/components/schemas/RuleGroupContract'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        not:
+          type:
+          - boolean
+          - 'null'
+        $type:
+          type: string
+    VertexApiSurface:
+      type: string
+      description: ''
+      x-enumNames:
+      - GenerateContent
+      - RawPredict
+      - OpenApi
+      enum:
+      - GenerateContent
+      - RawPredict
+      - OpenApi
+    GroupDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
     BudgetDataDto:
       type: object
       additionalProperties: false
@@ -1666,134 +1654,146 @@ components:
         limitAmount:
           type: number
           format: decimal
-    GatewayApiKeyModel:
+    AzureFoundrySyncResult:
       type: object
       additionalProperties: false
-      required:
-      - gatewayConfigurationId
-      - type
       properties:
-        gatewayConfigurationId:
-          type: string
-          format: guid
-          minLength: 1
-        type:
-          $ref: '#/components/schemas/GatewayApiKeyType2'
-        enabled:
-          type: boolean
-        resourceId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        email:
-          type:
-          - string
-          - 'null'
-          format: email
-        agentName:
-          type:
-          - string
-          - 'null'
-          maxLength: 128
-        expiresAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    VertexModelType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Gemini
-      - Partner
-      - OpenWeight
-      - SelfDeployed
-      enum:
-      - Gemini
-      - Partner
-      - OpenWeight
-      - SelfDeployed
-    RuleBehaviorTypes:
-      type: string
-      description: ''
-      x-enumNames:
-      - Continue
-      - Exit
-      enum:
-      - Continue
-      - Exit
-    AiriaLibraryModelDto:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - displayName
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
-        category:
-          type:
-          - string
-          - 'null'
-    GatewayUserAccessDto:
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleContract'
+        deletedRuleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        allowedModelNames:
+          type: array
+          items:
+            type: string
+    RuleContract:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        gatewayConfigurationId:
+        name:
           type: string
-          format: guid
-        gatewayUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userFirstName:
-          type:
-          - string
-          - 'null'
-        userLastName:
-          type:
-          - string
-          - 'null'
-        userGroups:
+        priority:
+          type: integer
+          format: int32
+        condition:
+          $ref: '#/components/schemas/BaseRuleContract'
+        actions:
           type: array
           items:
-            $ref: '#/components/schemas/GroupDto'
-        createdAt:
+            $ref: '#/components/schemas/BaseActionContract'
+        behavior:
+          $ref: '#/components/schemas/RuleBehaviorTypes'
+        origin:
           type:
           - string
           - 'null'
-          format: date-time
-        updatedAt:
+        sourceRef:
           type:
           - string
           - 'null'
-          format: date-time
-    RejectedModelsResponse:
+        displayName:
+          type:
+          - string
+          - 'null'
+    VertexModelDto:
       type: object
       additionalProperties: false
       properties:
-        rejectedModels:
-          type: array
-          items:
-            $ref: '#/components/schemas/RejectedModelEntry'
-    ResilienceMode:
+        modelId:
+          type: string
+        displayName:
+          type: string
+        publisher:
+          type: string
+        type:
+          $ref: '#/components/schemas/VertexModelType'
+        apiSurface:
+          $ref: '#/components/schemas/VertexApiSurface'
+        launchStage:
+          type: string
+    BudgetPeriod:
       type: string
       description: ''
       x-enumNames:
-      - Failover
-      - LoadBalance
-      - LoadBalanceWithFailover
+      - Daily
+      - Weekly
+      - Monthly
       enum:
-      - Failover
-      - LoadBalance
-      - LoadBalanceWithFailover
+      - Daily
+      - Weekly
+      - Monthly
+    GatewayApiKeyRevocationMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Natural
+      - Immediate
+      enum:
+      - Natural
+      - Immediate
+    CircuitBreakerConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        failureThreshold:
+          type: integer
+          format: int32
+        timespanWindowInSeconds:
+          type: integer
+          format: int32
+        failureRateThreshold:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        cooldownSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    BedrockModelType:
+      type: string
+      description: ''
+      x-enumNames:
+      - FoundationModel
+      - InferenceProfile
+      - ApplicationInferenceProfile
+      - ProvisionedModel
+      - CustomModel
+      - ImportedModel
+      enum:
+      - FoundationModel
+      - InferenceProfile
+      - ApplicationInferenceProfile
+      - ProvisionedModel
+      - CustomModel
+      - ImportedModel
+    AzureFoundryModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        modelName:
+          type: string
+        endpointUrl:
+          type: string
+        apiVersion:
+          type:
+          - string
+          - 'null'
+        baseUrl:
+          type: string
+        modelKind:
+          $ref: '#/components/schemas/AzureFoundryModelKind'
+        deploymentKey:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -209,22 +209,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GraphEdgeDto:
-      type: object
-      additionalProperties: false
-      required:
-      - source
-      - target
-      - type
-      properties:
-        source:
-          type: string
-        target:
-          type: string
-        type:
-          type: string
-        label:
-          type: string
     GraphNodeDto:
       type: object
       additionalProperties: false
@@ -252,6 +236,184 @@ components:
           - 'null'
         description:
           type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AttackPathDiffChangeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - current
+      - previousSeverity
+      properties:
+        current:
+          $ref: '#/components/schemas/AttackPathDto'
+        previousScore:
+          type: integer
+          format: int32
+        previousSeverity:
+          type: string
+    AttackPathDiffResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        hasComparison:
+          type: boolean
+        currentRunId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        currentGeneratedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        previousRunId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        previousGeneratedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        newFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
+        resolvedFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
+        changedFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDiffChangeDto'
+    GraphEdgeDto:
+      type: object
+      additionalProperties: false
+      required:
+      - source
+      - target
+      - type
+      properties:
+        source:
+          type: string
+        target:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+    AttackPathRunSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          format: guid
+        status:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        truncated:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
+        findingCount:
+          type: integer
+          format: int32
+    AttackPathRefreshResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    ScoreFactorDto:
+      type: object
+      additionalProperties: false
+      required:
+      - group
+      - factor
+      - evidence
+      properties:
+        group:
+          type: string
+        factor:
+          type: string
+        evidence:
+          type: string
+        points:
+          type: integer
+          format: int32
+    AttackPathGraphStatusResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      properties:
+        status:
+          type: string
+        isRunning:
+          type: boolean
+        generatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        truncated:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeDto'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphEdgeDto'
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
     AttackPathDto:
       type: object
       additionalProperties: false
@@ -297,168 +459,6 @@ components:
             $ref: '#/components/schemas/ScoreFactorDto'
         detectorId:
           type: string
-    AttackPathDiffChangeDto:
-      type: object
-      additionalProperties: false
-      required:
-      - current
-      - previousSeverity
-      properties:
-        current:
-          $ref: '#/components/schemas/AttackPathDto'
-        previousScore:
-          type: integer
-          format: int32
-        previousSeverity:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AttackPathRefreshResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - status
-      - message
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-    AttackPathGraphStatusResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - status
-      properties:
-        status:
-          type: string
-        isRunning:
-          type: boolean
-        generatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        truncated:
-          type: boolean
-        error:
-          type:
-          - string
-          - 'null'
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphNodeDto'
-        edges:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphEdgeDto'
-        paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttackPathDto'
-    AttackPathDiffResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        hasComparison:
-          type: boolean
-        currentRunId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        currentGeneratedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        previousRunId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        previousGeneratedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        newFindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttackPathDto'
-        resolvedFindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttackPathDto'
-        changedFindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttackPathDiffChangeDto'
-    AttackPathRunSummaryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - status
-      properties:
-        id:
-          type: string
-          format: guid
-        status:
-          type: string
-        generatedAt:
-          type: string
-          format: date-time
-        truncated:
-          type: boolean
-        error:
-          type:
-          - string
-          - 'null'
-        findingCount:
-          type: integer
-          format: int32
-    ScoreFactorDto:
-      type: object
-      additionalProperties: false
-      required:
-      - group
-      - factor
-      - evidence
-      properties:
-        group:
-          type: string
-        factor:
-          type: string
-        evidence:
-          type: string
-        points:
-          type: integer
-          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

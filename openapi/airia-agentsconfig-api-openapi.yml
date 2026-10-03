@@ -74,6 +74,120 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AgentDeploymentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+      enum:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PipelineVersion:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineId:
+            type: string
+            format: guid
+          majorVersion:
+            type: integer
+            format: int32
+          minorVersion:
+            type: integer
+            format: int32
+          versionNumber:
+            type: string
+          isDraftVersion:
+            type: boolean
+          isLatest:
+            type: boolean
+          steps:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStep'
+          alignment:
+            $ref: '#/components/schemas/PipelineAlignment'
+          description:
+            type:
+            - string
+            - 'null'
+            maxLength: 1024
+          versionName:
+            type:
+            - string
+            - 'null'
+            maxLength: 256
+          isDeprecated:
+            type: boolean
+          boxedAgentDefinition:
+            type:
+            - string
+            - 'null'
+          overrides:
+            type:
+            - string
+            - 'null'
     PipelineStep:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -178,160 +292,6 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
-    AgentDeploymentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-      enum:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-    AgentBehaviours:
-      type: string
-      description: ''
-      x-enumNames:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
-      enum:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
-    PipelineStepDependency:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          pipelineStepId:
-            type: string
-            format: guid
-          parentId:
-            type: string
-            format: guid
-          parentHandleId:
-            type: string
-            format: guid
-          handleId:
-            type: string
-            format: guid
-    PipelineStepPosition:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          x:
-            type: number
-            format: float
-          y:
-            type: number
-            format: float
-          pipelineStepId:
-            type: string
-            format: guid
-    AgentDetailItem:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        name:
-          type: string
-        value: {}
-        options:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    DeploymentInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        deploymentType:
-          $ref: '#/components/schemas/AgentDeploymentType'
-        pipelineId:
-          type: string
-          format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PipelineAlignment:
-      type: string
-      description: ''
-      x-enumNames:
-      - Horizontal
-      - Vertical
-      enum:
-      - Horizontal
-      - Vertical
     RetryConfiguration:
       type: object
       additionalProperties: false
@@ -360,6 +320,31 @@ components:
           minimum: 1
         useJitter:
           type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     PaginatedAgentDto:
       type: object
       additionalProperties: false
@@ -523,26 +508,66 @@ components:
           format: guid
         isEndUserPrivate:
           type: boolean
-    BaseAuditEntity:
+    AgentDetailItem:
       type: object
-      x-abstract: true
       additionalProperties: false
       properties:
-        createdAt:
+        type:
+          type: string
+        name:
+          type: string
+        value: {}
+        options:
           type:
-          - string
+          - array
           - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
+          items:
+            type: string
+    DeploymentInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
           format: guid
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        pipelineId:
+          type: string
+          format: guid
+    PipelineStepPosition:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          x:
+            type: number
+            format: float
+          y:
+            type: number
+            format: float
+          pipelineStepId:
+            type: string
+            format: guid
+    PipelineStepDependency:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineStepId:
+            type: string
+            format: guid
+          parentId:
+            type: string
+            format: guid
+          parentHandleId:
+            type: string
+            format: guid
+          handleId:
+            type: string
+            format: guid
     ExecutionStats:
       type: object
       additionalProperties: false
@@ -553,55 +578,21 @@ components:
         failureCount:
           type: integer
           format: int32
-    PipelineVersion:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          pipelineId:
-            type: string
-            format: guid
-          majorVersion:
-            type: integer
-            format: int32
-          minorVersion:
-            type: integer
-            format: int32
-          versionNumber:
-            type: string
-          isDraftVersion:
-            type: boolean
-          isLatest:
-            type: boolean
-          steps:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStep'
-          alignment:
-            $ref: '#/components/schemas/PipelineAlignment'
-          description:
-            type:
-            - string
-            - 'null'
-            maxLength: 1024
-          versionName:
-            type:
-            - string
-            - 'null'
-            maxLength: 256
-          isDeprecated:
-            type: boolean
-          boxedAgentDefinition:
-            type:
-            - string
-            - 'null'
-          overrides:
-            type:
-            - string
-            - 'null'
+    AgentBehaviours:
+      type: string
+      description: ''
+      x-enumNames:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+      enum:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
     PipelineStepHandle:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -652,6 +643,15 @@ components:
           projectId:
             type: string
             format: guid
+    PipelineAlignment:
+      type: string
+      description: ''
+      x-enumNames:
+      - Horizontal
+      - Vertical
+      enum:
+      - Horizontal
+      - Vertical
   securitySchemes:
     ApiKey:
       type: apiKey

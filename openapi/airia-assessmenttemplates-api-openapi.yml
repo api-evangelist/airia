@@ -605,6 +605,177 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AssessmentTemplateCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Exploratory
+      - Attestation
+      enum:
+      - Exploratory
+      - Attestation
+    ForkAssessmentTemplateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AssessmentTemplateSubCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+      enum:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+    AssessmentTemplateDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentTemplateListDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          sourceTemplateId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          versions:
+            type: array
+            items:
+              $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
+    AssessmentTemplateVersionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Processing
+      - Completed
+      - Failed
+      enum:
+      - Processing
+      - Completed
+      - Failed
+    UpdateAssessmentTemplateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isActive:
+          type:
+          - boolean
+          - 'null'
+    AssessmentTemplateVersionDetailDto:
+      allOf:
+      - $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          templateStructure:
+            type:
+            - string
+            - 'null'
+    UpdateAssessmentTemplateVersionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        templateStructure:
+          type:
+          - string
+          - 'null'
+        questionCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    PagedResultOfAssessmentTemplateListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateListDto'
+        totalCount:
+          type: integer
+          format: int32
+    AssessmentTemplateScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Organization
+      - UseCase
+      - Asset
+      enum:
+      - Organization
+      - UseCase
+      - Asset
     CreateAssessmentTemplateRequest:
       type: object
       additionalProperties: false
@@ -627,54 +798,6 @@ components:
           format: guid
         fileUrl:
           type: string
-    AssessmentTemplateCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Exploratory
-      - Attestation
-      enum:
-      - Exploratory
-      - Attestation
-    ForkAssessmentTemplateRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-    CreateAssessmentTemplateVersionDraftRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        templateStructure:
-          type:
-          - string
-          - 'null'
-    AssessmentTemplateVersionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Processing
-      - Completed
-      - Failed
-      enum:
-      - Processing
-      - Completed
-      - Failed
     AssessmentTemplateListDto:
       type: object
       additionalProperties: false
@@ -737,145 +860,6 @@ components:
           - string
           - 'null'
           format: guid
-    UpdateAssessmentTemplateVersionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        templateStructure:
-          type:
-          - string
-          - 'null'
-        questionCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    AssessmentTemplateScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Organization
-      - UseCase
-      - Asset
-      enum:
-      - Organization
-      - UseCase
-      - Asset
-    UpdateAssessmentTemplateRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        category:
-          oneOf:
-          - $ref: '#/components/schemas/AssessmentTemplateCategory'
-        scope:
-          oneOf:
-          - $ref: '#/components/schemas/AssessmentTemplateScope'
-        subCategories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
-        frameworkId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isActive:
-          type:
-          - boolean
-          - 'null'
-    AssessmentTemplateSubCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Impact
-      - Risk
-      - Vendor
-      - Register
-      enum:
-      - Impact
-      - Risk
-      - Vendor
-      - Register
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AssessmentTemplateVersionDetailDto:
-      allOf:
-      - $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          templateStructure:
-            type:
-            - string
-            - 'null'
-    AssessmentTemplateDetailDto:
-      allOf:
-      - $ref: '#/components/schemas/AssessmentTemplateListDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          sourceTemplateId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          versions:
-            type: array
-            items:
-              $ref: '#/components/schemas/AssessmentTemplateVersionListDto'
-    PagedResultOfAssessmentTemplateListDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssessmentTemplateListDto'
-        totalCount:
-          type: integer
-          format: int32
     AssessmentTemplateVersionListDto:
       type: object
       additionalProperties: false
@@ -911,6 +895,22 @@ components:
         updatedAt:
           type: string
           format: date-time
+    CreateAssessmentTemplateVersionDraftRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        templateStructure:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

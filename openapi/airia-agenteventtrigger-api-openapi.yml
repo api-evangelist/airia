@@ -487,40 +487,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AgentEventTriggerModel:
-      type: object
-      additionalProperties: false
-      required:
-      - pipelineId
-      - pipelineVersionId
-      - eventTypeName
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        pipelineVersionId:
-          type: string
-          format: guid
-        eventTypeName:
-          type: string
-          maxLength: 128
-          minLength: 0
-        filters:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        triggerMode:
-          $ref: '#/components/schemas/AgentEventTriggerMode'
-        enabled:
-          type: boolean
-    ExecuteAgentEventTriggerResponse:
+    TestFireAgentEventTriggerResponse:
       type: object
       additionalProperties: false
       properties:
@@ -544,13 +511,13 @@ components:
             type: array
             items:
               type: string
-    TestFireAgentEventTriggerRequest:
+    ExecuteAgentEventTriggerRequest:
       type: object
       additionalProperties: false
       required:
-      - payload
+      - context
       properties:
-        payload:
+        context:
           type: object
           additionalProperties: {}
     ProblemDetails:
@@ -603,22 +570,55 @@ components:
       - FirstOccurrenceOnly
       - EveryOccurrence
       - OnDemand
-    ExecuteAgentEventTriggerRequest:
+    TestFireAgentEventTriggerRequest:
       type: object
       additionalProperties: false
       required:
-      - context
+      - payload
       properties:
-        context:
+        payload:
           type: object
           additionalProperties: {}
-    TestFireAgentEventTriggerResponse:
+    ExecuteAgentEventTriggerResponse:
       type: object
       additionalProperties: false
       properties:
         executionId:
           type: string
           format: guid
+    AgentEventTriggerModel:
+      type: object
+      additionalProperties: false
+      required:
+      - pipelineId
+      - pipelineVersionId
+      - eventTypeName
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        eventTypeName:
+          type: string
+          maxLength: 128
+          minLength: 0
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          $ref: '#/components/schemas/AgentEventTriggerMode'
+        enabled:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

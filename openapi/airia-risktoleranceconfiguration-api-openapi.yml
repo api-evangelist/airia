@@ -138,24 +138,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SetRiskDomainToleranceOverrideRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - maxRiskLevel
-      properties:
-        maxRiskLevel:
-          $ref: '#/components/schemas/RiskLevel'
-    RiskToleranceConfigurationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        posture:
-          $ref: '#/components/schemas/RiskTolerancePosture'
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskDomainToleranceItem'
     RiskLevel:
       type: string
       description: ''
@@ -214,6 +196,14 @@ components:
           type:
           - string
           - 'null'
+    SetRiskTolerancePostureRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - posture
+      properties:
+        posture:
+          $ref: '#/components/schemas/RiskTolerancePosture'
     RiskTolerancePosture:
       type: string
       description: ''
@@ -227,14 +217,24 @@ components:
       - Conservative
       - Balanced
       - Progressive
-    SetRiskTolerancePostureRequest:
+    RiskToleranceConfigurationResponse:
       type: object
       additionalProperties: false
-      required:
-      - posture
       properties:
         posture:
           $ref: '#/components/schemas/RiskTolerancePosture'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDomainToleranceItem'
+    SetRiskDomainToleranceOverrideRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - maxRiskLevel
+      properties:
+        maxRiskLevel:
+          $ref: '#/components/schemas/RiskLevel'
   securitySchemes:
     ApiKey:
       type: apiKey

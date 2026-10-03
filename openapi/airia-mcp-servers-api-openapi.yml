@@ -100,6 +100,110 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    McpGetAvailableToolsBody:
+      type: object
+      additionalProperties: false
+      required:
+      - toolType
+      properties:
+        toolType:
+          $ref: '#/components/schemas/ToolType'
+        mcpServerUrl:
+          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        headers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolHeaderModel'
+        credentialsSourceType:
+          oneOf:
+          - $ref: '#/components/schemas/SourceType'
+        credentialConnectorId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useJwtForwarding:
+          type: boolean
+        routeThroughACC:
+          type: boolean
+        isPersonal:
+          type: boolean
+        accGroup:
+          type:
+          - string
+          - 'null'
+        toolDefinitionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    McpServerInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        serverName:
+          type: string
+        version:
+          type: string
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpToolInfo'
+    McpToolInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpToolParametersInfo'
+    McpToolParametersInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        schema: {}
+        isRequired:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     ToolType:
       type: string
       description: ''
@@ -427,17 +531,6 @@ components:
       - McpInternalAiriaPlatformSecurity
       - McpInternalAiriaPlatformGovernance
       - GetFileLink
-    McpToolParametersInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        schema: {}
-        isRequired:
-          type: boolean
     ToolHeaderModel:
       type: object
       additionalProperties: false
@@ -448,55 +541,6 @@ components:
           type: string
         sensitive:
           type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    McpServerInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        serverName:
-          type: string
-        version:
-          type: string
-        tools:
-          type: array
-          items:
-            $ref: '#/components/schemas/McpToolInfo'
-    McpToolInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/McpToolParametersInfo'
     SourceType:
       type: string
       description: ''
@@ -506,50 +550,6 @@ components:
       enum:
       - userProvided
       - library
-    McpGetAvailableToolsBody:
-      type: object
-      additionalProperties: false
-      required:
-      - toolType
-      properties:
-        toolType:
-          $ref: '#/components/schemas/ToolType'
-        mcpServerUrl:
-          type: string
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        headers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolHeaderModel'
-        credentialsSourceType:
-          oneOf:
-          - $ref: '#/components/schemas/SourceType'
-        credentialConnectorId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        useJwtForwarding:
-          type: boolean
-        routeThroughACC:
-          type: boolean
-        isPersonal:
-          type: boolean
-        accGroup:
-          type:
-          - string
-          - 'null'
-        toolDefinitionId:
-          type:
-          - string
-          - 'null'
-          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

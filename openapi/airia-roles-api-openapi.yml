@@ -411,28 +411,6 @@ components:
         totalCount:
           type: integer
           format: int32
-    RoleViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
     PagedResultOfRoleUserAssignmentViewModel:
       type: object
       additionalProperties: false
@@ -492,6 +470,28 @@ components:
           format: date-time
         orphaned:
           type: boolean
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
     RolePoliciesViewModel:
       type: object
       additionalProperties: false

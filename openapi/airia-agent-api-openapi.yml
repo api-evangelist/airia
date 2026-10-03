@@ -92,73 +92,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AgentCardSignature:
-      type: object
-      additionalProperties: false
-      properties:
-        protected:
-          type: string
-        signature:
-          type: string
-        header:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    SecurityRequirement:
-      type: object
-      additionalProperties: false
-      properties:
-        schemes:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    AgentCapabilities:
-      type: object
-      additionalProperties: false
-      properties:
-        streaming:
-          type:
-          - boolean
-          - 'null'
-        pushNotifications:
-          type:
-          - boolean
-          - 'null'
-        extendedAgentCard:
-          type:
-          - boolean
-          - 'null'
-        extensions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentExtension'
-    AgentProvider:
-      type: object
-      additionalProperties: false
-      properties:
-        organization:
-          type: string
-        url:
-          type: string
-    AgentInterface:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        protocolBinding:
-          type: string
-        protocolVersion:
-          type: string
-        tenant:
-          type:
-          - string
-          - 'null'
     SecurityScheme:
       type: object
       discriminator:
@@ -180,69 +113,6 @@ components:
           - 'null'
         type:
           type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AgentSkill:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        examples:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        inputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        outputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement'
     AgentCardModel:
       type: object
       additionalProperties: false
@@ -309,6 +179,83 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AgentSkill'
+    AgentInterface:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        protocolBinding:
+          type: string
+        protocolVersion:
+          type: string
+        tenant:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentSkill:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        examples:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        inputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement'
     AgentExtension:
       type: object
       additionalProperties: false
@@ -328,6 +275,59 @@ components:
           - object
           - 'null'
           additionalProperties: {}
+    AgentProvider:
+      type: object
+      additionalProperties: false
+      properties:
+        organization:
+          type: string
+        url:
+          type: string
+    AgentCapabilities:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension'
+    AgentCardSignature:
+      type: object
+      additionalProperties: false
+      properties:
+        protected:
+          type: string
+        signature:
+          type: string
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    SecurityRequirement:
+      type: object
+      additionalProperties: false
+      properties:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
   securitySchemes:
     ApiKey:
       type: apiKey

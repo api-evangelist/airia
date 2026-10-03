@@ -80,14 +80,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MdmEnrollmentStatusResponse:
+    RecordMdmEnrollmentRequest:
       type: object
       additionalProperties: false
+      required:
+      - provider
       properties:
-        providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MdmProvider'
+        provider:
+          $ref: '#/components/schemas/MdmProvider'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -126,14 +126,14 @@ components:
       - Kandji
       - JamfPro
       - BigFix
-    RecordMdmEnrollmentRequest:
+    MdmEnrollmentStatusResponse:
       type: object
       additionalProperties: false
-      required:
-      - provider
       properties:
-        provider:
-          $ref: '#/components/schemas/MdmProvider'
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MdmProvider'
   securitySchemes:
     ApiKey:
       type: apiKey

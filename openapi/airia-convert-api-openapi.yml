@@ -177,6 +177,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ConvertCsvToPptxResponseV2:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ConvertCsvToXlsxResponseV2:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int64
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -202,28 +224,6 @@ components:
           type:
           - string
           - 'null'
-    ConvertCsvToPptxResponseV2:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        duration:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    ConvertCsvToXlsxResponseV2:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        duration:
-          type:
-          - integer
-          - 'null'
-          format: int64
   securitySchemes:
     ApiKey:
       type: apiKey

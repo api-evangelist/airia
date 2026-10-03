@@ -62,58 +62,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    NistAiRmfTier:
+    Iso42001Level:
       type: string
       description: ''
       x-enumNames:
-      - Tier1
-      - Tier2
-      - Tier3
-      - Tier4
-      - Tier5
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
       - NotApplicable
       enum:
-      - Tier1
-      - Tier2
-      - Tier3
-      - Tier4
-      - Tier5
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
       - NotApplicable
-    UsecaseRiskClassificationMessageRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseDescription
-      properties:
-        useCaseId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        useCaseDescription:
-          type: string
-          minLength: 1
-        agentIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        userMessage:
-          type:
-          - string
-          - 'null'
-        conversationHistory:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UsecaseRiskClassificationHistoryMessage'
-        organizationalContext:
-          type:
-          - string
-          - 'null'
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -139,51 +119,6 @@ components:
           type:
           - string
           - 'null'
-    UsecaseRiskClassificationHistoryMessage:
-      type: object
-      additionalProperties: false
-      required:
-      - role
-      - message
-      properties:
-        role:
-          type: string
-          minLength: 1
-        message:
-          type: string
-          minLength: 1
-    EuAiActCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-      enum:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-    Iso42001Level:
-      type: string
-      description: ''
-      x-enumNames:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-      enum:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
     UsecaseRiskClassificationMessageResponse:
       type: object
       additionalProperties: false
@@ -197,6 +132,23 @@ components:
         savedClassification:
           oneOf:
           - $ref: '#/components/schemas/UseCaseRiskClassificationDto'
+    NistAiRmfTier:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
+      enum:
+      - Tier1
+      - Tier2
+      - Tier3
+      - Tier4
+      - Tier5
+      - NotApplicable
     UseCaseRiskClassificationDto:
       type: object
       additionalProperties: false
@@ -262,6 +214,54 @@ components:
           - string
           - 'null'
           format: guid
+    UsecaseRiskClassificationHistoryMessage:
+      type: object
+      additionalProperties: false
+      required:
+      - role
+      - message
+      properties:
+        role:
+          type: string
+          minLength: 1
+        message:
+          type: string
+          minLength: 1
+    UsecaseRiskClassificationMessageRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseDescription
+      properties:
+        useCaseId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        useCaseDescription:
+          type: string
+          minLength: 1
+        agentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        userMessage:
+          type:
+          - string
+          - 'null'
+        conversationHistory:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UsecaseRiskClassificationHistoryMessage'
+        organizationalContext:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

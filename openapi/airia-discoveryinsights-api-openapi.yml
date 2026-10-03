@@ -549,20 +549,30 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DiscoveryInsightEntityRowDto:
-      type: object
-      additionalProperties: false
-      properties:
-        entityKey:
-          type: string
-        displayLabel:
-          type: string
-        entityKind:
-          $ref: '#/components/schemas/DiscoveryInsightEntityKind'
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
+    DiscoveryInsightEntityKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Person
+      - Model
+      - Grant
+      - Device
+      enum:
+      - Person
+      - Model
+      - Grant
+      - Device
+    DiscoveryInsightDenominatorState:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotApplicable
+      - CountsOnly
+      - Percent
+      enum:
+      - NotApplicable
+      - CountsOnly
+      - Percent
     DiscoveryInsightProvenanceReadDto:
       type: object
       additionalProperties: false
@@ -577,17 +587,108 @@ components:
           type:
           - string
           - 'null'
-    DiscoveryInsightDenominatorState:
+    DiscoveryInsightMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        labelKey:
+          type: string
+        value: {}
+        unitKey:
+          type:
+          - string
+          - 'null'
+        formulaKey:
+          type:
+          - string
+          - 'null'
+        formulaParams:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        valueState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryMetricValueState'
+        higherIsBetter:
+          type:
+          - boolean
+          - 'null'
+        exitCriterionState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryExitCriterionState'
+        surfaceVerdict:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryScorecardSurfaceVerdict'
+        scorecardSurfaceKey:
+          type:
+          - string
+          - 'null'
+    DiscoveryExitCriterionState:
       type: string
       description: ''
       x-enumNames:
       - NotApplicable
-      - CountsOnly
-      - Percent
+      - Met
+      - Missed
       enum:
       - NotApplicable
-      - CountsOnly
-      - Percent
+      - Met
+      - Missed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DiscoveryInsightNarrativeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        templateKey:
+          type: string
+        params:
+          type: object
+          additionalProperties: {}
+        isGenerated:
+          type: boolean
+    DiscoveryInsightEntityRowDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entityKey:
+          type: string
+        displayLabel:
+          type: string
+        entityKind:
+          $ref: '#/components/schemas/DiscoveryInsightEntityKind'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
     DiscoveryMetricValueState:
       type: string
       description: ''
@@ -601,6 +702,27 @@ components:
       - Floor
       - Unavailable
       - Estimated
+    DiscoveryInsightProvenanceEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        metricKey:
+          type: string
+        reads:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightProvenanceReadDto'
+        derivationKey:
+          type: string
+        derivationParams:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        caveatKeys:
+          type: array
+          items:
+            type: string
     DiscoveryInsightResultDto:
       type: object
       additionalProperties: false
@@ -661,128 +783,6 @@ components:
       - NotStarted
       - Flat
       - Improving
-    DiscoveryInsightProvenanceEntryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        metricKey:
-          type: string
-        reads:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryInsightProvenanceReadDto'
-        derivationKey:
-          type: string
-        derivationParams:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        caveatKeys:
-          type: array
-          items:
-            type: string
-    DiscoveryExitCriterionState:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotApplicable
-      - Met
-      - Missed
-      enum:
-      - NotApplicable
-      - Met
-      - Missed
-    DiscoveryInsightNarrativeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        templateKey:
-          type: string
-        params:
-          type: object
-          additionalProperties: {}
-        isGenerated:
-          type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    DiscoveryInsightEntityKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Person
-      - Model
-      - Grant
-      - Device
-      enum:
-      - Person
-      - Model
-      - Grant
-      - Device
-    DiscoveryInsightMetricDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        labelKey:
-          type: string
-        value: {}
-        unitKey:
-          type:
-          - string
-          - 'null'
-        formulaKey:
-          type:
-          - string
-          - 'null'
-        formulaParams:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        valueState:
-          oneOf:
-          - $ref: '#/components/schemas/DiscoveryMetricValueState'
-        higherIsBetter:
-          type:
-          - boolean
-          - 'null'
-        exitCriterionState:
-          oneOf:
-          - $ref: '#/components/schemas/DiscoveryExitCriterionState'
-        surfaceVerdict:
-          oneOf:
-          - $ref: '#/components/schemas/DiscoveryScorecardSurfaceVerdict'
-        scorecardSurfaceKey:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -617,6 +617,16 @@ components:
         createdAt:
           oneOf:
           - $ref: '#/components/schemas/Timestamp'
+    Timestamp:
+      type: object
+      additionalProperties: false
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
     AuditChange:
       type: object
       additionalProperties: false
@@ -633,6 +643,254 @@ components:
           type:
           - string
           - 'null'
+    Resource:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        tenantId:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+        activeVersionId:
+          type:
+          - string
+          - 'null'
+    Actor:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        role:
+          type:
+          - string
+          - 'null'
+    AuditEventSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
+    AuditOperation:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Read
+      - Update
+      - Edit
+      - Delete
+      - Publish
+      - SetActiveVersion
+      - Toggle
+      - Upload
+      - PermissionToggle
+      - AutoAddFundsToggle
+      - SettingsChanged
+      - CreateInvitation
+      - Login
+      - Logout
+      - PasswordReset
+      - PermissionGranted
+      - PermissionRevoked
+      - Export
+      - Import
+      - Configure
+      - RoleAssigned
+      - RoleRevoked
+      - RoleChanged
+      - Enable
+      - Disable
+      - AuthenticationSuccess
+      - AuthenticationFailure
+      - SessionTermination
+      - PasswordSet
+      - PasswordChange
+      - Attach
+      - Detach
+      - Assign
+      - Unassign
+      - CanvasOperationAdd
+      - CanvasOperationRemove
+      - PolicyViolation
+      - DlpViolation
+      - AnomalyDetected
+      - DataAccess
+      - DataExport
+      - AuditAccess
+      - Execute
+      - Approve
+      - Reject
+      - Impersonate
+      - Password
+      - Access
+      - Unpublish
+      - Grant
+      - Revoke
+      enum:
+      - Create
+      - Read
+      - Update
+      - Edit
+      - Delete
+      - Publish
+      - SetActiveVersion
+      - Toggle
+      - Upload
+      - PermissionToggle
+      - AutoAddFundsToggle
+      - SettingsChanged
+      - CreateInvitation
+      - Login
+      - Logout
+      - PasswordReset
+      - PermissionGranted
+      - PermissionRevoked
+      - Export
+      - Import
+      - Configure
+      - RoleAssigned
+      - RoleRevoked
+      - RoleChanged
+      - Enable
+      - Disable
+      - AuthenticationSuccess
+      - AuthenticationFailure
+      - SessionTermination
+      - PasswordSet
+      - PasswordChange
+      - Attach
+      - Detach
+      - Assign
+      - Unassign
+      - CanvasOperationAdd
+      - CanvasOperationRemove
+      - PolicyViolation
+      - DlpViolation
+      - AnomalyDetected
+      - DataAccess
+      - DataExport
+      - AuditAccess
+      - Execute
+      - Approve
+      - Reject
+      - Impersonate
+      - Password
+      - Access
+      - Unpublish
+      - Grant
+      - Revoke
+    SearchAuditEntriesOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entries:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEntry'
+          totalCount:
+            type: integer
+            format: int32
+          page:
+            type: integer
+            format: int32
+          pageSize:
+            type: integer
+            format: int32
+    GetAuditEntryOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entry:
+            oneOf:
+            - $ref: '#/components/schemas/AuditEntry'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GetAuditEntriesOperationResponse:
+      allOf:
+      - $ref: '#/components/schemas/AuditLogOperationResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          entries:
+            type: array
+            items:
+              $ref: '#/components/schemas/AuditEntry'
+          totalCount:
+            type: integer
+            format: int32
+          page:
+            type: integer
+            format: int32
+          pageSize:
+            type: integer
+            format: int32
+          hasMore:
+            type: boolean
     ResourceType:
       type: string
       description: ''
@@ -748,134 +1006,6 @@ components:
       - DocumentGeneration
       - PointOfUseDisclosure
       - DisclosureTemplate
-    AuditEventSeverity:
-      type: string
-      description: ''
-      x-enumNames:
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - Low
-      - Medium
-      - High
-      - Critical
-    GetAuditEntryOperationResponse:
-      allOf:
-      - $ref: '#/components/schemas/AuditLogOperationResponse'
-      - type: object
-        additionalProperties: false
-        properties:
-          entry:
-            oneOf:
-            - $ref: '#/components/schemas/AuditEntry'
-    Resource:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        tenantId:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-        activeVersionId:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    Timestamp:
-      type: object
-      additionalProperties: false
-      properties:
-        seconds:
-          type: integer
-          format: int64
-        nanos:
-          type: integer
-          format: int32
-    SearchAuditEntriesOperationResponse:
-      allOf:
-      - $ref: '#/components/schemas/AuditLogOperationResponse'
-      - type: object
-        additionalProperties: false
-        properties:
-          entries:
-            type: array
-            items:
-              $ref: '#/components/schemas/AuditEntry'
-          totalCount:
-            type: integer
-            format: int32
-          page:
-            type: integer
-            format: int32
-          pageSize:
-            type: integer
-            format: int32
-    Actor:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        role:
-          type:
-          - string
-          - 'null'
     AuditLogOperationResponse:
       type: object
       additionalProperties: false
@@ -886,136 +1016,6 @@ components:
           type:
           - string
           - 'null'
-    AuditOperation:
-      type: string
-      description: ''
-      x-enumNames:
-      - Create
-      - Read
-      - Update
-      - Edit
-      - Delete
-      - Publish
-      - SetActiveVersion
-      - Toggle
-      - Upload
-      - PermissionToggle
-      - AutoAddFundsToggle
-      - SettingsChanged
-      - CreateInvitation
-      - Login
-      - Logout
-      - PasswordReset
-      - PermissionGranted
-      - PermissionRevoked
-      - Export
-      - Import
-      - Configure
-      - RoleAssigned
-      - RoleRevoked
-      - RoleChanged
-      - Enable
-      - Disable
-      - AuthenticationSuccess
-      - AuthenticationFailure
-      - SessionTermination
-      - PasswordSet
-      - PasswordChange
-      - Attach
-      - Detach
-      - Assign
-      - Unassign
-      - CanvasOperationAdd
-      - CanvasOperationRemove
-      - PolicyViolation
-      - DlpViolation
-      - AnomalyDetected
-      - DataAccess
-      - DataExport
-      - AuditAccess
-      - Execute
-      - Approve
-      - Reject
-      - Impersonate
-      - Password
-      - Access
-      - Unpublish
-      - Grant
-      - Revoke
-      enum:
-      - Create
-      - Read
-      - Update
-      - Edit
-      - Delete
-      - Publish
-      - SetActiveVersion
-      - Toggle
-      - Upload
-      - PermissionToggle
-      - AutoAddFundsToggle
-      - SettingsChanged
-      - CreateInvitation
-      - Login
-      - Logout
-      - PasswordReset
-      - PermissionGranted
-      - PermissionRevoked
-      - Export
-      - Import
-      - Configure
-      - RoleAssigned
-      - RoleRevoked
-      - RoleChanged
-      - Enable
-      - Disable
-      - AuthenticationSuccess
-      - AuthenticationFailure
-      - SessionTermination
-      - PasswordSet
-      - PasswordChange
-      - Attach
-      - Detach
-      - Assign
-      - Unassign
-      - CanvasOperationAdd
-      - CanvasOperationRemove
-      - PolicyViolation
-      - DlpViolation
-      - AnomalyDetected
-      - DataAccess
-      - DataExport
-      - AuditAccess
-      - Execute
-      - Approve
-      - Reject
-      - Impersonate
-      - Password
-      - Access
-      - Unpublish
-      - Grant
-      - Revoke
-    GetAuditEntriesOperationResponse:
-      allOf:
-      - $ref: '#/components/schemas/AuditLogOperationResponse'
-      - type: object
-        additionalProperties: false
-        properties:
-          entries:
-            type: array
-            items:
-              $ref: '#/components/schemas/AuditEntry'
-          totalCount:
-            type: integer
-            format: int32
-          page:
-            type: integer
-            format: int32
-          pageSize:
-            type: integer
-            format: int32
-          hasMore:
-            type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

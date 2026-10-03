@@ -179,30 +179,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RiskProfileFrameworkDto:
-      type: object
-      additionalProperties: false
-      required:
-      - frameworkKey
-      properties:
-        frameworkKey:
-          type: string
-        classificationValue:
-          type:
-          - string
-          - 'null'
-        confidence:
-          type:
-          - string
-          - 'null'
-        rationale:
-          type:
-          - string
-          - 'null'
-        applicability:
-          type:
-          - string
-          - 'null'
     RiskProfileSubdomainDto:
       type: object
       additionalProperties: false
@@ -284,6 +260,177 @@ components:
           type: array
           items:
             type: string
+    RiskProfileFrameworkDto:
+      type: object
+      additionalProperties: false
+      required:
+      - frameworkKey
+      properties:
+        frameworkKey:
+          type: string
+        classificationValue:
+          type:
+          - string
+          - 'null'
+        confidence:
+          type:
+          - string
+          - 'null'
+        rationale:
+          type:
+          - string
+          - 'null'
+        applicability:
+          type:
+          - string
+          - 'null'
+    RiskProfileDto:
+      type: object
+      additionalProperties: false
+      properties:
+        governanceScoreInherent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        governanceScoreResidual:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        needsInherentRerun:
+          type: boolean
+        needsResidualRerun:
+          type: boolean
+        frameworks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskProfileFrameworkDto'
+        subdomains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskProfileSubdomainDto'
+        evidenceRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEvidenceRequestDto'
+        scoreBreakdownInherent:
+          oneOf:
+          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
+        scoreBreakdownResidual:
+          oneOf:
+          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UseCaseStage:
+      type: string
+      description: ''
+      x-enumNames:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+      enum:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+    RiskAnalysisRunStatusDto:
+      type: object
+      additionalProperties: false
+      required:
+      - runId
+      - useCaseId
+      - state
+      properties:
+        runId:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        state:
+          type: string
+        runType:
+          type: string
+        isInProgress:
+          type: boolean
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        failureReason:
+          type:
+          - string
+          - 'null'
+        attemptCount:
+          type: integer
+          format: int32
+        contextGaps:
+          type: array
+          items:
+            type: string
+    RiskEvidenceRequestDto:
+      type: object
+      additionalProperties: false
+      required:
+      - subDomainName
+      - field
+      - phase
+      properties:
+        subDomainName:
+          type: string
+        field:
+          type: string
+        phase:
+          type: string
     RiskScoreBreakdownDto:
       type: object
       additionalProperties: false
@@ -331,33 +478,6 @@ components:
           - integer
           - 'null'
           format: int32
-    UseCaseStage:
-      type: string
-      description: ''
-      x-enumNames:
-      - Discover
-      - Register
-      - Triage
-      - Assess
-      - BuildAndConnect
-      - Mitigate
-      - Approve
-      - Monitor
-      - Quarantine
-      - Change
-      - Archive
-      enum:
-      - Discover
-      - Register
-      - Triage
-      - Assess
-      - BuildAndConnect
-      - Mitigate
-      - Approve
-      - Monitor
-      - Quarantine
-      - Change
-      - Archive
     RiskRecomputeRequest:
       type: object
       additionalProperties: false
@@ -365,98 +485,19 @@ components:
         stage:
           oneOf:
           - $ref: '#/components/schemas/UseCaseStage'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    RiskScoreFrameworkContributionDto:
+    RiskAnalysisStartRequest:
       type: object
       additionalProperties: false
       required:
-      - frameworkKey
-      - score
+      - useCaseDescription
       properties:
-        frameworkKey:
+        useCaseDescription:
           type: string
-        score:
-          type: integer
-          format: int32
-    RiskEvidenceRequestDto:
-      type: object
-      additionalProperties: false
-      required:
-      - subDomainName
-      - field
-      - phase
-      properties:
-        subDomainName:
-          type: string
-        field:
-          type: string
-        phase:
-          type: string
-    RiskAnalysisRunStatusDto:
-      type: object
-      additionalProperties: false
-      required:
-      - runId
-      - useCaseId
-      - state
-      properties:
-        runId:
-          type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
-        state:
-          type: string
-        runType:
-          type: string
-        isInProgress:
-          type: boolean
-        startedAt:
+          minLength: 1
+        organizationalContext:
           type:
           - string
           - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        failureReason:
-          type:
-          - string
-          - 'null'
-        attemptCount:
-          type: integer
-          format: int32
-        contextGaps:
-          type: array
-          items:
-            type: string
     LikelihoodDriversDto:
       type: object
       additionalProperties: false
@@ -478,59 +519,18 @@ components:
         inputSurface:
           type: integer
           format: int32
-    RiskProfileDto:
-      type: object
-      additionalProperties: false
-      properties:
-        governanceScoreInherent:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        governanceScoreResidual:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        governanceLevel:
-          type:
-          - string
-          - 'null'
-        needsInherentRerun:
-          type: boolean
-        needsResidualRerun:
-          type: boolean
-        frameworks:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskProfileFrameworkDto'
-        subdomains:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskProfileSubdomainDto'
-        evidenceRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskEvidenceRequestDto'
-        scoreBreakdownInherent:
-          oneOf:
-          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
-        scoreBreakdownResidual:
-          oneOf:
-          - $ref: '#/components/schemas/RiskScoreBreakdownDto'
-    RiskAnalysisStartRequest:
+    RiskScoreFrameworkContributionDto:
       type: object
       additionalProperties: false
       required:
-      - useCaseDescription
+      - frameworkKey
+      - score
       properties:
-        useCaseDescription:
+        frameworkKey:
           type: string
-          minLength: 1
-        organizationalContext:
-          type:
-          - string
-          - 'null'
+        score:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

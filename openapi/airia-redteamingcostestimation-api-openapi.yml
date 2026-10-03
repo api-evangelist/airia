@@ -264,49 +264,253 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ModelCostBreakdown:
+    RedTeamingCampaignType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DatasetBased
+      - AgenticAI
+      enum:
+      - DatasetBased
+      - AgenticAI
+    ProviderType:
+      type: string
+      description: ''
+      x-enumNames:
+      - OpenAI
+      - Ollama
+      - Azure
+      - HuggingFace
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - Ai21
+      - Cohere
+      - Google
+      - TogetherAI
+      - XAI
+      - Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - GoogleVertex
+      enum:
+      - OpenAI
+      - Ollama
+      - Azure
+      - Hugging Face
+      - Anthropic
+      - AzureAIStudio
+      - OpenVINO
+      - PyTorch
+      - Replicate
+      - Stability
+      - Mistral
+      - Perplexity
+      - WatsonAix
+      - AI21
+      - Cohere
+      - Google
+      - Together AI
+      - xAI
+      - Amazon Bedrock
+      - Compass
+      - AzureML
+      - Unknown
+      - Alibaba
+      - GenericOpenAI
+      - GenericAnthropic
+      - Google Vertex AI
+    ScheduleModel:
       type: object
       additionalProperties: false
       properties:
-        modelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        modelName:
-          type: string
-        provider:
-          $ref: '#/components/schemas/ProviderType'
-        inputTokens:
+        second:
           type: integer
           format: int32
-        outputTokens:
+          maximum: 59
+          minimum: 0
+        minute:
           type: integer
           format: int32
-        inputTokenCost:
-          type: number
-          format: decimal
-        outputTokenCost:
-          type: number
-          format: decimal
-        totalCost:
-          type: number
-          format: decimal
-        modelInputTokenPrice:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        modelOutputTokenPrice:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        modelTokenUnits:
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
           type:
           - integer
           - 'null'
           format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    ExternalAgentHttpConfigurationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointUrl
+      - httpMethod
+      properties:
+        endpointUrl:
+          type: string
+          format: uri
+          maxLength: 2000
+          minLength: 1
+        httpMethod:
+          type: string
+          maxLength: 10
+          minLength: 1
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        headersJson:
+          type:
+          - string
+          - 'null'
+        bodyTemplate:
+          type:
+          - string
+          - 'null'
+        responseJsonPath:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+        timeoutMs:
+          type: integer
+          format: int32
+          maximum: 60000
+          minimum: 1000
+        queryStringsJson:
+          type:
+          - string
+          - 'null'
+        ignoreSslErrors:
+          type: boolean
+        bodyType:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
     RedTeamingCampaignCostEstimate:
       type: object
       additionalProperties: false
@@ -373,116 +577,21 @@ components:
         campaignModelCosts:
           oneOf:
           - $ref: '#/components/schemas/ModelCostBreakdown'
-    RedTeamingCampaignType:
+    MonthlyWeekOccurrence:
       type: string
       description: ''
       x-enumNames:
-      - DatasetBased
-      - AgenticAI
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
       enum:
-      - DatasetBased
-      - AgenticAI
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ProviderType:
-      type: string
-      description: ''
-      x-enumNames:
-      - OpenAI
-      - Ollama
-      - Azure
-      - HuggingFace
-      - Anthropic
-      - AzureAIStudio
-      - OpenVINO
-      - PyTorch
-      - Replicate
-      - Stability
-      - Mistral
-      - Perplexity
-      - WatsonAix
-      - Ai21
-      - Cohere
-      - Google
-      - TogetherAI
-      - XAI
-      - Bedrock
-      - Compass
-      - AzureML
-      - Unknown
-      - Alibaba
-      - GenericOpenAI
-      - GenericAnthropic
-      - GoogleVertex
-      enum:
-      - OpenAI
-      - Ollama
-      - Azure
-      - Hugging Face
-      - Anthropic
-      - AzureAIStudio
-      - OpenVINO
-      - PyTorch
-      - Replicate
-      - Stability
-      - Mistral
-      - Perplexity
-      - WatsonAix
-      - AI21
-      - Cohere
-      - Google
-      - Together AI
-      - xAI
-      - Amazon Bedrock
-      - Compass
-      - AzureML
-      - Unknown
-      - Alibaba
-      - GenericOpenAI
-      - GenericAnthropic
-      - Google Vertex AI
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
     DayOfWeek:
       type: string
       description: ''
@@ -502,17 +611,60 @@ components:
       - Thursday
       - Friday
       - Saturday
-    ModelIdentifierType:
+    ModelCostBreakdown:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelName:
+          type: string
+        provider:
+          $ref: '#/components/schemas/ProviderType'
+        inputTokens:
+          type: integer
+          format: int32
+        outputTokens:
+          type: integer
+          format: int32
+        inputTokenCost:
+          type: number
+          format: decimal
+        outputTokenCost:
+          type: number
+          format: decimal
+        totalCost:
+          type: number
+          format: decimal
+        modelInputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelOutputTokenPrice:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        modelTokenUnits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    TokenCountAccuracy:
       type: string
       description: ''
       x-enumNames:
-      - None
-      - Library
-      - Project
+      - High
+      - Low
+      - NotAvailable
       enum:
-      - None
-      - Library
-      - Project
+      - High
+      - Low
+      - NotAvailable
     CreateAgenticAiRedTeamingCampaignRequest:
       type: object
       additionalProperties: false
@@ -594,158 +746,6 @@ components:
             type: string
         campaignType:
           $ref: '#/components/schemas/RedTeamingCampaignType'
-    ScheduleModel:
-      type: object
-      additionalProperties: false
-      properties:
-        second:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        minute:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        hour:
-          type: integer
-          format: int32
-          maximum: 23
-          minimum: 0
-        executionHour:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 23
-          minimum: 0
-        day:
-          type: integer
-          format: int32
-          maximum: 31
-          minimum: 1
-        month:
-          type: integer
-          format: int32
-          maximum: 12
-          minimum: 1
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        daysOfWeek:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DayOfWeek'
-        monthlyWeekOccurrence:
-          oneOf:
-          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
-        timeZoneId:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          minLength: 0
-        year:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 2099
-          minimum: 1970
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    TokenCountAccuracy:
-      type: string
-      description: ''
-      x-enumNames:
-      - High
-      - Low
-      - NotAvailable
-      enum:
-      - High
-      - Low
-      - NotAvailable
-    MonthlyWeekOccurrence:
-      type: string
-      description: ''
-      x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-    ExternalAgentHttpConfigurationDto:
-      type: object
-      additionalProperties: false
-      required:
-      - endpointUrl
-      - httpMethod
-      properties:
-        endpointUrl:
-          type: string
-          format: uri
-          maxLength: 2000
-          minLength: 1
-        httpMethod:
-          type: string
-          maxLength: 10
-          minLength: 1
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        headersJson:
-          type:
-          - string
-          - 'null'
-        bodyTemplate:
-          type:
-          - string
-          - 'null'
-        responseJsonPath:
-          type:
-          - string
-          - 'null'
-          maxLength: 500
-        timeoutMs:
-          type: integer
-          format: int32
-          maximum: 60000
-          minimum: 1000
-        queryStringsJson:
-          type:
-          - string
-          - 'null'
-        ignoreSslErrors:
-          type: boolean
-        bodyType:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

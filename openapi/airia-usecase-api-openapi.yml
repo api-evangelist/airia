@@ -1764,6 +1764,757 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AssignAgentsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    GovernanceReadyToAdvanceNextStageDto:
+      type: object
+      additionalProperties: false
+      required:
+      - stageId
+      - name
+      properties:
+        stageId:
+          type: string
+          format: guid
+        name:
+          type: string
+    GovernanceReadyToAdvanceEntryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - useCaseId
+      - name
+      - stage
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        next:
+          oneOf:
+          - $ref: '#/components/schemas/GovernanceReadyToAdvanceNextStageDto'
+    GovernanceOwnershipGapEntryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - name
+      - stage
+      - ownerMissing
+      - approversMissing
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        name:
+          type: string
+        stage:
+          type: string
+        ownerMissing:
+          type: boolean
+        approversMissing:
+          type: boolean
+        ownerLivenessState:
+          oneOf:
+          - $ref: '#/components/schemas/InactiveAssigneeState'
+        reviewerLivenessState:
+          oneOf:
+          - $ref: '#/components/schemas/InactiveAssigneeState'
+    UseCaseReceiptEvidenceEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          type: string
+        name:
+          type: string
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    NutritionLabelGuardrailInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        filterTypes:
+          type: array
+          items:
+            type: string
+        targetType:
+          type: string
+    AiAssetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+      enum:
+      - InternalModel
+      - InternalDataSource
+      - InternalTools
+      - InternalAgent
+      - InternalProject
+      - InternalMcpServer
+      - ExternalModel
+      - UseCase
+      - ExternalAgent
+      - GovernanceAgent
+      - ExternalApplication
+      - InternalApplication
+      - EndpointApp
+      - EndpointMcpServer
+      - ExternalDataSource
+    NutritionLabelFrameworkRiskEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKey:
+          type: string
+        classificationValue:
+          type: string
+        rationale:
+          type:
+          - string
+          - 'null'
+        confidence:
+          type:
+          - string
+          - 'null'
+    UseCaseReceiptV1:
+      type: object
+      additionalProperties: false
+      properties:
+        schemaVersion:
+          type: string
+        header:
+          $ref: '#/components/schemas/UseCaseReceiptHeader'
+        core:
+          $ref: '#/components/schemas/NutritionLabelCoreSection'
+        intendedUse:
+          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
+        riskProfile:
+          $ref: '#/components/schemas/UseCaseReceiptRiskProfileSection'
+        treatmentPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptTreatmentPlanEntry'
+        guardrails:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
+        evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptEvidenceEntry'
+        reviewPolicy:
+          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
+        approvals:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseReceiptApprovalEntry'
+        isSealed:
+          type: boolean
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseIntendedUse:
+      type: object
+      additionalProperties: false
+      properties:
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        affectedPopulation:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+    GovernanceArtifactDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        artifactType:
+          type: string
+        fileId:
+          type: string
+        fileName:
+          type: string
+        slotKey:
+          type:
+          - string
+          - 'null'
+        uploadedByUserId:
+          type: string
+          format: guid
+        uploadedAt:
+          type: string
+          format: date-time
+    UseCaseDisclosureDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        isActive:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseFieldStateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        section:
+          type: string
+        label:
+          type: string
+        kind:
+          type: string
+        missing:
+          type: boolean
+        required:
+          type: boolean
+        value:
+          type:
+          - string
+          - 'null'
+        values:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        suggestedValues:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        allowsCustom:
+          type: boolean
+        vocabularyEnforced:
+          type: boolean
+        maxLength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        agentHint:
+          type:
+          - string
+          - 'null'
+        isFrameworkDemanded:
+          type: boolean
+        demandingFrameworkKeys:
+          type: array
+          items:
+            type: string
+        absentBehavior:
+          oneOf:
+          - $ref: '#/components/schemas/RegisterFactAbsentBehavior'
+        aiConfidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        aiReasoning:
+          type:
+          - string
+          - 'null'
+    GovernanceOwnershipGapsResponseDto:
+      type: object
+      additionalProperties: false
+      required:
+      - entries
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceOwnershipGapEntryDto'
+    UseCaseReceiptRiskProfileSection:
+      type: object
+      additionalProperties: false
+      properties:
+        airiaScore:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        airiaScoreInherent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        airiaLevel:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        euAiAct:
+          oneOf:
+          - $ref: '#/components/schemas/EuAiActCategory'
+        nistAiRmfTier:
+          oneOf:
+          - $ref: '#/components/schemas/NistAiRmfTier'
+        iso42001Level:
+          oneOf:
+          - $ref: '#/components/schemas/Iso42001Level'
+        riskDomain:
+          type:
+          - string
+          - 'null'
+        riskSubDomain:
+          type:
+          - string
+          - 'null'
+        frameworkRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
+        notApplicableRiskCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        excludedRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
+    PagedResultV2OfUseCaseVersionListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseVersionListDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    NutritionLabelAssetEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          $ref: '#/components/schemas/AiAssetType'
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        isDependency:
+          type: boolean
+        parents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelAssetParent'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseSecurityViolationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        violationId:
+          type: string
+          format: guid
+        timestamp:
+          type: string
+          format: date-time
+        violationType:
+          type: string
+        violationAttributeName:
+          type: string
+        severity:
+          $ref: '#/components/schemas/SecurityViolationSeverity'
+        configuredAction:
+          type:
+          - string
+          - 'null'
+        sourceId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        executionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        score:
+          type: number
+          format: double
+    NutritionLabelV2:
+      type: object
+      additionalProperties: false
+      properties:
+        schemaVersion:
+          type: string
+        header:
+          $ref: '#/components/schemas/NutritionLabelHeader'
+        core:
+          $ref: '#/components/schemas/NutritionLabelCoreSection'
+        intendedUse:
+          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
+        governanceScore:
+          $ref: '#/components/schemas/NutritionLabelGovernanceScoreSection'
+        frameworkRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
+        notApplicableRiskCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        excludedRisks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelAssetEntry'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelDocumentEntry'
+        guardrails:
+          type: array
+          items:
+            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
+        reviewPolicy:
+          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
+        isSealed:
+          type: boolean
+        sealedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseLinkedGatewayDto:
+      type: object
+      additionalProperties: false
+      properties:
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        isIdentitySuppressed:
+          type: boolean
+        linkedAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
+        traffic:
+          oneOf:
+          - $ref: '#/components/schemas/GatewayTrafficTotals'
+        availableControls:
+          type: array
+          items:
+            type: string
+    UseCaseReceiptMitigationArtifact:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        kind:
+          type: string
+        name:
+          type: string
+    UseCaseEvaluationCandidatesResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - candidates
+      properties:
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseEvaluationCandidateDto'
+    BulkImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        createdCount:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            type: string
+        hasErrors:
+          type: boolean
+    FieldPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        isSet:
+          type: boolean
+        value: {}
+        isNull:
+          type: boolean
+    UseCaseStatsDto:
+      type: object
+      additionalProperties: false
+      required:
+      - totalUseCases
+      - highOrCriticalRisk
+      - pendingRiskMitigation
+      - pendingApproval
+      properties:
+        totalUseCases:
+          type: integer
+          format: int32
+        highOrCriticalRisk:
+          type: integer
+          format: int32
+        pendingRiskMitigation:
+          type: integer
+          format: int32
+        pendingApproval:
+          type: integer
+          format: int32
+    UseCaseVersionListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        versionNumber:
+          type: integer
+          format: int32
+        versionLabel:
+          type:
+          - string
+          - 'null'
+        isActive:
+          type: boolean
+        isArchived:
+          type: boolean
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        stage:
+          type: string
+        stageKey:
+          type:
+          - string
+          - 'null'
+        stageName:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          type:
+          - string
+          - 'null'
+        agentNames:
+          type: string
+        agentCount:
+          type: integer
+          format: int32
+        applicationNames:
+          type: string
+        applicationCount:
+          type: integer
+          format: int32
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        governanceLevel:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        impacted:
+          type:
+          - string
+          - 'null'
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        riskDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        riskSubDomainId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        pendingTaskCount:
+          type: integer
+          format: int32
+        acceptsAssetUpdates:
+          type: boolean
+        hasNutritionLabel:
+          type: boolean
+        approvedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
     NistAiRmfTier:
       type: string
       description: ''
@@ -1781,20 +2532,656 @@ components:
       - Tier4
       - Tier5
       - NotApplicable
-    NutritionLabelAssetParent:
+    NutritionLabelReviewPolicySection:
+      type: object
+      additionalProperties: false
+      properties:
+        disclaimerText:
+          type:
+          - string
+          - 'null'
+        reviewCadence:
+          type:
+          - string
+          - 'null'
+        nextReviewDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    UseCaseCore:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    NutritionLabelCoreSection:
+      type: object
+      additionalProperties: false
+      properties:
+        summary:
+          type:
+          - string
+          - 'null'
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    UseCaseFieldMetadataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        section:
+          type: string
+        label:
+          type: string
+        kind:
+          type: string
+        suggestedValues:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        allowsCustom:
+          type: boolean
+        vocabularyEnforced:
+          type: boolean
+        maxLength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        agentHint:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfGovernanceReadyToAdvanceEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GovernanceReadyToAdvanceEntryDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    CreateUseCaseRiskEntriesRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        risks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskEntryInput'
+    InactiveAssigneeState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Deactivated
+      - Removed
+      enum:
+      - Deactivated
+      - Removed
+    NutritionLabelGovernanceScoreSection:
+      type: object
+      additionalProperties: false
+      properties:
+        level:
+          type:
+          - string
+          - 'null'
+        score:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scoreRationale:
+          type:
+          - string
+          - 'null'
+    RegisterFactAbsentBehavior:
+      type: string
+      description: ''
+      x-enumNames:
+      - FailClosed
+      - FailOpen
+      enum:
+      - FailClosed
+      - FailOpen
+    UseCaseAssetComponentNodeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        assetId:
+          type: string
+          format: guid
+        name:
+          type: string
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        provider:
+          type:
+          - string
+          - 'null'
+        connectorName:
+          type:
+          - string
+          - 'null'
+        isRepeated:
+          type: boolean
+        truncated:
+          type: boolean
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
+    PagedResultV2OfUseCaseVersionChangeLogEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseVersionChangeLogEntryDto'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    UseCaseReportExportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+    UseCaseStage:
+      type: string
+      description: ''
+      x-enumNames:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+      enum:
+      - Discover
+      - Register
+      - Triage
+      - Assess
+      - BuildAndConnect
+      - Mitigate
+      - Approve
+      - Monitor
+      - Quarantine
+      - Change
+      - Archive
+    UseCaseGuardrailFilterDto:
+      type: object
+      additionalProperties: false
+      properties:
+        filterType:
+          type: string
+        label:
+          type:
+          - string
+          - 'null'
+        action:
+          type:
+          - string
+          - 'null'
+    SetUseCaseEvaluationSelectionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    UseCaseIntendedUseSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        impacted:
+          type:
+          - string
+          - 'null'
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+    SecurityViolationSeverity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Low
+      - Medium
+      - High
+      - Critical
+    UseCaseReceiptApprovalEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        approverUserId:
+          type: string
+          format: guid
+        approverDisplayName:
+          type: string
+        decision:
+          $ref: '#/components/schemas/ApprovalDecision'
+        comments:
+          type:
+          - string
+          - 'null'
+        decidedAt:
+          type: string
+          format: date-time
+    ApplicationAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        isAIService:
+          type:
+          - boolean
+          - 'null'
+        aiServiceConfidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        userCount:
+          type: integer
+          format: int32
+        scopes:
+          type:
+          - string
+          - 'null'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        assetVersionTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseFrameworkSnapshotDto:
+      type: object
+      additionalProperties: false
+      properties:
+        governanceFrameworkId:
+          type: string
+          format: guid
+        frameworkName:
+          type: string
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+    UseCaseLinkedGatewayAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        clientId:
+          type: string
+        linkedVia:
+          $ref: '#/components/schemas/UseCaseGatewayLinkSource'
+        providers:
+          type: array
+          items:
+            type: string
+        isClientOverride:
+          type: boolean
+        routedInstallCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        reachCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+    Iso42001Level:
+      type: string
+      description: ''
+      x-enumNames:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+      enum:
+      - Level1
+      - Level2
+      - Level3
+      - Level4
+      - Level5
+      - NotApplicable
+    MitigationStepInput:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type:
+          - string
+          - 'null'
+        controlId:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UseCaseActivityEntryDto:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-          format: guid
-        name:
+        description:
           type: string
-    AssignAgentsRequest:
+        actorName:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        operation:
+          type: string
+    NutritionLabelExcludedRiskEntry:
       type: object
       additionalProperties: false
       properties:
-        agentIds:
+        domainName:
+          type: string
+        subDomainName:
+          type: string
+        reason:
+          type:
+          - string
+          - 'null'
+    SecurePostureStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+      enum:
+      - NotSecured
+      - Secured
+      - PartiallySecured
+      - NotSecurableSecurePostureProvider
+      - NotSecurableAiProvider
+      - NotSecurableAiModel
+      - NoAiService
+    UseCaseStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Rejected
+      enum:
+      - Approved
+      - Rejected
+    UseCaseSectionCompleteness:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        populated:
+          type: boolean
+        missingFields:
+          type: array
+          items:
+            type: string
+    UseCaseSecurityViolationsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSecurityViolationDto'
+        totalCount:
+          type: integer
+          format: int32
+        windowDays:
+          type: integer
+          format: int32
+        isDegraded:
+          type: boolean
+    UseCaseCoreSectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        ownerId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        ownerName:
+          type:
+          - string
+          - 'null'
+        summary:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+    UseCaseAssetComponentsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        roots:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
+        maxDepth:
+          type: integer
+          format: int32
+        truncated:
+          type: boolean
+    UseCaseActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseActivityEntryDto'
+    UseCaseEvaluationSelectionSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - Manual
+      - CreatedFromUseCase
+      - Automation
+      - LegacyAuto
+      enum:
+      - Manual
+      - CreatedFromUseCase
+      - Automation
+      - LegacyAuto
+    UseCaseGatewayLinkSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - EndpointRoutingPolicy
+      - GatewaySecuredExternalAgent
+      enum:
+      - EndpointRoutingPolicy
+      - GatewaySecuredExternalAgent
+    UseCaseAutonomy:
+      type: string
+      description: ''
+      x-enumNames:
+      - HumanInTheLoop
+      - HumanOnTheLoop
+      - HumanInTheCommand
+      - SupervisedAutonomy
+      - FullAutonomy
+      enum:
+      - HumanInTheLoop
+      - HumanOnTheLoop
+      - HumanInTheCommand
+      - SupervisedAutonomy
+      - FullAutonomy
+    AssignAgentsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        linkedAgentIds:
           type: array
           items:
             type: string
@@ -1929,6 +3316,213 @@ components:
         disclosure:
           oneOf:
           - $ref: '#/components/schemas/UseCaseDisclosureDto'
+    CreateGovernanceArtifactRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - artifactType
+      - fileId
+      - fileName
+      properties:
+        artifactType:
+          type: string
+          maxLength: 200
+          minLength: 1
+        fileId:
+          type: string
+          maxLength: 100
+          minLength: 1
+        fileName:
+          type: string
+          maxLength: 500
+          minLength: 1
+        slotKey:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+    NutritionLabelIntendedUseSection:
+      type: object
+      additionalProperties: false
+      properties:
+        businessPurpose:
+          type:
+          - string
+          - 'null'
+        userPopulation:
+          type:
+          - string
+          - 'null'
+        deploymentContext:
+          type: array
+          items:
+            type: string
+        dataCategories:
+          type: array
+          items:
+            type: string
+        rightsAffecting:
+          type: array
+          items:
+            type: string
+        deploymentRegion:
+          type: array
+          items:
+            type: string
+        intendedOutcome:
+          type:
+          - string
+          - 'null'
+        operatingCadence:
+          type:
+          - string
+          - 'null'
+        intendedFor:
+          type: array
+          items:
+            type: string
+        notIntendedFor:
+          type: array
+          items:
+            type: string
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+    InternalApplicationAssignmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        internalApplicationId:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type:
+          - string
+          - 'null'
+        assetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetVersionOrdinal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        assetVersionTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    UseCaseEvaluationCandidateDto:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - evaluationName
+      - agentName
+      - isSelected
+      - isSelectable
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/JobStatus'
+        runAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        agentName:
+          type: string
+        agentVersion:
+          type:
+          - string
+          - 'null'
+        agentVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isSelected:
+          type: boolean
+        isSelectable:
+          type: boolean
+        notSelectableReason:
+          type:
+          - string
+          - 'null'
+    UseCaseGuardrailAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+    UseCaseLinkedGatewayMcpDto:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        name:
+          type: string
+        routedInstallCount:
+          type: integer
+          format: int32
+        reachCount:
+          type: integer
+          format: int32
+        securedStatus:
+          oneOf:
+          - $ref: '#/components/schemas/SecurePostureStatus'
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
     UpdateUseCaseRequest:
       type: object
       additionalProperties: false
@@ -1989,264 +3583,15 @@ components:
         reviewPolicy:
           oneOf:
           - $ref: '#/components/schemas/UseCaseReviewPolicy'
-    CreateGovernanceArtifactRequest:
+    UseCaseIntakeContextDto:
       type: object
       additionalProperties: false
-      required:
-      - artifactType
-      - fileId
-      - fileName
       properties:
-        artifactType:
+        assetContext:
           type: string
-          maxLength: 200
-          minLength: 1
-        fileId:
+        frameworksContext:
           type: string
-          maxLength: 100
-          minLength: 1
-        fileName:
-          type: string
-          maxLength: 500
-          minLength: 1
-        slotKey:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-    NutritionLabelGovernanceScoreSection:
-      type: object
-      additionalProperties: false
-      properties:
-        level:
-          type:
-          - string
-          - 'null'
-        score:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        scoreRationale:
-          type:
-          - string
-          - 'null'
-    PagedResultV2OfGovernanceReadyToAdvanceEntryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GovernanceReadyToAdvanceEntryDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    UseCaseAssetComponentNodeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        assetId:
-          type: string
-          format: guid
-        name:
-          type: string
-        assetType:
-          $ref: '#/components/schemas/AiAssetType'
-        provider:
-          type:
-          - string
-          - 'null'
-        connectorName:
-          type:
-          - string
-          - 'null'
-        isRepeated:
-          type: boolean
-        truncated:
-          type: boolean
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
-    SecurePostureStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotSecured
-      - Secured
-      - PartiallySecured
-      - NotSecurableSecurePostureProvider
-      - NotSecurableAiProvider
-      - NotSecurableAiModel
-      - NoAiService
-      enum:
-      - NotSecured
-      - Secured
-      - PartiallySecured
-      - NotSecurableSecurePostureProvider
-      - NotSecurableAiProvider
-      - NotSecurableAiModel
-      - NoAiService
-    UseCaseEvaluationResultsResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - agentEvaluations
-      properties:
-        agentEvaluations:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseAgentEvaluationDto'
-    UseCaseStatsDto:
-      type: object
-      additionalProperties: false
-      required:
-      - totalUseCases
-      - highOrCriticalRisk
-      - pendingRiskMitigation
-      - pendingApproval
-      properties:
-        totalUseCases:
-          type: integer
-          format: int32
-        highOrCriticalRisk:
-          type: integer
-          format: int32
-        pendingRiskMitigation:
-          type: integer
-          format: int32
-        pendingApproval:
-          type: integer
-          format: int32
-    UseCaseReportExportResult:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        title:
-          type: string
-    PatchUseCaseRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          $ref: '#/components/schemas/FieldPatch'
-        description:
-          $ref: '#/components/schemas/FieldPatch'
-        autonomy:
-          $ref: '#/components/schemas/FieldPatch'
-        impacted:
-          $ref: '#/components/schemas/FieldPatch'
-        summary:
-          $ref: '#/components/schemas/FieldPatch'
-        tags:
-          $ref: '#/components/schemas/FieldPatch'
-        businessPurpose:
-          $ref: '#/components/schemas/FieldPatch'
-        userPopulation:
-          $ref: '#/components/schemas/FieldPatch'
-        deploymentContext:
-          $ref: '#/components/schemas/FieldPatch'
-        deploymentRegion:
-          $ref: '#/components/schemas/FieldPatch'
-        dataCategories:
-          $ref: '#/components/schemas/FieldPatch'
-        rightsAffecting:
-          $ref: '#/components/schemas/FieldPatch'
-        intendedOutcome:
-          $ref: '#/components/schemas/FieldPatch'
-        operatingCadence:
-          $ref: '#/components/schemas/FieldPatch'
-        intendedFor:
-          $ref: '#/components/schemas/FieldPatch'
-        notIntendedFor:
-          $ref: '#/components/schemas/FieldPatch'
-        disclaimerText:
-          $ref: '#/components/schemas/FieldPatch'
-        reviewCadence:
-          $ref: '#/components/schemas/FieldPatch'
-    UseCaseLinkedGatewaysDto:
-      type: object
-      additionalProperties: false
-      properties:
-        configurations:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseLinkedGatewayDto'
-        unsecuredAssets:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
-        mcpRouting:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseLinkedGatewayMcpDto'
-        routingEnforced:
-          type:
-          - boolean
-          - 'null'
-        trafficWindowDays:
-          type: integer
-          format: int32
-        isDegraded:
-          type: boolean
-    NutritionLabelV2:
-      type: object
-      additionalProperties: false
-      properties:
-        schemaVersion:
-          type: string
-        header:
-          $ref: '#/components/schemas/NutritionLabelHeader'
-        core:
-          $ref: '#/components/schemas/NutritionLabelCoreSection'
-        intendedUse:
-          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
-        governanceScore:
-          $ref: '#/components/schemas/NutritionLabelGovernanceScoreSection'
-        frameworkRisks:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
-        notApplicableRiskCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        excludedRisks:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
-        assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelAssetEntry'
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelDocumentEntry'
-        guardrails:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
-        reviewPolicy:
-          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
-        isSealed:
-          type: boolean
-        sealedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ApplicationAssignmentDto:
+    AgentAssignmentDto:
       type: object
       additionalProperties: false
       properties:
@@ -2255,26 +3600,8 @@ components:
           format: guid
         name:
           type: string
-        provider:
-          type:
-          - string
-          - 'null'
-        isAIService:
-          type:
-          - boolean
-          - 'null'
-        aiServiceConfidence:
-          type:
-          - number
-          - 'null'
-          format: double
-        userCount:
-          type: integer
-          format: int32
-        scopes:
-          type:
-          - string
-          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
         assetVersionId:
           type:
           - string
@@ -2290,453 +3617,6 @@ components:
           - integer
           - 'null'
           format: int32
-    SetUseCaseEvaluationSelectionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        evaluationIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    UseCaseEvaluationSelectionSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Manual
-      - CreatedFromUseCase
-      - Automation
-      - LegacyAuto
-      enum:
-      - Manual
-      - CreatedFromUseCase
-      - Automation
-      - LegacyAuto
-    UseCaseDisclosureDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        isActive:
-          type: boolean
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    UseCaseSecurityViolationsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        violations:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseSecurityViolationDto'
-        totalCount:
-          type: integer
-          format: int32
-        windowDays:
-          type: integer
-          format: int32
-        isDegraded:
-          type: boolean
-    FieldPatch:
-      type: object
-      additionalProperties: false
-      properties:
-        isSet:
-          type: boolean
-        value: {}
-        isNull:
-          type: boolean
-    GovernanceOwnershipGapsResponseDto:
-      type: object
-      additionalProperties: false
-      required:
-      - entries
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/GovernanceOwnershipGapEntryDto'
-    UseCaseCore:
-      type: object
-      additionalProperties: false
-      properties:
-        summary:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-    GovernanceReadyToAdvanceNextStageDto:
-      type: object
-      additionalProperties: false
-      required:
-      - stageId
-      - name
-      properties:
-        stageId:
-          type: string
-          format: guid
-        name:
-          type: string
-    GovernanceReadyToAdvanceEntryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - useCaseId
-      - name
-      - stage
-      properties:
-        id:
-          type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
-        name:
-          type: string
-        stage:
-          type: string
-        next:
-          oneOf:
-          - $ref: '#/components/schemas/GovernanceReadyToAdvanceNextStageDto'
-    GovernanceArtifactDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
-        artifactType:
-          type: string
-        fileId:
-          type: string
-        fileName:
-          type: string
-        slotKey:
-          type:
-          - string
-          - 'null'
-        uploadedByUserId:
-          type: string
-          format: guid
-        uploadedAt:
-          type: string
-          format: date-time
-    UseCaseEvaluationCandidatesResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - candidates
-      properties:
-        candidates:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseEvaluationCandidateDto'
-    RiskEntryInput:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        mitDomain:
-          type:
-          - string
-          - 'null'
-        mitSubDomain:
-          type:
-          - string
-          - 'null'
-        riskLevel:
-          type: integer
-          format: int32
-        description:
-          type:
-          - string
-          - 'null'
-        controlIds:
-          type: array
-          items:
-            type: string
-        mitigationSteps:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationStepInput'
-    UseCaseLinkedGatewayMcpDto:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        name:
-          type: string
-        routedInstallCount:
-          type: integer
-          format: int32
-        reachCount:
-          type: integer
-          format: int32
-        securedStatus:
-          oneOf:
-          - $ref: '#/components/schemas/SecurePostureStatus'
-    UseCaseCompletenessSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseSectionCompleteness'
-        overallPercent:
-          type: integer
-          format: int32
-    UseCaseReceiptApprovalEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        approverUserId:
-          type: string
-          format: guid
-        approverDisplayName:
-          type: string
-        decision:
-          $ref: '#/components/schemas/ApprovalDecision'
-        comments:
-          type:
-          - string
-          - 'null'
-        decidedAt:
-          type: string
-          format: date-time
-    GovernanceOwnershipGapEntryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseId
-      - name
-      - stage
-      - ownerMissing
-      - approversMissing
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        name:
-          type: string
-        stage:
-          type: string
-        ownerMissing:
-          type: boolean
-        approversMissing:
-          type: boolean
-        ownerLivenessState:
-          oneOf:
-          - $ref: '#/components/schemas/InactiveAssigneeState'
-        reviewerLivenessState:
-          oneOf:
-          - $ref: '#/components/schemas/InactiveAssigneeState'
-    AiAssetType:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalModel
-      - InternalDataSource
-      - InternalTools
-      - InternalAgent
-      - InternalProject
-      - InternalMcpServer
-      - ExternalModel
-      - UseCase
-      - ExternalAgent
-      - GovernanceAgent
-      - ExternalApplication
-      - InternalApplication
-      - EndpointApp
-      - EndpointMcpServer
-      - ExternalDataSource
-      enum:
-      - InternalModel
-      - InternalDataSource
-      - InternalTools
-      - InternalAgent
-      - InternalProject
-      - InternalMcpServer
-      - ExternalModel
-      - UseCase
-      - ExternalAgent
-      - GovernanceAgent
-      - ExternalApplication
-      - InternalApplication
-      - EndpointApp
-      - EndpointMcpServer
-      - ExternalDataSource
-    EntityNamesResult:
-      type: object
-      additionalProperties: false
-      properties:
-        names:
-          type: object
-          additionalProperties:
-            type: string
-    BulkImportResult:
-      type: object
-      additionalProperties: false
-      properties:
-        createdCount:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            type: string
-        hasErrors:
-          type: boolean
-    UseCaseIntendedUseSectionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        impacted:
-          type:
-          - string
-          - 'null'
-        autonomy:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseAutonomy'
-        businessPurpose:
-          type:
-          - string
-          - 'null'
-        userPopulation:
-          type:
-          - string
-          - 'null'
-        deploymentContext:
-          type: array
-          items:
-            type: string
-        dataCategories:
-          type: array
-          items:
-            type: string
-        rightsAffecting:
-          type: array
-          items:
-            type: string
-        deploymentRegion:
-          type: array
-          items:
-            type: string
-        intendedOutcome:
-          type:
-          - string
-          - 'null'
-        operatingCadence:
-          type:
-          - string
-          - 'null'
-        intendedFor:
-          type: array
-          items:
-            type: string
-        notIntendedFor:
-          type: array
-          items:
-            type: string
-    NutritionLabelReviewPolicySection:
-      type: object
-      additionalProperties: false
-      properties:
-        disclaimerText:
-          type:
-          - string
-          - 'null'
-        reviewCadence:
-          type:
-          - string
-          - 'null'
-        nextReviewDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    UseCaseCoreSectionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        ownerId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        ownerName:
-          type:
-          - string
-          - 'null'
-        summary:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-    MitigationStepInput:
-      type: object
-      additionalProperties: false
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        callToAction:
-          type:
-          - string
-          - 'null'
-        controlId:
-          type:
-          - string
-          - 'null'
-    UseCaseReceiptMitigationArtifact:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        kind:
-          type: string
-        name:
-          type: string
-    UseCaseAutonomy:
-      type: string
-      description: ''
-      x-enumNames:
-      - HumanInTheLoop
-      - HumanOnTheLoop
-      - HumanInTheCommand
-      - SupervisedAutonomy
-      - FullAutonomy
-      enum:
-      - HumanInTheLoop
-      - HumanOnTheLoop
-      - HumanInTheCommand
-      - SupervisedAutonomy
-      - FullAutonomy
     UseCaseReceiptHeader:
       type: object
       additionalProperties: false
@@ -2756,471 +3636,22 @@ components:
           format: date
         version:
           type: string
-    NutritionLabelAssetEntry:
+    NutritionLabelDocumentEntry:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        kind:
-          $ref: '#/components/schemas/AiAssetType'
-        name:
+        fileName:
           type: string
-        provider:
-          type:
-          - string
-          - 'null'
-        isDependency:
-          type: boolean
-        parents:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelAssetParent'
-        assetVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        assetVersionOrdinal:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    InactiveAssigneeState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Deactivated
-      - Removed
-      enum:
-      - Deactivated
-      - Removed
-    PagedResultOfUseCaseListDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseListDto'
-        totalCount:
-          type: integer
-          format: int32
-    UseCaseReviewPolicySectionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        reviewedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        disclaimerText:
-          type:
-          - string
-          - 'null'
-        reviewCadence:
-          type:
-          - string
-          - 'null'
-        nextReviewDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    UseCaseReceiptV1:
-      type: object
-      additionalProperties: false
-      properties:
-        schemaVersion:
+        fileId:
           type: string
-        header:
-          $ref: '#/components/schemas/UseCaseReceiptHeader'
-        core:
-          $ref: '#/components/schemas/NutritionLabelCoreSection'
-        intendedUse:
-          $ref: '#/components/schemas/NutritionLabelIntendedUseSection'
-        riskProfile:
-          $ref: '#/components/schemas/UseCaseReceiptRiskProfileSection'
-        treatmentPlans:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseReceiptTreatmentPlanEntry'
-        guardrails:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelGuardrailInfo'
-        evidence:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseReceiptEvidenceEntry'
-        reviewPolicy:
-          $ref: '#/components/schemas/NutritionLabelReviewPolicySection'
-        approvals:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseReceiptApprovalEntry'
-        isSealed:
-          type: boolean
-        sealedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    UseCaseIntakeContextDto:
-      type: object
-      additionalProperties: false
-      properties:
-        assetContext:
+        artifactType:
           type: string
-        frameworksContext:
-          type: string
-    UseCaseReceiptTreatmentPlanEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        riskId:
-          type: string
-        riskName:
-          type: string
-        strategy:
-          type:
-          - string
-          - 'null'
-        rationale:
-          type:
-          - string
-          - 'null'
-        inherentLevel:
-          type:
-          - string
-          - 'null'
-        residualLevel:
-          type:
-          - string
-          - 'null'
-        mitigationArtifacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseReceiptMitigationArtifact'
-    PagedResultV2OfUseCaseVersionChangeLogEntryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseVersionChangeLogEntryDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    UseCaseLinkedGatewayAssetDto:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        name:
-          type: string
-        clientId:
-          type: string
-        linkedVia:
-          $ref: '#/components/schemas/UseCaseGatewayLinkSource'
-        providers:
-          type: array
-          items:
-            type: string
-        isClientOverride:
-          type: boolean
-        routedInstallCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        reachCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        securedStatus:
-          oneOf:
-          - $ref: '#/components/schemas/SecurePostureStatus'
-    UseCaseVersionChangeLogEntryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        versionId:
-          type: string
-          format: guid
-        version:
-          type: string
-        description:
-          type: string
-        changedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        changedBy:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isActive:
-          type: boolean
-        isArchived:
-          type: boolean
-    UseCaseActivityEntryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-        actorName:
-          type: string
-        timestamp:
+        uploadedAt:
           type: string
           format: date-time
-        operation:
-          type: string
-    InternalApplicationAssignmentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        internalApplicationId:
-          type: string
-          format: guid
-        name:
-          type: string
-        provider:
-          type:
-          - string
-          - 'null'
-        category:
-          type:
-          - string
-          - 'null'
-        riskLevel:
-          type:
-          - string
-          - 'null'
-        assetVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        assetVersionOrdinal:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        assetVersionTotal:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    UseCaseFieldStateDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        section:
-          type: string
-        label:
-          type: string
-        kind:
-          type: string
-        missing:
-          type: boolean
-        required:
-          type: boolean
-        value:
-          type:
-          - string
-          - 'null'
-        values:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        suggestedValues:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        allowsCustom:
-          type: boolean
-        vocabularyEnforced:
-          type: boolean
-        maxLength:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        agentHint:
-          type:
-          - string
-          - 'null'
-        isFrameworkDemanded:
-          type: boolean
-        demandingFrameworkKeys:
-          type: array
-          items:
-            type: string
-        absentBehavior:
-          oneOf:
-          - $ref: '#/components/schemas/RegisterFactAbsentBehavior'
-        aiConfidence:
-          type:
-          - number
-          - 'null'
-          format: double
-        aiReasoning:
-          type:
-          - string
-          - 'null'
-    NutritionLabelExcludedRiskEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        domainName:
-          type: string
-        subDomainName:
-          type: string
-        reason:
-          type:
-          - string
-          - 'null'
-    UseCaseCompletenessDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sections:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseSectionCompleteness'
-        overallPercent:
-          type: integer
-          format: int32
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseFieldStateDto'
-    UseCaseGatewayLinkSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - EndpointRoutingPolicy
-      - GatewaySecuredExternalAgent
-      enum:
-      - EndpointRoutingPolicy
-      - GatewaySecuredExternalAgent
-    JobStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-      enum:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-    UseCaseLinkedGatewayDto:
-      type: object
-      additionalProperties: false
-      properties:
-        gatewayConfigurationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        isIdentitySuppressed:
-          type: boolean
-        linkedAssets:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
-        traffic:
-          oneOf:
-          - $ref: '#/components/schemas/GatewayTrafficTotals'
-        availableControls:
-          type: array
-          items:
-            type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    SecurityViolationSeverity:
-      type: string
-      description: ''
-      x-enumNames:
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - Low
-      - Medium
-      - High
-      - Critical
     UseCaseListDto:
       type: object
       additionalProperties: false
@@ -3324,6 +3755,15 @@ components:
           - string
           - 'null'
           format: guid
+    NutritionLabelAssetParent:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
     UseCaseGuardrailDto:
       type: object
       additionalProperties: false
@@ -3343,47 +3783,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UseCaseGuardrailAssetDto'
-    Iso42001Level:
-      type: string
-      description: ''
-      x-enumNames:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-      enum:
-      - Level1
-      - Level2
-      - Level3
-      - Level4
-      - Level5
-      - NotApplicable
-    NutritionLabelFrameworkRiskEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        frameworkKey:
-          type: string
-        classificationValue:
-          type: string
-        rationale:
-          type:
-          - string
-          - 'null'
-        confidence:
-          type:
-          - string
-          - 'null'
-    UseCaseActivityDto:
-      type: object
-      additionalProperties: false
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseActivityEntryDto'
     UseCaseCompletenessSectionDto:
       type: object
       additionalProperties: false
@@ -3400,96 +3799,56 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UseCaseFieldStateDto'
-    UseCaseVersionListDto:
+    CreateUseCaseRequest:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
-        versionNumber:
-          type: integer
-          format: int32
-        versionLabel:
-          type:
-          - string
-          - 'null'
-        isActive:
-          type: boolean
-        isArchived:
-          type: boolean
         name:
           type: string
+          maxLength: 200
+          minLength: 0
+        stage:
+          $ref: '#/components/schemas/UseCaseStage'
         description:
           type:
           - string
           - 'null'
-        summary:
+        autonomy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseAutonomy'
+        agentAssetIds:
           type:
-          - string
+          - array
           - 'null'
-        tags:
-          type: array
           items:
             type: string
-        stage:
-          type: string
-        stageKey:
+            format: guid
+        applicationAssetId:
           type:
           - string
           - 'null'
-        stageName:
+          format: guid
+        internalApplicationId:
           type:
           - string
           - 'null'
-        autonomy:
-          type:
-          - string
-          - 'null'
-        agentNames:
-          type: string
-        agentCount:
-          type: integer
-          format: int32
-        applicationNames:
-          type: string
-        applicationCount:
-          type: integer
-          format: int32
-        riskLevel:
-          type:
-          - string
-          - 'null'
-        governanceLevel:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
+          format: guid
         ownerId:
           type:
           - string
           - 'null'
           format: guid
-        ownerName:
+        reviewerId:
           type:
           - string
           - 'null'
+          format: guid
         impacted:
           type:
           - string
           - 'null'
+          maxLength: 500
+          minLength: 0
         reviewedAt:
           type:
           - string
@@ -3505,18 +3864,234 @@ components:
           - string
           - 'null'
           format: guid
-        pendingTaskCount:
-          type: integer
-          format: int32
-        acceptsAssetUpdates:
-          type: boolean
-        hasNutritionLabel:
-          type: boolean
-        approvedVersionId:
+        core:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseCore'
+        intendedUse:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseIntendedUse'
+        reviewPolicy:
+          oneOf:
+          - $ref: '#/components/schemas/UseCaseReviewPolicy'
+    UseCaseReviewPolicy:
+      type: object
+      additionalProperties: false
+      properties:
+        disclaimerText:
+          type:
+          - string
+          - 'null'
+        reviewCadence:
+          type:
+          - string
+          - 'null'
+        nextReviewDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ApprovalDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+      enum:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+    UseCaseVersionChangeLogEntryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        versionId:
+          type: string
+          format: guid
+        version:
+          type: string
+        description:
+          type: string
+        changedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        changedBy:
           type:
           - string
           - 'null'
           format: guid
+        isActive:
+          type: boolean
+        isArchived:
+          type: boolean
+    UseCaseLinkedGatewaysDto:
+      type: object
+      additionalProperties: false
+      properties:
+        configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayDto'
+        unsecuredAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayAssetDto'
+        mcpRouting:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseLinkedGatewayMcpDto'
+        routingEnforced:
+          type:
+          - boolean
+          - 'null'
+        trafficWindowDays:
+          type: integer
+          format: int32
+        isDegraded:
+          type: boolean
+    UseCaseEvaluationResultsResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agentEvaluations
+      properties:
+        agentEvaluations:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseAgentEvaluationDto'
+    EuAiActCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+      enum:
+      - Prohibited
+      - HighRisk
+      - LimitedRisk
+      - MinimalRisk
+      - NotApplicable
+    RiskEntryInput:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        mitDomain:
+          type:
+          - string
+          - 'null'
+        mitSubDomain:
+          type:
+          - string
+          - 'null'
+        riskLevel:
+          type: integer
+          format: int32
+        description:
+          type:
+          - string
+          - 'null'
+        controlIds:
+          type: array
+          items:
+            type: string
+        mitigationSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationStepInput'
+    GatewayTrafficTotals:
+      type: object
+      additionalProperties: false
+      properties:
+        requestCount:
+          type: integer
+          format: int32
+        promptTokens:
+          type: integer
+          format: int64
+        completionTokens:
+          type: integer
+          format: int64
+        totalTokens:
+          type: integer
+          format: int64
+        cost:
+          type: number
+          format: decimal
+    PatchUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          $ref: '#/components/schemas/FieldPatch'
+        description:
+          $ref: '#/components/schemas/FieldPatch'
+        autonomy:
+          $ref: '#/components/schemas/FieldPatch'
+        impacted:
+          $ref: '#/components/schemas/FieldPatch'
+        summary:
+          $ref: '#/components/schemas/FieldPatch'
+        tags:
+          $ref: '#/components/schemas/FieldPatch'
+        businessPurpose:
+          $ref: '#/components/schemas/FieldPatch'
+        userPopulation:
+          $ref: '#/components/schemas/FieldPatch'
+        deploymentContext:
+          $ref: '#/components/schemas/FieldPatch'
+        deploymentRegion:
+          $ref: '#/components/schemas/FieldPatch'
+        dataCategories:
+          $ref: '#/components/schemas/FieldPatch'
+        rightsAffecting:
+          $ref: '#/components/schemas/FieldPatch'
+        intendedOutcome:
+          $ref: '#/components/schemas/FieldPatch'
+        operatingCadence:
+          $ref: '#/components/schemas/FieldPatch'
+        intendedFor:
+          $ref: '#/components/schemas/FieldPatch'
+        notIntendedFor:
+          $ref: '#/components/schemas/FieldPatch'
+        disclaimerText:
+          $ref: '#/components/schemas/FieldPatch'
+        reviewCadence:
+          $ref: '#/components/schemas/FieldPatch'
+    PagedResultOfUseCaseListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseListDto'
+        totalCount:
+          type: integer
+          format: int32
+    UseCaseCompletenessDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSectionCompleteness'
+        overallPercent:
+          type: integer
+          format: int32
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseFieldStateDto'
     UseCaseAgentEvaluationDto:
       type: object
       additionalProperties: false
@@ -3602,166 +4177,15 @@ components:
           format: date-time
         isAssetLinked:
           type: boolean
-    CreateUseCaseRequest:
+    UseCaseReviewPolicySectionDto:
       type: object
       additionalProperties: false
       properties:
-        name:
-          type: string
-          maxLength: 200
-          minLength: 0
-        stage:
-          $ref: '#/components/schemas/UseCaseStage'
-        description:
-          type:
-          - string
-          - 'null'
-        autonomy:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseAutonomy'
-        agentAssetIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        applicationAssetId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        internalApplicationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        ownerId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        reviewerId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        impacted:
-          type:
-          - string
-          - 'null'
-          maxLength: 500
-          minLength: 0
         reviewedAt:
           type:
           - string
           - 'null'
           format: date-time
-        riskDomainId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        riskSubDomainId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        core:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseCore'
-        intendedUse:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseIntendedUse'
-        reviewPolicy:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseReviewPolicy'
-    NutritionLabelGuardrailInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        filterTypes:
-          type: array
-          items:
-            type: string
-        targetType:
-          type: string
-    UseCaseIntendedUse:
-      type: object
-      additionalProperties: false
-      properties:
-        businessPurpose:
-          type:
-          - string
-          - 'null'
-        userPopulation:
-          type:
-          - string
-          - 'null'
-        deploymentContext:
-          type: array
-          items:
-            type: string
-        dataCategories:
-          type: array
-          items:
-            type: string
-        rightsAffecting:
-          type: array
-          items:
-            type: string
-        affectedPopulation:
-          type: array
-          items:
-            type: string
-        deploymentRegion:
-          type: array
-          items:
-            type: string
-        intendedOutcome:
-          type:
-          - string
-          - 'null'
-        operatingCadence:
-          type:
-          - string
-          - 'null'
-        intendedFor:
-          type: array
-          items:
-            type: string
-        notIntendedFor:
-          type: array
-          items:
-            type: string
-    UseCaseFrameworkSnapshotDto:
-      type: object
-      additionalProperties: false
-      properties:
-        governanceFrameworkId:
-          type: string
-          format: guid
-        frameworkName:
-          type: string
-        frameworkKey:
-          type:
-          - string
-          - 'null'
-        riskLevel:
-          type:
-          - string
-          - 'null'
-    UseCaseReviewPolicy:
-      type: object
-      additionalProperties: false
-      properties:
         disclaimerText:
           type:
           - string
@@ -3775,200 +4199,6 @@ components:
           - string
           - 'null'
           format: date-time
-    NutritionLabelIntendedUseSection:
-      type: object
-      additionalProperties: false
-      properties:
-        businessPurpose:
-          type:
-          - string
-          - 'null'
-        userPopulation:
-          type:
-          - string
-          - 'null'
-        deploymentContext:
-          type: array
-          items:
-            type: string
-        dataCategories:
-          type: array
-          items:
-            type: string
-        rightsAffecting:
-          type: array
-          items:
-            type: string
-        deploymentRegion:
-          type: array
-          items:
-            type: string
-        intendedOutcome:
-          type:
-          - string
-          - 'null'
-        operatingCadence:
-          type:
-          - string
-          - 'null'
-        intendedFor:
-          type: array
-          items:
-            type: string
-        notIntendedFor:
-          type: array
-          items:
-            type: string
-        autonomy:
-          oneOf:
-          - $ref: '#/components/schemas/UseCaseAutonomy'
-    CreateUseCaseRiskEntriesRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        risks:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskEntryInput'
-    UseCaseFieldMetadataDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        section:
-          type: string
-        label:
-          type: string
-        kind:
-          type: string
-        suggestedValues:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        allowsCustom:
-          type: boolean
-        vocabularyEnforced:
-          type: boolean
-        maxLength:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        agentHint:
-          type:
-          - string
-          - 'null'
-    UseCaseAssetComponentsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        roots:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseAssetComponentNodeDto'
-        maxDepth:
-          type: integer
-          format: int32
-        truncated:
-          type: boolean
-    UseCaseReceiptEvidenceEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        kind:
-          type: string
-        name:
-          type: string
-        sealedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    PagedResultV2OfUseCaseVersionListDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UseCaseVersionListDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    UseCaseSectionCompleteness:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        populated:
-          type: boolean
-        missingFields:
-          type: array
-          items:
-            type: string
-    ApprovalDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Approved
-      - Rejected
-      - Deferred
-      - Bypassed
-      enum:
-      - Approved
-      - Rejected
-      - Deferred
-      - Bypassed
-    NutritionLabelDocumentEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        fileName:
-          type: string
-        fileId:
-          type: string
-        artifactType:
-          type: string
-        uploadedAt:
-          type: string
-          format: date-time
-    UseCaseGuardrailAssetDto:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        name:
-          type: string
-    UseCaseStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Approved
-      - Rejected
-      enum:
-      - Approved
-      - Rejected
     NutritionLabelHeader:
       type: object
       additionalProperties: false
@@ -3996,162 +4226,14 @@ components:
           format: date
         version:
           type: string
-    AgentAssignmentDto:
+    EntityNamesResult:
       type: object
       additionalProperties: false
       properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        name:
-          type: string
-        assetType:
-          $ref: '#/components/schemas/AiAssetType'
-        assetVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        assetVersionOrdinal:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        assetVersionTotal:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    UseCaseEvaluationCandidateDto:
-      type: object
-      additionalProperties: false
-      required:
-      - evaluationId
-      - evaluationName
-      - agentName
-      - isSelected
-      - isSelectable
-      properties:
-        evaluationId:
-          type: string
-          format: guid
-        evaluationName:
-          type: string
-        evaluationJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/JobStatus'
-        runAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        agentName:
-          type: string
-        agentVersion:
-          type:
-          - string
-          - 'null'
-        agentVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isSelected:
-          type: boolean
-        isSelectable:
-          type: boolean
-        notSelectableReason:
-          type:
-          - string
-          - 'null'
-    GatewayTrafficTotals:
-      type: object
-      additionalProperties: false
-      properties:
-        requestCount:
-          type: integer
-          format: int32
-        promptTokens:
-          type: integer
-          format: int64
-        completionTokens:
-          type: integer
-          format: int64
-        totalTokens:
-          type: integer
-          format: int64
-        cost:
-          type: number
-          format: decimal
-    NutritionLabelCoreSection:
-      type: object
-      additionalProperties: false
-      properties:
-        summary:
-          type:
-          - string
-          - 'null'
-        ownerId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        ownerName:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
+        names:
+          type: object
+          additionalProperties:
             type: string
-    EuAiActCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-      enum:
-      - Prohibited
-      - HighRisk
-      - LimitedRisk
-      - MinimalRisk
-      - NotApplicable
-    AssignAgentsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        linkedAgentIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    UseCaseGuardrailFilterDto:
-      type: object
-      additionalProperties: false
-      properties:
-        filterType:
-          type: string
-        label:
-          type:
-          - string
-          - 'null'
-        action:
-          type:
-          - string
-          - 'null'
     UseCaseRiskProfileSectionDto:
       type: object
       additionalProperties: false
@@ -4170,127 +4252,45 @@ components:
           type:
           - string
           - 'null'
-    UseCaseSecurityViolationDto:
+    UseCaseCompletenessSummaryDto:
       type: object
       additionalProperties: false
       properties:
-        violationId:
-          type: string
-          format: guid
-        timestamp:
-          type: string
-          format: date-time
-        violationType:
-          type: string
-        violationAttributeName:
-          type: string
-        severity:
-          $ref: '#/components/schemas/SecurityViolationSeverity'
-        configuredAction:
-          type:
-          - string
-          - 'null'
-        sourceId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        executionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        score:
-          type: number
-          format: double
-    UseCaseStage:
-      type: string
-      description: ''
-      x-enumNames:
-      - Discover
-      - Register
-      - Triage
-      - Assess
-      - BuildAndConnect
-      - Mitigate
-      - Approve
-      - Monitor
-      - Quarantine
-      - Change
-      - Archive
-      enum:
-      - Discover
-      - Register
-      - Triage
-      - Assess
-      - BuildAndConnect
-      - Mitigate
-      - Approve
-      - Monitor
-      - Quarantine
-      - Change
-      - Archive
-    UseCaseReceiptRiskProfileSection:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/UseCaseSectionCompleteness'
+        overallPercent:
+          type: integer
+          format: int32
+    UseCaseReceiptTreatmentPlanEntry:
       type: object
       additionalProperties: false
       properties:
-        airiaScore:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        airiaScoreInherent:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        airiaLevel:
+        riskId:
+          type: string
+        riskName:
+          type: string
+        strategy:
           type:
           - string
           - 'null'
-        summary:
+        rationale:
           type:
           - string
           - 'null'
-        euAiAct:
-          oneOf:
-          - $ref: '#/components/schemas/EuAiActCategory'
-        nistAiRmfTier:
-          oneOf:
-          - $ref: '#/components/schemas/NistAiRmfTier'
-        iso42001Level:
-          oneOf:
-          - $ref: '#/components/schemas/Iso42001Level'
-        riskDomain:
+        inherentLevel:
           type:
           - string
           - 'null'
-        riskSubDomain:
+        residualLevel:
           type:
           - string
           - 'null'
-        frameworkRisks:
+        mitigationArtifacts:
           type: array
           items:
-            $ref: '#/components/schemas/NutritionLabelFrameworkRiskEntry'
-        notApplicableRiskCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        excludedRisks:
-          type: array
-          items:
-            $ref: '#/components/schemas/NutritionLabelExcludedRiskEntry'
-    RegisterFactAbsentBehavior:
-      type: string
-      description: ''
-      x-enumNames:
-      - FailClosed
-      - FailOpen
-      enum:
-      - FailClosed
-      - FailOpen
+            $ref: '#/components/schemas/UseCaseReceiptMitigationArtifact'
   securitySchemes:
     ApiKey:
       type: apiKey

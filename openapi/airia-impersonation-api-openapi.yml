@@ -104,6 +104,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ClientCredentialsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -129,14 +137,6 @@ components:
           type:
           - string
           - 'null'
-    ClientCredentialsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

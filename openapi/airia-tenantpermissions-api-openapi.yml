@@ -135,28 +135,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TenantPermissionsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        enabled:
-          type: boolean
-        userIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -182,6 +160,28 @@ components:
           type:
           - string
           - 'null'
+    TenantPermissionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

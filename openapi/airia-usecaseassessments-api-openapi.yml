@@ -434,26 +434,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultOfAssessmentListDto:
+    AssessmentQuestionOptionDto:
       type: object
       additionalProperties: false
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssessmentListDto'
-        totalCount:
-          type: integer
-          format: int32
-    AssessmentTemplateCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Exploratory
-      - Attestation
-      enum:
-      - Exploratory
-      - Attestation
+        optionText:
+          type: string
+        optionValue:
+          type: string
     AssessmentDetailDto:
       allOf:
       - $ref: '#/components/schemas/AssessmentListDto'
@@ -467,274 +455,6 @@ components:
           aiAssetAggregateId:
             type: string
             format: guid
-    AssessmentResponseItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sectionName:
-          type: string
-        question:
-          type: string
-        questionType:
-          type: string
-        answer:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssessmentQuestionOptionDto'
-        guidance:
-          type: string
-        clauseReference:
-          type: string
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: double
-        reasoning:
-          type: string
-        abstained:
-          type: boolean
-    CreateAssessmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        templateId:
-          type: string
-          format: guid
-        templateVersionId:
-          type: string
-          format: guid
-        version:
-          type: string
-        approverId:
-          type: string
-          format: guid
-        fileId:
-          type:
-          - string
-          - 'null'
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-    AssessmentTemplateListDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          $ref: '#/components/schemas/AssessmentTemplateCategory'
-        scope:
-          $ref: '#/components/schemas/AssessmentTemplateScope'
-        subCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
-        frameworkId:
-          type: string
-          format: guid
-        frameworkName:
-          type:
-          - string
-          - 'null'
-        frameworkKey:
-          type:
-          - string
-          - 'null'
-        isSystemManaged:
-          type: boolean
-        latestPublishedVersionNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        latestPublishedVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        hasDraft:
-          type: boolean
-        questionCount:
-          type: integer
-          format: int32
-        isActive:
-          type: boolean
-        hasAssessments:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    UpdateAssessmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        version:
-          type:
-          - string
-          - 'null'
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/AssessmentStatus'
-        approverId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        responses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AssessmentResponseWriteItemDto'
-        fileId:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AssessmentTemplateScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Organization
-      - UseCase
-      - Asset
-      enum:
-      - Organization
-      - UseCase
-      - Asset
-    AssessmentTemplateSubCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - Impact
-      - Risk
-      - Vendor
-      - Register
-      enum:
-      - Impact
-      - Risk
-      - Vendor
-      - Register
-    AssessmentResponseWriteItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sectionName:
-          type: string
-        question:
-          type: string
-        questionType:
-          type: string
-        answer:
-          type: string
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: double
-        reasoning:
-          type: string
-    AssessmentQuestionOptionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        optionText:
-          type: string
-        optionValue:
-          type: string
-    AssessmentStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Draft
-      - Pending
-      - Approved
-      - Rejected
-      - AutoComplete
-      - ReadyForReview
-      - AutoCompleteFailed
-      enum:
-      - Draft
-      - Pending
-      - Approved
-      - Rejected
-      - AutoComplete
-      - ReadyForReview
-      - AutoCompleteFailed
-    AutoCompleteAssessmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        includeExecutionLogs:
-          type: boolean
-        logSampleSize:
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
-        confidenceThreshold:
-          type: number
-          format: double
-          maximum: 1
-          minimum: 0
     AssessmentListDto:
       type: object
       additionalProperties: false
@@ -810,6 +530,286 @@ components:
           - 'null'
           additionalProperties:
             type: string
+    AssessmentStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Pending
+      - Approved
+      - Rejected
+      - AutoComplete
+      - ReadyForReview
+      - AutoCompleteFailed
+      enum:
+      - Draft
+      - Pending
+      - Approved
+      - Rejected
+      - AutoComplete
+      - ReadyForReview
+      - AutoCompleteFailed
+    AutoCompleteAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        includeExecutionLogs:
+          type: boolean
+        logSampleSize:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        confidenceThreshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+    CreateAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        templateId:
+          type: string
+          format: guid
+        templateVersionId:
+          type: string
+          format: guid
+        version:
+          type: string
+        approverId:
+          type: string
+          format: guid
+        fileId:
+          type:
+          - string
+          - 'null'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    AssessmentTemplateCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Exploratory
+      - Attestation
+      enum:
+      - Exploratory
+      - Attestation
+    PagedResultOfAssessmentListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentListDto'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AssessmentTemplateSubCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+      enum:
+      - Impact
+      - Risk
+      - Vendor
+      - Register
+    UpdateAssessmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/AssessmentStatus'
+        approverId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        responses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AssessmentResponseWriteItemDto'
+        fileId:
+          type:
+          - string
+          - 'null'
+    AssessmentResponseWriteItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sectionName:
+          type: string
+        question:
+          type: string
+        questionType:
+          type: string
+        answer:
+          type: string
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        reasoning:
+          type: string
+    AssessmentTemplateScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Organization
+      - UseCase
+      - Asset
+      enum:
+      - Organization
+      - UseCase
+      - Asset
+    AssessmentTemplateListDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/AssessmentTemplateCategory'
+        scope:
+          $ref: '#/components/schemas/AssessmentTemplateScope'
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentTemplateSubCategory'
+        frameworkId:
+          type: string
+          format: guid
+        frameworkName:
+          type:
+          - string
+          - 'null'
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        isSystemManaged:
+          type: boolean
+        latestPublishedVersionNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        latestPublishedVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        hasDraft:
+          type: boolean
+        questionCount:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        hasAssessments:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    AssessmentResponseItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sectionName:
+          type: string
+        question:
+          type: string
+        questionType:
+          type: string
+        answer:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentQuestionOptionDto'
+        guidance:
+          type: string
+        clauseReference:
+          type: string
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: double
+        reasoning:
+          type: string
+        abstained:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

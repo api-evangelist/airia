@@ -188,31 +188,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ClassificationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Default
-      - Custom
-      - RiskLevel
-      enum:
-      - Default
-      - Custom
-      - RiskLevel
-    ClassificationLabelResponse:
+    ClassificationLabelDto:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
         labelName:
           type: string
+        labelId:
+          type:
+          - string
+          - 'null'
+          format: guid
         isDefaultValue:
           type: boolean
-        classificationId:
-          type: string
-          format: guid
         priority:
           type: integer
           format: int32
@@ -241,25 +229,6 @@ components:
           type:
           - string
           - 'null'
-    ClassificationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        classificationName:
-          type: string
-        required:
-          type: boolean
-        isActive:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/ClassificationType'
-        classificationLabels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassificationLabelResponse'
     CreateClassificationRequest:
       type: object
       additionalProperties: false
@@ -296,22 +265,53 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ClassificationLabelDto'
-    ClassificationLabelDto:
+    ClassificationLabelResponse:
       type: object
       additionalProperties: false
       properties:
+        id:
+          type: string
+          format: guid
         labelName:
           type: string
-        labelId:
-          type:
-          - string
-          - 'null'
-          format: guid
         isDefaultValue:
           type: boolean
+        classificationId:
+          type: string
+          format: guid
         priority:
           type: integer
           format: int32
+    ClassificationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        classificationName:
+          type: string
+        required:
+          type: boolean
+        isActive:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ClassificationType'
+        classificationLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassificationLabelResponse'
+    ClassificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Default
+      - Custom
+      - RiskLevel
+      enum:
+      - Default
+      - Custom
+      - RiskLevel
   securitySchemes:
     ApiKey:
       type: apiKey

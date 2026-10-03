@@ -95,21 +95,6 @@ components:
           type:
           - string
           - 'null'
-    AgentAttributeAutoFillResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - suggestions
-      - classificationSuggestions
-      properties:
-        suggestions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentAttributeFieldSuggestion'
-        classificationSuggestions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassificationFieldSuggestion'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -135,6 +120,21 @@ components:
           type:
           - string
           - 'null'
+    AgentAttributeAutoFillResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - suggestions
+      - classificationSuggestions
+      properties:
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAttributeFieldSuggestion'
+        classificationSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassificationFieldSuggestion'
   securitySchemes:
     ApiKey:
       type: apiKey

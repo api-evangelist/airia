@@ -197,19 +197,6 @@ components:
           $ref: '#/components/schemas/QueryFinancialTransactionType'
         chargeId:
           type: string
-    QueryFinancialTransactionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - OneTime
-      - Subscription
-      - AutoPay
-      - SupportHours
-      enum:
-      - OneTime
-      - Subscription
-      - AutoPay
-      - SupportHours
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -235,6 +222,19 @@ components:
           type:
           - string
           - 'null'
+    QueryFinancialTransactionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - OneTime
+      - Subscription
+      - AutoPay
+      - SupportHours
+      enum:
+      - OneTime
+      - Subscription
+      - AutoPay
+      - SupportHours
   securitySchemes:
     ApiKey:
       type: apiKey

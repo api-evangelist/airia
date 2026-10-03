@@ -159,16 +159,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateUserStoreFolderRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - path
-      properties:
-        path:
-          type: string
-          maxLength: 1024
-          minLength: 1
     RenameUserStoreEntryRequest:
       type: object
       additionalProperties: false
@@ -181,6 +171,16 @@ components:
           minLength: 1
         newPath:
           type: string
+          minLength: 1
+    CreateUserStoreFolderRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          maxLength: 1024
           minLength: 1
     ProblemDetails:
       type: object

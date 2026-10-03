@@ -30,27 +30,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MitigationCapability:
-      type: string
-      description: ''
-      x-enumNames:
-      - Invocable
-      - TrafficInterposed
-      - ConfigControlledLlmRouting
-      - ConfigControlledMcpRouting
-      - ConfigControlledMcpSanction
-      - ConfigControlledGateway
-      - Observed
-      - Declared
-      enum:
-      - Invocable
-      - TrafficInterposed
-      - ConfigControlledLlmRouting
-      - ConfigControlledMcpRouting
-      - ConfigControlledMcpSanction
-      - ConfigControlledGateway
-      - Observed
-      - Declared
     MitigationDefinitionResponse:
       type: object
       additionalProperties: false
@@ -83,17 +62,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MitigationDefinitionPrerequisiteResponse'
-    MitigationDefinitionPrerequisiteResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        assetFamily:
-          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
-        prerequisiteDefinitionId:
-          type: string
-          format: guid
-        prerequisiteName:
-          type: string
     MitigationCapabilityAssetFamily:
       type: string
       description: ''
@@ -111,6 +79,27 @@ components:
       - EndpointAppWithoutAgent
       - EndpointMcpServer
       - Other
+    MitigationCapability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
+      enum:
+      - Invocable
+      - TrafficInterposed
+      - ConfigControlledLlmRouting
+      - ConfigControlledMcpRouting
+      - ConfigControlledMcpSanction
+      - ConfigControlledGateway
+      - Observed
+      - Declared
     MitigationControlFunction:
       type: string
       description: ''
@@ -122,6 +111,17 @@ components:
       - Prevent
       - Detect
       - Respond
+    MitigationDefinitionPrerequisiteResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        prerequisiteDefinitionId:
+          type: string
+          format: guid
+        prerequisiteName:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

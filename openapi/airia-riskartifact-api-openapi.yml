@@ -149,51 +149,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateRiskArtifactRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - artifactType
-      - fileId
-      - fileName
-      properties:
-        artifactType:
-          type: string
-          maxLength: 200
-          minLength: 1
-        fileId:
-          type: string
-          maxLength: 100
-          minLength: 1
-        fileName:
-          type: string
-          maxLength: 500
-          minLength: 1
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     RiskArtifactDto:
       type: object
       additionalProperties: false
@@ -220,6 +175,51 @@ components:
           - string
           - 'null'
           format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    CreateRiskArtifactRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - artifactType
+      - fileId
+      - fileName
+      properties:
+        artifactType:
+          type: string
+          maxLength: 200
+          minLength: 1
+        fileId:
+          type: string
+          maxLength: 100
+          minLength: 1
+        fileName:
+          type: string
+          maxLength: 500
+          minLength: 1
   securitySchemes:
     ApiKey:
       type: apiKey

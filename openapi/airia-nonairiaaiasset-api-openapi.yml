@@ -277,33 +277,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GoogleVertexSourceRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - configurationName
-      - location
-      properties:
-        configurationName:
-          type: string
-          minLength: 1
-        location:
-          type: string
-          minLength: 1
-        authMethod:
-          $ref: '#/components/schemas/GoogleVertexAuthMethod'
-        projectId:
-          type:
-          - string
-          - 'null'
-        serviceAccountJson:
-          type:
-          - string
-          - 'null'
-        apiKey:
-          type:
-          - string
-          - 'null'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
     CredentialType:
       type: string
       description: ''
@@ -939,13 +928,32 @@ components:
       - AnthropicInferenceHooks
       - AnthropicAnalytics
       - GoogleVertexAi
-    CredentialEntry:
+    AzureOpenAiSourceRequest:
       type: object
       additionalProperties: false
+      required:
+      - region
       properties:
-        key:
-          $ref: '#/components/schemas/CredentialKeyField'
-        value:
+        region:
+          type: string
+          minLength: 1
+        resourceName:
+          type:
+          - string
+          - 'null'
+        configurationName:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        deploymentId:
+          type:
+          - string
+          - 'null'
+        azureTenantId:
+          type: string
+        subscriptionId:
           type: string
     AiAssetSourceType:
       type: string
@@ -1026,88 +1034,26 @@ components:
       - Purview
       - AzureFunctionApps
       - GitLab
-    AdministrativeScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Tenant
-      - Project
-      - Personal
-      enum:
-      - Tenant
-      - Project
-      - User
-    GoogleVertexAuthMethod:
-      type: string
-      description: ''
-      x-enumNames:
-      - ServiceAccount
-      - ExpressApiKey
-      enum:
-      - ServiceAccount
-      - ExpressApiKey
-    AwsBedrockSourceRequest:
+    BaseAuditEntity:
       type: object
+      x-abstract: true
       additionalProperties: false
-      required:
-      - region
       properties:
-        secretKey:
-          type: string
-        accessKey:
-          type: string
-        configurationName:
-          type: string
-        region:
-          type: string
-          minLength: 1
-        createdAfter:
+        createdAt:
           type:
           - string
           - 'null'
           format: date-time
-        createdBefore:
+        updatedAt:
           type:
           - string
           - 'null'
           format: date-time
-    BaseOptionalProjectEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          projectId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
+        userId:
           type:
           - string
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+          format: guid
     CredentialsViewModel:
       type: object
       additionalProperties: false
@@ -1195,74 +1141,34 @@ components:
           type:
           - string
           - 'null'
-    NonAiriaAssetConnectionsResponse:
+    CredentialEntry:
       type: object
       additionalProperties: false
       properties:
-        id:
+        key:
+          $ref: '#/components/schemas/CredentialKeyField'
+        value:
           type: string
-          format: guid
-        sourceId:
-          type: string
-          format: guid
-        name:
-          type: string
-        sourceType:
-          $ref: '#/components/schemas/AiAssetSourceType'
-        credentials:
-          oneOf:
-          - $ref: '#/components/schemas/CredentialsViewModel'
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    CustomCredentials:
+    GoogleVertexAuthMethod:
+      type: string
+      description: ''
+      x-enumNames:
+      - ServiceAccount
+      - ExpressApiKey
+      enum:
+      - ServiceAccount
+      - ExpressApiKey
+    BaseOptionalProjectEntity:
       allOf:
-      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - name
-        properties:
-          credentialType:
-            $ref: '#/components/schemas/CredentialType'
-          name:
-            type: string
-            maxLength: 255
-            minLength: 1
-          credentialData:
-            type: string
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
+      - $ref: '#/components/schemas/BaseEntity'
       - type: object
         x-abstract: true
         additionalProperties: false
         properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
           projectId:
-            type: string
+            type:
+            - string
+            - 'null'
             format: guid
     CredentialKeyField:
       type: string
@@ -1453,6 +1359,31 @@ components:
       - anthropicAnalyticsKey
       - gcpProjectId
       - gcpLocation
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     CredentialOrigin:
       type: string
       description: ''
@@ -1462,33 +1393,102 @@ components:
       enum:
       - Platform
       - Chat
-    AzureOpenAiSourceRequest:
+    AwsBedrockSourceRequest:
       type: object
       additionalProperties: false
       required:
       - region
       properties:
+        secretKey:
+          type: string
+        accessKey:
+          type: string
+        configurationName:
+          type: string
         region:
           type: string
           minLength: 1
-        resourceName:
+        createdAfter:
           type:
           - string
           - 'null'
+          format: date-time
+        createdBefore:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CustomCredentials:
+      allOf:
+      - $ref: '#/components/schemas/BaseOptionalProjectEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - name
+        properties:
+          credentialType:
+            $ref: '#/components/schemas/CredentialType'
+          name:
+            type: string
+            maxLength: 255
+            minLength: 1
+          credentialData:
+            type: string
+    NonAiriaAssetConnectionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        sourceId:
+          type: string
+          format: guid
+        name:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/AiAssetSourceType'
+        credentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsViewModel'
+    GoogleVertexSourceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - configurationName
+      - location
+      properties:
         configurationName:
           type: string
-        clientId:
+          minLength: 1
+        location:
           type: string
-        clientSecret:
-          type: string
-        deploymentId:
+          minLength: 1
+        authMethod:
+          $ref: '#/components/schemas/GoogleVertexAuthMethod'
+        projectId:
           type:
           - string
           - 'null'
-        azureTenantId:
-          type: string
-        subscriptionId:
-          type: string
+        serviceAccountJson:
+          type:
+          - string
+          - 'null'
+        apiKey:
+          type:
+          - string
+          - 'null'
+    AdministrativeScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Personal
+      enum:
+      - Tenant
+      - Project
+      - User
   securitySchemes:
     ApiKey:
       type: apiKey

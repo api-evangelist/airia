@@ -129,31 +129,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GovernanceFrameworkDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        key:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        isEnabled:
-          type: boolean
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -179,6 +154,31 @@ components:
           type:
           - string
           - 'null'
+    GovernanceFrameworkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        key:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        isEnabled:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

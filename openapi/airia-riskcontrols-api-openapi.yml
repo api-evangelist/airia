@@ -109,27 +109,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RiskTreatmentStepInfo:
+    RiskControlDetailResponse:
       type: object
       additionalProperties: false
       properties:
-        title:
-          type: string
-        description:
-          type: string
-        callToAction:
-          type: string
-    RiskControlResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
         controlId:
           type: string
         name:
           type: string
+        treatmentSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskTreatmentStepInfo'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -155,18 +146,33 @@ components:
           type:
           - string
           - 'null'
-    RiskControlDetailResponse:
+    UpdateRiskControlGroupSettingRequest:
       type: object
       additionalProperties: false
       properties:
+        isEnabled:
+          type: boolean
+    RiskTreatmentStepInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        callToAction:
+          type: string
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
         controlId:
           type: string
         name:
           type: string
-        treatmentSteps:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskTreatmentStepInfo'
     RiskControlGroupResponse:
       type: object
       additionalProperties: false
@@ -182,12 +188,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskControlResponse'
-    UpdateRiskControlGroupSettingRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        isEnabled:
-          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey
