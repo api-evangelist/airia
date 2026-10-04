@@ -92,6 +92,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Agents
+  tags_raw:
   - Agent
   properties:
   - type: OpenAPI
@@ -140,6 +142,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - A2A
+  tags_raw:
   - AgentCard
   properties:
   - type: OpenAPI
@@ -164,6 +168,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Agent Discovery
+  tags_raw:
   - AgentDiscovery
   properties:
   - type: OpenAPI
@@ -188,6 +194,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Agent Evaluation
+  tags_raw:
   - AgentEvaluation
   properties:
   - type: OpenAPI
@@ -550,6 +558,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Asset Discovery
+  tags_raw:
   - AssetDiscovery
   properties:
   - type: OpenAPI
@@ -574,6 +584,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Assistant
+  tags_raw:
   - Assistants
   properties:
   - type: OpenAPI
@@ -622,6 +634,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Attack Paths
+  tags_raw:
   - AttackPaths
   properties:
   - type: OpenAPI
@@ -959,6 +973,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Community
+  tags_raw:
   - Communities
   properties:
   - type: OpenAPI
@@ -1152,6 +1168,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Dashboards
+  tags_raw:
   - Dashboard
   properties:
   - type: OpenAPI
@@ -1273,6 +1291,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -1513,7 +1533,8 @@ apis:
   description: The Endpoints API from Airia — 8 operation(s) for endpoints.
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
-  tags:
+  tags: []
+  tags_raw:
   - Endpoints
   properties:
   - type: OpenAPI
@@ -1562,6 +1583,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Experience
+  tags_raw:
   - Experiences
   properties:
   - type: OpenAPI
@@ -1683,6 +1706,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - File Picker
+  tags_raw:
   - FilePicker
   properties:
   - type: OpenAPI
@@ -1707,6 +1732,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -1731,6 +1758,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Framework
+  tags_raw:
   - Frameworks
   properties:
   - type: OpenAPI
@@ -2019,6 +2048,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -2163,6 +2194,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Job Orchestration
+  tags_raw:
   - JobOrchestration
   properties:
   - type: OpenAPI
@@ -2187,6 +2220,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - JWKS
+  tags_raw:
   - Jwks
   properties:
   - type: OpenAPI
@@ -2548,6 +2583,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -2572,6 +2609,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -2645,6 +2684,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Pipeline Execution
+  tags_raw:
   - PipelineExecution
   properties:
   - type: OpenAPI
@@ -2838,6 +2879,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Profiles
+  tags_raw:
   - Profile
   properties:
   - type: OpenAPI
@@ -3442,6 +3485,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - SCIM
+  tags_raw:
   - Scim
   properties:
   - type: OpenAPI
@@ -3538,6 +3583,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Shadow AI
+  tags_raw:
   - ShadowAi
   properties:
   - type: OpenAPI
@@ -3683,6 +3730,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - SPM
+  tags_raw:
   - Spm
   properties:
   - type: OpenAPI
@@ -4165,6 +4214,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - User Attributes
+  tags_raw:
   - UserAttributes
   properties:
   - type: OpenAPI
@@ -4189,6 +4240,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - User Avatars
+  tags_raw:
   - UserAvatars
   properties:
   - type: OpenAPI
@@ -4261,6 +4314,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -4333,6 +4388,8 @@ apis:
   humanURL: https://api.airia.ai/docs/
   baseURL: https://api.airia.ai
   tags:
+  - Voice Chat
+  tags_raw:
   - VoiceChat
   properties:
   - type: OpenAPI
@@ -4406,6 +4463,8 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
+  - Audit Logs
+  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
@@ -4502,6 +4561,8 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
+  - MCP Server
+  tags_raw:
   - MCP Servers
   properties:
   - type: OpenAPI
@@ -4550,6 +4611,8 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
+  - Text-to-Speech
+  tags_raw:
   - Text To Speech
   properties:
   - type: OpenAPI
@@ -4598,6 +4661,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/airia-capability-edges.yml
+  name: Airia Business Capability Map
 - type: Overlay
   url: overlays/airia-web-apis-overlay.yaml
 - type: Website
