@@ -647,6 +647,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ExportSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - paths
+      properties:
+        paths:
+          type: array
+          minItems: 1
+          items:
+            type: string
     UpdateSkillsRepositoryRequest:
       type: object
       additionalProperties: false
@@ -677,51 +688,6 @@ components:
             format: guid
         updateAssignments:
           type: boolean
-    ExportSkillsRepositoryRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - paths
-      properties:
-        paths:
-          type: array
-          minItems: 1
-          items:
-            type: string
-    CreateSkillsRepositoryRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - projectId
-      - name
-      properties:
-        projectId:
-          type: string
-          format: guid
-          minLength: 1
-        name:
-          type: string
-          maxLength: 256
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 2048
-        assignedUserIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        assignedGroupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
     RenameRequest:
       type: object
       additionalProperties: false
@@ -760,6 +726,40 @@ components:
           type:
           - string
           - 'null'
+    CreateSkillsRepositoryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      - name
+      properties:
+        projectId:
+          type: string
+          format: guid
+          minLength: 1
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2048
+        assignedUserIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        assignedGroupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
     SkillsRepositoryDto:
       type: object
       additionalProperties: false

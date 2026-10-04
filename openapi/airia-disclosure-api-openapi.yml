@@ -72,16 +72,6 @@ components:
           type:
           - string
           - 'null'
-    ModelDisclosure:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        modelName:
-          type:
-          - string
-          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -178,6 +168,16 @@ components:
           - 'null'
         disclosureVersion:
           type: string
+    ModelDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -319,40 +319,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OutboundWebhookDeliveryLogDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        eventId:
-          type: string
-          format: guid
-        eventType:
-          type: string
-        attemptNumber:
-          type: integer
-          format: int32
-        status:
-          type: string
-        httpStatusCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        latencyMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        errorMessage:
-          type:
-          - string
-          - 'null'
-        attemptedAt:
-          type: string
-          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -431,6 +397,40 @@ components:
           type:
           - string
           - 'null'
+          format: date-time
+    OutboundWebhookDeliveryLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        eventId:
+          type: string
+          format: guid
+        eventType:
+          type: string
+        attemptNumber:
+          type: integer
+          format: int32
+        status:
+          type: string
+        httpStatusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        attemptedAt:
+          type: string
           format: date-time
   securitySchemes:
     ApiKey:

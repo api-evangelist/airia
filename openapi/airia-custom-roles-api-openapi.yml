@@ -518,21 +518,63 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GetAssignableRoleIdsRequest:
-      allOf:
-      - $ref: '#/components/schemas/GetRolesByIdsRequest'
-      - type: object
-        additionalProperties: false
-        properties:
-          targetUserId:
-            type:
-            - string
-            - 'null'
-            format: guid
-    UpdateCustomRoleRequest:
+    PagedResultOfCustomRoleSummary:
       type: object
       additionalProperties: false
       properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomRoleSummary'
+        totalCount:
+          type: integer
+          format: int32
+    ValidatePermissionsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        permissions:
+          type: array
+          items:
+            type: string
+    PagedResultOfString:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+        totalCount:
+          type: integer
+          format: int32
+    PermissionValidationIssueType:
+      type: string
+      description: ''
+      x-enumNames:
+      - MissingPrerequisite
+      - MissingDependency
+      enum:
+      - missing_prerequisite
+      - missing_dependency
+    GetRolesByIdsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        roleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    CustomRoleDetail:
+      type: object
+      additionalProperties: false
+      properties:
+        roleId:
+          type: string
+          format: guid
+        roleName:
+          type: string
         displayName:
           type:
           - string
@@ -541,6 +583,10 @@ components:
           type:
           - string
           - 'null'
+        isSystemRole:
+          type: boolean
+        isProjectSpecific:
+          type: boolean
         permissions:
           type: array
           items:
@@ -570,26 +616,61 @@ components:
           type:
           - string
           - 'null'
-    GetRolesByIdsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        roleIds:
-          type: array
-          items:
-            type: string
+    GetAssignableRoleIdsRequest:
+      allOf:
+      - $ref: '#/components/schemas/GetRolesByIdsRequest'
+      - type: object
+        additionalProperties: false
+        properties:
+          targetUserId:
+            type:
+            - string
+            - 'null'
             format: guid
-    PagedResultOfString:
+    CreateCustomRoleRequest:
       type: object
       additionalProperties: false
       properties:
-        items:
+        displayName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        permissions:
           type: array
           items:
             type: string
-        totalCount:
-          type: integer
-          format: int32
+    PermissionValidationIssue:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/PermissionValidationIssueType'
+        permission:
+          type: string
+        relatedPermission:
+          type:
+          - string
+          - 'null'
+        message:
+          type: string
+    UpdateCustomRoleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        permissions:
+          type: array
+          items:
+            type: string
     CustomRoleSummary:
       type: object
       additionalProperties: false
@@ -620,87 +701,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    CreateCustomRoleRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        displayName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        permissions:
-          type: array
-          items:
-            type: string
-    PermissionValidationIssueType:
-      type: string
-      description: ''
-      x-enumNames:
-      - MissingPrerequisite
-      - MissingDependency
-      enum:
-      - missing_prerequisite
-      - missing_dependency
-    CustomRoleDetail:
-      type: object
-      additionalProperties: false
-      properties:
-        roleId:
-          type: string
-          format: guid
-        roleName:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        isSystemRole:
-          type: boolean
-        isProjectSpecific:
-          type: boolean
-        permissions:
-          type: array
-          items:
-            type: string
-    ValidatePermissionsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        permissions:
-          type: array
-          items:
-            type: string
-    PagedResultOfCustomRoleSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomRoleSummary'
-        totalCount:
-          type: integer
-          format: int32
-    PermissionValidationIssue:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/PermissionValidationIssueType'
-        permission:
-          type: string
-        relatedPermission:
-          type:
-          - string
-          - 'null'
-        message:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

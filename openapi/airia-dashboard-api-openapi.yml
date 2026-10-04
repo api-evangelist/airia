@@ -252,44 +252,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ResourceUsageSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        count:
-          type: integer
-          format: int32
-        percentageChange:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        delta:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    DashboardUsageSummaryResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        agents:
-          $ref: '#/components/schemas/ResourceUsageSummary'
-        models:
-          $ref: '#/components/schemas/ResourceUsageSummary'
-        tools:
-          $ref: '#/components/schemas/ResourceUsageSummary'
-        dataSources:
-          $ref: '#/components/schemas/ResourceUsageSummary'
-    TopResourceResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        executionCount:
-          type: integer
-          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -315,6 +277,44 @@ components:
           type:
           - string
           - 'null'
+    TopResourceResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        executionCount:
+          type: integer
+          format: int32
+    DashboardUsageSummaryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        agents:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        models:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        tools:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+        dataSources:
+          $ref: '#/components/schemas/ResourceUsageSummary'
+    ResourceUsageSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        count:
+          type: integer
+          format: int32
+        percentageChange:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        delta:
+          type:
+          - integer
+          - 'null'
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

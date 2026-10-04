@@ -229,30 +229,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OwaspGuidelineDetailsDto:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        testId:
-          type:
-          - string
-          - 'null'
-        topics:
-          type: array
-          items:
-            type: string
-        fewShotExamples:
-          type: array
-          items:
-            type: string
-        judgePrompt:
-          type:
-          - string
-          - 'null'
     OwaspGuidelineDto:
       type: object
       additionalProperties: false
@@ -261,6 +237,17 @@ components:
       properties:
         name:
           type: string
+    OwaspPromptPreviewResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        prompts:
+          type: array
+          items:
+            type: string
+        totalPrompts:
+          type: integer
+          format: int32
     OwaspPromptPreviewRequest:
       type: object
       additionalProperties: false
@@ -295,6 +282,31 @@ components:
           type: string
           format: guid
           minLength: 1
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     GenerateOwaspPromptsRequest:
       type: object
       additionalProperties: false
@@ -346,42 +358,30 @@ components:
           format: int32
           maximum: 50
           minimum: 1
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    OwaspPromptPreviewResponse:
+    OwaspGuidelineDetailsDto:
       type: object
       additionalProperties: false
+      required:
+      - name
       properties:
-        prompts:
+        name:
+          type: string
+        testId:
+          type:
+          - string
+          - 'null'
+        topics:
           type: array
           items:
             type: string
-        totalPrompts:
-          type: integer
-          format: int32
+        fewShotExamples:
+          type: array
+          items:
+            type: string
+        judgePrompt:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

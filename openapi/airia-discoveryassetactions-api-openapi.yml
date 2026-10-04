@@ -137,17 +137,37 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AiAssetSanctionDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sanctioned
-      - Unsanctioned
-      - PendingReview
-      enum:
-      - Sanctioned
-      - Unsanctioned
-      - PendingReview
+    SanctionAiAssetResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - createdAt
+      - auditEventEmitted
+      properties:
+        value:
+          type: string
+        previousValue:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        auditEventEmitted:
+          type: boolean
+    SanctionAiAssetRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          $ref: '#/components/schemas/AiAssetSanctionDecision'
+        reason:
+          type:
+          - string
+          - 'null'
     DivertAiAssetResponse:
       type: object
       additionalProperties: false
@@ -199,37 +219,17 @@ components:
           type:
           - string
           - 'null'
-    SanctionAiAssetRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - decision
-      properties:
-        decision:
-          $ref: '#/components/schemas/AiAssetSanctionDecision'
-        reason:
-          type:
-          - string
-          - 'null'
-    SanctionAiAssetResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      - createdAt
-      - auditEventEmitted
-      properties:
-        value:
-          type: string
-        previousValue:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        auditEventEmitted:
-          type: boolean
+    AiAssetSanctionDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sanctioned
+      - Unsanctioned
+      - PendingReview
+      enum:
+      - Sanctioned
+      - Unsanctioned
+      - PendingReview
     AiAssetDivertDecision:
       type: string
       description: ''

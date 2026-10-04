@@ -88,6 +88,19 @@ components:
       properties:
         provider:
           $ref: '#/components/schemas/MdmProvider'
+    MdmProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Intune
+      - Kandji
+      - JamfPro
+      - BigFix
+      enum:
+      - Intune
+      - Kandji
+      - JamfPro
+      - BigFix
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -113,19 +126,6 @@ components:
           type:
           - string
           - 'null'
-    MdmProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - Intune
-      - Kandji
-      - JamfPro
-      - BigFix
-      enum:
-      - Intune
-      - Kandji
-      - JamfPro
-      - BigFix
     MdmEnrollmentStatusResponse:
       type: object
       additionalProperties: false

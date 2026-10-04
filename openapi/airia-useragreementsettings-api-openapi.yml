@@ -108,14 +108,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserAgreementSettingsViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        mode:
-          type: string
-        text:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -141,6 +133,14 @@ components:
           type:
           - string
           - 'null'
+    UserAgreementSettingsViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type: string
+        text:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

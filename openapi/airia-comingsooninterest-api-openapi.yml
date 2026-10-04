@@ -65,6 +65,15 @@ components:
           type:
           - string
           - 'null'
+    ComingSoonInterestType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Framework
+      - IntakeMethod
+      enum:
+      - Framework
+      - IntakeMethod
     RecordComingSoonInterestRequest:
       type: object
       additionalProperties: false
@@ -78,15 +87,6 @@ components:
           type: string
           maxLength: 128
           minLength: 1
-    ComingSoonInterestType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Framework
-      - IntakeMethod
-      enum:
-      - Framework
-      - IntakeMethod
   securitySchemes:
     ApiKey:
       type: apiKey

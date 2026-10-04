@@ -254,6 +254,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    InternalApplicationDropdownOptionsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            type: string
     PagedResultOfInternalApplicationDto:
       type: object
       additionalProperties: false
@@ -265,6 +277,40 @@ components:
         totalCount:
           type: integer
           format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
     InternalApplicationDto:
       type: object
       additionalProperties: false
@@ -341,52 +387,6 @@ components:
           - string
           - 'null'
           format: date-time
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    SourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserProvided
-      - Library
-      enum:
-      - userProvided
-      - library
-    InternalApplicationDropdownOptionsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        categories:
-          type: array
-          items:
-            type: string
-        providers:
-          type: array
-          items:
-            type: string
     InternalApplicationRequest:
       type: object
       additionalProperties: false

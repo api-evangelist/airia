@@ -264,90 +264,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ViolationItemTypes:
-      type: string
-      description: ''
-      x-enumFlags: true
-      x-enumNames:
-      - None
-      - PCI
-      - PHI
-      - PII
-      - PromptSecurity
-      - Secrets
-      - CustomRecognizer
-      - KeywordDetector
-      - HtmlSanitization
-      - Moderation
-      - UrlSanitization
-      - AgentMisalignment
-      - PythonFilter
-      - SystemPromptAdherence
-      enum:
-      - None
-      - PCI
-      - PHI
-      - PII
-      - PromptSecurity
-      - Secrets
-      - CustomRecognizer
-      - KeywordDetector
-      - HtmlSanitization
-      - Moderation
-      - UrlSanitization
-      - AgentMisalignment
-      - PythonFilter
-      - SystemPromptAdherence
-    ViolationSourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pipeline
-      - Gateway
-      - Playground
-      - Claude
-      - ShadowAi
-      - BrowserExtension
-      - CopilotStudio
-      - LiteLlm
-      - McpGateway
-      - InferenceHooks
-      enum:
-      - Pipeline
-      - Gateway
-      - Playground
-      - Claude
-      - ShadowAi
-      - BrowserExtension
-      - CopilotStudio
-      - LiteLlm
-      - McpGateway
-      - InferenceHooks
     PolicyViolationsWithDataPrivacyItemResponseV1:
       type: object
       additionalProperties: false
@@ -429,6 +345,90 @@ components:
           type:
           - string
           - 'null'
+    ViolationSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pipeline
+      - Gateway
+      - Playground
+      - Claude
+      - ShadowAi
+      - BrowserExtension
+      - CopilotStudio
+      - LiteLlm
+      - McpGateway
+      - InferenceHooks
+      enum:
+      - Pipeline
+      - Gateway
+      - Playground
+      - Claude
+      - ShadowAi
+      - BrowserExtension
+      - CopilotStudio
+      - LiteLlm
+      - McpGateway
+      - InferenceHooks
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ViolationItemTypes:
+      type: string
+      description: ''
+      x-enumFlags: true
+      x-enumNames:
+      - None
+      - PCI
+      - PHI
+      - PII
+      - PromptSecurity
+      - Secrets
+      - CustomRecognizer
+      - KeywordDetector
+      - HtmlSanitization
+      - Moderation
+      - UrlSanitization
+      - AgentMisalignment
+      - PythonFilter
+      - SystemPromptAdherence
+      enum:
+      - None
+      - PCI
+      - PHI
+      - PII
+      - PromptSecurity
+      - Secrets
+      - CustomRecognizer
+      - KeywordDetector
+      - HtmlSanitization
+      - Moderation
+      - UrlSanitization
+      - AgentMisalignment
+      - PythonFilter
+      - SystemPromptAdherence
     PolicyViolationsWithDataPrivacyResponseV1:
       type: object
       additionalProperties: false

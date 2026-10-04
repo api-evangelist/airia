@@ -92,22 +92,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserAlertSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        settings:
-          oneOf:
-          - $ref: '#/components/schemas/UserAlertSettingsProps'
-        updatedAt:
-          type: string
-          format: date-time
     UserAlertSettingsProps:
       type: object
       additionalProperties: false
@@ -159,6 +143,18 @@ components:
           - 'null'
           additionalProperties:
             type: boolean
+    AiInboxNotificationSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        browser:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - boolean
+          - 'null'
     UserAlertSettingsDto:
       type: object
       additionalProperties: false
@@ -191,18 +187,22 @@ components:
           type:
           - string
           - 'null'
-    AiInboxNotificationSettings:
+    UserAlertSettings:
       type: object
       additionalProperties: false
       properties:
-        browser:
-          type:
-          - boolean
-          - 'null'
-        email:
-          type:
-          - boolean
-          - 'null'
+        userId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        settings:
+          oneOf:
+          - $ref: '#/components/schemas/UserAlertSettingsProps'
+        updatedAt:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -487,30 +487,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TestFireAgentEventTriggerResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        executionId:
-          type: string
-          format: guid
-    AgentEventTriggerSamplePayloadResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        payload:
-          type: object
-          additionalProperties: {}
-        optionalKeys:
-          type: array
-          items:
-            type: string
-        allowedValues:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+    AgentEventTriggerMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
+      enum:
+      - FirstOccurrenceOnly
+      - EveryOccurrence
+      - OnDemand
     ExecuteAgentEventTriggerRequest:
       type: object
       additionalProperties: false
@@ -520,31 +507,13 @@ components:
         context:
           type: object
           additionalProperties: {}
-    ProblemDetails:
+    TestFireAgentEventTriggerResponse:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
       properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+        executionId:
+          type: string
+          format: guid
     AgentEventTriggerCatalogItemModel:
       type: object
       additionalProperties: false
@@ -559,33 +528,6 @@ components:
           type: string
         eventTypeName:
           type: string
-    AgentEventTriggerMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - FirstOccurrenceOnly
-      - EveryOccurrence
-      - OnDemand
-      enum:
-      - FirstOccurrenceOnly
-      - EveryOccurrence
-      - OnDemand
-    TestFireAgentEventTriggerRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - payload
-      properties:
-        payload:
-          type: object
-          additionalProperties: {}
-    ExecuteAgentEventTriggerResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        executionId:
-          type: string
-          format: guid
     AgentEventTriggerModel:
       type: object
       additionalProperties: false
@@ -619,6 +561,64 @@ components:
           $ref: '#/components/schemas/AgentEventTriggerMode'
         enabled:
           type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ExecuteAgentEventTriggerResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        executionId:
+          type: string
+          format: guid
+    AgentEventTriggerSamplePayloadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        payload:
+          type: object
+          additionalProperties: {}
+        optionalKeys:
+          type: array
+          items:
+            type: string
+        allowedValues:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    TestFireAgentEventTriggerRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - payload
+      properties:
+        payload:
+          type: object
+          additionalProperties: {}
   securitySchemes:
     ApiKey:
       type: apiKey

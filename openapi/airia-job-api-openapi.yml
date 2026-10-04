@@ -89,26 +89,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    JsonNodeOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyNameCaseInsensitive:
-          type: boolean
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -134,6 +114,26 @@ components:
           type:
           - string
           - 'null'
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
     ScheduledJobTriggerRequest:
       type: object
       additionalProperties: false

@@ -351,165 +351,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WebhookSecretResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        secret:
-          type: string
-    WebhookActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Agent
-      - SlackBot
-      - TeamsBot
-      - WhatsAppBot
-      - MicrosoftGraphFileTrigger
-      enum:
-      - None
-      - Agent
-      - SlackBot
-      - TeamsBot
-      - WhatsAppBot
-      - MicrosoftGraphFileTrigger
-    UpdateWebhookRequestModel:
-      type: object
-      additionalProperties: false
-      required:
-      - friendlyName
-      - type
-      - actionType
-      - authorizationType
-      - configuration
-      - enabled
-      properties:
-        friendlyName:
-          type: string
-          maxLength: 128
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 512
-          minLength: 0
-        type:
-          $ref: '#/components/schemas/WebhookType'
-        actionType:
-          $ref: '#/components/schemas/WebhookActionType'
-        actionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        authorizationType:
-          $ref: '#/components/schemas/WebhookAuthorizationType'
-        authorization:
-          oneOf:
-          - $ref: '#/components/schemas/WebhookAuthorizationBase'
-        configuration:
-          $ref: '#/components/schemas/WebhookConfiguration'
-        enabled:
-          type: boolean
-    PagedResultOfWebhookResponseModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookResponseModel'
-        totalCount:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    WebhookResponseModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseWebhookModel'
-      - type: object
-        additionalProperties: false
-        required:
-        - configuration
-        properties:
-          authorization:
-            oneOf:
-            - $ref: '#/components/schemas/WebhookAuthorizationBase'
-          configuration:
-            $ref: '#/components/schemas/WebhookConfiguration'
-    BaseWebhookModel:
-      type: object
-      additionalProperties: false
-      required:
-      - friendlyName
-      - webhookUrl
-      properties:
-        id:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userId:
-          type: string
-          format: guid
-        friendlyName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/WebhookType'
-        actionType:
-          $ref: '#/components/schemas/WebhookActionType'
-        actionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        authorizationType:
-          $ref: '#/components/schemas/WebhookAuthorizationType'
-        webhookUrl:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        modifiedAt:
-          type: string
-          format: date-time
-        enabled:
-          type: boolean
     WebhookConfiguration:
       type: object
       additionalProperties: false
@@ -657,28 +498,40 @@ components:
           type:
           - string
           - 'null'
-    WebhookAuthorizationType:
+    WebhookType:
       type: string
       description: ''
       x-enumNames:
-      - None
-      - Hmac
+      - Manual
+      - GitHub
+      - SlackEventSubscriptions
+      - TeamsBotFramework
+      - WhatsAppCloudApi
+      - DropBox
+      - OneDrive
+      - SharePoint
+      - Asana
       enum:
-      - None
-      - Hmac
-    WebhookAuthorizationBase:
+      - Manual
+      - GitHub
+      - SlackEventSubscriptions
+      - TeamsBotFramework
+      - WhatsAppCloudApi
+      - DropBox
+      - OneDrive
+      - SharePoint
+      - Asana
+    PagedResultOfWebhookResponseModel:
       type: object
-      discriminator:
-        propertyName: $type
-        mapping:
-          WebhookHmacAuthorization: '#/components/schemas/WebhookHmacAuthorization'
-      x-abstract: true
       additionalProperties: false
-      required:
-      - $type
       properties:
-        $type:
-          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookResponseModel'
+        totalCount:
+          type: integer
+          format: int32
     CreateWebhookRequestModel:
       type: object
       additionalProperties: false
@@ -723,29 +576,176 @@ components:
           format: guid
         enabled:
           type: boolean
-    WebhookType:
+    WebhookResponseModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseWebhookModel'
+      - type: object
+        additionalProperties: false
+        required:
+        - configuration
+        properties:
+          authorization:
+            oneOf:
+            - $ref: '#/components/schemas/WebhookAuthorizationBase'
+          configuration:
+            $ref: '#/components/schemas/WebhookConfiguration'
+    WebhookAuthorizationBase:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          WebhookHmacAuthorization: '#/components/schemas/WebhookHmacAuthorization'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        $type:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UpdateWebhookRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - friendlyName
+      - type
+      - actionType
+      - authorizationType
+      - configuration
+      - enabled
+      properties:
+        friendlyName:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+          minLength: 0
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        actionType:
+          $ref: '#/components/schemas/WebhookActionType'
+        actionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authorizationType:
+          $ref: '#/components/schemas/WebhookAuthorizationType'
+        authorization:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookAuthorizationBase'
+        configuration:
+          $ref: '#/components/schemas/WebhookConfiguration'
+        enabled:
+          type: boolean
+    WebhookAuthorizationType:
       type: string
       description: ''
       x-enumNames:
-      - Manual
-      - GitHub
-      - SlackEventSubscriptions
-      - TeamsBotFramework
-      - WhatsAppCloudApi
-      - DropBox
-      - OneDrive
-      - SharePoint
-      - Asana
+      - None
+      - Hmac
       enum:
-      - Manual
-      - GitHub
-      - SlackEventSubscriptions
-      - TeamsBotFramework
-      - WhatsAppCloudApi
-      - DropBox
-      - OneDrive
-      - SharePoint
-      - Asana
+      - None
+      - Hmac
+    BaseWebhookModel:
+      type: object
+      additionalProperties: false
+      required:
+      - friendlyName
+      - webhookUrl
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userId:
+          type: string
+          format: guid
+        friendlyName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        actionType:
+          $ref: '#/components/schemas/WebhookActionType'
+        actionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        authorizationType:
+          $ref: '#/components/schemas/WebhookAuthorizationType'
+        webhookUrl:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+        enabled:
+          type: boolean
+    WebhookActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Agent
+      - SlackBot
+      - TeamsBot
+      - WhatsAppBot
+      - MicrosoftGraphFileTrigger
+      enum:
+      - None
+      - Agent
+      - SlackBot
+      - TeamsBot
+      - WhatsAppBot
+      - MicrosoftGraphFileTrigger
+    WebhookSecretResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        secret:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -405,6 +405,29 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+    BulkInviteUsersRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - groupId
+      properties:
+        groupId:
+          type: string
+          format: guid
+          minLength: 1
     BulkInviteUsersResponse:
       type: object
       additionalProperties: false
@@ -435,6 +458,39 @@ components:
             $ref: '#/components/schemas/UserInviteResult'
         message:
           type: string
+    EditGroupRequestViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        roleIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupLeaderId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        projectIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
     AssignUserGroupRoleRequest:
       type: object
       additionalProperties: false
@@ -505,19 +561,22 @@ components:
           items:
             type: string
             format: guid
-    EditGroupRequestViewModel:
+    EntityNamesResult:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
+        names:
+          type: object
+          additionalProperties:
+            type: string
+    CreateGroupRequestViewModel:
+      type: object
+      additionalProperties: false
+      properties:
         name:
           type: string
         roleIds:
-          type:
-          - array
-          - 'null'
+          type: array
           items:
             type: string
             format: guid
@@ -532,78 +591,10 @@ components:
           - 'null'
           format: guid
         projectIds:
-          type:
-          - array
-          - 'null'
+          type: array
           items:
             type: string
             format: guid
-    UserInviteResult:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        email:
-          type: string
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        reason:
-          type: string
-        inviteSentDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        invitationExpirationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    BulkInviteUsersRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - groupId
-      properties:
-        groupId:
-          type: string
-          format: guid
-          minLength: 1
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     UserViewModel:
       type: object
       additionalProperties: false
@@ -713,14 +704,62 @@ components:
           type:
           - string
           - 'null'
-    EntityNamesResult:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserInviteResult:
       type: object
       additionalProperties: false
       properties:
-        names:
-          type: object
-          additionalProperties:
-            type: string
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        email:
+          type: string
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        reason:
+          type: string
+        inviteSentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        invitationExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
     RoleViewModel:
       type: object
       additionalProperties: false
@@ -743,45 +782,6 @@ components:
           - string
           - 'null'
           format: guid
-    CreateGroupRequestViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        roleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        userIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        groupLeaderId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    GroupType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-      enum:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
   securitySchemes:
     ApiKey:
       type: apiKey

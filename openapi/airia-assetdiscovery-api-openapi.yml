@@ -40,6 +40,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PagedResultOfAssetDiscoveryResult:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDiscoveryResult'
+        totalCount:
+          type: integer
+          format: int32
     AssetDiscoveryResult:
       type: object
       additionalProperties: false
@@ -53,17 +64,6 @@ components:
         name:
           type: string
         executionCount:
-          type: integer
-          format: int32
-    PagedResultOfAssetDiscoveryResult:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetDiscoveryResult'
-        totalCount:
           type: integer
           format: int32
   securitySchemes:

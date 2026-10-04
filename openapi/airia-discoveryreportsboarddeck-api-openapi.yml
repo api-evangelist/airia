@@ -102,13 +102,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BoardDeckGenerationStartedResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        requestId:
-          type: string
-          format: guid
+    BoardDeckGenerationStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Failed
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Failed
     BoardDeckGenerationStatusResponse:
       type: object
       additionalProperties: false
@@ -151,19 +157,13 @@ components:
           type:
           - string
           - 'null'
-    BoardDeckGenerationStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Running
-      - Completed
-      - Failed
-      enum:
-      - Pending
-      - Running
-      - Completed
-      - Failed
+    BoardDeckGenerationStartedResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        requestId:
+          type: string
+          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

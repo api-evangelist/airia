@@ -108,21 +108,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    McpLibraryConfigurationSaveResponse:
+    SaveMcpLibraryConfigurationRequest:
       type: object
       additionalProperties: {}
       required:
-      - id
-      - enabled
-      - level
+      - authType
       properties:
-        id:
+        authType:
           type: string
-          format: guid
-        enabled:
-          type: boolean
+          maxLength: 64
+          minLength: 1
         level:
           type: string
+        enabled:
+          type: boolean
+        properties:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -177,26 +182,21 @@ components:
           - 'null'
           additionalProperties:
             type: string
-    SaveMcpLibraryConfigurationRequest:
+    McpLibraryConfigurationSaveResponse:
       type: object
       additionalProperties: {}
       required:
-      - authType
+      - id
+      - enabled
+      - level
       properties:
-        authType:
+        id:
           type: string
-          maxLength: 64
-          minLength: 1
-        level:
-          type: string
+          format: guid
         enabled:
           type: boolean
-        properties:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
+        level:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

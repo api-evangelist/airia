@@ -621,86 +621,60 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserTaskModel:
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    ShareUserTaskModel:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        title:
-          type: string
-        prompt:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        deploymentId:
-          type: string
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        sourceTaskId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        sharedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        shareStatus:
-          type:
-          - string
-          - 'null'
-        isSharedWithOrganization:
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        shareWithOrganization:
           type: boolean
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/DeploymentScheduleModel'
-        lastExecutedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        executionStatus:
-          $ref: '#/components/schemas/UserTaskExecutionStatus'
-        hasSchedule:
-          type: boolean
-        scheduleId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    CreateUserTaskModel:
-      type: object
-      additionalProperties: false
-      required:
-      - title
-      - prompt
-      - deploymentId
-      properties:
-        title:
-          type: string
-          maxLength: 256
-          minLength: 0
-        prompt:
-          type: string
-          maxLength: 16000
-          minLength: 0
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-          minLength: 0
-        deploymentId:
-          type: string
-          format: guid
-          minLength: 1
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    ScheduleThreadingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - NewThread
+      - SameThread
+      enum:
+      - NewThread
+      - SameThread
     ScheduleModel:
       type: object
       additionalProperties: false
@@ -796,30 +770,6 @@ components:
           type:
           - string
           - 'null'
-    UserTaskExecutionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Idle
-      - Running
-      - Completed
-      - Failed
-      enum:
-      - Idle
-      - Running
-      - Completed
-      - Failed
-    ShareUserTaskModel:
-      type: object
-      additionalProperties: false
-      properties:
-        userIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        shareWithOrganization:
-          type: boolean
     ScheduleType:
       type: string
       description: ''
@@ -839,6 +789,86 @@ components:
       - OneTime
       - Monthly
       - Quarterly
+    CreateUserTaskModel:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - prompt
+      - deploymentId
+      properties:
+        title:
+          type: string
+          maxLength: 256
+          minLength: 0
+        prompt:
+          type: string
+          maxLength: 16000
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        deploymentId:
+          type: string
+          format: guid
+          minLength: 1
+    UserTaskModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        title:
+          type: string
+        prompt:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        sourceTaskId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sharedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        shareStatus:
+          type:
+          - string
+          - 'null'
+        isSharedWithOrganization:
+          type: boolean
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentScheduleModel'
+        lastExecutedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        executionStatus:
+          $ref: '#/components/schemas/UserTaskExecutionStatus'
+        hasSchedule:
+          type: boolean
+        scheduleId:
+          type:
+          - string
+          - 'null'
+          format: guid
     DeploymentScheduleModel:
       allOf:
       - $ref: '#/components/schemas/ScheduleModel'
@@ -882,21 +912,19 @@ components:
             - string
             - 'null'
             format: guid
-    MonthlyWeekOccurrence:
+    UserTaskExecutionStatus:
       type: string
       description: ''
       x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
+      - Idle
+      - Running
+      - Completed
+      - Failed
       enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
+      - Idle
+      - Running
+      - Completed
+      - Failed
     PagedResultOfUserTaskModel:
       type: object
       additionalProperties: false
@@ -908,34 +936,6 @@ components:
         totalCount:
           type: integer
           format: int32
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-    ScheduleThreadingMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - NewThread
-      - SameThread
-      enum:
-      - NewThread
-      - SameThread
   securitySchemes:
     ApiKey:
       type: apiKey

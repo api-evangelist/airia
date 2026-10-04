@@ -393,30 +393,29 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PromptVersionDto:
+    GetPromptDto:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        versionNumber:
-          type: integer
-          format: int32
-        versionChangeDescription:
-          type: string
-        message:
+        name:
           type:
           - string
           - 'null'
-        messages:
+        activeVersionId:
+          type: string
+          format: guid
+        activeVersion:
+          oneOf:
+          - $ref: '#/components/schemas/PromptVersionDto'
+        versions:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/PromptMessageDto'
-        isLatest:
-          type: boolean
+            $ref: '#/components/schemas/PromptVersionDto'
         createdAt:
           type:
           - string
@@ -427,31 +426,37 @@ components:
           - string
           - 'null'
           format: date-time
-    CreatePromptRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
         projectId:
           type:
           - string
           - 'null'
           format: guid
-        versionChangeDescription:
-          type: string
-        messages:
-          type: array
-          deprecated: true
-          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
-          items:
-            $ref: '#/components/schemas/PromptMessageDto'
-        message:
-          type: string
         isAgentSpecific:
           type: boolean
+        usageInfo:
+          oneOf:
+          - $ref: '#/components/schemas/PromptUsageInfo'
+    PipelineUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
     PromptDto:
       type: object
       additionalProperties: false
@@ -498,93 +503,30 @@ components:
           format: int32
         isAgentSpecific:
           type: boolean
-    PromptUsageInfo:
+    PagedResultOfPromptDto:
       type: object
       additionalProperties: false
       properties:
-        pipelines:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/PipelineUsageInfo'
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelUsageInfo'
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SegmentUsageInfo'
-        usedInOtherProjects:
-          type: boolean
-        isInUse:
-          type: boolean
-        isInUseByLatestVersion:
-          type: boolean
-    SegmentUsageInfo:
+            $ref: '#/components/schemas/PromptDto'
+        totalCount:
+          type: integer
+          format: int32
+    ModelUsageInfo:
       type: object
       additionalProperties: false
       properties:
-        segmentId:
+        modelId:
           type: string
           format: guid
-        pipelineId:
+        modelName:
           type: string
-          format: guid
-        pipelineName:
-          type: string
-        pipelineVersionId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-        isLatest:
-          type: boolean
         projectId:
           type:
           - string
           - 'null'
-          format: guid
-    PipelineUsageInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type: string
-          format: guid
-        pipelineName:
-          type: string
-        pipelineVersionId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
-        isLatest:
-          type: boolean
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    UpdatePromptRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        activeVersionId:
-          type: string
           format: guid
     ProblemDetails:
       type: object
@@ -611,15 +553,136 @@ components:
           type:
           - string
           - 'null'
-    ModelUsageInfo:
+    CreatePromptRequest:
       type: object
       additionalProperties: false
       properties:
-        modelId:
+        name:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        versionChangeDescription:
+          type: string
+        messages:
+          type: array
+          deprecated: true
+          x-deprecatedMessage: Use Message instead. This property will be removed in a future version.
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        message:
+          type: string
+        isAgentSpecific:
+          type: boolean
+    UpdatePromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
           format: guid
-        modelName:
+        name:
           type: string
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        activeVersionId:
+          type: string
+          format: guid
+    PromptUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelines:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineUsageInfo'
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelUsageInfo'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+        isInUse:
+          type: boolean
+        isInUseByLatestVersion:
+          type: boolean
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    PromptVersionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        versionNumber:
+          type: integer
+          format: int32
+        versionChangeDescription:
+          type: string
+        message:
+          type:
+          - string
+          - 'null'
+        messages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptMessageDto'
+        isLatest:
+          type: boolean
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    SegmentUsageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        segmentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        pipelineVersionId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
+        isLatest:
+          type: boolean
         projectId:
           type:
           - string
@@ -634,69 +697,6 @@ components:
         order:
           type: integer
           format: int32
-    PagedResultOfPromptDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PromptDto'
-        totalCount:
-          type: integer
-          format: int32
-    GetPromptDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        activeVersionId:
-          type: string
-          format: guid
-        activeVersion:
-          oneOf:
-          - $ref: '#/components/schemas/PromptVersionDto'
-        versions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PromptVersionDto'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isAgentSpecific:
-          type: boolean
-        usageInfo:
-          oneOf:
-          - $ref: '#/components/schemas/PromptUsageInfo'
-    ProjectModelBase:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

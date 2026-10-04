@@ -114,6 +114,42 @@ components:
           type:
           - boolean
           - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    SpmThreatDetectionVerdict:
+      type: string
+      description: ''
+      x-enumNames:
+      - Allowed
+      - Blocked
+      - Error
+      enum:
+      - Allowed
+      - Blocked
+      - Error
     ThreatDetectionEventResponse:
       type: object
       additionalProperties: false
@@ -176,42 +212,6 @@ components:
           - string
           - 'null'
         payloadJson:
-          type:
-          - string
-          - 'null'
-    SpmThreatDetectionVerdict:
-      type: string
-      description: ''
-      x-enumNames:
-      - Allowed
-      - Blocked
-      - Error
-      enum:
-      - Allowed
-      - Blocked
-      - Error
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
           type:
           - string
           - 'null'

@@ -549,6 +549,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    DiscoveryScorecardSurfaceVerdict:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotStarted
+      - Flat
+      - Improving
+      enum:
+      - NotStarted
+      - Flat
+      - Improving
     DiscoveryInsightEntityKind:
       type: string
       description: ''
@@ -562,17 +573,17 @@ components:
       - Model
       - Grant
       - Device
-    DiscoveryInsightDenominatorState:
+    DiscoveryExitCriterionState:
       type: string
       description: ''
       x-enumNames:
       - NotApplicable
-      - CountsOnly
-      - Percent
+      - Met
+      - Missed
       enum:
       - NotApplicable
-      - CountsOnly
-      - Percent
+      - Met
+      - Missed
     DiscoveryInsightProvenanceReadDto:
       type: object
       additionalProperties: false
@@ -626,17 +637,6 @@ components:
           type:
           - string
           - 'null'
-    DiscoveryExitCriterionState:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotApplicable
-      - Met
-      - Missed
-      enum:
-      - NotApplicable
-      - Met
-      - Missed
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -662,46 +662,6 @@ components:
           type:
           - string
           - 'null'
-    DiscoveryInsightNarrativeDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        templateKey:
-          type: string
-        params:
-          type: object
-          additionalProperties: {}
-        isGenerated:
-          type: boolean
-    DiscoveryInsightEntityRowDto:
-      type: object
-      additionalProperties: false
-      properties:
-        entityKey:
-          type: string
-        displayLabel:
-          type: string
-        entityKind:
-          $ref: '#/components/schemas/DiscoveryInsightEntityKind'
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
-    DiscoveryMetricValueState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Measured
-      - Floor
-      - Unavailable
-      - Estimated
-      enum:
-      - Measured
-      - Floor
-      - Unavailable
-      - Estimated
     DiscoveryInsightProvenanceEntryDto:
       type: object
       additionalProperties: false
@@ -723,6 +683,44 @@ components:
           type: array
           items:
             type: string
+    DiscoveryInsightDenominatorState:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotApplicable
+      - CountsOnly
+      - Percent
+      enum:
+      - NotApplicable
+      - CountsOnly
+      - Percent
+    DiscoveryInsightEntityRowDto:
+      type: object
+      additionalProperties: false
+      properties:
+        entityKey:
+          type: string
+        displayLabel:
+          type: string
+        entityKind:
+          $ref: '#/components/schemas/DiscoveryInsightEntityKind'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryInsightMetricDto'
+    DiscoveryInsightNarrativeDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        templateKey:
+          type: string
+        params:
+          type: object
+          additionalProperties: {}
+        isGenerated:
+          type: boolean
     DiscoveryInsightResultDto:
       type: object
       additionalProperties: false
@@ -772,17 +770,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DiscoveryInsightNarrativeDto'
-    DiscoveryScorecardSurfaceVerdict:
+    DiscoveryMetricValueState:
       type: string
       description: ''
       x-enumNames:
-      - NotStarted
-      - Flat
-      - Improving
+      - Measured
+      - Floor
+      - Unavailable
+      - Estimated
       enum:
-      - NotStarted
-      - Flat
-      - Improving
+      - Measured
+      - Floor
+      - Unavailable
+      - Estimated
   securitySchemes:
     ApiKey:
       type: apiKey

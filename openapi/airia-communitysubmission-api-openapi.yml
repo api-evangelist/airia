@@ -235,6 +235,45 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UseCaseDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type: string
+        stage:
+          type: string
+        riskTier:
+          type:
+          - string
+          - 'null'
+        euAiActCategory:
+          type:
+          - string
+          - 'null'
+        nistAiRmfTier:
+          type:
+          - string
+          - 'null'
+    AgentSubmitReviewerRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userInput:
+          type: string
+        saveHistory:
+          type: boolean
+        asyncOutput:
+          type: boolean
+        additionalInfo:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
     AgentStepCompletionStatus:
       type: string
       description: ''
@@ -256,21 +295,140 @@ components:
       - Exception
       - Halt
       - LazyComplete
-    AgentSubmitReviewerRequest:
+    StepType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AIOperation
+      - DataSearch
+      - ExecutePipelineStep
+      - InputStep
+      - MachineLearningOperationStep
+      - MemoryLoadStep
+      - MemoryStoreStep
+      - OutputStep
+      - PythonStep
+      - Exception
+      - RouterStep
+      - AnnotationStep
+      - ApprovalStep
+      - WebhookApprovalStep
+      - ToolActionStep
+      - AgentCardStep
+      - ConditionalBranchStep
+      - LoopContainerStep
+      - LoopStartStep
+      - LoopEndStep
+      - JsonFormatterStep
+      - SdkStep
+      - CustomFormHumanApprovalStep
+      - ImageGenerationStep
+      - DocumentSplitterStep
+      enum:
+      - AIOperation
+      - dataSearch
+      - executePipelineStep
+      - inputStep
+      - machineLearningOperationStep
+      - memoryLoadStep
+      - memoryStoreStep
+      - outputStep
+      - pythonStep
+      - exception
+      - routerStep
+      - annotationStep
+      - approvalStep
+      - webhookApprovalStep
+      - toolActionStep
+      - agentCardStep
+      - conditionalBranchStep
+      - loopContainerStep
+      - loopStartStep
+      - loopEndStep
+      - jsonFormatterStep
+      - sdkStep
+      - customFormHumanApprovalStep
+      - imageGenerationStep
+      - documentSplitterStep
+    TimeTrackingData:
       type: object
       additionalProperties: false
       properties:
-        userInput:
-          type: string
-        saveHistory:
-          type: boolean
-        asyncOutput:
-          type: boolean
-        additionalInfo:
+        duration:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
+          example: 0.0
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ModelDisclosure:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        modelName:
+          type:
+          - string
+          - 'null'
+    CommunitySubmissionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - agentId
+      properties:
+        agentId:
+          type: string
+          format: guid
+          minLength: 1
+        note:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+        errorDetails:
+          type:
+          - array
+          - 'null'
+          items:
             type: string
     PipelineExecutionResult:
       type: object
@@ -352,118 +510,6 @@ components:
         debugInformation:
           type: object
           additionalProperties: {}
-    TimeTrackingData:
-      type: object
-      additionalProperties: false
-      properties:
-        duration:
-          type:
-          - string
-          - 'null'
-          example: 0.0
-        startedAt:
-          type: string
-          format: date-time
-        finishedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    StepType:
-      type: string
-      description: ''
-      x-enumNames:
-      - AIOperation
-      - DataSearch
-      - ExecutePipelineStep
-      - InputStep
-      - MachineLearningOperationStep
-      - MemoryLoadStep
-      - MemoryStoreStep
-      - OutputStep
-      - PythonStep
-      - Exception
-      - RouterStep
-      - AnnotationStep
-      - ApprovalStep
-      - WebhookApprovalStep
-      - ToolActionStep
-      - AgentCardStep
-      - ConditionalBranchStep
-      - LoopContainerStep
-      - LoopStartStep
-      - LoopEndStep
-      - JsonFormatterStep
-      - SdkStep
-      - CustomFormHumanApprovalStep
-      - ImageGenerationStep
-      - DocumentSplitterStep
-      enum:
-      - AIOperation
-      - dataSearch
-      - executePipelineStep
-      - inputStep
-      - machineLearningOperationStep
-      - memoryLoadStep
-      - memoryStoreStep
-      - outputStep
-      - pythonStep
-      - exception
-      - routerStep
-      - annotationStep
-      - approvalStep
-      - webhookApprovalStep
-      - toolActionStep
-      - agentCardStep
-      - conditionalBranchStep
-      - loopContainerStep
-      - loopStartStep
-      - loopEndStep
-      - jsonFormatterStep
-      - sdkStep
-      - customFormHumanApprovalStep
-      - imageGenerationStep
-      - documentSplitterStep
-    CommunitySubmissionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        communityAgentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        errorCode:
-          type:
-          - string
-          - 'null'
-    UseCaseDisclosure:
-      type: object
-      additionalProperties: false
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        useCaseName:
-          type: string
-        stage:
-          type: string
-        riskTier:
-          type:
-          - string
-          - 'null'
-        euAiActCategory:
-          type:
-          - string
-          - 'null'
-        nistAiRmfTier:
-          type:
-          - string
-          - 'null'
     AgentBaseStepResult:
       type: object
       discriminator:
@@ -509,69 +555,6 @@ components:
           format: guid
         $type:
           type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    CommunitySubmissionRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - agentId
-      properties:
-        agentId:
-          type: string
-          format: guid
-          minLength: 1
-        note:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        country:
-          type:
-          - string
-          - 'null'
-        errorDetails:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    ModelDisclosure:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        modelName:
-          type:
-          - string
-          - 'null'
     DisclosurePayload:
       type: object
       additionalProperties: false
@@ -643,6 +626,23 @@ components:
           - 'null'
         disclosureVersion:
           type: string
+    CommunitySubmissionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        communityAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        errorCode:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

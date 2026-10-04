@@ -361,6 +361,88 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TopAppByUsersV1:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceApplication:
+          type:
+          - string
+          - 'null'
+        uniqueUserCount:
+          type: integer
+          format: int32
+        eventCount:
+          type: integer
+          format: int32
+    PaginationInfoV1:
+      type: object
+      additionalProperties: false
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalItems:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+    GetTopAppUsersResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TopAppUserV1'
+    GetShadowAiEventsResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShadowAiEventV1'
+        pagination:
+          oneOf:
+          - $ref: '#/components/schemas/PaginationInfoV1'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     Timestamp:
       type: object
       additionalProperties: false
@@ -371,6 +453,54 @@ components:
         nanos:
           type: integer
           format: int32
+    UsageTimeSeriesPointV1:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        uniqueUsers:
+          type: integer
+          format: int32
+        uniqueApplications:
+          type: integer
+          format: int32
+        eventsByApplication:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: integer
+            format: int32
+    GetUsageOverTimeResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        dataPoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UsageTimeSeriesPointV1'
+    TopAppUserV1:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        lastAccessed:
+          oneOf:
+          - $ref: '#/components/schemas/Timestamp'
     ShadowAiEventV1:
       type: object
       additionalProperties: false
@@ -459,20 +589,6 @@ components:
           type:
           - string
           - 'null'
-    TopAppUserV1:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type:
-          - string
-          - 'null'
-        eventCount:
-          type: integer
-          format: int32
-        lastAccessed:
-          oneOf:
-          - $ref: '#/components/schemas/Timestamp'
     GetTopAppsByUsersResponseV1:
       type: object
       additionalProperties: false
@@ -483,122 +599,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/TopAppByUsersV1'
-        pagination:
-          oneOf:
-          - $ref: '#/components/schemas/PaginationInfoV1'
-    GetUsageOverTimeResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        dataPoints:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UsageTimeSeriesPointV1'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    TopAppByUsersV1:
-      type: object
-      additionalProperties: false
-      properties:
-        sourceApplication:
-          type:
-          - string
-          - 'null'
-        uniqueUserCount:
-          type: integer
-          format: int32
-        eventCount:
-          type: integer
-          format: int32
-    UsageTimeSeriesPointV1:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type:
-          - string
-          - 'null'
-        eventCount:
-          type: integer
-          format: int32
-        uniqueUsers:
-          type: integer
-          format: int32
-        uniqueApplications:
-          type: integer
-          format: int32
-        eventsByApplication:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: integer
-            format: int32
-    GetTopAppUsersResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        users:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TopAppUserV1'
-    PaginationInfoV1:
-      type: object
-      additionalProperties: false
-      properties:
-        currentPage:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        totalItems:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-    GetShadowAiEventsResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ShadowAiEventV1'
         pagination:
           oneOf:
           - $ref: '#/components/schemas/PaginationInfoV1'

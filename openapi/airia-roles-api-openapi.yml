@@ -400,53 +400,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultOfRoleGroupAssignmentViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleGroupAssignmentViewModel'
-        totalCount:
-          type: integer
-          format: int32
-    PagedResultOfRoleUserAssignmentViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleUserAssignmentViewModel'
-        totalCount:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     RoleGroupAssignmentViewModel:
       type: object
       additionalProperties: false
@@ -470,20 +423,18 @@ components:
           format: date-time
         orphaned:
           type: boolean
-    RoleViewModel:
+    RoleUserAssignmentViewModel:
       type: object
       additionalProperties: false
       properties:
-        id:
+        userId:
           type: string
           format: guid
-        name:
-          type: string
-        displayName:
+        email:
           type:
           - string
           - 'null'
-        description:
+        displayName:
           type:
           - string
           - 'null'
@@ -492,6 +443,13 @@ components:
           - string
           - 'null'
           format: guid
+        grantedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orphaned:
+          type: boolean
     RolePoliciesViewModel:
       type: object
       additionalProperties: false
@@ -550,18 +508,67 @@ components:
           type: boolean
         isAgentRequestEditingEnabled:
           type: boolean
-    RoleUserAssignmentViewModel:
+    PagedResultOfRoleGroupAssignmentViewModel:
       type: object
       additionalProperties: false
       properties:
-        userId:
-          type: string
-          format: guid
-        email:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleGroupAssignmentViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
           type:
           - string
           - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfRoleUserAssignmentViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleUserAssignmentViewModel'
+        totalCount:
+          type: integer
+          format: int32
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
         displayName:
+          type:
+          - string
+          - 'null'
+        description:
           type:
           - string
           - 'null'
@@ -570,13 +577,6 @@ components:
           - string
           - 'null'
           format: guid
-        grantedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        orphaned:
-          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

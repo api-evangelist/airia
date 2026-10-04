@@ -91,56 +91,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserOAuthProvider:
+    PagedResultV2OfUserOAuthProvider:
       type: object
       additionalProperties: false
       properties:
-        name:
-          type: string
-        provider:
-          type: string
-        providerId:
-          type: string
-        credentialId:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/OAuthProviderStatus'
-        providerScopes:
+        items:
           type: array
           items:
-            type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        authenticationType:
-          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
+            $ref: '#/components/schemas/UserOAuthProvider'
+        totalCount:
           type:
           - integer
           - 'null'
           format: int32
-        detail:
+        hasMore:
           type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
+          - boolean
           - 'null'
     ProviderAuthenticationTypeV1:
       type: string
@@ -169,6 +135,31 @@ components:
       - StaticAwsStsExternalId
       - ClerkM2MOauth
       - IdJagCrossAppAccess
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     OAuthProviderStatus:
       type: string
       description: ''
@@ -180,23 +171,32 @@ components:
       - Connected
       - Error
       - NotConnected
-    PagedResultV2OfUserOAuthProvider:
+    UserOAuthProvider:
       type: object
       additionalProperties: false
       properties:
-        items:
+        name:
+          type: string
+        provider:
+          type: string
+        providerId:
+          type: string
+        credentialId:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/OAuthProviderStatus'
+        providerScopes:
           type: array
           items:
-            $ref: '#/components/schemas/UserOAuthProvider'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
+            type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        authenticationType:
+          $ref: '#/components/schemas/ProviderAuthenticationTypeV1'
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -250,15 +250,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateAssignmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        assignedClassificationLabelId:
-          type:
-          - string
-          - 'null'
-          format: guid
     AssetClassificationDto:
       type: object
       additionalProperties: false
@@ -279,6 +270,40 @@ components:
         inferredLabel:
           oneOf:
           - $ref: '#/components/schemas/ClassificationLabelInfo'
+    CreateAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: guid
+        assetId:
+          type: string
+          format: guid
+        classificationId:
+          type: string
+          format: guid
+        assignedClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        controlIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    ClassificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Default
+      - Custom
+      - RiskLevel
+      enum:
+      - Default
+      - Custom
+      - RiskLevel
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -304,6 +329,32 @@ components:
           type:
           - string
           - 'null'
+    ClassificationLabelInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        labelName:
+          type: string
+        isDefaultValue:
+          type: boolean
+        classificationId:
+          type: string
+          format: guid
+        priority:
+          type: integer
+          format: int32
+    UpdateAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        assignedClassificationLabelId:
+          type:
+          - string
+          - 'null'
+          format: guid
     ClassificationAssignmentDto:
       type: object
       additionalProperties: false
@@ -330,57 +381,6 @@ components:
           - string
           - 'null'
           format: guid
-    CreateAssignmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        tenantId:
-          type: string
-          format: guid
-        assetId:
-          type: string
-          format: guid
-        classificationId:
-          type: string
-          format: guid
-        assignedClassificationLabelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        controlIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    ClassificationLabelInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        labelName:
-          type: string
-        isDefaultValue:
-          type: boolean
-        classificationId:
-          type: string
-          format: guid
-        priority:
-          type: integer
-          format: int32
-    ClassificationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Default
-      - Custom
-      - RiskLevel
-      enum:
-      - Default
-      - Custom
-      - RiskLevel
   securitySchemes:
     ApiKey:
       type: apiKey

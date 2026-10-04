@@ -159,19 +159,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RenameUserStoreEntryRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - oldPath
-      - newPath
-      properties:
-        oldPath:
-          type: string
-          minLength: 1
-        newPath:
-          type: string
-          minLength: 1
     CreateUserStoreFolderRequest:
       type: object
       additionalProperties: false
@@ -207,6 +194,19 @@ components:
           type:
           - string
           - 'null'
+    RenameUserStoreEntryRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          minLength: 1
+        newPath:
+          type: string
+          minLength: 1
     UserStoreFileItemDto:
       type: object
       additionalProperties: false

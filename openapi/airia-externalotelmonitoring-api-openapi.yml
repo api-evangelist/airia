@@ -488,17 +488,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    InferenceHooksEventOutcome:
-      type: string
-      description: ''
-      x-enumNames:
-      - Allow
-      - Deny
-      - Failure
-      enum:
-      - Allow
-      - Deny
-      - Failure
     ExternalOtelMonitoringPagedEvents:
       type: object
       additionalProperties: false
@@ -516,124 +505,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExternalOtelMonitoringEvent'
-    ExternalOtelMonitoringSession:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        sessionId:
-          type: string
-          maxLength: 128
-        userEmail:
-          type: string
-          maxLength: 256
-        service:
-          type: string
-          maxLength: 64
-        surface:
-          type:
-          - string
-          - 'null'
-          maxLength: 64
-        apiKeyId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        promptCount:
-          type: integer
-          format: int32
-        eventCount:
-          type: integer
-          format: int32
-        toolCallCount:
-          type: integer
-          format: int32
-        errorCount:
-          type: integer
-          format: int32
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ExternalOtelMonitoringPrompt:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        sessionId:
-          type: string
-          maxLength: 128
-        promptId:
-          type: string
-          maxLength: 128
-        userEmail:
-          type: string
-          maxLength: 256
-        service:
-          type: string
-          maxLength: 64
-        surface:
-          type:
-          - string
-          - 'null'
-          maxLength: 64
-        eventCount:
-          type: integer
-          format: int32
-        toolCallCount:
-          type: integer
-          format: int32
-        errorCount:
-          type: integer
-          format: int32
-        firstEventAt:
-          type: string
-          format: date-time
-        lastEventAt:
-          type: string
-          format: date-time
-    ClaudeOtelKeyHealthResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          $ref: '#/components/schemas/ClaudeOtelKeyHealthStatus'
-        mismatches:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClaudeOtelKeyMismatch'
-        lastTelemetryAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        enforcementEnabled:
-          type: boolean
-        lookbackDays:
-          type: integer
-          format: int32
-    ClaudeGuardrailEvaluationDirection:
-      type: string
-      description: ''
-      x-enumNames:
-      - Input
-      - Output
-      enum:
-      - Input
-      - Output
     ClaudeViolationLocation:
       type: object
       additionalProperties: false
@@ -650,90 +521,6 @@ components:
           - 'null'
         direction:
           $ref: '#/components/schemas/ClaudeGuardrailEvaluationDirection'
-    ClaudeOtelKeyMismatch:
-      type: object
-      additionalProperties: false
-      properties:
-        apiKeyId:
-          type: string
-          format: guid
-        apiKeyName:
-          type:
-          - string
-          - 'null'
-        service:
-          type: string
-        distinctUsers:
-          type: integer
-          format: int32
-        lastSeenAt:
-          type: string
-          format: date-time
-    ClaudeOtelKeyHealthStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotConfigured
-      - Healthy
-      - Mismatched
-      - Silent
-      - NeverReceived
-      - Unverified
-      enum:
-      - NotConfigured
-      - Healthy
-      - Mismatched
-      - Silent
-      - NeverReceived
-      - Unverified
-    ExternalOtelMonitoringConversationTurn:
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          user: '#/components/schemas/ConversationUserTurn'
-          assistant: '#/components/schemas/ConversationAssistantTurn'
-          recap: '#/components/schemas/ConversationRecapTurn'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        id:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        type:
-          type: string
-    ExternalOtelMonitoringConversation:
-      type: object
-      additionalProperties: false
-      properties:
-        sessionId:
-          type: string
-        turns:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalOtelMonitoringConversationTurn'
-        deletedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    GuardrailViolationStats:
-      type: object
-      additionalProperties: false
-      properties:
-        totalMessages:
-          type: integer
-          format: int32
-        flaggedMessages:
-          type: integer
-          format: int32
-        flaggedRate:
-          type: number
-          format: double
     ExternalOtelMonitoringEvent:
       type: object
       additionalProperties: false
@@ -806,6 +593,219 @@ components:
           type: string
           format: date-time
         ingestedAt:
+          type: string
+          format: date-time
+    ExternalOtelMonitoringConversationTurn:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          user: '#/components/schemas/ConversationUserTurn'
+          assistant: '#/components/schemas/ConversationAssistantTurn'
+          recap: '#/components/schemas/ConversationRecapTurn'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          type: string
+    InferenceHooksEventOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - Allow
+      - Deny
+      - Failure
+      enum:
+      - Allow
+      - Deny
+      - Failure
+    GuardrailViolationStats:
+      type: object
+      additionalProperties: false
+      properties:
+        totalMessages:
+          type: integer
+          format: int32
+        flaggedMessages:
+          type: integer
+          format: int32
+        flaggedRate:
+          type: number
+          format: double
+    ClaudeOtelKeyMismatch:
+      type: object
+      additionalProperties: false
+      properties:
+        apiKeyId:
+          type: string
+          format: guid
+        apiKeyName:
+          type:
+          - string
+          - 'null'
+        service:
+          type: string
+        distinctUsers:
+          type: integer
+          format: int32
+        lastSeenAt:
+          type: string
+          format: date-time
+    ClaudeOtelKeyHealthResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/ClaudeOtelKeyHealthStatus'
+        mismatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaudeOtelKeyMismatch'
+        lastTelemetryAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        enforcementEnabled:
+          type: boolean
+        lookbackDays:
+          type: integer
+          format: int32
+    ExternalOtelMonitoringSession:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        sessionId:
+          type: string
+          maxLength: 128
+        userEmail:
+          type: string
+          maxLength: 256
+        service:
+          type: string
+          maxLength: 64
+        surface:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        apiKeyId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        promptCount:
+          type: integer
+          format: int32
+        eventCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ClaudeGuardrailEvaluationDirection:
+      type: string
+      description: ''
+      x-enumNames:
+      - Input
+      - Output
+      enum:
+      - Input
+      - Output
+    ExternalOtelMonitoringConversation:
+      type: object
+      additionalProperties: false
+      properties:
+        sessionId:
+          type: string
+        turns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalOtelMonitoringConversationTurn'
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ClaudeOtelKeyHealthStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotConfigured
+      - Healthy
+      - Mismatched
+      - Silent
+      - NeverReceived
+      - Unverified
+      enum:
+      - NotConfigured
+      - Healthy
+      - Mismatched
+      - Silent
+      - NeverReceived
+      - Unverified
+    ExternalOtelMonitoringPrompt:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        sessionId:
+          type: string
+          maxLength: 128
+        promptId:
+          type: string
+          maxLength: 128
+        userEmail:
+          type: string
+          maxLength: 256
+        service:
+          type: string
+          maxLength: 64
+        surface:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        eventCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        firstEventAt:
+          type: string
+          format: date-time
+        lastEventAt:
           type: string
           format: date-time
   securitySchemes:

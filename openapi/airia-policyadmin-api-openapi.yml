@@ -90,15 +90,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SecretsPolicyV1:
+    GetAuthoredPolicyResponseV1:
       type: object
       additionalProperties: false
       properties:
-        plaintextForbidden:
-          type: boolean
-    ValidationProblemDetails:
+        schemaVersion:
+          type: integer
+          format: int32
+        revision:
+          type: integer
+          format: int64
+        generatedAt:
+          type: string
+          format: date-time
+        policy:
+          $ref: '#/components/schemas/AuthoredPolicyV1'
+    HttpValidationProblemDetails:
       allOf:
-      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - $ref: '#/components/schemas/ProblemDetails'
       - type: object
         additionalProperties: {}
         properties:
@@ -108,6 +117,21 @@ components:
               type: array
               items:
                 type: string
+    AuthoredLlmProxyEntryV1:
+      type: object
+      additionalProperties: false
+      properties:
+        gatewayUrl:
+          type: string
+        gatewayConfigurationId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        overrides:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AuthoredLlmProxyOverrideV1'
     McpPolicyV1:
       type: object
       additionalProperties: false
@@ -128,29 +152,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DefaultMcpServerV1'
-    AuthoredLlmProxyOverrideV1:
+    MatchPredicateV1:
       type: object
       additionalProperties: false
       properties:
-        gatewayUrl:
-          type: string
-        gatewayConfigurationId:
+        host:
           type:
           - string
           - 'null'
-          format: guid
-    UpdatePolicyRequestV1:
+        name:
+          type:
+          - string
+          - 'null'
+    SanctionedServerV1:
       type: object
       additionalProperties: false
-      required:
-      - expectedRevision
-      - policy
       properties:
-        expectedRevision:
-          type: integer
-          format: int64
-        policy:
-          $ref: '#/components/schemas/AuthoredPolicyV1'
+        logicalId:
+          type: string
+        match:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchPredicateV1'
+        gatewayUrl:
+          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -176,45 +201,18 @@ components:
           type:
           - string
           - 'null'
-    SanctionedServerV1:
-      type: object
-      additionalProperties: false
-      properties:
-        logicalId:
-          type: string
-        match:
-          type: array
-          items:
-            $ref: '#/components/schemas/MatchPredicateV1'
-        gatewayUrl:
-          type: string
-    DefaultMcpServerV1:
-      type: object
-      additionalProperties: false
-      properties:
-        logicalId:
-          type: string
-        gatewayUrl:
-          type: string
-        installIn:
-          type: array
-          items:
-            type: string
-    GetAuthoredPolicyResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        schemaVersion:
-          type: integer
-          format: int32
-        revision:
-          type: integer
-          format: int64
-        generatedAt:
-          type: string
-          format: date-time
-        policy:
-          $ref: '#/components/schemas/AuthoredPolicyV1'
+    ValidationProblemDetails:
+      allOf:
+      - $ref: '#/components/schemas/HttpValidationProblemDetails'
+      - type: object
+        additionalProperties: {}
+        properties:
+          errors:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
     AuthoredPolicyV1:
       type: object
       additionalProperties: false
@@ -233,7 +231,37 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/AuthoredLlmProxyEntryV1'
-    AuthoredLlmProxyEntryV1:
+    UpdatePolicyRequestV1:
+      type: object
+      additionalProperties: false
+      required:
+      - expectedRevision
+      - policy
+      properties:
+        expectedRevision:
+          type: integer
+          format: int64
+        policy:
+          $ref: '#/components/schemas/AuthoredPolicyV1'
+    SecretsPolicyV1:
+      type: object
+      additionalProperties: false
+      properties:
+        plaintextForbidden:
+          type: boolean
+    DefaultMcpServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        logicalId:
+          type: string
+        gatewayUrl:
+          type: string
+        installIn:
+          type: array
+          items:
+            type: string
+    AuthoredLlmProxyOverrideV1:
       type: object
       additionalProperties: false
       properties:
@@ -244,34 +272,6 @@ components:
           - string
           - 'null'
           format: guid
-        overrides:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AuthoredLlmProxyOverrideV1'
-    HttpValidationProblemDetails:
-      allOf:
-      - $ref: '#/components/schemas/ProblemDetails'
-      - type: object
-        additionalProperties: {}
-        properties:
-          errors:
-            type: object
-            additionalProperties:
-              type: array
-              items:
-                type: string
-    MatchPredicateV1:
-      type: object
-      additionalProperties: false
-      properties:
-        host:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

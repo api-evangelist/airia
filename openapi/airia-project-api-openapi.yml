@@ -816,6 +816,69 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ProjectDeletionBlockedDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        projectName:
+          type: string
+        blockingEntities:
+          $ref: '#/components/schemas/ProjectDeletionBlockingEntities'
+    GroupType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+      enum:
+      - Feature
+      - Tenant
+      - Keycloak
+      - EndpointDiscovered
+    BlockingEntityInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    DatasourceSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    ProjectType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
+      enum:
+      - Standard
+      - Frontline
+      - Legal
+      - FieldService
+      - BrainFreeze
     ProjectDeletionBlockingEntities:
       type: object
       additionalProperties: false
@@ -860,7 +923,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BlockingEntityInfo'
-    BlockingEntityInfo:
+    ProjectModelBase:
       type: object
       additionalProperties: false
       properties:
@@ -869,6 +932,82 @@ components:
           format: guid
         name:
           type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GroupViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        parentId:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        identityServerGroupId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        users:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserViewModel'
+        totalUsers:
+          type: integer
+          format: int32
+        rolesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleViewModel'
+        isIdpProvisioned:
+          type: boolean
+        groupLeader:
+          oneOf:
+          - $ref: '#/components/schemas/UserViewModel'
+        projectIds:
+          type: array
+          items:
+            type: string
+            format: guid
     ProjectDto:
       allOf:
       - $ref: '#/components/schemas/ProjectModelBase'
@@ -977,108 +1116,17 @@ components:
               - string
               - 'null'
               format: guid
-    GroupViewModel:
+    PagedResultOfUserViewModel:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        parentId:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        identityServerGroupId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        groupType:
-          $ref: '#/components/schemas/GroupType'
-        users:
-          type:
-          - array
-          - 'null'
+        items:
+          type: array
           items:
             $ref: '#/components/schemas/UserViewModel'
-        totalUsers:
+        totalCount:
           type: integer
           format: int32
-        rolesList:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleViewModel'
-        isIdpProvisioned:
-          type: boolean
-        groupLeader:
-          oneOf:
-          - $ref: '#/components/schemas/UserViewModel'
-        projectIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    ProjectDeletionBlockedDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        message:
-          type: string
-        projectId:
-          type: string
-          format: guid
-        projectName:
-          type: string
-        blockingEntities:
-          $ref: '#/components/schemas/ProjectDeletionBlockingEntities'
-    PipelineSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     UserViewModel:
       type: object
       additionalProperties: false
@@ -1188,6 +1236,41 @@ components:
           type:
           - string
           - 'null'
+    PipelineSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    RoleViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
     ListingProjectDto:
       allOf:
       - $ref: '#/components/schemas/ProjectModelBase'
@@ -1218,89 +1301,6 @@ components:
             - 'null'
           projectType:
             $ref: '#/components/schemas/ProjectType'
-    DatasourceSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    ProjectType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Standard
-      - Frontline
-      - Legal
-      - FieldService
-      - BrainFreeze
-      enum:
-      - Standard
-      - Frontline
-      - Legal
-      - FieldService
-      - BrainFreeze
-    RoleViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    PagedResultOfUserViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserViewModel'
-        totalCount:
-          type: integer
-          format: int32
-    GroupType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-      enum:
-      - Feature
-      - Tenant
-      - Keycloak
-      - EndpointDiscovered
-    ProjectModelBase:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

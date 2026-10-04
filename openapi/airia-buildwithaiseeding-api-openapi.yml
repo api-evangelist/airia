@@ -363,6 +363,15 @@ components:
           - string
           - 'null'
           format: guid
+    BuildWithAiProjectType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AgentBuilder
+      - PythonVibeCoding
+      enum:
+      - AgentBuilder
+      - PythonVibeCoding
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -388,37 +397,6 @@ components:
           type:
           - string
           - 'null'
-    BuildWithAiProjectInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        projectType:
-          $ref: '#/components/schemas/BuildWithAiProjectType'
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isEnabled:
-          type: boolean
-        isManagedBySystemAgent:
-          type: boolean
-        projectName:
-          type: string
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    BuildWithAiProjectType:
-      type: string
-      description: ''
-      x-enumNames:
-      - AgentBuilder
-      - PythonVibeCoding
-      enum:
-      - AgentBuilder
-      - PythonVibeCoding
     BuildWithAiSeedingProgressDto:
       type: object
       additionalProperties: false
@@ -466,6 +444,28 @@ components:
           - 'null'
           items:
             type: string
+    BuildWithAiProjectInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        projectType:
+          $ref: '#/components/schemas/BuildWithAiProjectType'
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        isManagedBySystemAgent:
+          type: boolean
+        projectName:
+          type: string
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

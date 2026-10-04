@@ -188,17 +188,6 @@ components:
           - integer
           - 'null'
           format: int64
-    ConvertCsvToXlsxResponseV2:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        duration:
-          type:
-          - integer
-          - 'null'
-          format: int64
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -224,6 +213,17 @@ components:
           type:
           - string
           - 'null'
+    ConvertCsvToXlsxResponseV2:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int64
   securitySchemes:
     ApiKey:
       type: apiKey

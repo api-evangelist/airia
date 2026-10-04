@@ -145,6 +145,98 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PythonParsedFileEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        file_id:
+          type: string
+        name:
+          type: string
+        content:
+          type: string
+        content_type:
+          type: string
+        pages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PythonParsedFilePage'
+    PythonScriptClientData:
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_id_token:
+          type:
+          - string
+          - 'null'
+        user_input_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_name:
+          type:
+          - string
+          - 'null'
+        conversation_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        user_input:
+          type:
+          - string
+          - 'null'
+        images:
+          type: array
+          items:
+            type: string
+        additional_info:
+          type: array
+          items: {}
+        step_inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+        files:
+          type: array
+          items:
+            type: string
+        parsed_files:
+          type: array
+          items:
+            $ref: '#/components/schemas/PythonParsedFileEntry'
+        user_groups:
+          type: array
+          items:
+            type: string
+        user_roles:
+          type: array
+          items:
+            type: string
+        variables:
+          type: object
+          additionalProperties:
+            type: string
+    PythonScriptEmailData:
+      type: object
+      additionalProperties: false
+      properties:
+        user_email:
+          type:
+          - string
+          - 'null'
+        sender_email:
+          type:
+          - string
+          - 'null'
     PythonScriptExecutionRequest:
       type: object
       additionalProperties: false
@@ -226,6 +318,50 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
+    PythonScriptExecutionParameters:
+      type: object
+      additionalProperties: false
+      properties:
+        execution_id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        step_results_by_type:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentBaseStepResult'
+        step_results_by_name:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     PythonCredentialEntry:
       type: object
       additionalProperties: false
@@ -241,6 +377,15 @@ components:
           type: object
           additionalProperties:
             type: string
+    PythonParsedFilePage:
+      type: object
+      additionalProperties: false
+      properties:
+        page_number:
+          type: integer
+          format: int32
+        content:
+          type: string
     AgentBaseStepResult:
       type: object
       discriminator:
@@ -286,151 +431,6 @@ components:
           format: guid
         $type:
           type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PythonScriptClientData:
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        user_id_token:
-          type:
-          - string
-          - 'null'
-        user_input_id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        user_name:
-          type:
-          - string
-          - 'null'
-        conversation_id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        user_input:
-          type:
-          - string
-          - 'null'
-        images:
-          type: array
-          items:
-            type: string
-        additional_info:
-          type: array
-          items: {}
-        step_inputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentBaseStepResult'
-        files:
-          type: array
-          items:
-            type: string
-        parsed_files:
-          type: array
-          items:
-            $ref: '#/components/schemas/PythonParsedFileEntry'
-        user_groups:
-          type: array
-          items:
-            type: string
-        user_roles:
-          type: array
-          items:
-            type: string
-        variables:
-          type: object
-          additionalProperties:
-            type: string
-    PythonParsedFilePage:
-      type: object
-      additionalProperties: false
-      properties:
-        page_number:
-          type: integer
-          format: int32
-        content:
-          type: string
-    PythonScriptEmailData:
-      type: object
-      additionalProperties: false
-      properties:
-        user_email:
-          type:
-          - string
-          - 'null'
-        sender_email:
-          type:
-          - string
-          - 'null'
-    PythonScriptExecutionParameters:
-      type: object
-      additionalProperties: false
-      properties:
-        execution_id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        step_results_by_type:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/AgentBaseStepResult'
-        step_results_by_name:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AgentBaseStepResult'
-    PythonParsedFileEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        file_id:
-          type: string
-        name:
-          type: string
-        content:
-          type: string
-        content_type:
-          type: string
-        pages:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PythonParsedFilePage'
   securitySchemes:
     ApiKey:
       type: apiKey

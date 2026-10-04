@@ -867,23 +867,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateSmartScanRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-          maxLength: 250
-          minLength: 0
-        isBookmarked:
-          type:
-          - boolean
-          - 'null'
     SmartScanCountType:
       type: string
       description: ''
@@ -903,31 +886,6 @@ components:
       - AnswersTagged
       - AnswersExtracted
       - AnswersSummarized
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     SmartScanFile:
       allOf:
       - $ref: '#/components/schemas/BaseAuditEntity'
@@ -967,21 +925,70 @@ components:
           smartScanId:
             type: string
             format: guid
-    SmartScanFileStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - InProgress
-      - Success
-      - Fail
-      - Canceled
-      enum:
-      - Pending
-      - InProgress
-      - Success
-      - Fail
-      - Canceled
+    SmartScan:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            type: string
+          status:
+            maxLength: 15
+            minLength: 0
+            oneOf:
+            - $ref: '#/components/schemas/SmartScanStatus'
+          dataStoreId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          isBookmarked:
+            type: boolean
+          metadata:
+            type: object
+            x-dictionaryKey:
+              $ref: '#/components/schemas/SmartScanCountType'
+            additionalProperties:
+              type: integer
+              format: int32
+          smartScanPrompts:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/SmartScanPrompt'
+    CreateSmartScanRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        dataStoreId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        smartScanPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateSmartScanPromptRequest'
+        fileIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
     BaseAuditEntity:
       type: object
       x-abstract: true
@@ -1002,6 +1009,127 @@ components:
           - string
           - 'null'
           format: guid
+    SmartScanStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+      enum:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+    SmartScanFileStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+      enum:
+      - Pending
+      - InProgress
+      - Success
+      - Fail
+      - Canceled
+    PatchSmartScanFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        result:
+          type:
+          - string
+          - 'null'
+    BaseEntity:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        x-abstract: true
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+          projectId:
+            type: string
+            format: guid
+    UpdateSmartScanFileRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        promptSequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pipelineExecutionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        status:
+          $ref: '#/components/schemas/SmartScanFileStatus'
+        result:
+          type:
+          - string
+          - 'null'
+        explanation:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedResultOfSmartScanFile:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartScanFile'
+        totalCount:
+          type: integer
+          format: int32
     SmartScanPromptResponse:
       type: object
       additionalProperties: false
@@ -1038,13 +1166,22 @@ components:
           - string
           - 'null'
           format: date-time
-    PatchSmartScanFileRequest:
+    UpdateSmartScanRequest:
       type: object
       additionalProperties: false
       properties:
-        result:
+        id:
+          type: string
+          format: guid
+        name:
           type:
           - string
+          - 'null'
+          maxLength: 250
+          minLength: 0
+        isBookmarked:
+          type:
+          - boolean
           - 'null'
     SmartScanPromptType:
       type: string
@@ -1057,130 +1194,6 @@ components:
       - Tag
       - Extract
       - Summarize
-    BaseEntity:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        x-abstract: true
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-          projectId:
-            type: string
-            format: guid
-    SmartScanStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - InProgress
-      - Success
-      - Fail
-      - Canceled
-      enum:
-      - Pending
-      - InProgress
-      - Success
-      - Fail
-      - Canceled
-    SmartScan:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          name:
-            type: string
-          status:
-            maxLength: 15
-            minLength: 0
-            oneOf:
-            - $ref: '#/components/schemas/SmartScanStatus'
-          dataStoreId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          isBookmarked:
-            type: boolean
-          metadata:
-            type: object
-            x-dictionaryKey:
-              $ref: '#/components/schemas/SmartScanCountType'
-            additionalProperties:
-              type: integer
-              format: int32
-          smartScanPrompts:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/SmartScanPrompt'
-    UpdateSmartScanFileRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        promptSequenceNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pipelineExecutionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        status:
-          $ref: '#/components/schemas/SmartScanFileStatus'
-        result:
-          type:
-          - string
-          - 'null'
-        explanation:
-          type:
-          - string
-          - 'null'
-        error:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-    CreateSmartScanPromptRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/SmartScanPromptType'
-        prompt:
-          type: string
-        promptName:
-          type:
-          - string
-          - 'null'
-          maxLength: 64
-        promptLabel:
-          type:
-          - string
-          - 'null'
-          maxLength: 32
-    PagedResultOfSmartScanFile:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SmartScanFile'
-        totalCount:
-          type: integer
-          format: int32
     SmartScanResponse:
       type: object
       additionalProperties: false
@@ -1211,6 +1224,33 @@ components:
           - string
           - 'null'
           format: date-time
+    CreateSmartScanPromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/SmartScanPromptType'
+        prompt:
+          type: string
+        promptName:
+          type:
+          - string
+          - 'null'
+          maxLength: 64
+        promptLabel:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
+    PatchSmartScanPromptRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        promptLabel:
+          type:
+          - string
+          - 'null'
+          maxLength: 32
     SmartScanPrompt:
       allOf:
       - $ref: '#/components/schemas/BaseAuditEntity'
@@ -1250,46 +1290,6 @@ components:
             additionalProperties:
               type: integer
               format: int32
-    PatchSmartScanPromptRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        promptLabel:
-          type:
-          - string
-          - 'null'
-          maxLength: 32
-    CreateSmartScanRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        dataStoreId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        smartScanPrompts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateSmartScanPromptRequest'
-        fileIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

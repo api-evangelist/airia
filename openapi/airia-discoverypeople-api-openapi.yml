@@ -345,6 +345,103 @@ components:
       - Medium
       - High
       - Critical
+    DiscoveryPersonGatewaySessionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        sessionId:
+          type: string
+        service:
+          type: string
+        surface:
+          type:
+          - string
+          - 'null'
+        eventCount:
+          type: integer
+          format: int32
+        promptCount:
+          type: integer
+          format: int32
+        toolCallCount:
+          type: integer
+          format: int32
+        errorCount:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        lastActivityAt:
+          type: string
+          format: date-time
+    DiscoveryPersonAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        provider:
+          type: string
+        used:
+          type: boolean
+        owned:
+          type: boolean
+        usageCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lastUsedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonAgentComponentDto'
+    DiscoveryPersonLinkState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Linked
+      - NoDirectoryMatch
+      - NotLinkable
+      enum:
+      - Linked
+      - NoDirectoryMatch
+      - NotLinkable
+    DiscoveryPersonEndpointAppDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        vendor:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        hostName:
+          type: string
+        os:
+          type:
+          - string
+          - 'null'
+        lastSeen:
+          type: string
+          format: date-time
+        mcpServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonEndpointMcpServerDto'
     DiscoveryPersonSource:
       type: string
       description: ''
@@ -356,6 +453,74 @@ components:
       - Spm
       - Endpoint
       - Gateway
+    DiscoveryEndpointRiskDto:
+      type: object
+      additionalProperties: false
+      properties:
+        people:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryEndpointRiskPersonDto'
+        totalDevices:
+          type: integer
+          format: int32
+        devicesWithEmail:
+          type: integer
+          format: int32
+    SpmComponentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+      enum:
+      - Undefined
+      - AiModel
+      - SpmAgent
+      - Tool
+      - McpServer
+      - Knowledge
+    DiscoveryPersonEndpointMcpServerDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        transport:
+          type: string
+        sanctioned:
+          type: boolean
+        hasPlaintextSecret:
+          type: boolean
+        routedThroughGateway:
+          type: boolean
+    DiscoveryPersonEndpointActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isAttributionAvailable:
+          type: boolean
+        apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonEndpointAppDto'
+    DiscoveryPersonBrowserActivityDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isLinkedToPlatformUser:
+          type: boolean
+        linkState:
+          oneOf:
+          - $ref: '#/components/schemas/DiscoveryPersonLinkState'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonBrowserEventDto'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -381,45 +546,6 @@ components:
           type:
           - string
           - 'null'
-    DiscoveryAgentUsagePersonDto:
-      type: object
-      additionalProperties: false
-      properties:
-        identifier:
-          type: string
-        eventCount:
-          type: integer
-          format: int32
-        agentCount:
-          type: integer
-          format: int32
-    DiscoveryPersonEndpointActivityDto:
-      type: object
-      additionalProperties: false
-      properties:
-        isAttributionAvailable:
-          type: boolean
-        apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryPersonEndpointAppDto'
-    SpmComponentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Undefined
-      - AiModel
-      - SpmAgent
-      - Tool
-      - McpServer
-      - Knowledge
-      enum:
-      - Undefined
-      - AiModel
-      - SpmAgent
-      - Tool
-      - McpServer
-      - Knowledge
     DiscoveryPersonPlatformRunsDto:
       type: object
       additionalProperties: false
@@ -433,93 +559,51 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DiscoveryPersonPlatformRunDto'
-    DiscoveryPersonEndpointMcpServerDto:
+    DiscoveryPersonBrowserEventDto:
       type: object
       additionalProperties: false
       properties:
-        name:
+        timestamp:
           type: string
-        transport:
-          type: string
-        sanctioned:
-          type: boolean
-        hasPlaintextSecret:
-          type: boolean
-        routedThroughGateway:
-          type: boolean
-    DiscoveryPersonBrowserActivityDto:
-      type: object
-      additionalProperties: false
-      properties:
-        isLinkedToPlatformUser:
-          type: boolean
-        linkState:
-          oneOf:
-          - $ref: '#/components/schemas/DiscoveryPersonLinkState'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryPersonBrowserEventDto'
-    DiscoveryPersonAgentComponentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        componentType:
-          $ref: '#/components/schemas/SpmComponentType'
-    DiscoveryPersonGrantDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        clientId:
-          type: string
-        provider:
-          type: string
-        scopes:
-          type: array
-          items:
-            type: string
-        hasSensitiveScopes:
-          type: boolean
-        riskLevel:
-          $ref: '#/components/schemas/DiscoveryRiskLevel'
-        consentType:
-          type:
-          - string
-          - 'null'
-        discoveredAt:
-          type:
-          - string
-          - 'null'
           format: date-time
-    DiscoveryEndpointRiskDto:
+        sourceApplication:
+          type:
+          - string
+          - 'null'
+        domain:
+          type: string
+        actionTaken:
+          type: string
+        browserType:
+          type:
+          - string
+          - 'null'
+        hasPromptDetails:
+          type: boolean
+    DiscoveryEndpointRiskPersonDto:
       type: object
       additionalProperties: false
       properties:
-        people:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryEndpointRiskPersonDto'
-        totalDevices:
+        identifier:
+          type: string
+        plaintextSecretAppCount:
           type: integer
           format: int32
-        devicesWithEmail:
+        unsanctionedAppCount:
           type: integer
           format: int32
-    DiscoveryPersonLinkState:
-      type: string
-      description: ''
-      x-enumNames:
-      - Linked
-      - NoDirectoryMatch
-      - NotLinkable
-      enum:
-      - Linked
-      - NoDirectoryMatch
-      - NotLinkable
+    DiscoveryAgentUsagePersonDto:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        eventCount:
+          type: integer
+          format: int32
+        agentCount:
+          type: integer
+          format: int32
     DiscoveryPersonSummaryDto:
       type: object
       additionalProperties: false
@@ -566,150 +650,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DiscoveryPersonSource'
-    DiscoveryPeopleStatsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        totalPeople:
-          type: integer
-          format: int32
-        peopleWithSensitiveAccess:
-          type: integer
-          format: int32
-        discoveredAppCount:
-          type: integer
-          format: int32
-        sensitiveAppCount:
-          type: integer
-          format: int32
-    DiscoveryAgentUsageDayDto:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-        people:
-          type: integer
-          format: int32
-        events:
-          type: integer
-          format: int32
-    DiscoveryPersonKeyKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Email
-      - Upn
-      - Opaque
-      - Synthetic
-      enum:
-      - Email
-      - Upn
-      - Opaque
-      - Synthetic
-    DiscoveryPersonAgentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        provider:
-          type: string
-        used:
-          type: boolean
-        owned:
-          type: boolean
-        usageCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lastUsedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryPersonAgentComponentDto'
-    PagedResultV2OfDiscoveryPersonSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryPersonSummaryDto'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    DiscoveryPersonEndpointAppDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        vendor:
-          type:
-          - string
-          - 'null'
-        category:
-          type:
-          - string
-          - 'null'
-        hostName:
-          type: string
-        os:
-          type:
-          - string
-          - 'null'
-        lastSeen:
-          type: string
-          format: date-time
-        mcpServers:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscoveryPersonEndpointMcpServerDto'
-    DiscoveryPersonGatewaySessionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        sessionId:
-          type: string
-        service:
-          type: string
-        surface:
-          type:
-          - string
-          - 'null'
-        eventCount:
-          type: integer
-          format: int32
-        promptCount:
-          type: integer
-          format: int32
-        toolCallCount:
-          type: integer
-          format: int32
-        errorCount:
-          type: integer
-          format: int32
-        startedAt:
-          type: string
-          format: date-time
-        lastActivityAt:
-          type: string
-          format: date-time
     DiscoveryAgentUsagePeopleDto:
       type: object
       additionalProperties: false
@@ -731,39 +671,99 @@ components:
         attributedEvents:
           type: integer
           format: int32
-    DiscoveryEndpointRiskPersonDto:
+    DiscoveryAgentUsageDayDto:
       type: object
       additionalProperties: false
       properties:
-        identifier:
+        date:
           type: string
-        plaintextSecretAppCount:
+        people:
           type: integer
           format: int32
-        unsanctionedAppCount:
+        events:
           type: integer
           format: int32
-    DiscoveryPersonBrowserEventDto:
+    PagedResultV2OfDiscoveryPersonSummaryDto:
       type: object
       additionalProperties: false
       properties:
-        timestamp:
-          type: string
-          format: date-time
-        sourceApplication:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscoveryPersonSummaryDto'
+        totalCount:
           type:
-          - string
+          - integer
           - 'null'
-        domain:
-          type: string
-        actionTaken:
-          type: string
-        browserType:
+          format: int32
+        hasMore:
           type:
-          - string
+          - boolean
           - 'null'
-        hasPromptDetails:
+    DiscoveryPeopleStatsDto:
+      type: object
+      additionalProperties: false
+      properties:
+        totalPeople:
+          type: integer
+          format: int32
+        peopleWithSensitiveAccess:
+          type: integer
+          format: int32
+        discoveredAppCount:
+          type: integer
+          format: int32
+        sensitiveAppCount:
+          type: integer
+          format: int32
+    DiscoveryPersonAgentComponentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        componentType:
+          $ref: '#/components/schemas/SpmComponentType'
+    DiscoveryPersonKeyKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+      enum:
+      - Email
+      - Upn
+      - Opaque
+      - Synthetic
+    DiscoveryPersonGrantDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        clientId:
+          type: string
+        provider:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        hasSensitiveScopes:
           type: boolean
+        riskLevel:
+          $ref: '#/components/schemas/DiscoveryRiskLevel'
+        consentType:
+          type:
+          - string
+          - 'null'
+        discoveredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     DiscoveryPersonPlatformRunDto:
       type: object
       additionalProperties: false

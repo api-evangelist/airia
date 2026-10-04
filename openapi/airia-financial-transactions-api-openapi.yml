@@ -168,35 +168,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GetFinancialTransactionResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        tenantId:
-          type: string
-          format: guid
-        transactionDateTime:
-          type: string
-          format: date-time
-        transactionUser:
-          type:
-          - string
-          - 'null'
-        creditCardNumber:
-          type:
-          - string
-          - 'null'
-        creditCardVendor:
-          type:
-          - string
-          - 'null'
-        transactionAmount:
-          type: number
-          format: decimal
-        financialTransactionType:
-          $ref: '#/components/schemas/QueryFinancialTransactionType'
-        chargeId:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -235,6 +206,35 @@ components:
       - Subscription
       - AutoPay
       - SupportHours
+    GetFinancialTransactionResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: guid
+        transactionDateTime:
+          type: string
+          format: date-time
+        transactionUser:
+          type:
+          - string
+          - 'null'
+        creditCardNumber:
+          type:
+          - string
+          - 'null'
+        creditCardVendor:
+          type:
+          - string
+          - 'null'
+        transactionAmount:
+          type: number
+          format: decimal
+        financialTransactionType:
+          $ref: '#/components/schemas/QueryFinancialTransactionType'
+        chargeId:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

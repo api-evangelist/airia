@@ -402,59 +402,6 @@ components:
         totalCount:
           type: integer
           format: int32
-    RedTeamingAttackTestCaseDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - prompt
-      - category
-      - attackLibraryId
-      properties:
-        id:
-          type: string
-          format: guid
-        prompt:
-          type: string
-        category:
-          type: string
-        attackLibraryId:
-          type: string
-          format: guid
-    ISecurityStandardCategory:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     DatasetGenerationStatus:
       type: string
       description: ''
@@ -470,26 +417,6 @@ components:
       - generating
       - completed
       - failed
-    PagedResultOfRedTeamingAttackLibraryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingAttackLibraryDto'
-        totalCount:
-          type: integer
-          format: int32
-    SourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserProvided
-      - Library
-      enum:
-      - userProvided
-      - library
     RedTeamingAttackLibraryDto:
       type: object
       additionalProperties: false
@@ -555,6 +482,79 @@ components:
           - string
           - 'null'
           format: guid
+    PagedResultOfRedTeamingAttackLibraryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAttackLibraryDto'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RedTeamingAttackTestCaseDto:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - prompt
+      - category
+      - attackLibraryId
+      properties:
+        id:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        category:
+          type: string
+        attackLibraryId:
+          type: string
+          format: guid
+    ISecurityStandardCategory:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+    SourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserProvided
+      - Library
+      enum:
+      - userProvided
+      - library
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -30,60 +30,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ConditionalCapabilityGrantResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        capability:
-          $ref: '#/components/schemas/MitigationCapability'
-        condition:
-          $ref: '#/components/schemas/MitigationCapabilityGrantCondition'
-    CapabilityGrantMatrixRowResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        assetFamily:
-          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
-        baseCapabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationCapability'
-        conditionalCapabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConditionalCapabilityGrantResponse'
-        noteCode:
-          type:
-          - string
-          - 'null'
-    MitigationCapabilityGrantCondition:
-      type: string
-      description: ''
-      x-enumNames:
-      - ProviderSupportsInvocation
-      - GatewayAssociated
-      - EndpointInstallRouted
-      enum:
-      - ProviderSupportsInvocation
-      - GatewayAssociated
-      - EndpointInstallRouted
-    MitigationCapabilityAssetFamily:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
-      enum:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
     MitigationCapability:
       type: string
       description: ''
@@ -105,6 +51,60 @@ components:
       - ConfigControlledGateway
       - Observed
       - Declared
+    MitigationCapabilityGrantCondition:
+      type: string
+      description: ''
+      x-enumNames:
+      - ProviderSupportsInvocation
+      - GatewayAssociated
+      - EndpointInstallRouted
+      enum:
+      - ProviderSupportsInvocation
+      - GatewayAssociated
+      - EndpointInstallRouted
+    ConditionalCapabilityGrantResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        capability:
+          $ref: '#/components/schemas/MitigationCapability'
+        condition:
+          $ref: '#/components/schemas/MitigationCapabilityGrantCondition'
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+    CapabilityGrantMatrixRowResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        assetFamily:
+          $ref: '#/components/schemas/MitigationCapabilityAssetFamily'
+        baseCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationCapability'
+        conditionalCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionalCapabilityGrantResponse'
+        noteCode:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

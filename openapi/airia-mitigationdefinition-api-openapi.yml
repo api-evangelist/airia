@@ -62,23 +62,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MitigationDefinitionPrerequisiteResponse'
-    MitigationCapabilityAssetFamily:
-      type: string
-      description: ''
-      x-enumNames:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
-      enum:
-      - InternalAgent
-      - ExternalAgent
-      - EndpointApp
-      - EndpointAppWithoutAgent
-      - EndpointMcpServer
-      - Other
     MitigationCapability:
       type: string
       description: ''
@@ -100,6 +83,23 @@ components:
       - ConfigControlledGateway
       - Observed
       - Declared
+    MitigationCapabilityAssetFamily:
+      type: string
+      description: ''
+      x-enumNames:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
+      enum:
+      - InternalAgent
+      - ExternalAgent
+      - EndpointApp
+      - EndpointAppWithoutAgent
+      - EndpointMcpServer
+      - Other
     MitigationControlFunction:
       type: string
       description: ''

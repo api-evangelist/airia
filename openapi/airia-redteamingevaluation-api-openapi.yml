@@ -799,96 +799,101 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RedTeamingDashboardResponse:
+    ToolPatchEntry:
       type: object
       additionalProperties: false
-      required:
-      - securityScore
-      - averageAsrPercentage
-      - vulnerabilitiesFound
-      - maxVulnerabilities
-      - activeCampaignsCount
-      - asrByCategory
-      - asrByAgent
       properties:
-        securityScore:
+        stepTitle:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        averageAsrPercentage:
+        toolInstanceId:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-        maxVulnerabilities:
-          type: integer
-          format: int32
-        activeCampaignsCount:
-          type: integer
-          format: int32
-        asrByCategory:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
-        asrByAgent:
+        toolAggregateId:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    RedTeamingEvaluationLogDto:
+      allOf:
+      - $ref: '#/components/schemas/RedTeamingEvaluationBaseDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          jobId:
+            type: string
+            format: guid
+          executionId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          cancellationReason:
+            type:
+            - string
+            - 'null'
+          failureReason:
+            type:
+            - string
+            - 'null'
+          failureCategory:
+            type:
+            - string
+            - 'null'
+          totalInputTokens:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          totalOutputTokens:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          totalCost:
+            type:
+            - number
+            - 'null'
+            format: decimal
+          totalModelCallDurationSeconds:
+            type:
+            - number
+            - 'null'
+            format: double
+    PagedResultOfRedTeamingAgentAsrDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
           type: array
           items:
             $ref: '#/components/schemas/RedTeamingAgentAsrDto2'
-    AgentEvaluationSummaryDto:
+        totalCount:
+          type: integer
+          format: int32
+    AgentDefinition:
       type: object
       additionalProperties: false
       required:
-      - latencyMs
-      - tokenCount
-      - cost
-      - accuracy
+      - id
+      - versionId
+      - name
+      - version
       properties:
-        latencyMs:
-          type: number
-          format: double
-        tokenCount:
-          type: integer
-          format: int32
-        cost:
-          type: number
-          format: decimal
-        accuracy:
-          type: number
-          format: double
-        bias:
-          type:
-          - number
-          - 'null'
-          format: double
-        drift:
-          type:
-          - number
-          - 'null'
-          format: double
-        consistency:
-          type:
-          - number
-          - 'null'
-          format: double
-        evaluatorCost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        evaluatorTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        evaluatorLatencyMs:
-          type:
-          - number
-          - 'null'
-          format: double
+        id:
+          type: string
+          format: guid
+        versionId:
+          type: string
+          format: guid
+        name:
+          type: string
+        version:
+          type: string
     PagedResultOfRedTeamingCampaignSummary:
       type: object
       additionalProperties: false
@@ -900,151 +905,6 @@ components:
         totalCount:
           type: integer
           format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    RedTeamingScheduleInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        hour:
-          type: integer
-          format: int32
-        minute:
-          type: integer
-          format: int32
-        second:
-          type: integer
-          format: int32
-        day:
-          type: integer
-          format: int32
-        month:
-          type: integer
-          format: int32
-        year:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        daysOfWeek:
-          type:
-          - string
-          - 'null'
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    PagedResultOfAgentEvaluationDetailedResultDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentEvaluationDetailedResultDto'
-        totalCount:
-          type: integer
-          format: int32
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    PagedResultOfRedTeamingEvaluationDatasetDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingEvaluationDatasetDto'
-        totalCount:
-          type: integer
-          format: int32
-    ModelOverride:
-      type: object
-      additionalProperties: false
-      properties:
-        modelId:
-          type: string
-        identifierType:
-          $ref: '#/components/schemas/ModelIdentifierType'
-    WhatIfComparisonResult:
-      type: object
-      additionalProperties: false
-      required:
-      - comparisonSetId
-      - baseline
-      - variants
-      properties:
-        comparisonSetId:
-          type: string
-          format: guid
-        baseline:
-          $ref: '#/components/schemas/WhatIfVariantAggregate'
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/WhatIfVariantComparison'
     MonthlyWeekOccurrence:
       type: string
       description: ''
@@ -1060,6 +920,71 @@ components:
       - Third
       - Fourth
       - Last
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    EvaluationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+      enum:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+    JobTaskStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+      enum:
+      - Created
+      - Ready
+      - Scheduling
+      - Scheduled
+      - Cancelled
+      - Running
+      - Retrying
+      - Success
+      - Failed
+      - Skipped
+    PagedResultOfRedTeamingEvaluationLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingEvaluationLogDto'
+        totalCount:
+          type: integer
+          format: int32
     AgentEvaluationDetailedResultDto:
       type: object
       additionalProperties: false
@@ -1177,75 +1102,183 @@ components:
           - integer
           - 'null'
           format: int64
-    WhatIfBaselineMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - FreshInJob
-      - ReuseExisting
-      enum:
-      - FreshInJob
-      - ReuseExisting
-    EvaluationConnectionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Active
-      - DeletedPureFoundry
-      - DeletedMixed
-      enum:
-      - Active
-      - DeletedPureFoundry
-      - DeletedMixed
-    ScenarioOverrideKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - Internal
-      - External
-      enum:
-      - Internal
-      - External
-    EvaluatorSelectionView:
+    RedTeamingEvaluationDetailsResponse:
       type: object
       additionalProperties: false
       required:
-      - evaluatorKey
+      - evaluationId
+      - evaluationName
+      - runAt
+      - status
+      - securityScore
+      - asrPercentage
+      - vulnerabilitiesFound
+      - maxVulnerabilities
+      - asrByCategory
+      - asrByAgent
       properties:
-        evalSuiteEvaluatorId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/EvaluatorSource'
-        evaluatorKey:
+        evaluationId:
           type: string
-        displayName:
+          format: guid
+        evaluationName:
+          type: string
+        evaluationDescription:
           type:
           - string
           - 'null'
-        deploymentName:
-          type:
-          - string
-          - 'null'
-        threshold:
+        runAt:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        securityScore:
           type:
           - number
           - 'null'
           format: double
-    ModelIdentifierType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Library
-      - Project
-      enum:
-      - None
-      - Library
-      - Project
+        asrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        asrByCategory:
+          $ref: '#/components/schemas/PagedResultOfRedTeamingCategoryAsrDto'
+        asrByAgent:
+          $ref: '#/components/schemas/PagedResultOfRedTeamingAgentAsrDto'
+        primaryAgentName:
+          type:
+          - string
+          - 'null'
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/RedTeamingScheduleInfo'
+        targetAgentName:
+          type:
+          - string
+          - 'null'
+        modelName:
+          type:
+          - string
+          - 'null'
+        securityStandardType:
+          type:
+          - string
+          - 'null'
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    CreateAgentEvaluationResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - evaluationName
+      - agentVersionIds
+      properties:
+        id:
+          type: string
+          format: guid
+        evaluationName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        agentVersionIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datasetIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+    RedTeamingEvaluationDatasetDto:
+      type: object
+      additionalProperties: false
+      required:
+      - datasetId
+      - prompt
+      properties:
+        datasetId:
+          type: string
+          format: guid
+        prompt:
+          type: string
+        testId:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - string
+          - 'null'
+        severity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        reason:
+          type:
+          - string
+          - 'null'
     ConsistencyRunResult:
       type: object
       additionalProperties: false
@@ -1282,77 +1315,80 @@ components:
           - number
           - 'null'
           format: decimal
-    ScenarioOverrides:
+    ConsistencyRunDto:
       type: object
-      discriminator:
-        propertyName: kind
-        mapping:
-          Internal: '#/components/schemas/InternalScenarioOverrides'
-          External: '#/components/schemas/ExternalScenarioOverrides'
-      x-abstract: true
       additionalProperties: false
       required:
-      - kind
+      - actualOutput
+      - accuracy
       properties:
-        modelOverride:
-          oneOf:
-          - $ref: '#/components/schemas/ModelOverride'
-        toolOverrides:
-          oneOf:
-          - $ref: '#/components/schemas/ToolPatch'
-        kind:
+        actualOutput:
           type: string
-    ToolPatch:
-      type: object
-      additionalProperties: false
-      properties:
-        add:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        remove:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        modify:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-    WhatIfVariantComparison:
-      type: object
-      additionalProperties: false
-      required:
-      - variant
-      properties:
-        variant:
-          $ref: '#/components/schemas/WhatIfVariantAggregate'
-        failed:
+        truncated:
           type: boolean
-        metricDeltas:
-          type: array
-          items:
-            $ref: '#/components/schemas/WhatIfMetricDelta'
-        latencyDeltaMs:
-          type:
-          - number
-          - 'null'
+        accuracy:
+          type: number
           format: double
-        estimatedCostDelta:
+        latencyMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cost:
           type:
           - number
           - 'null'
           format: decimal
-        totalTokensDelta:
+    RedTeamingScheduleInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        hour:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+        day:
+          type: integer
+          format: int32
+        month:
+          type: integer
+          format: int32
+        year:
           type:
-          - number
+          - integer
           - 'null'
-          format: double
+          format: int32
+        daysOfWeek:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
     WhatIfMetricDelta:
       type: object
       additionalProperties: false
@@ -1376,6 +1412,545 @@ components:
           format: double
         isImprovement:
           type: boolean
+    ScheduleModel:
+      type: object
+      additionalProperties: false
+      properties:
+        second:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        executionHour:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        daysOfWeek:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DayOfWeek'
+        monthlyWeekOccurrence:
+          oneOf:
+          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          minLength: 0
+        year:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 2099
+          minimum: 1970
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    JobStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+      enum:
+      - Creating
+      - Created
+      - Running
+      - Cancelled
+      - Success
+      - Failed
+    ModelOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        modelId:
+          type: string
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    RedTeamingCampaignSummary:
+      type: object
+      additionalProperties: false
+      required:
+      - evaluationId
+      - jobId
+      - campaignId
+      - name
+      - status
+      - createdBy
+      properties:
+        evaluationId:
+          type: string
+          format: guid
+        jobId:
+          type: string
+          format: guid
+        campaignId:
+          type: string
+          format: guid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: string
+          format: guid
+        primaryAgentName:
+          type:
+          - string
+          - 'null'
+        asrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        totalTasks:
+          type: integer
+          format: int32
+        completedTasks:
+          type: integer
+          format: int32
+        cancellationReason:
+          type:
+          - string
+          - 'null'
+        jobCreatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        scheduleType:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleType'
+        isScheduleCancelled:
+          type:
+          - boolean
+          - 'null'
+    WhatIfBaselineMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FreshInJob
+      - ReuseExisting
+      enum:
+      - FreshInJob
+      - ReuseExisting
+    RedTeamingEvaluationBaseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        runAt:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        securityScore:
+          type: number
+          format: double
+        asrPercentage:
+          type: number
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        completed:
+          type: integer
+          format: int32
+        asrByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+    AgentEvaluationDetailedResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - agent
+      - summary
+      - evaluations
+      properties:
+        agent:
+          $ref: '#/components/schemas/AgentDefinition'
+        summary:
+          $ref: '#/components/schemas/AgentEvaluationSummaryDto'
+        evaluations:
+          $ref: '#/components/schemas/PagedResultOfAgentEvaluationDetailedResultDto'
+    ScenarioOverrides:
+      type: object
+      discriminator:
+        propertyName: kind
+        mapping:
+          Internal: '#/components/schemas/InternalScenarioOverrides'
+          External: '#/components/schemas/ExternalScenarioOverrides'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        modelOverride:
+          oneOf:
+          - $ref: '#/components/schemas/ModelOverride'
+        toolOverrides:
+          oneOf:
+          - $ref: '#/components/schemas/ToolPatch'
+        kind:
+          type: string
+    WhatIfComparisonResult:
+      type: object
+      additionalProperties: false
+      required:
+      - comparisonSetId
+      - baseline
+      - variants
+      properties:
+        comparisonSetId:
+          type: string
+          format: guid
+        baseline:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfVariantComparison'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentEvaluationVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        variantId:
+          type: string
+          format: guid
+        label:
+          type: string
+        isBaseline:
+          type: boolean
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ExternalScenarioOverrides'
+    RedTeamingCategoryAsrDto2:
+      type: object
+      additionalProperties: false
+      required:
+      - attackCategory
+      - asrPercentage
+      - attacksSucceeded
+      - totalAttacks
+      - vulnerabilitiesFound
+      properties:
+        attackCategory:
+          type: string
+        asrPercentage:
+          type: number
+          format: double
+        attacksSucceeded:
+          type: integer
+          format: int32
+        totalAttacks:
+          type: integer
+          format: int32
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+    PagedResultOfAgentEvaluationDetailedResultDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentEvaluationDetailedResultDto'
+        totalCount:
+          type: integer
+          format: int32
+    EvaluationConnectionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
+      enum:
+      - Active
+      - DeletedPureFoundry
+      - DeletedMixed
+    RedTeamingAsrOverTime:
+      type: object
+      additionalProperties: false
+      required:
+      - date
+      properties:
+        date:
+          type: string
+        totalAttacks:
+          type: integer
+          format: int32
+        successfulAttacks:
+          type: integer
+          format: int32
+        asrPercentage:
+          type: number
+          format: double
+    AgentEvaluationSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - latencyMs
+      - tokenCount
+      - cost
+      - accuracy
+      properties:
+        latencyMs:
+          type: number
+          format: double
+        tokenCount:
+          type: integer
+          format: int32
+        cost:
+          type: number
+          format: decimal
+        accuracy:
+          type: number
+          format: double
+        bias:
+          type:
+          - number
+          - 'null'
+          format: double
+        drift:
+          type:
+          - number
+          - 'null'
+          format: double
+        consistency:
+          type:
+          - number
+          - 'null'
+          format: double
+        evaluatorCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        evaluatorTokens:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        evaluatorLatencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+    RedTeamingAgentAsrDto2:
+      type: object
+      additionalProperties: false
+      required:
+      - pipelineVersionId
+      - agentName
+      - agentVersion
+      - asrPercentage
+      - attacksSucceeded
+      - totalAttacks
+      - securityScore
+      properties:
+        pipelineVersionId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentVersion:
+          type: string
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        asrPercentage:
+          type: number
+          format: double
+        attacksSucceeded:
+          type: integer
+          format: int32
+        totalAttacks:
+          type: integer
+          format: int32
+        securityScore:
+          type: number
+          format: double
+    PagedResultOfRedTeamingCategoryAsrDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+        totalCount:
+          type: integer
+          format: int32
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    RedTeamingDashboardResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - securityScore
+      - averageAsrPercentage
+      - vulnerabilitiesFound
+      - maxVulnerabilities
+      - activeCampaignsCount
+      - asrByCategory
+      - asrByAgent
+      properties:
+        securityScore:
+          type:
+          - number
+          - 'null'
+          format: double
+        averageAsrPercentage:
+          type:
+          - number
+          - 'null'
+          format: double
+        vulnerabilitiesFound:
+          type: integer
+          format: int32
+        maxVulnerabilities:
+          type: integer
+          format: int32
+        activeCampaignsCount:
+          type: integer
+          format: int32
+        asrByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
+        asrByAgent:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingAgentAsrDto2'
     GetAgentEvaluationResponse:
       type: object
       additionalProperties: false
@@ -1466,446 +2041,46 @@ components:
         whatIf:
           oneOf:
           - $ref: '#/components/schemas/WhatIfComparisonSection'
-    RedTeamingEvaluationDetailsResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - evaluationId
-      - evaluationName
-      - runAt
-      - status
-      - securityScore
-      - asrPercentage
-      - vulnerabilitiesFound
-      - maxVulnerabilities
-      - asrByCategory
-      - asrByAgent
-      properties:
-        evaluationId:
-          type: string
-          format: guid
-        evaluationName:
-          type: string
-        evaluationDescription:
-          type:
-          - string
-          - 'null'
-        runAt:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        asrPercentage:
-          type:
-          - number
-          - 'null'
-          format: double
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-        maxVulnerabilities:
-          type: integer
-          format: int32
-        asrByCategory:
-          $ref: '#/components/schemas/PagedResultOfRedTeamingCategoryAsrDto'
-        asrByAgent:
-          $ref: '#/components/schemas/PagedResultOfRedTeamingAgentAsrDto'
-        primaryAgentName:
-          type:
-          - string
-          - 'null'
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/RedTeamingScheduleInfo'
-        targetAgentName:
-          type:
-          - string
-          - 'null'
-        modelName:
-          type:
-          - string
-          - 'null'
-        securityStandardType:
-          type:
-          - string
-          - 'null'
-    ConsistencyRunDto:
-      type: object
-      additionalProperties: false
-      required:
-      - actualOutput
-      - accuracy
-      properties:
-        actualOutput:
-          type: string
-        truncated:
-          type: boolean
-        accuracy:
-          type: number
-          format: double
-        latencyMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        inputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        outputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        cost:
-          type:
-          - number
-          - 'null'
-          format: decimal
-    PagedResultOfRedTeamingCategoryAsrDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
-        totalCount:
-          type: integer
-          format: int32
-    PagedResultOfRedTeamingAgentAsrDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingAgentAsrDto2'
-        totalCount:
-          type: integer
-          format: int32
-    AgentEvaluationVariant:
-      type: object
-      additionalProperties: false
-      properties:
-        variantId:
-          type: string
-          format: guid
-        label:
-          type: string
-        isBaseline:
-          type: boolean
-        overrides:
-          oneOf:
-          - $ref: '#/components/schemas/ExternalScenarioOverrides'
-    ScheduleModel:
-      type: object
-      additionalProperties: false
-      properties:
-        second:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        minute:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        hour:
-          type: integer
-          format: int32
-          maximum: 23
-          minimum: 0
-        executionHour:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 23
-          minimum: 0
-        day:
-          type: integer
-          format: int32
-          maximum: 31
-          minimum: 1
-        month:
-          type: integer
-          format: int32
-          maximum: 12
-          minimum: 1
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        daysOfWeek:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DayOfWeek'
-        monthlyWeekOccurrence:
-          oneOf:
-          - $ref: '#/components/schemas/MonthlyWeekOccurrence'
-        timeZoneId:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          minLength: 0
-        year:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 2099
-          minimum: 1970
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    CreateAgentEvaluationResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - evaluationName
-      - agentVersionIds
-      properties:
-        id:
-          type: string
-          format: guid
-        evaluationName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        agentVersionIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        modelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        datasetIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleModel'
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-    PagedResultOfRedTeamingEvaluationLogDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingEvaluationLogDto'
-        totalCount:
-          type: integer
-          format: int32
-    RedTeamingCampaignSummary:
-      type: object
-      additionalProperties: false
-      required:
-      - evaluationId
-      - jobId
-      - campaignId
-      - name
-      - status
-      - createdBy
-      properties:
-        evaluationId:
-          type: string
-          format: guid
-        jobId:
-          type: string
-          format: guid
-        campaignId:
-          type: string
-          format: guid
-        name:
-          type: string
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        createdAt:
-          type: string
-          format: date-time
-        createdBy:
-          type: string
-          format: guid
-        primaryAgentName:
-          type:
-          - string
-          - 'null'
-        asrPercentage:
-          type:
-          - number
-          - 'null'
-          format: double
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-        securityScore:
-          type:
-          - number
-          - 'null'
-          format: double
-        totalTasks:
-          type: integer
-          format: int32
-        completedTasks:
-          type: integer
-          format: int32
-        cancellationReason:
-          type:
-          - string
-          - 'null'
-        jobCreatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        scheduleType:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleType'
-        isScheduleCancelled:
-          type:
-          - boolean
-          - 'null'
-    AgentEvaluationDetailedResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - agent
-      - summary
-      - evaluations
-      properties:
-        agent:
-          $ref: '#/components/schemas/AgentDefinition'
-        summary:
-          $ref: '#/components/schemas/AgentEvaluationSummaryDto'
-        evaluations:
-          $ref: '#/components/schemas/PagedResultOfAgentEvaluationDetailedResultDto'
-    RedTeamingAsrOverTime:
-      type: object
-      additionalProperties: false
-      required:
-      - date
-      properties:
-        date:
-          type: string
-        totalAttacks:
-          type: integer
-          format: int32
-        successfulAttacks:
-          type: integer
-          format: int32
-        asrPercentage:
-          type: number
-          format: double
-    EvaluationType:
+    EvaluatorSource:
       type: string
       description: ''
       x-enumNames:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
+      - Airia
+      - AzureFoundry
       enum:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
-    DayOfWeek:
+      - Airia
+      - AzureFoundry
+    ExternalScenarioOverrides:
+      allOf:
+      - $ref: '#/components/schemas/ScenarioOverrides'
+      - type: object
+        additionalProperties: false
+        properties:
+          overrideKind:
+            $ref: '#/components/schemas/ScenarioOverrideKind'
+          systemPromptOverride:
+            type:
+            - string
+            - 'null'
+          additionalInstructions:
+            type:
+            - string
+            - 'null'
+          configOverrides:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/JsonNode'
+    ScenarioOverrideKind:
       type: string
       description: ''
       x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
+      - Internal
+      - External
       enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-    RedTeamingAgentAsrDto2:
-      type: object
-      additionalProperties: false
-      required:
-      - pipelineVersionId
-      - agentName
-      - agentVersion
-      - asrPercentage
-      - attacksSucceeded
-      - totalAttacks
-      - securityScore
-      properties:
-        pipelineVersionId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        agentVersion:
-          type: string
-        agentIcon:
-          type:
-          - string
-          - 'null'
-        asrPercentage:
-          type: number
-          format: double
-        attacksSucceeded:
-          type: integer
-          format: int32
-        totalAttacks:
-          type: integer
-          format: int32
-        securityScore:
-          type: number
-          format: double
+      - Internal
+      - External
     WhatIfComparisonSection:
       type: object
       additionalProperties: false
@@ -1923,72 +2098,40 @@ components:
         comparison:
           oneOf:
           - $ref: '#/components/schemas/WhatIfComparisonResult'
-    JobTaskStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-      enum:
-      - Created
-      - Ready
-      - Scheduling
-      - Scheduled
-      - Cancelled
-      - Running
-      - Retrying
-      - Success
-      - Failed
-      - Skipped
-    RedTeamingCategoryAsrDto2:
+    WhatIfVariantAggregate:
       type: object
       additionalProperties: false
-      required:
-      - attackCategory
-      - asrPercentage
-      - attacksSucceeded
-      - totalAttacks
-      - vulnerabilitiesFound
       properties:
-        attackCategory:
-          type: string
-        asrPercentage:
-          type: number
+        variantId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isBaseline:
+          type: boolean
+        runCount:
+          type: integer
+          format: int32
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        averageLatencyMs:
+          type:
+          - number
+          - 'null'
           format: double
-        attacksSucceeded:
-          type: integer
-          format: int32
-        totalAttacks:
-          type: integer
-          format: int32
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-    JobStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
-      enum:
-      - Creating
-      - Created
-      - Running
-      - Cancelled
-      - Success
-      - Failed
+        averageEstimatedCost:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        averageTotalTokens:
+          type:
+          - number
+          - 'null'
+          format: double
     AgentEvaluationJobTaskResult:
       type: object
       additionalProperties: false
@@ -2160,218 +2303,75 @@ components:
           - integer
           - 'null'
           format: int64
-    EvaluatorSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - Airia
-      - AzureFoundry
-      enum:
-      - Airia
-      - AzureFoundry
-    ExternalScenarioOverrides:
-      allOf:
-      - $ref: '#/components/schemas/ScenarioOverrides'
-      - type: object
-        additionalProperties: false
-        properties:
-          overrideKind:
-            $ref: '#/components/schemas/ScenarioOverrideKind'
-          systemPromptOverride:
-            type:
-            - string
-            - 'null'
-          additionalInstructions:
-            type:
-            - string
-            - 'null'
-          configOverrides:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/JsonNode'
-    ToolPatchEntry:
+    PagedResultOfRedTeamingEvaluationDatasetDto:
       type: object
       additionalProperties: false
       properties:
-        stepTitle:
-          type:
-          - string
-          - 'null'
-        toolInstanceId:
-          type:
-          - string
-          - 'null'
-        toolAggregateId:
-          type:
-          - string
-          - 'null'
-        configuration:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-    JsonNodeOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyNameCaseInsensitive:
-          type: boolean
-    AgentDefinition:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RedTeamingEvaluationDatasetDto'
+        totalCount:
+          type: integer
+          format: int32
+    WhatIfVariantComparison:
       type: object
       additionalProperties: false
       required:
-      - id
-      - versionId
-      - name
-      - version
+      - variant
       properties:
-        id:
-          type: string
-          format: guid
-        versionId:
-          type: string
-          format: guid
-        name:
-          type: string
-        version:
-          type: string
-    WhatIfVariantAggregate:
-      type: object
-      additionalProperties: false
-      properties:
-        variantId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isBaseline:
+        variant:
+          $ref: '#/components/schemas/WhatIfVariantAggregate'
+        failed:
           type: boolean
-        runCount:
-          type: integer
-          format: int32
-        metrics:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-        averageLatencyMs:
+        metricDeltas:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatIfMetricDelta'
+        latencyDeltaMs:
           type:
           - number
           - 'null'
           format: double
-        averageEstimatedCost:
+        estimatedCostDelta:
           type:
           - number
           - 'null'
           format: decimal
-        averageTotalTokens:
+        totalTokensDelta:
           type:
           - number
           - 'null'
           format: double
-    RedTeamingEvaluationBaseDto:
-      type: object
-      additionalProperties: false
-      properties:
-        runAt:
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/JobStatus'
-        securityScore:
-          type: number
-          format: double
-        asrPercentage:
-          type: number
-          format: double
-        vulnerabilitiesFound:
-          type: integer
-          format: int32
-        maxVulnerabilities:
-          type: integer
-          format: int32
-        completed:
-          type: integer
-          format: int32
-        asrByCategory:
-          type: array
-          items:
-            $ref: '#/components/schemas/RedTeamingCategoryAsrDto2'
-    RedTeamingEvaluationDatasetDto:
+    EvaluatorSelectionView:
       type: object
       additionalProperties: false
       required:
-      - datasetId
-      - prompt
+      - evaluatorKey
       properties:
-        datasetId:
-          type: string
+        evalSuiteEvaluatorId:
+          type:
+          - string
+          - 'null'
           format: guid
-        prompt:
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/EvaluatorSource'
+        evaluatorKey:
           type: string
-        testId:
+        displayName:
           type:
           - string
           - 'null'
-        category:
+        deploymentName:
           type:
           - string
           - 'null'
-        severity:
+        threshold:
           type:
-          - integer
+          - number
           - 'null'
-          format: int32
-        reason:
-          type:
-          - string
-          - 'null'
-    RedTeamingEvaluationLogDto:
-      allOf:
-      - $ref: '#/components/schemas/RedTeamingEvaluationBaseDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          jobId:
-            type: string
-            format: guid
-          executionId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          cancellationReason:
-            type:
-            - string
-            - 'null'
-          failureReason:
-            type:
-            - string
-            - 'null'
-          failureCategory:
-            type:
-            - string
-            - 'null'
-          totalInputTokens:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          totalOutputTokens:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          totalCost:
-            type:
-            - number
-            - 'null'
-            format: decimal
-          totalModelCallDurationSeconds:
-            type:
-            - number
-            - 'null'
-            format: double
+          format: double
   securitySchemes:
     ApiKey:
       type: apiKey

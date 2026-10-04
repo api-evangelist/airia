@@ -201,17 +201,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ImageUploadResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        imageUrl:
-          type:
-          - string
-          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -234,6 +223,17 @@ components:
           - string
           - 'null'
         instance:
+          type:
+          - string
+          - 'null'
+    ImageUploadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        imageUrl:
           type:
           - string
           - 'null'

@@ -85,6 +85,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PublicModelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        provider:
+          type: string
+        version:
+          type:
+          - string
+          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -110,16 +122,6 @@ components:
           type:
           - string
           - 'null'
-    PublicRiskClassificationDto:
-      type: object
-      additionalProperties: false
-      properties:
-        frameworkKey:
-          type: string
-        frameworkName:
-          type: string
-        level:
-          type: string
     PublicGovernanceDto:
       type: object
       additionalProperties: false
@@ -201,18 +203,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/PublicRiskClassificationDto'
-    PublicModelDto:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        provider:
-          type: string
-        version:
-          type:
-          - string
-          - 'null'
     PublicAssetDto:
       type: object
       additionalProperties: false
@@ -220,6 +210,16 @@ components:
         name:
           type: string
         type:
+          type: string
+    PublicRiskClassificationDto:
+      type: object
+      additionalProperties: false
+      properties:
+        frameworkKey:
+          type: string
+        frameworkName:
+          type: string
+        level:
           type: string
   securitySchemes:
     ApiKey:

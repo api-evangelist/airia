@@ -518,6 +518,78 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    FindingType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Provider
+      - Framework
+      - McpServer
+      - Secret
+      - AgentPattern
+      - ApiEndpoint
+      - ModelReference
+      - ToolIntegration
+      - Dependency
+      - ModelArtifact
+      - AstCodePattern
+      - Configuration
+      - Agent
+      - Task
+      - Workflow
+      - Tool
+      - Unknown
+      enum:
+      - Provider
+      - Framework
+      - McpServer
+      - Secret
+      - AgentPattern
+      - ApiEndpoint
+      - ModelReference
+      - ToolIntegration
+      - Dependency
+      - ModelArtifact
+      - AstCodePattern
+      - Configuration
+      - Agent
+      - Task
+      - Workflow
+      - Tool
+      - Unknown
+    CodeRepositoryProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - GitHub
+      - AzureDevOps
+      - GitLab
+      enum:
+      - GitHub
+      - AzureDevOps
+      - GitLab
+    PagedResultOfCodeScanFindingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeScanFindingDto'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultOfGitHubRepositoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitHubRepositoryDto'
+        totalCount:
+          type: integer
+          format: int32
     CodeScanWebhookResponse:
       type: object
       additionalProperties: false
@@ -537,6 +609,48 @@ components:
           type:
           - string
           - 'null'
+    RepositoryInfo:
+      type: object
+      additionalProperties: false
+      required:
+      - repositoryUrl
+      - repositoryOwner
+      - repositoryName
+      properties:
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/CodeRepositoryProvider'
+        repositoryUrl:
+          type: string
+          maxLength: 500
+          minLength: 1
+        repositoryOwner:
+          type: string
+          maxLength: 200
+          minLength: 1
+        projectName:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        repositoryName:
+          type: string
+          maxLength: 200
+          minLength: 1
+        branch:
+          type: string
+          maxLength: 100
+    PagedResultOfCodeScanExecutionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeScanExecutionDto'
+        totalCount:
+          type: integer
+          format: int32
     ScanStatus:
       type: string
       description: ''
@@ -548,6 +662,99 @@ components:
       - Completed
       - Failed
       - CompletedWithWarnings
+    Severity:
+      type: string
+      description: ''
+      x-enumNames:
+      - Info
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - Info
+      - Low
+      - Medium
+      - High
+      - Critical
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GitHubRepositoryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - repositoryUrl
+      - branch
+      properties:
+        id:
+          type: string
+          format: guid
+        provider:
+          $ref: '#/components/schemas/CodeRepositoryProvider'
+        name:
+          type: string
+          maxLength: 256
+          minLength: 0
+        projectName:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+          minLength: 0
+        repositoryUrl:
+          type: string
+          maxLength: 512
+          minLength: 0
+        branch:
+          type: string
+          maxLength: 256
+          minLength: 0
+        isEnabled:
+          type: boolean
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        lastScanAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     CodeScanExecutionDto:
       type: object
       additionalProperties: false
@@ -602,57 +809,116 @@ components:
           - string
           - 'null'
           format: date-time
-    PagedResultOfGitHubRepositoryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitHubRepositoryDto'
-        totalCount:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    Severity:
+    Scanner:
       type: string
       description: ''
       x-enumNames:
-      - Info
-      - Low
-      - Medium
-      - High
-      - Critical
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
       enum:
-      - Info
-      - Low
-      - Medium
-      - High
-      - Critical
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+    CodeScanWebhookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - executionId
+      - repository
+      - status
+      - findings
+      properties:
+        executionId:
+          type: string
+          format: guid
+          minLength: 1
+        repository:
+          $ref: '#/components/schemas/RepositoryInfo'
+        commitSha:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/FindingInfo'
+        stats:
+          oneOf:
+          - $ref: '#/components/schemas/ScanStats'
+    ScanStats:
+      type: object
+      additionalProperties: false
+      properties:
+        totalFilesScanned:
+          type: integer
+          format: int32
+        totalFindings:
+          type: integer
+          format: int32
+        gitleaks:
+          type: integer
+          format: int32
+        naive:
+          type: integer
+          format: int32
+        dependencies:
+          type: integer
+          format: int32
+        modelArtifacts:
+          type: integer
+          format: int32
+        astAnalysis:
+          type: integer
+          format: int32
+        configAnalysis:
+          type: integer
+          format: int32
+        agentAnalysis:
+          type: integer
+          format: int32
+        duplicatesRemoved:
+          type: integer
+          format: int32
+        uniqueModels:
+          type: integer
+          format: int32
+        uniqueProviders:
+          type: integer
+          format: int32
+        agentCount:
+          type: integer
+          format: int32
+        riskScore:
+          type: number
+          format: double
     FindingInfo:
       type: object
       additionalProperties: false
@@ -699,28 +965,6 @@ components:
           type:
           - string
           - 'null'
-    CodeRepositoryProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - GitHub
-      - AzureDevOps
-      - GitLab
-      enum:
-      - GitHub
-      - AzureDevOps
-      - GitLab
-    PagedResultOfCodeScanExecutionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeScanExecutionDto'
-        totalCount:
-          type: integer
-          format: int32
     CodeScanFindingDto:
       type: object
       additionalProperties: false
@@ -785,250 +1029,6 @@ components:
           - string
           - 'null'
           format: date-time
-    FindingType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Provider
-      - Framework
-      - McpServer
-      - Secret
-      - AgentPattern
-      - ApiEndpoint
-      - ModelReference
-      - ToolIntegration
-      - Dependency
-      - ModelArtifact
-      - AstCodePattern
-      - Configuration
-      - Agent
-      - Task
-      - Workflow
-      - Tool
-      - Unknown
-      enum:
-      - Provider
-      - Framework
-      - McpServer
-      - Secret
-      - AgentPattern
-      - ApiEndpoint
-      - ModelReference
-      - ToolIntegration
-      - Dependency
-      - ModelArtifact
-      - AstCodePattern
-      - Configuration
-      - Agent
-      - Task
-      - Workflow
-      - Tool
-      - Unknown
-    Scanner:
-      type: string
-      description: ''
-      x-enumNames:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-      enum:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-    GitHubRepositoryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - repositoryUrl
-      - branch
-      properties:
-        id:
-          type: string
-          format: guid
-        provider:
-          $ref: '#/components/schemas/CodeRepositoryProvider'
-        name:
-          type: string
-          maxLength: 256
-          minLength: 0
-        projectName:
-          type:
-          - string
-          - 'null'
-          maxLength: 256
-          minLength: 0
-        repositoryUrl:
-          type: string
-          maxLength: 512
-          minLength: 0
-        branch:
-          type: string
-          maxLength: 256
-          minLength: 0
-        isEnabled:
-          type: boolean
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        lastScanAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    CodeScanWebhookRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - executionId
-      - repository
-      - status
-      - findings
-      properties:
-        executionId:
-          type: string
-          format: guid
-          minLength: 1
-        repository:
-          $ref: '#/components/schemas/RepositoryInfo'
-        commitSha:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-        status:
-          $ref: '#/components/schemas/ScanStatus'
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        errorMessage:
-          type:
-          - string
-          - 'null'
-        findings:
-          type: array
-          items:
-            $ref: '#/components/schemas/FindingInfo'
-        stats:
-          oneOf:
-          - $ref: '#/components/schemas/ScanStats'
-    RepositoryInfo:
-      type: object
-      additionalProperties: false
-      required:
-      - repositoryUrl
-      - repositoryOwner
-      - repositoryName
-      properties:
-        provider:
-          oneOf:
-          - $ref: '#/components/schemas/CodeRepositoryProvider'
-        repositoryUrl:
-          type: string
-          maxLength: 500
-          minLength: 1
-        repositoryOwner:
-          type: string
-          maxLength: 200
-          minLength: 1
-        projectName:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        repositoryName:
-          type: string
-          maxLength: 200
-          minLength: 1
-        branch:
-          type: string
-          maxLength: 100
-    ScanStats:
-      type: object
-      additionalProperties: false
-      properties:
-        totalFilesScanned:
-          type: integer
-          format: int32
-        totalFindings:
-          type: integer
-          format: int32
-        gitleaks:
-          type: integer
-          format: int32
-        naive:
-          type: integer
-          format: int32
-        dependencies:
-          type: integer
-          format: int32
-        modelArtifacts:
-          type: integer
-          format: int32
-        astAnalysis:
-          type: integer
-          format: int32
-        configAnalysis:
-          type: integer
-          format: int32
-        agentAnalysis:
-          type: integer
-          format: int32
-        duplicatesRemoved:
-          type: integer
-          format: int32
-        uniqueModels:
-          type: integer
-          format: int32
-        uniqueProviders:
-          type: integer
-          format: int32
-        agentCount:
-          type: integer
-          format: int32
-        riskScore:
-          type: number
-          format: double
-    PagedResultOfCodeScanFindingDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeScanFindingDto'
-        totalCount:
-          type: integer
-          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

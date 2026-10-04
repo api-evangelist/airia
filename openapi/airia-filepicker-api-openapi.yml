@@ -142,21 +142,6 @@ components:
           type:
           - string
           - 'null'
-    GetDriveItemRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - credentialId
-      properties:
-        credentialId:
-          type: string
-          format: guid
-        driveId:
-          type: string
-        itemId:
-          type:
-          - string
-          - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -192,6 +177,21 @@ components:
           type: string
         isRoot:
           type: boolean
+    GetDriveItemRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credentialId
+      properties:
+        credentialId:
+          type: string
+          format: guid
+        driveId:
+          type: string
+        itemId:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

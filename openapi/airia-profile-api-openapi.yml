@@ -153,121 +153,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserSettingsModel:
+    TenantPermissionsDto:
       type: object
       additionalProperties: false
-      properties:
-        hasSeenFileIngestionSuccessMessage:
-          type:
-          - boolean
-          - 'null'
-        language:
-          type:
-          - string
-          - 'null'
-        readingVoice:
-          type:
-          - string
-          - 'null'
-        hasCompletedOnboarding:
-          type:
-          - boolean
-          - 'null'
-        hasDismissedWelcomeVideo:
-          type:
-          - boolean
-          - 'null'
-        isNewNavigationEnabled:
-          type:
-          - boolean
-          - 'null'
-        hasSeenSidebarIaAdoption:
-          type:
-          - boolean
-          - 'null'
-    UserDetailsModel:
-      type: object
-      additionalProperties: false
-      properties:
-        general:
-          type: string
-        workDescription:
-          type:
-          - string
-          - 'null'
-        personalPreferences:
-          type:
-          - string
-          - 'null'
-    UserSettingKey:
-      type: string
-      description: ''
-      x-enumNames:
-      - HasSeenFileIngestionSuccessMessage
-      - Language
-      - ReadingVoice
-      - HasCompletedOnboarding
-      - IsNewNavigationEnabled
-      - HasSeenSidebarIaAdoption
-      enum:
-      - HasSeenFileIngestionSuccessMessage
-      - Language
-      - ReadingVoice
-      - HasCompletedOnboarding
-      - IsNewNavigationEnabled
-      - HasSeenSidebarIaAdoption
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
       properties:
         type:
+          type: string
+        enabled:
+          type: boolean
+        userIds:
           type:
-          - string
+          - array
           - 'null'
-        title:
+          items:
+            type: string
+            format: guid
+        groupIds:
           type:
-          - string
+          - array
           - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    UpdateUserInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        profileImageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userDetails:
-          oneOf:
-          - $ref: '#/components/schemas/UserDetailsModel'
-        userSettings:
-          oneOf:
-          - $ref: '#/components/schemas/UserSettingsModel'
-    UpdateUserSettingRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      properties:
-        key:
-          $ref: '#/components/schemas/UserSettingKey'
-        value:
-          type:
-          - string
-          - 'null'
+          items:
+            type: string
+            format: guid
     ActiveOrganizationClaim:
       type: object
       additionalProperties: false
@@ -301,28 +208,33 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/TenantPermissionsDto'
-    TenantPermissionsDto:
+    UpdateUserSettingRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          $ref: '#/components/schemas/UserSettingKey'
+        value:
+          type:
+          - string
+          - 'null'
+    UpdateUserInfo:
       type: object
       additionalProperties: false
       properties:
-        type:
-          type: string
-        enabled:
-          type: boolean
-        userIds:
+        profileImageId:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
+          format: guid
+        userDetails:
+          oneOf:
+          - $ref: '#/components/schemas/UserDetailsModel'
+        userSettings:
+          oneOf:
+          - $ref: '#/components/schemas/UserSettingsModel'
     UserInfoDto:
       type: object
       additionalProperties: false
@@ -391,6 +303,94 @@ components:
         userSettings:
           oneOf:
           - $ref: '#/components/schemas/UserSettingsModel'
+    UserDetailsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        general:
+          type: string
+        workDescription:
+          type:
+          - string
+          - 'null'
+        personalPreferences:
+          type:
+          - string
+          - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    UserSettingKey:
+      type: string
+      description: ''
+      x-enumNames:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+      enum:
+      - HasSeenFileIngestionSuccessMessage
+      - Language
+      - ReadingVoice
+      - HasCompletedOnboarding
+      - IsNewNavigationEnabled
+      - HasSeenSidebarIaAdoption
+    UserSettingsModel:
+      type: object
+      additionalProperties: false
+      properties:
+        hasSeenFileIngestionSuccessMessage:
+          type:
+          - boolean
+          - 'null'
+        language:
+          type:
+          - string
+          - 'null'
+        readingVoice:
+          type:
+          - string
+          - 'null'
+        hasCompletedOnboarding:
+          type:
+          - boolean
+          - 'null'
+        hasDismissedWelcomeVideo:
+          type:
+          - boolean
+          - 'null'
+        isNewNavigationEnabled:
+          type:
+          - boolean
+          - 'null'
+        hasSeenSidebarIaAdoption:
+          type:
+          - boolean
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -472,6 +472,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    SeedingStatusResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        isInProgress:
+          type: boolean
     RemoveIntegrationRequest:
       type: object
       additionalProperties: false
@@ -500,76 +506,6 @@ components:
           type: array
           items:
             type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ExecuteAgentRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - agentId
-      - projectId
-      properties:
-        agentId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-    EnterpriseSearchSeedingStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotStarted
-      - InProgress
-      - Completed
-      - Failed
-      - PartiallyCompleted
-      enum:
-      - NotStarted
-      - InProgress
-      - Completed
-      - Failed
-      - PartiallyCompleted
-    SeedingStatusResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        isInProgress:
-          type: boolean
-    IntegrationDeploymentStatusDto:
-      type: object
-      additionalProperties: false
-      properties:
-        isDeployed:
-          type: boolean
-        agentIds:
-          type: array
-          items:
-            type: string
-            format: guid
     EnterpriseSearchSeedingProgressDto:
       type: object
       additionalProperties: false
@@ -615,6 +551,25 @@ components:
           - 'null'
           items:
             type: string
+    ExecuteAgentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - agentId
+      - projectId
+      properties:
+        agentId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+    DeployIntegrationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        integrationType:
+          type: string
     AgentExecutionResultDto:
       type: object
       additionalProperties: false
@@ -628,6 +583,46 @@ components:
           - object
           - 'null'
           additionalProperties: {}
+    EnterpriseSearchSeedingStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+      enum:
+      - NotStarted
+      - InProgress
+      - Completed
+      - Failed
+      - PartiallyCompleted
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     IntegrationOAuthRequirementsDto:
       type: object
       additionalProperties: false
@@ -638,12 +633,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AgentOAuthRequirement'
-    DeployIntegrationRequest:
+    IntegrationDeploymentStatusDto:
       type: object
       additionalProperties: false
       properties:
-        integrationType:
-          type: string
+        isDeployed:
+          type: boolean
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

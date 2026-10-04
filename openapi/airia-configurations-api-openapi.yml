@@ -258,6 +258,41 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    EmbeddingConfigurationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        model:
+          type: string
+        vectorBatchSize:
+          type: integer
+          format: int32
+        dimensions:
+          type: integer
+          format: int32
+        displayName:
+          type: string
+        isReadonly:
+          type: boolean
+        supportedDimensions:
+          type: array
+          items:
+            type: integer
+            format: int32
+    AIGatewayResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+        homeRegion:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIGatewayRegionDto'
     SupportedVectorDbTypesResponse:
       type: object
       additionalProperties: false
@@ -266,29 +301,6 @@ components:
           type: string
         postgresHybrid:
           type: boolean
-    AWSConfiguration:
-      type: object
-      additionalProperties: false
-      required:
-      - accountNumber
-      - accountUser
-      - externalId
-      properties:
-        accountNumber:
-          type: string
-          minLength: 1
-        accountUser:
-          type: string
-          minLength: 1
-        externalId:
-          type: string
-          minLength: 1
-    OAuthCallbackUrlResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -314,25 +326,11 @@ components:
           type:
           - string
           - 'null'
-    AIGatewayResponse:
+    OAuthCallbackUrlResponse:
       type: object
       additionalProperties: false
       properties:
         url:
-          type: string
-        homeRegion:
-          type: string
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIGatewayRegionDto'
-    AIGatewayRegionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        regionName:
-          type: string
-        regionalEndpoint:
           type: string
     SasExpiryConfigurationResponse:
       type: object
@@ -341,29 +339,31 @@ components:
         defaultExpiryMinutes:
           type: number
           format: double
-    EmbeddingConfigurationResponse:
+    AIGatewayRegionDto:
       type: object
       additionalProperties: false
       properties:
-        provider:
+        regionName:
           type: string
-        model:
+        regionalEndpoint:
           type: string
-        vectorBatchSize:
-          type: integer
-          format: int32
-        dimensions:
-          type: integer
-          format: int32
-        displayName:
+    AWSConfiguration:
+      type: object
+      additionalProperties: false
+      required:
+      - accountNumber
+      - accountUser
+      - externalId
+      properties:
+        accountNumber:
           type: string
-        isReadonly:
-          type: boolean
-        supportedDimensions:
-          type: array
-          items:
-            type: integer
-            format: int32
+          minLength: 1
+        accountUser:
+          type: string
+          minLength: 1
+        externalId:
+          type: string
+          minLength: 1
   securitySchemes:
     ApiKey:
       type: apiKey

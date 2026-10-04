@@ -247,113 +247,6 @@ components:
           type:
           - string
           - 'null'
-    RiskAlertResourceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        tenantId:
-          type: string
-    GovernanceSlaAtRiskResponseDto:
-      type: object
-      additionalProperties: false
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/GovernanceSlaAtRiskEntryDto'
-        totalCount:
-          type: integer
-          format: int32
-        page:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        overdueCount:
-          type: integer
-          format: int32
-        approachingCount:
-          type: integer
-          format: int32
-    RiskAlertActorDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    DashboardMetricDto:
-      type: object
-      additionalProperties: false
-      properties:
-        currentPeriod:
-          type: number
-          format: double
-        previousPeriod:
-          type: number
-          format: double
-        diffValue:
-          type: number
-          format: double
-    GovernanceDashboardRiskDomainSummaryDto:
-      type: object
-      additionalProperties: false
-      required:
-      - domains
-      properties:
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskDomainCountDto'
-    RiskDomainCountDto:
-      type: object
-      additionalProperties: false
-      required:
-      - riskDomainId
-      - riskDomainName
-      - count
-      properties:
-        riskDomainId:
-          type: string
-          format: guid
-        riskDomainName:
-          type: string
-        count:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     GovernanceSlaAtRiskEntryDto:
       type: object
       additionalProperties: false
@@ -394,39 +287,39 @@ components:
         pageSize:
           type: integer
           format: int32
-    GovernanceDashboardSummaryDto:
+    GovernanceSlaAtRiskResponseDto:
       type: object
       additionalProperties: false
-      required:
-      - governanceScore
-      - monitoredUseCases
-      - highRiskUseCases
-      - agentsGoverned
-      - policyEnforcements
-      - pendingHumanReviews
       properties:
-        governanceScore:
-          $ref: '#/components/schemas/GovernanceScoreMetricDto'
-        monitoredUseCases:
-          $ref: '#/components/schemas/DashboardMetricDto'
-        highRiskUseCases:
-          $ref: '#/components/schemas/DashboardMetricDto'
-        agentsGoverned:
-          $ref: '#/components/schemas/DashboardMetricDto'
-        policyEnforcements:
-          $ref: '#/components/schemas/DashboardMetricDto'
-        pendingHumanReviews:
-          $ref: '#/components/schemas/DashboardMetricDto'
-    GovernanceDashboardHeatmapDto:
-      type: object
-      additionalProperties: false
-      required:
-      - dataPoints
-      properties:
-        dataPoints:
+        entries:
           type: array
           items:
-            $ref: '#/components/schemas/HeatmapDataPointDto'
+            $ref: '#/components/schemas/GovernanceSlaAtRiskEntryDto'
+        totalCount:
+          type: integer
+          format: int32
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        overdueCount:
+          type: integer
+          format: int32
+        approachingCount:
+          type: integer
+          format: int32
+    GovernanceDashboardRiskDomainSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - domains
+      properties:
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDomainCountDto'
     RiskAlertEntryDto:
       type: object
       additionalProperties: false
@@ -455,6 +348,109 @@ components:
           type:
           - string
           - 'null'
+    RiskAlertActorDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    GovernanceDashboardSummaryDto:
+      type: object
+      additionalProperties: false
+      required:
+      - governanceScore
+      - monitoredUseCases
+      - highRiskUseCases
+      - agentsGoverned
+      - policyEnforcements
+      - pendingHumanReviews
+      properties:
+        governanceScore:
+          $ref: '#/components/schemas/GovernanceScoreMetricDto'
+        monitoredUseCases:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        highRiskUseCases:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        agentsGoverned:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        policyEnforcements:
+          $ref: '#/components/schemas/DashboardMetricDto'
+        pendingHumanReviews:
+          $ref: '#/components/schemas/DashboardMetricDto'
+    GovernanceScoreMetricDto:
+      allOf:
+      - $ref: '#/components/schemas/DashboardMetricDto'
+      - type: object
+        additionalProperties: false
+        properties:
+          riskClassificationDiscipline:
+            type: number
+            format: double
+          controlCoverage:
+            type: number
+            format: double
+          agentIntegrityHealth:
+            type: number
+            format: double
+          riskGovernance:
+            type: number
+            format: double
+          oversightEffectiveness:
+            type: number
+            format: double
+    GovernanceDashboardHeatmapDto:
+      type: object
+      additionalProperties: false
+      required:
+      - dataPoints
+      properties:
+        dataPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeatmapDataPointDto'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RiskDomainCountDto:
+      type: object
+      additionalProperties: false
+      required:
+      - riskDomainId
+      - riskDomainName
+      - count
+      properties:
+        riskDomainId:
+          type: string
+          format: guid
+        riskDomainName:
+          type: string
+        count:
+          type: integer
+          format: int32
     GovernanceDashboardAdditionalDetailsDto:
       type: object
       additionalProperties: false
@@ -496,27 +492,31 @@ components:
         agentsDeployedWithoutGuardrails:
           type: integer
           format: int32
-    GovernanceScoreMetricDto:
-      allOf:
-      - $ref: '#/components/schemas/DashboardMetricDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          riskClassificationDiscipline:
-            type: number
-            format: double
-          controlCoverage:
-            type: number
-            format: double
-          agentIntegrityHealth:
-            type: number
-            format: double
-          riskGovernance:
-            type: number
-            format: double
-          oversightEffectiveness:
-            type: number
-            format: double
+    DashboardMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        currentPeriod:
+          type: number
+          format: double
+        previousPeriod:
+          type: number
+          format: double
+        diffValue:
+          type: number
+          format: double
+    RiskAlertResourceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        tenantId:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -197,12 +197,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SqlQueryRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        sqlQuery:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -228,6 +222,12 @@ components:
           type:
           - string
           - 'null'
+    SqlQueryRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        sqlQuery:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

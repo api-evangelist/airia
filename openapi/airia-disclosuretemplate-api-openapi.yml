@@ -273,6 +273,15 @@ components:
           - string
           - 'null'
           maxLength: 200
+    DisclosureAudience:
+      type: string
+      description: ''
+      x-enumNames:
+      - Internal
+      - External
+      enum:
+      - Internal
+      - External
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -295,6 +304,54 @@ components:
           - string
           - 'null'
         instance:
+          type:
+          - string
+          - 'null'
+    DisclosureTemplateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        frameworkKey:
+          type:
+          - string
+          - 'null'
+        audience:
+          $ref: '#/components/schemas/DisclosureAudience'
+        isDefault:
+          type: boolean
+        lockedAttributes:
+          oneOf:
+          - $ref: '#/components/schemas/DisclosureLockedAttributes'
+        isSystem:
+          type: boolean
+        enableApiDisclosure:
+          type: boolean
+        enableSseDisclosureEvent:
+          type: boolean
+        includeAssetIdentity:
+          type: boolean
+        includeModelDetails:
+          type: boolean
+        includeModelNames:
+          type: boolean
+        includeGuardrails:
+          type: boolean
+        includeGuardrailNames:
+          type: boolean
+        includeRiskClassification:
+          type: boolean
+        includeUseCaseDetails:
+          type: boolean
+        includeHumanReview:
+          type: boolean
+        includeDisclaimer:
+          type: boolean
+        customReviewedBy:
           type:
           - string
           - 'null'
@@ -390,63 +447,6 @@ components:
           type: boolean
         includeDisclaimer:
           type: boolean
-    DisclosureAudience:
-      type: string
-      description: ''
-      x-enumNames:
-      - Internal
-      - External
-      enum:
-      - Internal
-      - External
-    DisclosureTemplateDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        frameworkKey:
-          type:
-          - string
-          - 'null'
-        audience:
-          $ref: '#/components/schemas/DisclosureAudience'
-        isDefault:
-          type: boolean
-        lockedAttributes:
-          oneOf:
-          - $ref: '#/components/schemas/DisclosureLockedAttributes'
-        isSystem:
-          type: boolean
-        enableApiDisclosure:
-          type: boolean
-        enableSseDisclosureEvent:
-          type: boolean
-        includeAssetIdentity:
-          type: boolean
-        includeModelDetails:
-          type: boolean
-        includeModelNames:
-          type: boolean
-        includeGuardrails:
-          type: boolean
-        includeGuardrailNames:
-          type: boolean
-        includeRiskClassification:
-          type: boolean
-        includeUseCaseDetails:
-          type: boolean
-        includeHumanReview:
-          type: boolean
-        includeDisclaimer:
-          type: boolean
-        customReviewedBy:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

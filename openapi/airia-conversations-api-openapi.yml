@@ -1053,6 +1053,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TypingStatusRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - isTyping
+      properties:
+        isTyping:
+          type: boolean
     UpdateConversationRequest:
       type: object
       additionalProperties: false
@@ -1086,103 +1094,6 @@ components:
           - string
           - 'null'
           format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    DeleteMessagesFromPointResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        conversationId:
-          type: string
-          format: guid
-        fromMessageId:
-          type: string
-          format: guid
-        deletedCount:
-          type: integer
-          format: int32
-        remainingCount:
-          type: integer
-          format: int32
-    UpdateParticipantRoleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - role
-      properties:
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-    ConversationParticipantDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        userId:
-          type: string
-          format: guid
-        username:
-          type:
-          - string
-          - 'null'
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-        sharedAt:
-          type: string
-          format: date-time
-        sharedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        sharedByUsername:
-          type:
-          - string
-          - 'null'
-    AgentAttachmentUploadResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        blobId:
-          type: string
-        url:
-          type: string
-    AttachmentSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - User
-      - Agent
-      enum:
-      - user
-      - agent
     AddMessageToConversationRequest:
       type: object
       additionalProperties: false
@@ -1207,58 +1118,6 @@ components:
           type:
           - string
           - 'null'
-    CreateExternalConversationIdentityMappingRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - externalSystem
-      - externalChannelId
-      - externalThreadId
-      properties:
-        externalSystem:
-          type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[A-Za-z][A-Za-z0-9]*$
-        externalChannelId:
-          type: string
-          maxLength: 255
-          minLength: 1
-        externalThreadId:
-          type: string
-          maxLength: 255
-          minLength: 1
-    ExternalConversationIdentityMappingResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        externalSystem:
-          type: string
-        externalChannelId:
-          type: string
-        externalThreadId:
-          type: string
-        verifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastSyncedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
     ConversationRole:
       type: string
       description: ''
@@ -1270,104 +1129,6 @@ components:
       - Owner
       - Collaborator
       - Viewer
-    ShareConversationRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - userId
-      - role
-      properties:
-        userId:
-          type: string
-          format: guid
-          minLength: 1
-        role:
-          $ref: '#/components/schemas/ConversationRole'
-    CreateConversationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        websocketUrl:
-          type: string
-        deploymentId:
-          type: string
-          format: guid
-        iconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        spaceName:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-    AddMessageToConversationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        messageId:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        createdAt:
-          type: string
-          format: date-time
-    LastExecutionStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-      enum:
-      - InProgress
-      - Completed
-      - Failed
-      - NotApplicable
-    PagedResultOfConversationFeedDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversationFeedDto'
-        totalCount:
-          type: integer
-          format: int32
-    PresenceUpdateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - action
-      properties:
-        action:
-          type: string
-          minLength: 1
-          pattern: ^(joined|left)$
     ToolCallData:
       type: object
       additionalProperties: false
@@ -1383,90 +1144,30 @@ components:
           type:
           - string
           - 'null'
-    ConversationType2:
-      type: string
-      description: ''
-      x-enumNames:
-      - UserConversation
-      - AgentBuilderAssistantAI
-      - PythonCodeAssistantAI
-      enum:
-      - UserConversation
-      - AgentBuilderAssistantAI
-      - PythonCodeAssistantAI
-    TypingStatusRequest:
+    ToolResponseData:
       type: object
       additionalProperties: false
       required:
-      - isTyping
+      - toolCallId
+      - toolName
       properties:
-        isTyping:
-          type: boolean
-    RedactionRecordData:
-      type: object
-      additionalProperties: false
-      properties:
-        violatingText:
+        toolCallId:
           type: string
-        confidenceScore:
-          type: number
-          format: double
-        startOffset:
-          type: integer
-          format: int32
-        length:
-          type: integer
-          format: int32
-        placeholderBase:
+        toolName:
           type: string
-        placeholderIndex:
-          type: integer
-          format: int32
-        contexts:
-          type: array
-          items:
-            type: string
-        violatingSubIndex:
-          type: integer
-          format: int32
-    CreateConversationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
+        response:
           type:
           - string
           - 'null'
-          format: guid
-        title:
-          type:
-          - string
-          - 'null'
-        deploymentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dataSourceFiles:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        isBookmarked:
-          type: boolean
-        pipelineId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        userInput:
-          type:
-          - string
-          - 'null'
-        type:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationType2'
+    AttachmentSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - User
+      - Agent
+      enum:
+      - user
+      - agent
     ConversationMessage:
       type: object
       additionalProperties: false
@@ -1542,21 +1243,224 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ToolResponseData'
-    ToolResponseData:
+    RedactionStoreData:
       type: object
       additionalProperties: false
-      required:
-      - toolCallId
-      - toolName
       properties:
-        toolCallId:
+        messageRedactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/RedactionRecordData'
+        contextIndex:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+              format: guid
+        version:
+          type: integer
+          format: int32
+        lastModified:
           type: string
-        toolName:
+          format: date-time
+    ConversationAttachmentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
-        response:
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        messageId:
           type:
           - string
           - 'null'
+          format: guid
+        blobId:
+          type: string
+          format: guid
+        fileName:
+          type: string
+        contentType:
+          type: string
+        fileSizeBytes:
+          type: integer
+          format: int64
+        source:
+          $ref: '#/components/schemas/AttachmentSource'
+        createdAt:
+          type: string
+          format: date-time
+        downloadUrl:
+          type:
+          - string
+          - 'null'
+    UploadAgentAttachmentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - base64Content
+      - fileName
+      - contentType
+      properties:
+        base64Content:
+          type: string
+          minLength: 1
+        fileName:
+          type: string
+          maxLength: 512
+          minLength: 1
+        contentType:
+          type: string
+          maxLength: 256
+          minLength: 1
+    UpdateParticipantRoleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - role
+      properties:
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    ShareConversationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - role
+      properties:
+        userId:
+          type: string
+          format: guid
+          minLength: 1
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+    AgentAttachmentUploadResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        blobId:
+          type: string
+        url:
+          type: string
+    PagedResultOfConversationFeedDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationFeedDto'
+        totalCount:
+          type: integer
+          format: int32
+    CreateConversationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        title:
+          type:
+          - string
+          - 'null'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dataSourceFiles:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        isBookmarked:
+          type: boolean
+        pipelineId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        userInput:
+          type:
+          - string
+          - 'null'
+        type:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationType2'
+    DeleteMessagesFromPointResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        conversationId:
+          type: string
+          format: guid
+        fromMessageId:
+          type: string
+          format: guid
+        deletedCount:
+          type: integer
+          format: int32
+        remainingCount:
+          type: integer
+          format: int32
+    LastExecutionStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+      enum:
+      - InProgress
+      - Completed
+      - Failed
+      - NotApplicable
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PresenceUpdateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      properties:
+        action:
+          type: string
+          minLength: 1
+          pattern: ^(joined|left)$
     GetConversationByIdResponse:
       type: object
       additionalProperties: false
@@ -1648,72 +1552,22 @@ components:
         lastComputeEnvironmentType:
           oneOf:
           - $ref: '#/components/schemas/ComputeEnvironmentType'
-    ConversationAttachmentDto:
+    ConversationMessageUserDto:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        messageId:
+        firstName:
           type:
           - string
           - 'null'
-          format: guid
-        blobId:
-          type: string
-          format: guid
-        fileName:
-          type: string
-        contentType:
-          type: string
-        fileSizeBytes:
-          type: integer
-          format: int64
-        source:
-          $ref: '#/components/schemas/AttachmentSource'
-        createdAt:
-          type: string
-          format: date-time
-        downloadUrl:
+        lastName:
           type:
           - string
           - 'null'
-    ComputeEnvironmentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sandbox
-      - BrowserAgent
-      enum:
-      - Sandbox
-      - BrowserAgent
-    RedactionStoreData:
-      type: object
-      additionalProperties: false
-      properties:
-        messageRedactions:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/RedactionRecordData'
-        contextIndex:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-              format: guid
-        version:
-          type: integer
-          format: int32
-        lastModified:
-          type: string
-          format: date-time
+        avatarUrl:
+          type:
+          - string
+          - 'null'
     ConversationFeedDto:
       type: object
       additionalProperties: false
@@ -1775,41 +1629,187 @@ components:
           format: decimal
         isEndUserPrivate:
           type: boolean
-    ConversationMessageUserDto:
+    ComputeEnvironmentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sandbox
+      - BrowserAgent
+      enum:
+      - Sandbox
+      - BrowserAgent
+    ConversationParticipantDto:
       type: object
       additionalProperties: false
       properties:
-        firstName:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        userId:
+          type: string
+          format: guid
+        username:
           type:
           - string
           - 'null'
-        lastName:
+        role:
+          $ref: '#/components/schemas/ConversationRole'
+        sharedAt:
+          type: string
+          format: date-time
+        sharedByUserId:
           type:
           - string
           - 'null'
-        avatarUrl:
+          format: guid
+        sharedByUsername:
           type:
           - string
           - 'null'
-    UploadAgentAttachmentRequest:
+    CreateConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        websocketUrl:
+          type: string
+        deploymentId:
+          type: string
+          format: guid
+        iconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        spaceName:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    CreateExternalConversationIdentityMappingRequest:
       type: object
       additionalProperties: false
       required:
-      - base64Content
-      - fileName
-      - contentType
+      - externalSystem
+      - externalChannelId
+      - externalThreadId
       properties:
-        base64Content:
+        externalSystem:
           type: string
-          minLength: 1
-        fileName:
+          maxLength: 50
+          minLength: 2
+          pattern: ^[A-Za-z][A-Za-z0-9]*$
+        externalChannelId:
           type: string
-          maxLength: 512
+          maxLength: 255
           minLength: 1
-        contentType:
+        externalThreadId:
           type: string
-          maxLength: 256
+          maxLength: 255
           minLength: 1
+    ConversationType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+      enum:
+      - UserConversation
+      - AgentBuilderAssistantAI
+      - PythonCodeAssistantAI
+    AddMessageToConversationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        messageId:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+    ExternalConversationIdentityMappingResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        externalSystem:
+          type: string
+        externalChannelId:
+          type: string
+        externalThreadId:
+          type: string
+        verifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastSyncedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    RedactionRecordData:
+      type: object
+      additionalProperties: false
+      properties:
+        violatingText:
+          type: string
+        confidenceScore:
+          type: number
+          format: double
+        startOffset:
+          type: integer
+          format: int32
+        length:
+          type: integer
+          format: int32
+        placeholderBase:
+          type: string
+        placeholderIndex:
+          type: integer
+          format: int32
+        contexts:
+          type: array
+          items:
+            type: string
+        violatingSubIndex:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

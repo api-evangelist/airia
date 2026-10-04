@@ -75,6 +75,68 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ReconciledSpendRowKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - DimensionValue
+      - NoDimensionValue
+      - NotUserAttributed
+      enum:
+      - DimensionValue
+      - NoDimensionValue
+      - NotUserAttributed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ReconciledSpendRowDto:
+      type: object
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        kind:
+          $ref: '#/components/schemas/ReconciledSpendRowKind'
+        label:
+          type:
+          - string
+          - 'null'
+        costCents:
+          type: number
+          format: decimal
+        sharePercent:
+          type: number
+          format: double
+        anyEstimated:
+          type: boolean
+        actorCount:
+          type: integer
+          format: int32
+        actorsNotInPlatformCount:
+          type: integer
+          format: int32
     ReconciledSpendResultDto:
       type: object
       additionalProperties: false
@@ -110,68 +172,6 @@ components:
           - number
           - 'null'
           format: double
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ReconciledSpendRowKind:
-      type: string
-      description: ''
-      x-enumNames:
-      - DimensionValue
-      - NoDimensionValue
-      - NotUserAttributed
-      enum:
-      - DimensionValue
-      - NoDimensionValue
-      - NotUserAttributed
-    ReconciledSpendRowDto:
-      type: object
-      additionalProperties: false
-      required:
-      - kind
-      properties:
-        kind:
-          $ref: '#/components/schemas/ReconciledSpendRowKind'
-        label:
-          type:
-          - string
-          - 'null'
-        costCents:
-          type: number
-          format: decimal
-        sharePercent:
-          type: number
-          format: double
-        anyEstimated:
-          type: boolean
-        actorCount:
-          type: integer
-          format: int32
-        actorsNotInPlatformCount:
-          type: integer
-          format: int32
     ReconciledSpendStatus:
       type: string
       description: ''

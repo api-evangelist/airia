@@ -85,6 +85,42 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PagedResultOfCommunityShareHistoryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunityShareHistoryItem'
+        totalCount:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     CommunityShareHistoryItem:
       type: object
       additionalProperties: false
@@ -147,42 +183,6 @@ components:
       enum:
       - ShareableLink
       - Community
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedResultOfCommunityShareHistoryItem:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommunityShareHistoryItem'
-        totalCount:
-          type: integer
-          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

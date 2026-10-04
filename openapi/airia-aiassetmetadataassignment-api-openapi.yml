@@ -253,6 +253,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreateAiAssetMetadataAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetMetadataDefinitionId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinitionOptionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
     AiAssetType:
       type: string
       description: ''
@@ -288,57 +308,6 @@ components:
       - EndpointApp
       - EndpointMcpServer
       - ExternalDataSource
-    CreateAiAssetMetadataAssignmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetMetadataDefinitionId:
-          type: string
-          format: guid
-        aiAssetMetadataDefinitionOptionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        value:
-          type:
-          - string
-          - 'null'
-        version:
-          type:
-          - string
-          - 'null'
-    AiAssetMetadataAssignmentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        aiAssetAggregateId:
-          type: string
-          format: guid
-        aiAssetMetadataDefinitionId:
-          type: string
-          format: guid
-        aiAssetMetadataDefinition:
-          oneOf:
-          - $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
-        aiAssetMetadataDefinitionOptionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        aiAssetMetadataDefinitionOption:
-          oneOf:
-          - $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
-        assetType:
-          $ref: '#/components/schemas/AiAssetType'
-        value:
-          type:
-          - string
-          - 'null'
-        version:
-          type:
-          - string
-          - 'null'
     AiAssetMetadataValueType:
       type: string
       description: ''
@@ -379,6 +348,17 @@ components:
           type:
           - string
           - 'null'
+    AiAssetMetadataType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+      enum:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
     AiAssetMetadataDefinitionResponse:
       type: object
       additionalProperties: false
@@ -408,6 +388,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
+    AiAssetMetadataAssignmentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        aiAssetAggregateId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinitionId:
+          type: string
+          format: guid
+        aiAssetMetadataDefinition:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataDefinitionResponse'
+        aiAssetMetadataDefinitionOptionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        aiAssetMetadataDefinitionOption:
+          oneOf:
+          - $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - 'null'
     AiAssetMetadataDefinitionOptionResponse:
       type: object
       additionalProperties: false
@@ -417,17 +428,6 @@ components:
           format: guid
         value:
           type: string
-    AiAssetMetadataType:
-      type: string
-      description: ''
-      x-enumNames:
-      - DirectValue
-      - SingleOption
-      - MultipleOption
-      enum:
-      - DirectValue
-      - SingleOption
-      - MultipleOption
   securitySchemes:
     ApiKey:
       type: apiKey

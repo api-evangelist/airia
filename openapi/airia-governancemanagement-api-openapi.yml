@@ -78,16 +78,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GovernanceManagementFrameworkDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
     GovernanceManagementSummaryDto:
       type: object
       additionalProperties: false
@@ -115,17 +105,6 @@ components:
         windowEnd:
           type: string
           format: date-time
-    GovernanceManagementComingSoonFrameworkDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        requestedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -151,6 +130,27 @@ components:
           type:
           - string
           - 'null'
+    GovernanceManagementComingSoonFrameworkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        requestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    GovernanceManagementFrameworkDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

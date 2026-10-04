@@ -114,6 +114,46 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    StepExecutionLogDto:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        stepId:
+          type: string
+          format: guid
+        stepType:
+          oneOf:
+          - $ref: '#/components/schemas/StepType'
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        duration:
+          type:
+          - string
+          - 'null'
+          example: 0.0
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        finishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        success:
+          type:
+          - boolean
+          - 'null'
+        exception:
+          type:
+          - string
+          - 'null'
     StepType:
       type: string
       description: ''
@@ -169,30 +209,6 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
-    GetPipelineExecutionResult:
-      type: object
-      additionalProperties: false
-      properties:
-        executionId:
-          type: string
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        logRecordDetails:
-          $ref: '#/components/schemas/PipelineExecutionLogDetailsDto'
-        stepExecutionLogRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/StepExecutionLogDto'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -245,46 +261,30 @@ components:
           type:
           - string
           - 'null'
-    StepExecutionLogDto:
+    GetPipelineExecutionResult:
       type: object
       additionalProperties: false
       properties:
+        executionId:
+          type: string
+          format: guid
         pipelineId:
           type: string
           format: guid
-        stepId:
+        tenantId:
           type: string
           format: guid
-        stepType:
-          oneOf:
-          - $ref: '#/components/schemas/StepType'
-        stepTitle:
+        projectId:
+          type: string
+          format: guid
+        logRecordDetails:
+          $ref: '#/components/schemas/PipelineExecutionLogDetailsDto'
+        stepExecutionLogRecords:
           type:
-          - string
+          - array
           - 'null'
-        duration:
-          type:
-          - string
-          - 'null'
-          example: 0.0
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        finishedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        success:
-          type:
-          - boolean
-          - 'null'
-        exception:
-          type:
-          - string
-          - 'null'
+          items:
+            $ref: '#/components/schemas/StepExecutionLogDto'
   securitySchemes:
     ApiKey:
       type: apiKey

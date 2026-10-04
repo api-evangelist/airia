@@ -151,12 +151,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PasskeyNudgeSettingsViewModel:
+    PasskeyNudgeSettingsUpdateViewModel:
       type: object
       additionalProperties: false
+      required:
+      - mode
       properties:
-        configured:
-          type: boolean
         mode:
           $ref: '#/components/schemas/PasskeyNudgeMode'
         snoozeDays:
@@ -165,11 +165,6 @@ components:
         maxDeclines:
           type: integer
           format: int32
-        resetAt:
-          type:
-          - integer
-          - 'null'
-          format: int64
     PasskeyNudgeMode:
       type: string
       description: The passkey nudge mode, in increasing order of insistence.
@@ -202,12 +197,12 @@ components:
           type:
           - string
           - 'null'
-    PasskeyNudgeSettingsUpdateViewModel:
+    PasskeyNudgeSettingsViewModel:
       type: object
       additionalProperties: false
-      required:
-      - mode
       properties:
+        configured:
+          type: boolean
         mode:
           $ref: '#/components/schemas/PasskeyNudgeMode'
         snoozeDays:
@@ -216,6 +211,11 @@ components:
         maxDeclines:
           type: integer
           format: int32
+        resetAt:
+          type:
+          - integer
+          - 'null'
+          format: int64
   securitySchemes:
     ApiKey:
       type: apiKey

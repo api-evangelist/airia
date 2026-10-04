@@ -541,6 +541,212 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ToolPatchEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        stepTitle:
+          type:
+          - string
+          - 'null'
+        toolInstanceId:
+          type:
+          - string
+          - 'null'
+        toolAggregateId:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    EvaluatorMetricDto:
+      type: object
+      additionalProperties: false
+      properties:
+        evaluatorKey:
+          type: string
+        score:
+          type: number
+          format: double
+        scoreType:
+          type: string
+        reasonText:
+          type:
+          - string
+          - 'null'
+    ScenarioComplianceScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        status:
+          $ref: '#/components/schemas/ScenarioStatus'
+        owner:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        assetAggregateId:
+          type: string
+          format: guid
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          $ref: '#/components/schemas/ChangeScenarioSource'
+        overridesSummary:
+          type:
+          - string
+          - 'null'
+        activityNotes:
+          type:
+          - string
+          - 'null'
+    GuardrailViolationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        guardrailId:
+          type: string
+          format: guid
+        guardrailName:
+          type: string
+        stage:
+          type: string
+        action:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    ScenarioPendingActionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    ToolPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        add:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        remove:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+        modify:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolPatchEntry'
+    ScenarioTransitionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - targetStatus
+      properties:
+        targetStatus:
+          $ref: '#/components/schemas/ScenarioStatus'
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
+    UpdateChangeScenarioRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        activityNotes:
+          type:
+          - string
+          - 'null'
+          maxLength: 4000
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
     ScenarioAuditEntryDto:
       type: object
       additionalProperties: false
@@ -561,181 +767,12 @@ components:
           type:
           - string
           - 'null'
-    ScenarioSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        active:
-          type: integer
-          format: int32
-        pendingReview:
-          type: integer
-          format: int32
-        evaluationsQueued:
-          type: integer
-          format: int32
-        adoptedThisMonth:
-          type: integer
-          format: int32
-        comparisonsActive:
-          type: integer
-          format: int32
-        comparisonsDecided:
-          type: integer
-          format: int32
-        comparisonsAbandoned:
-          type: integer
-          format: int32
-    PagedResultOfChangeScenarioDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChangeScenarioDto'
-        totalCount:
-          type: integer
-          format: int32
-    RiskImpact:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-    CreateChangeScenarioRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - assetAggregateId
-      - changeCategory
-      - name
-      - risk
-      properties:
-        useCaseId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        assetAggregateId:
-          type: string
-          format: guid
-          minLength: 1
-        changeCategory:
-          $ref: '#/components/schemas/ChangeCategory'
-        name:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
-        risk:
-          $ref: '#/components/schemas/RiskImpact'
-        owner:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dueDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/ChangeScenarioDetails'
-        baseVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        sourceKind:
-          oneOf:
-          - $ref: '#/components/schemas/ChangeScenarioSource'
-        overrides:
-          oneOf:
-          - $ref: '#/components/schemas/ScenarioOverrides'
-    ScenarioStepDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        order:
-          type: integer
-          format: int32
-        title:
-          type: string
-        branchGroup:
-          type: string
-        status:
-          $ref: '#/components/schemas/StageInstanceStatus'
-        outcome:
-          oneOf:
-          - $ref: '#/components/schemas/StageOutcome'
-        requirementStatus:
-          oneOf:
-          - $ref: '#/components/schemas/StageRequirementStatus'
-        dependsOn:
-          type: array
-          items:
-            type: string
-            format: guid
-        enteredAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        gateSlaDeadline:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        requiresApproval:
-          type: boolean
-        genericApproval:
-          type: boolean
-        automations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationSummaryDto'
-        displaySection:
-          oneOf:
-          - $ref: '#/components/schemas/DisplaySectionDto'
-        displaySectionV2:
-          oneOf:
-          - $ref: '#/components/schemas/DisplaySectionV2Dto'
-    WidgetDto:
+    RequiredComponentDto:
       type: object
       additionalProperties: false
       properties:
         key:
           type: string
-        mode:
-          $ref: '#/components/schemas/StageDisplayMode'
         order:
           type: integer
           format: int32
@@ -747,102 +784,6 @@ components:
           - object
           - 'null'
           additionalProperties: {}
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    AutomationSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        automationId:
-          type: string
-          format: guid
-        automationType:
-          type: string
-        timing:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/AutomationExecutionStatus'
-        externalJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        startedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        error:
-          type:
-          - string
-          - 'null'
-        sequence:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        durationMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    JudgeComparability:
-      type: string
-      description: ''
-      x-enumNames:
-      - Comparable
-      - JudgeUnknown
-      - JudgeMismatch
-      enum:
-      - Comparable
-      - JudgeUnknown
-      - JudgeMismatch
     ChangeScenarioDto:
       type: object
       additionalProperties: false
@@ -948,58 +889,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScenarioPendingActionDto'
-    DisplaySectionV2Dto:
-      type: object
-      additionalProperties: false
-      properties:
-        actionable:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-        representational:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-    ModelOverride:
-      type: object
-      additionalProperties: false
-      properties:
-        modelId:
-          type: string
-        identifierType:
-          $ref: '#/components/schemas/ModelIdentifierType'
-    ScenarioComplianceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        frameworkKeys:
-          type: array
-          items:
-            type: string
-        recentViolations:
-          type: array
-          items:
-            $ref: '#/components/schemas/GuardrailViolationSummaryDto'
-        totalViolations30d:
-          type: integer
-          format: int32
-        generatedAt:
-          type: string
-          format: date-time
-        scenario:
-          oneOf:
-          - $ref: '#/components/schemas/ScenarioComplianceScenarioDto'
-        useCase:
-          oneOf:
-          - $ref: '#/components/schemas/ScenarioComplianceUseCaseDto'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioStepDto'
-        pendingActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioPendingActionDto'
     AutomationExecutionStatus:
       type: string
       description: ''
@@ -1015,6 +904,207 @@ components:
       - Completed
       - Failed
       - Skipped
+    CreateChangeScenarioRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - assetAggregateId
+      - changeCategory
+      - name
+      - risk
+      properties:
+        useCaseId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        assetAggregateId:
+          type: string
+          format: guid
+          minLength: 1
+        changeCategory:
+          $ref: '#/components/schemas/ChangeCategory'
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+        risk:
+          $ref: '#/components/schemas/RiskImpact'
+        owner:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioDetails'
+        baseVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        sourceKind:
+          oneOf:
+          - $ref: '#/components/schemas/ChangeScenarioSource'
+        overrides:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioOverrides'
+    ChangeScenarioDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        modelFrom:
+          type:
+          - string
+          - 'null'
+        modelTo:
+          type:
+          - string
+          - 'null'
+        promptDiff:
+          type:
+          - string
+          - 'null'
+        guardrailThreshold:
+          type:
+          - number
+          - 'null'
+          format: double
+        dataSourceFrom:
+          type:
+          - string
+          - 'null'
+        dataSourceTo:
+          type:
+          - string
+          - 'null'
+        configChanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigChange'
+    StageDisplayMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Requirement
+      - Summary
+      - Informational
+      enum:
+      - Requirement
+      - Summary
+      - Informational
+    ScenarioStepDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+        title:
+          type: string
+        branchGroup:
+          type: string
+        status:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/StageOutcome'
+        requirementStatus:
+          oneOf:
+          - $ref: '#/components/schemas/StageRequirementStatus'
+        dependsOn:
+          type: array
+          items:
+            type: string
+            format: guid
+        enteredAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        gateSlaDeadline:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        requiresApproval:
+          type: boolean
+        genericApproval:
+          type: boolean
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationSummaryDto'
+        displaySection:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionDto'
+        displaySectionV2:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionV2Dto'
+    DisplaySectionItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        systemRequirement:
+          type: boolean
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        isRequired:
+          type: boolean
+        requirementReason:
+          type:
+          - string
+          - 'null'
+    ChangeCategory:
+      type: string
+      description: ''
+      x-enumNames:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
+      enum:
+      - ModelUpgrade
+      - PromptChange
+      - DataSourceChange
+      - GuardrailUpdate
+      - PipelineChange
+      - ConfigChange
+      - PythonCodeChange
     ScenarioRedTeamRunDto:
       type: object
       additionalProperties: false
@@ -1080,109 +1170,156 @@ components:
           - 'null'
         failureCategory:
           type: string
-    EvaluatorMetricDto:
+    ScenarioComplianceDto:
       type: object
       additionalProperties: false
       properties:
-        evaluatorKey:
-          type: string
-        score:
-          type: number
-          format: double
-        scoreType:
-          type: string
-        reasonText:
-          type:
-          - string
-          - 'null'
-    AttestationRecord:
-      type: object
-      additionalProperties: false
-      properties:
-        attested:
-          type: boolean
-        attestedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        attestedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ChangeScenarioDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        modelFrom:
-          type:
-          - string
-          - 'null'
-        modelTo:
-          type:
-          - string
-          - 'null'
-        promptDiff:
-          type:
-          - string
-          - 'null'
-        guardrailThreshold:
-          type:
-          - number
-          - 'null'
-          format: double
-        dataSourceFrom:
-          type:
-          - string
-          - 'null'
-        dataSourceTo:
-          type:
-          - string
-          - 'null'
-        configChanges:
+        frameworkKeys:
           type: array
           items:
-            $ref: '#/components/schemas/ConfigChange'
-    RequiredComponentDto:
+            type: string
+        recentViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailViolationSummaryDto'
+        totalViolations30d:
+          type: integer
+          format: int32
+        generatedAt:
+          type: string
+          format: date-time
+        scenario:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioComplianceScenarioDto'
+        useCase:
+          oneOf:
+          - $ref: '#/components/schemas/ScenarioComplianceUseCaseDto'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioStepDto'
+        pendingActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPendingActionDto'
+    ModelOverride:
       type: object
       additionalProperties: false
       properties:
-        key:
+        modelId:
           type: string
-        order:
+        identifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+    ScenarioStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+      enum:
+      - Draft
+      - Evaluating
+      - PendingReview
+      - Approved
+      - Adopted
+      - Discarded
+    DisplaySectionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        requiredComponents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredComponentDto'
+        widgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/WidgetDto'
+    ScenarioCompareRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - scenarioIds
+      properties:
+        scenarioIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    ScenarioComplianceAssetDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        assetType:
+          type: string
+    RiskImpact:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    ScenarioAuditDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioAuditEntryDto'
+    ScenarioSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        active:
           type: integer
           format: int32
-        visibleWhen:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        options:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    ModelIdentifierType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Library
-      - Project
-      enum:
-      - None
-      - Library
-      - Project
-    StageDisplayMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Requirement
-      - Summary
-      - Informational
-      enum:
-      - Requirement
-      - Summary
-      - Informational
+        pendingReview:
+          type: integer
+          format: int32
+        evaluationsQueued:
+          type: integer
+          format: int32
+        adoptedThisMonth:
+          type: integer
+          format: int32
+        comparisonsActive:
+          type: integer
+          format: int32
+        comparisonsDecided:
+          type: integer
+          format: int32
+        comparisonsAbandoned:
+          type: integer
+          format: int32
+    PagedResultOfChangeScenarioDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeScenarioDto'
+        totalCount:
+          type: integer
+          format: int32
     ScenarioOverrides:
       type: object
       discriminator:
@@ -1203,74 +1340,6 @@ components:
           - $ref: '#/components/schemas/ToolPatch'
         kind:
           type: string
-    ToolPatch:
-      type: object
-      additionalProperties: false
-      properties:
-        add:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        remove:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-        modify:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolPatchEntry'
-    ChangeCategory:
-      type: string
-      description: ''
-      x-enumNames:
-      - ModelUpgrade
-      - PromptChange
-      - DataSourceChange
-      - GuardrailUpdate
-      - PipelineChange
-      - ConfigChange
-      - PythonCodeChange
-      enum:
-      - ModelUpgrade
-      - PromptChange
-      - DataSourceChange
-      - GuardrailUpdate
-      - PipelineChange
-      - ConfigChange
-      - PythonCodeChange
-    UpdateChangeScenarioRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
-        owner:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dueDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        activityNotes:
-          type:
-          - string
-          - 'null'
-          maxLength: 4000
-        overrides:
-          oneOf:
-          - $ref: '#/components/schemas/ScenarioOverrides'
     ScenarioEvaluationsDto:
       type: object
       additionalProperties: false
@@ -1281,19 +1350,104 @@ components:
             $ref: '#/components/schemas/EvaluationRunDto'
         judgeComparability:
           $ref: '#/components/schemas/JudgeComparability'
-    ScenarioTransitionRequest:
+    AttestationRecord:
       type: object
       additionalProperties: false
-      required:
-      - targetStatus
       properties:
-        targetStatus:
-          $ref: '#/components/schemas/ScenarioStatus'
-        reason:
+        attested:
+          type: boolean
+        attestedByUserId:
           type:
           - string
           - 'null'
-          maxLength: 2000
+          format: guid
+        attestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    JudgeComparability:
+      type: string
+      description: ''
+      x-enumNames:
+      - Comparable
+      - JudgeUnknown
+      - JudgeMismatch
+      enum:
+      - Comparable
+      - JudgeUnknown
+      - JudgeMismatch
+    AutomationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        automationId:
+          type: string
+          format: guid
+        automationType:
+          type: string
+        timing:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        error:
+          type:
+          - string
+          - 'null'
+        sequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
     ChangeScenarioSource:
       type: string
       description: ''
@@ -1303,50 +1457,150 @@ components:
       enum:
       - UserProposed
       - AutoMonitorObserved
-    ScenarioStatus:
+    ConditionNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    ModelIdentifierType:
       type: string
       description: ''
       x-enumNames:
-      - Draft
-      - Evaluating
-      - PendingReview
-      - Approved
-      - Adopted
-      - Discarded
+      - None
+      - Library
+      - Project
       enum:
-      - Draft
-      - Evaluating
-      - PendingReview
-      - Approved
-      - Adopted
-      - Discarded
-    ScenarioComplianceUseCaseDto:
+      - None
+      - Library
+      - Project
+    WidgetDto:
       type: object
       additionalProperties: false
       properties:
-        id:
+        key:
           type: string
-          format: guid
-        name:
+        mode:
+          $ref: '#/components/schemas/StageDisplayMode'
+        order:
+          type: integer
+          format: int32
+        visibleWhen:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ConfigChange:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
           type: string
-        description:
+        from:
           type:
           - string
           - 'null'
-        stage:
-          type: string
-        owner:
+        to:
           type:
           - string
           - 'null'
-        regulatoryFrameworks:
-          type: array
-          items:
+    StageRequirementStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        approvalResolution:
+          type:
+          - string
+          - 'null'
+        approvalsReceived:
+          type: integer
+          format: int32
+        approvalsRequired:
+          type: integer
+          format: int32
+        evaluationResults:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ThresholdResult'
+        artifactStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        documentSlotStatus:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        artifactRequirementReasons:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
             type: string
-        assignedAssets:
+        attestationStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttestationRecord'
+        approvalNotificationSentAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        defaultApprovalResolution:
+          type:
+          - string
+          - 'null'
+        defaultApprovalsReceived:
+          type: integer
+          format: int32
+        defaultApprovalsRequired:
+          type: integer
+          format: int32
+        requiresApprovalOverride:
+          type:
+          - boolean
+          - 'null'
+    DisplaySectionV2Dto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionable:
           type: array
           items:
-            $ref: '#/components/schemas/ScenarioComplianceAssetDto'
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+        representational:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+    ThresholdResult:
+      type: object
+      additionalProperties: false
+      properties:
+        actualValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        requiredValue:
+          type: number
+          format: double
+        passed:
+          type: boolean
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
     EvaluationRunDto:
       type: object
       additionalProperties: false
@@ -1424,115 +1678,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EvaluatorMetricDto'
-    GuardrailViolationSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        guardrailId:
-          type: string
-          format: guid
-        guardrailName:
-          type: string
-        stage:
-          type: string
-        action:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-    ScenarioCompareRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - scenarioIds
-      properties:
-        scenarioIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    ConditionNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-    StageRequirementStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        approvalResolution:
-          type:
-          - string
-          - 'null'
-        approvalsReceived:
-          type: integer
-          format: int32
-        approvalsRequired:
-          type: integer
-          format: int32
-        evaluationResults:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ThresholdResult'
-        artifactStatus:
-          type: object
-          additionalProperties:
-            type: boolean
-        documentSlotStatus:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        artifactRequirementReasons:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        attestationStatus:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AttestationRecord'
-        approvalNotificationSentAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        defaultApprovalResolution:
-          type:
-          - string
-          - 'null'
-        defaultApprovalsReceived:
-          type: integer
-          format: int32
-        defaultApprovalsRequired:
-          type: integer
-          format: int32
-        requiresApprovalOverride:
-          type:
-          - boolean
-          - 'null'
-    ScenarioPendingActionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        type:
-          type: string
-        message:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
     StageOutcome:
       type: string
       description: ''
@@ -1546,15 +1691,15 @@ components:
       - Approved
       - Rejected
       - FlaggedForReview
-    ScenarioAuditDto:
+    ScenarioRedTeamRunsDto:
       type: object
       additionalProperties: false
       properties:
-        items:
+        runs:
           type: array
           items:
-            $ref: '#/components/schemas/ScenarioAuditEntryDto'
-    ScenarioComplianceAssetDto:
+            $ref: '#/components/schemas/ScenarioRedTeamRunDto'
+    ScenarioComplianceUseCaseDto:
       type: object
       additionalProperties: false
       properties:
@@ -1563,47 +1708,24 @@ components:
           format: guid
         name:
           type: string
-        assetType:
+        description:
+          type:
+          - string
+          - 'null'
+        stage:
           type: string
-    ToolPatchEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        stepTitle:
+        owner:
           type:
           - string
           - 'null'
-        toolInstanceId:
-          type:
-          - string
-          - 'null'
-        toolAggregateId:
-          type:
-          - string
-          - 'null'
-        configuration:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-    ConfigChange:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        from:
-          type:
-          - string
-          - 'null'
-        to:
-          type:
-          - string
-          - 'null'
-    JsonNodeOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyNameCaseInsensitive:
-          type: boolean
+        regulatoryFrameworks:
+          type: array
+          items:
+            type: string
+        assignedAssets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioComplianceAssetDto'
     StageInstanceStatus:
       type: string
       description: ''
@@ -1631,128 +1753,6 @@ components:
       - Bypassed
       - Failed
       - AwaitingUserReview
-    DisplaySectionItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        order:
-          type: integer
-          format: int32
-        systemRequirement:
-          type: boolean
-        options:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        isRequired:
-          type: boolean
-        requirementReason:
-          type:
-          - string
-          - 'null'
-    ScenarioRedTeamRunsDto:
-      type: object
-      additionalProperties: false
-      properties:
-        runs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScenarioRedTeamRunDto'
-    ScenarioComplianceScenarioDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        changeCategory:
-          $ref: '#/components/schemas/ChangeCategory'
-        risk:
-          $ref: '#/components/schemas/RiskImpact'
-        status:
-          $ref: '#/components/schemas/ScenarioStatus'
-        owner:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        dueDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        assetAggregateId:
-          type: string
-          format: guid
-        baseVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        sourceKind:
-          $ref: '#/components/schemas/ChangeScenarioSource'
-        overridesSummary:
-          type:
-          - string
-          - 'null'
-        activityNotes:
-          type:
-          - string
-          - 'null'
-    DisplaySectionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        requiredComponents:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequiredComponentDto'
-        widgets:
-          type: array
-          items:
-            $ref: '#/components/schemas/WidgetDto'
-    ThresholdResult:
-      type: object
-      additionalProperties: false
-      properties:
-        actualValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        requiredValue:
-          type: number
-          format: double
-        passed:
-          type: boolean
-        evaluationJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        evaluatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
   securitySchemes:
     ApiKey:
       type: apiKey

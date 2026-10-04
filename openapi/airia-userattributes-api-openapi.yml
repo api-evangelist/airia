@@ -706,72 +706,39 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserAttributeConnectionTestCheckDto:
+    UserAttributeSourceProvider:
+      type: string
+      description: ''
+      x-enumNames:
+      - Undefined
+      - EntraId
+      - CsvUpload
+      enum:
+      - Undefined
+      - EntraId
+      - CsvUpload
+    UserAttributeCsvColumn:
       type: object
       additionalProperties: false
       required:
-      - key
-      - status
-      - message
+      - header
+      - attributeKey
       properties:
-        key:
+        header:
           type: string
-        status:
+        attributeKey:
           type: string
-        message:
-          type: string
-        remediation:
+        isIdentifierCandidate:
+          type: boolean
+        defaultIncluded:
+          type: boolean
+        fillRate:
+          type: integer
+          format: int32
+        sample:
           type:
           - string
           - 'null'
-    UserAttributeImportPreviewResponseModel:
-      type: object
-      additionalProperties: false
-      properties:
-        columns:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserAttributeCsvColumn'
-        identifierColumn:
-          type: string
-        rowCount:
-          type: integer
-          format: int32
-        sourceUserCount:
-          type: integer
-          format: int32
-        storedUserCount:
-          type: integer
-          format: int32
-        linkedUserCount:
-          type: integer
-          format: int32
-        matchedUserCount:
-          type: integer
-          format: int32
-        noIdentifierCount:
-          type: integer
-          format: int32
-        unlinkedSample:
-          type: array
-          items:
-            type: string
-        unmatchedSample:
-          type: array
-          items:
-            type: string
-        attributeKeys:
-          type: array
-          items:
-            type: string
-        rowErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserAttributeCsvRowError'
-        warnings:
-          type: array
-          items:
-            type: string
     DiscoveredUserAttributeDto:
       type: object
       additionalProperties: false
@@ -821,28 +788,54 @@ components:
           type: array
           items:
             type: string
-    UserAttributeCsvColumn:
+    UserAttributeImportPreviewResponseModel:
       type: object
       additionalProperties: false
-      required:
-      - header
-      - attributeKey
       properties:
-        header:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeCsvColumn'
+        identifierColumn:
           type: string
-        attributeKey:
-          type: string
-        isIdentifierCandidate:
-          type: boolean
-        defaultIncluded:
-          type: boolean
-        fillRate:
+        rowCount:
           type: integer
           format: int32
-        sample:
-          type:
-          - string
-          - 'null'
+        sourceUserCount:
+          type: integer
+          format: int32
+        storedUserCount:
+          type: integer
+          format: int32
+        linkedUserCount:
+          type: integer
+          format: int32
+        matchedUserCount:
+          type: integer
+          format: int32
+        noIdentifierCount:
+          type: integer
+          format: int32
+        unlinkedSample:
+          type: array
+          items:
+            type: string
+        unmatchedSample:
+          type: array
+          items:
+            type: string
+        attributeKeys:
+          type: array
+          items:
+            type: string
+        rowErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAttributeCsvRowError'
+        warnings:
+          type: array
+          items:
+            type: string
     UserAttributeConnectionTestResultDto:
       type: object
       additionalProperties: false
@@ -856,41 +849,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserAttributeConnectionTestCheckDto'
-    UserAttributeSourceProvider:
+    UserAttributeSyncStatus:
       type: string
       description: ''
       x-enumNames:
-      - Undefined
-      - EntraId
-      - CsvUpload
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
       enum:
-      - Undefined
-      - EntraId
-      - CsvUpload
-    UserAttributeStatDto:
+      - NeverSynced
+      - Running
+      - Succeeded
+      - Failed
+    UserAttributeConnectionTestCheckDto:
       type: object
       additionalProperties: false
       required:
-      - attributeKey
+      - key
+      - status
+      - message
       properties:
-        attributeKey:
+        key:
           type: string
-        usersWithValue:
-          type: integer
-          format: int32
-        linkedUsersWithValue:
-          type: integer
-          format: int32
-        totalUsers:
-          type: integer
-          format: int32
-        coveragePercent:
-          type: number
-          format: double
-        distinctValueCount:
-          type: integer
-          format: int32
-        exampleValue:
+        status:
+          type: string
+        message:
+          type: string
+        remediation:
           type:
           - string
           - 'null'
@@ -946,44 +932,6 @@ components:
           format: int32
         message:
           type: string
-    UserAttributeConnectionRequestModel:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - provider
-      properties:
-        name:
-          type: string
-          maxLength: 256
-          minLength: 1
-        provider:
-          $ref: '#/components/schemas/UserAttributeSourceProvider'
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isEnabled:
-          type: boolean
-        syncIntervalHours:
-          type: integer
-          format: int32
-          maximum: 168
-          minimum: 1
-    UserAttributeSyncStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NeverSynced
-      - Running
-      - Succeeded
-      - Failed
-      enum:
-      - NeverSynced
-      - Running
-      - Succeeded
-      - Failed
     UserAttributeConnectionResponseModel:
       type: object
       additionalProperties: false
@@ -1040,6 +988,58 @@ components:
         linkedUserCount:
           type: integer
           format: int32
+    UserAttributeConnectionRequestModel:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - provider
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        provider:
+          $ref: '#/components/schemas/UserAttributeSourceProvider'
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isEnabled:
+          type: boolean
+        syncIntervalHours:
+          type: integer
+          format: int32
+          maximum: 168
+          minimum: 1
+    UserAttributeStatDto:
+      type: object
+      additionalProperties: false
+      required:
+      - attributeKey
+      properties:
+        attributeKey:
+          type: string
+        usersWithValue:
+          type: integer
+          format: int32
+        linkedUsersWithValue:
+          type: integer
+          format: int32
+        totalUsers:
+          type: integer
+          format: int32
+        coveragePercent:
+          type: number
+          format: double
+        distinctValueCount:
+          type: integer
+          format: int32
+        exampleValue:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

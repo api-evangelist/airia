@@ -66,52 +66,32 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    McpServerV1:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        scope:
-          type: string
-        transport:
-          type: string
-        endpoint:
-          type: string
-        authType:
-          type: string
-        hasPlaintextSecret:
-          type: boolean
-        routedThroughGateway:
-          type: boolean
-        sanctioned:
-          type: boolean
-        replaceableTier:
-          type: string
-        capability:
-          type:
-          - string
-          - 'null'
-        reportedByDeviceIds:
-          type: array
-          items:
-            type: string
-    LocalAppDetailV1:
-      type: object
-      additionalProperties: false
-      properties:
-        appId:
-          type: string
-        name:
-          type: string
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeviceReportV1'
-        mcpServers:
-          type: array
-          items:
-            $ref: '#/components/schemas/McpServerV1'
+    InventoryItemSource:
+      type: string
+      description: ''
+      x-enumNames:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+      enum:
+      - SpmAgent
+      - SpmComponent
+      - CodeScanFinding
+      - EndpointAgent
+    SpmSecurityScoreStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
+      enum:
+      - NotAnalyzed
+      - Analyzed
+      - Error
+      - NotApplicable
     SecurePostureStatus:
       type: string
       description: ''
@@ -131,67 +111,115 @@ components:
       - NotSecurableAiProvider
       - NotSecurableAiModel
       - NoAiService
-    DeviceReportV1:
+    OllamaModelV1:
       type: object
       additionalProperties: false
       properties:
-        deviceId:
+        name:
           type: string
-        hostName:
+        tag:
           type: string
-        userName:
+        digest:
           type: string
-        userEmail:
+        manifestPath:
           type: string
-        os:
+        manifestSizeBytes:
+          type: integer
+          format: int64
+        logicalSizeBytes:
+          type: integer
+          format: int64
+        onDiskSizeBytes:
+          type: integer
+          format: int64
+        loadState:
           type: string
-        version:
-          type: string
-        lastSeen:
-          type: string
-          format: date-time
-        llmApiBaseUrl:
-          type: string
-        llmApiConfigSource:
-          type: string
-        llmApiRouted:
-          type: boolean
-        gatewayConfigurationName:
+        blobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OllamaBlobV1'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
           type:
           - string
           - 'null'
-        keystoreEntryPresent:
-          type: boolean
-        aiApiKeyFindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AiApiKeyFinding'
-        managedPolicyPresent:
-          type: boolean
-        mdmEnforcedKeys:
-          type: array
-          items:
-            type: string
-        configParseErrors:
-          type: integer
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
           format: int32
-        parseErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigParseErrorV1'
-        mcpServerCount:
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    Scanner:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+      enum:
+      - Gitleaks
+      - Naive
+      - Dependency
+      - ModelArtifact
+      - AstAnalysis
+      - ConfigAnalysis
+      - AgentAnalysis
+      - Unknown
+    OllamaBlobV1:
+      type: object
+      additionalProperties: false
+      properties:
+        descriptorKind:
+          type: string
+        digest:
+          type: string
+        mediaType:
+          type: string
+        path:
+          type: string
+        declaredSizeBytes:
           type: integer
-          format: int32
-        policyRevision:
+          format: int64
+        actualSizeBytes:
           type:
           - integer
           - 'null'
           format: int64
-        policyMode:
+    LocalAppDetailV1:
+      type: object
+      additionalProperties: false
+      properties:
+        appId:
           type: string
-        ollama:
-          oneOf:
-          - $ref: '#/components/schemas/OllamaDetailV1'
+        name:
+          type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceReportV1'
+        mcpServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpServerV1'
     UnifiedInventoryItemDto:
       type: object
       additionalProperties: false
@@ -377,64 +405,19 @@ components:
           type:
           - boolean
           - 'null'
-    OllamaBlobV1:
+    AiApiKeyFinding:
       type: object
       additionalProperties: false
       properties:
-        descriptorKind:
+        provider:
           type: string
-        digest:
+        configPath:
           type: string
-        mediaType:
-          type: string
-        path:
-          type: string
-        declaredSizeBytes:
-          type: integer
-          format: int64
-        actualSizeBytes:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    SpmSecurityScoreStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - NotAnalyzed
-      - Analyzed
-      - Error
-      - NotApplicable
-      enum:
-      - NotAnalyzed
-      - Analyzed
-      - Error
-      - NotApplicable
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
+        line:
           type:
           - integer
           - 'null'
           format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     OllamaDetailV1:
       type: object
       additionalProperties: false
@@ -470,80 +453,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OllamaModelV1'
-    InventoryItemSource:
-      type: string
-      description: ''
-      x-enumNames:
-      - SpmAgent
-      - SpmComponent
-      - CodeScanFinding
-      - EndpointAgent
-      enum:
-      - SpmAgent
-      - SpmComponent
-      - CodeScanFinding
-      - EndpointAgent
-    Scanner:
-      type: string
-      description: ''
-      x-enumNames:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-      enum:
-      - Gitleaks
-      - Naive
-      - Dependency
-      - ModelArtifact
-      - AstAnalysis
-      - ConfigAnalysis
-      - AgentAnalysis
-      - Unknown
-    AiApiKeyFinding:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        configPath:
-          type: string
-        line:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    OllamaModelV1:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        tag:
-          type: string
-        digest:
-          type: string
-        manifestPath:
-          type: string
-        manifestSizeBytes:
-          type: integer
-          format: int64
-        logicalSizeBytes:
-          type: integer
-          format: int64
-        onDiskSizeBytes:
-          type: integer
-          format: int64
-        loadState:
-          type: string
-        blobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/OllamaBlobV1'
     ConfigParseErrorV1:
       type: object
       additionalProperties: false
@@ -558,6 +467,97 @@ components:
           type: string
         errorMessage:
           type: string
+    McpServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        scope:
+          type: string
+        transport:
+          type: string
+        endpoint:
+          type: string
+        authType:
+          type: string
+        hasPlaintextSecret:
+          type: boolean
+        routedThroughGateway:
+          type: boolean
+        sanctioned:
+          type: boolean
+        replaceableTier:
+          type: string
+        capability:
+          type:
+          - string
+          - 'null'
+        reportedByDeviceIds:
+          type: array
+          items:
+            type: string
+    DeviceReportV1:
+      type: object
+      additionalProperties: false
+      properties:
+        deviceId:
+          type: string
+        hostName:
+          type: string
+        userName:
+          type: string
+        userEmail:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        llmApiBaseUrl:
+          type: string
+        llmApiConfigSource:
+          type: string
+        llmApiRouted:
+          type: boolean
+        gatewayConfigurationName:
+          type:
+          - string
+          - 'null'
+        keystoreEntryPresent:
+          type: boolean
+        aiApiKeyFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiApiKeyFinding'
+        managedPolicyPresent:
+          type: boolean
+        mdmEnforcedKeys:
+          type: array
+          items:
+            type: string
+        configParseErrors:
+          type: integer
+          format: int32
+        parseErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigParseErrorV1'
+        mcpServerCount:
+          type: integer
+          format: int32
+        policyRevision:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        policyMode:
+          type: string
+        ollama:
+          oneOf:
+          - $ref: '#/components/schemas/OllamaDetailV1'
   securitySchemes:
     ApiKey:
       type: apiKey

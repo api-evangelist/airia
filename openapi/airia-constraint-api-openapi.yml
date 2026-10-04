@@ -371,6 +371,50 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ConstraintRuleAction:
+      type: string
+      description: ''
+      x-enumNames:
+      - Block
+      - Audit
+      - Warn
+      - StepUp
+      - Defer
+      enum:
+      - Block
+      - Audit
+      - Warn
+      - StepUp
+      - Defer
+    UpdateConstraintRuleCriteriaRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - fieldPath
+      - operator
+      - value
+      properties:
+        id:
+          type: string
+          format: guid
+        fieldPath:
+          type: string
+          maxLength: 256
+          minLength: 1
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+          maxLength: 1024
+          minLength: 1
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 0
     ConstraintRuleRunbookOnFailure:
       type: string
       description: ''
@@ -380,6 +424,294 @@ components:
       enum:
       - Block
       - Proceed
+    AddConstraintRuleCriteriaRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - fieldPath
+      - operator
+      - value
+      properties:
+        fieldPath:
+          type: string
+          maxLength: 256
+          minLength: 1
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+          maxLength: 1024
+          minLength: 1
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 0
+    ConstraintRuleCriteriaResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        fieldPath:
+          type: string
+        operator:
+          $ref: '#/components/schemas/ConstraintCriteriaOperator'
+        value:
+          type: string
+        logicalOperator:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintLogicalOperator'
+        orderIndex:
+          type: integer
+          format: int32
+    AddConstraintRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - action
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+        description:
+          type: string
+          maxLength: 1024
+          minLength: 0
+        action:
+          $ref: '#/components/schemas/ConstraintRuleAction'
+        priority:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        isActive:
+          type: boolean
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        gatewayIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        expressionJson:
+          type:
+          - string
+          - 'null'
+        expressionVersion:
+          type: integer
+          format: int32
+        scope:
+          $ref: '#/components/schemas/ConstraintRuleScope'
+        ruleType:
+          $ref: '#/components/schemas/ConstraintRuleType'
+        actionMessage:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+          minLength: 0
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddConstraintRuleCriteriaRequest'
+        runbookId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        runbookTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          maximum: 60
+          minimum: 1
+        runbookOnFailure:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
+    ConstraintRuleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Constraint
+      - AlignmentCheck
+      enum:
+      - Constraint
+      - AlignmentCheck
+    PagedResultOfConstraintRuleResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        totalCount:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstraintRuleResponseV1'
+    ConstraintRuleResponseV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        action:
+          $ref: '#/components/schemas/ConstraintRuleAction'
+        priority:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        tenantId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        gatewayIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        expressionJson:
+          type:
+          - string
+          - 'null'
+        expressionVersion:
+          type: integer
+          format: int32
+        scope:
+          $ref: '#/components/schemas/ConstraintRuleScope'
+        ruleType:
+          $ref: '#/components/schemas/ConstraintRuleType'
+        actionMessage:
+          type:
+          - string
+          - 'null'
+        runbookId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        runbookTimeoutSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        runbookOnFailure:
+          oneOf:
+          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConstraintRuleCriteriaResponseV1'
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ConstraintLogicalOperator:
+      type: string
+      description: ''
+      x-enumNames:
+      - And
+      - Or
+      enum:
+      - And
+      - Or
+    ConstraintCriteriaOperator:
+      type: string
+      description: ''
+      x-enumNames:
+      - Equals
+      - NotEquals
+      - Contains
+      - NotContains
+      - StartsWith
+      - EndsWith
+      - Regex
+      - In
+      - NotIn
+      - GreaterThan
+      - LessThan
+      enum:
+      - Equals
+      - NotEquals
+      - Contains
+      - NotContains
+      - StartsWith
+      - EndsWith
+      - Regex
+      - In
+      - NotIn
+      - GreaterThan
+      - LessThan
+    ConstraintRuleScope:
+      type: string
+      description: ''
+      x-enumNames:
+      - Gateway
+      - Agents
+      - Projects
+      - ExternalAgents
+      enum:
+      - Gateway
+      - Agents
+      - Projects
+      - ExternalAgents
     UpdateConstraintRuleRequest:
       type: object
       additionalProperties: false
@@ -459,338 +791,6 @@ components:
         runbookOnFailure:
           oneOf:
           - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
-    ConstraintCriteriaOperator:
-      type: string
-      description: ''
-      x-enumNames:
-      - Equals
-      - NotEquals
-      - Contains
-      - NotContains
-      - StartsWith
-      - EndsWith
-      - Regex
-      - In
-      - NotIn
-      - GreaterThan
-      - LessThan
-      enum:
-      - Equals
-      - NotEquals
-      - Contains
-      - NotContains
-      - StartsWith
-      - EndsWith
-      - Regex
-      - In
-      - NotIn
-      - GreaterThan
-      - LessThan
-    AddConstraintRuleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - action
-      properties:
-        name:
-          type: string
-          maxLength: 128
-          minLength: 1
-        description:
-          type: string
-          maxLength: 1024
-          minLength: 0
-        action:
-          $ref: '#/components/schemas/ConstraintRuleAction'
-        priority:
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 0
-        isActive:
-          type: boolean
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        agentIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        gatewayIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        expressionJson:
-          type:
-          - string
-          - 'null'
-        expressionVersion:
-          type: integer
-          format: int32
-        scope:
-          $ref: '#/components/schemas/ConstraintRuleScope'
-        ruleType:
-          $ref: '#/components/schemas/ConstraintRuleType'
-        actionMessage:
-          type:
-          - string
-          - 'null'
-          maxLength: 1024
-          minLength: 0
-        criteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddConstraintRuleCriteriaRequest'
-        runbookId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        runbookTimeoutSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          maximum: 60
-          minimum: 1
-        runbookOnFailure:
-          oneOf:
-          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
-    UpdateConstraintRuleCriteriaRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - fieldPath
-      - operator
-      - value
-      properties:
-        id:
-          type: string
-          format: guid
-        fieldPath:
-          type: string
-          maxLength: 256
-          minLength: 1
-        operator:
-          $ref: '#/components/schemas/ConstraintCriteriaOperator'
-        value:
-          type: string
-          maxLength: 1024
-          minLength: 1
-        logicalOperator:
-          oneOf:
-          - $ref: '#/components/schemas/ConstraintLogicalOperator'
-        orderIndex:
-          type: integer
-          format: int32
-          maximum: 2147483647
-          minimum: 0
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedResultOfConstraintRuleResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        totalCount:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConstraintRuleResponseV1'
-    ConstraintRuleCriteriaResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        fieldPath:
-          type: string
-        operator:
-          $ref: '#/components/schemas/ConstraintCriteriaOperator'
-        value:
-          type: string
-        logicalOperator:
-          oneOf:
-          - $ref: '#/components/schemas/ConstraintLogicalOperator'
-        orderIndex:
-          type: integer
-          format: int32
-    ConstraintLogicalOperator:
-      type: string
-      description: ''
-      x-enumNames:
-      - And
-      - Or
-      enum:
-      - And
-      - Or
-    ConstraintRuleScope:
-      type: string
-      description: ''
-      x-enumNames:
-      - Gateway
-      - Agents
-      - Projects
-      - ExternalAgents
-      enum:
-      - Gateway
-      - Agents
-      - Projects
-      - ExternalAgents
-    ConstraintRuleAction:
-      type: string
-      description: ''
-      x-enumNames:
-      - Block
-      - Audit
-      - Warn
-      - StepUp
-      - Defer
-      enum:
-      - Block
-      - Audit
-      - Warn
-      - StepUp
-      - Defer
-    ConstraintRuleResponseV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        action:
-          $ref: '#/components/schemas/ConstraintRuleAction'
-        priority:
-          type: integer
-          format: int32
-        isActive:
-          type: boolean
-        tenantId:
-          type: string
-          format: guid
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        agentIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        gatewayIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        expressionJson:
-          type:
-          - string
-          - 'null'
-        expressionVersion:
-          type: integer
-          format: int32
-        scope:
-          $ref: '#/components/schemas/ConstraintRuleScope'
-        ruleType:
-          $ref: '#/components/schemas/ConstraintRuleType'
-        actionMessage:
-          type:
-          - string
-          - 'null'
-        runbookId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        runbookTimeoutSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        runbookOnFailure:
-          oneOf:
-          - $ref: '#/components/schemas/ConstraintRuleRunbookOnFailure'
-        criteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConstraintRuleCriteriaResponseV1'
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-    AddConstraintRuleCriteriaRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - fieldPath
-      - operator
-      - value
-      properties:
-        fieldPath:
-          type: string
-          maxLength: 256
-          minLength: 1
-        operator:
-          $ref: '#/components/schemas/ConstraintCriteriaOperator'
-        value:
-          type: string
-          maxLength: 1024
-          minLength: 1
-        logicalOperator:
-          oneOf:
-          - $ref: '#/components/schemas/ConstraintLogicalOperator'
-        orderIndex:
-          type: integer
-          format: int32
-          maximum: 2147483647
-          minimum: 0
-    ConstraintRuleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Constraint
-      - AlignmentCheck
-      enum:
-      - Constraint
-      - AlignmentCheck
   securitySchemes:
     ApiKey:
       type: apiKey

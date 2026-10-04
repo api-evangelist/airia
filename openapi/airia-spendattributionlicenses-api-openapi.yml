@@ -578,242 +578,85 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AiUserTier:
+    LicenseInvoiceDto:
       type: object
       additionalProperties: false
       properties:
-        value:
+        id:
           type: string
-        source:
-          type: string
-        rawValue:
-          type:
-          - string
-          - 'null'
-    GatewayKeyUserActivity:
-      type: object
-      additionalProperties: false
-      properties:
-        userId:
-          type:
-          - string
-          - 'null'
           format: guid
-        displayName:
-          type:
-          - string
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        department:
-          type:
-          - string
-          - 'null'
-        lastActiveAt:
-          type: string
-          format: date-time
-        periodCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        tier:
-          type:
-          - string
-          - 'null'
-        rawTier:
-          type:
-          - string
-          - 'null'
-        tierMonthlyCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        tierPeriodCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    AiUsersDirectoryInvoice:
-      type: object
-      additionalProperties: false
-      properties:
+        provider:
+          $ref: '#/components/schemas/SpendProvider'
         invoiceNumber:
           type: string
+        issueDate:
+          type:
+          - string
+          - 'null'
+          format: date
         periodStart:
           type: string
           format: date
         periodEnd:
           type: string
           format: date
-        invoicedSeats:
-          type: integer
-          format: int32
-        invoicedSeatCostCents:
+        totalCents:
           type: number
           format: decimal
-        seatPriceCentsByTier:
-          type: object
-          additionalProperties:
-            type: number
-            format: decimal
-    SpendProvider:
-      type: string
-      description: ''
-      x-enumNames:
-      - Anthropic
-      - OpenAI
-      - OpenRouter
-      - Azure
-      - Google
-      enum:
-      - Anthropic
-      - OpenAI
-      - OpenRouter
-      - Azure
-      - Google
-    AiUserLicense:
-      type: object
-      additionalProperties: false
-      properties:
+        currency:
+          type: string
         organizationId:
-          type: string
+          type:
+          - string
+          - 'null'
           format: guid
-        organizationName:
-          type:
-          - string
-          - 'null'
-        connectionName:
-          type:
-          - string
-          - 'null'
-        providerOrganizationId:
-          type:
-          - string
-          - 'null'
-        planType:
-          type: string
-        tier:
-          type:
-          - string
-          - 'null'
-        licenseCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        licenseCostGap:
-          type:
-          - string
-          - 'null'
-        inferenceCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        reportedCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        gatewayCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        seatCoveredGatewayCostCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        inferenceCostIsEstimated:
-          type: boolean
-        inferenceSource:
-          type: string
-        utilization:
-          oneOf:
-          - $ref: '#/components/schemas/AiUserUtilization'
-        lastActiveDate:
+        paymentDueDate:
           type:
           - string
           - 'null'
           format: date
-        activeDays:
-          type: integer
-          format: int32
-        billingModel:
-          type: string
-        hasTelemetry:
-          type: boolean
-        attributedUsageCents:
+        paymentTerms:
           type:
-          - number
+          - string
           - 'null'
-          format: decimal
-    LicenseInvoiceLineDto:
+        purchaseOrderNumber:
+          type:
+          - string
+          - 'null'
+        sourceFileName:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseInvoiceLineDto'
+    AiUsersTierMapping:
       type: object
       additionalProperties: false
       properties:
-        kind:
-          $ref: '#/components/schemas/LicenseInvoiceLineKind'
-        lineNumber:
+        apiLabels:
           type: integer
           format: int32
-        planName:
-          type: string
-        tier:
-          type: string
-        quantity:
-          type:
-          - integer
-          - 'null'
+        invoiceTiers:
+          type: integer
           format: int32
-        unitPriceCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        amountCents:
-          type: number
-          format: decimal
-        chargePeriodStart:
-          type:
-          - string
-          - 'null'
-          format: date
-        chargePeriodEnd:
-          type:
-          - string
-          - 'null'
-          format: date
+        mapped:
+          type: integer
+          format: int32
+        unpricedSeats:
+          type: integer
+          format: int32
+    AiUsersSyncedAttribute:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        usersWithValue:
+          type: integer
+          format: int32
     AiUser:
       type: object
       additionalProperties: false
@@ -893,22 +736,89 @@ components:
             type:
             - string
             - 'null'
-    GatewayKeysLicenseSummary:
+    GatewayKeyUserActivity:
       type: object
       additionalProperties: false
       properties:
-        usersWithActivity:
-          type: integer
-          format: int32
-        totalCostCents:
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        displayName:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        department:
+          type:
+          - string
+          - 'null'
+        lastActiveAt:
+          type: string
+          format: date-time
+        periodCostCents:
           type:
           - number
           - 'null'
           format: decimal
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/GatewayKeyUserActivity'
+        tier:
+          type:
+          - string
+          - 'null'
+        rawTier:
+          type:
+          - string
+          - 'null'
+        tierMonthlyCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        tierPeriodCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    LicenseInvoiceLineDto:
+      type: object
+      additionalProperties: false
+      properties:
+        kind:
+          $ref: '#/components/schemas/LicenseInvoiceLineKind'
+        lineNumber:
+          type: integer
+          format: int32
+        planName:
+          type: string
+        tier:
+          type: string
+        quantity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unitPriceCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        amountCents:
+          type: number
+          format: decimal
+        chargePeriodStart:
+          type:
+          - string
+          - 'null'
+          format: date
+        chargePeriodEnd:
+          type:
+          - string
+          - 'null'
+          format: date
     AnthropicEnterpriseLicenseSummary:
       type: object
       additionalProperties: false
@@ -917,18 +827,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnthropicEnterpriseOrganizationLicenseSummary'
-    AiUserUtilization:
+    AiUsersDirectoryInvoice:
       type: object
       additionalProperties: false
       properties:
-        value:
+        invoiceNumber:
+          type: string
+        periodStart:
+          type: string
+          format: date
+        periodEnd:
+          type: string
+          format: date
+        invoicedSeats:
+          type: integer
+          format: int32
+        invoicedSeatCostCents:
           type: number
           format: decimal
-        basis:
-          type: string
-        partialCoverage:
-          type: boolean
-    AiUsersDirectoryOrganization:
+        seatPriceCentsByTier:
+          type: object
+          additionalProperties:
+            type: number
+            format: decimal
+    AiUserLicense:
       type: object
       additionalProperties: false
       properties:
@@ -949,20 +871,89 @@ components:
           - 'null'
         planType:
           type: string
-        gatewayConfigurationIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        seatPriceCentsByTier:
-          type: object
-          additionalProperties:
-            type: number
-            format: decimal
-        invoiceNumber:
+        tier:
           type:
           - string
           - 'null'
+        licenseCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        licenseCostGap:
+          type:
+          - string
+          - 'null'
+        inferenceCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        reportedCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        gatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        seatCoveredGatewayCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        inferenceCostIsEstimated:
+          type: boolean
+        inferenceSource:
+          type: string
+        utilization:
+          oneOf:
+          - $ref: '#/components/schemas/AiUserUtilization'
+        lastActiveDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        activeDays:
+          type: integer
+          format: int32
+        billingModel:
+          type: string
+        hasTelemetry:
+          type: boolean
+        attributedUsageCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+    AnthropicEnterpriseUserDailyUsage:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+          format: date
+        costCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        inputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        outputTokens:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        sources:
+          type: array
+          items:
+            type: string
     AnthropicEnterpriseOrganizationLicenseSummary:
       type: object
       additionalProperties: false
@@ -1010,47 +1001,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnthropicEnterpriseUserActivity'
-    LicenseInvoiceLineKind:
+    SpendProvider:
       type: string
       description: ''
       x-enumNames:
-      - Seat
-      - Tax
-      - Discount
-      - Credit
-      - Adjustment
+      - Anthropic
+      - OpenAI
+      - OpenRouter
+      - Azure
+      - Google
       enum:
-      - Seat
-      - Tax
-      - Discount
-      - Credit
-      - Adjustment
-    AnthropicEnterpriseUserDailyUsage:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-          format: date
-        costCents:
-          type:
-          - number
-          - 'null'
-          format: decimal
-        inputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        outputTokens:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        sources:
-          type: array
-          items:
-            type: string
+      - Anthropic
+      - OpenAI
+      - OpenRouter
+      - Azure
+      - Google
     AiUsersDirectory:
       type: object
       additionalProperties: false
@@ -1095,85 +1060,43 @@ components:
             $ref: '#/components/schemas/AiUsersSyncedAttribute'
         hasAttributeSource:
           type: boolean
-    AiUsersTierMapping:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AiUserTier:
       type: object
       additionalProperties: false
       properties:
-        apiLabels:
-          type: integer
-          format: int32
-        invoiceTiers:
-          type: integer
-          format: int32
-        mapped:
-          type: integer
-          format: int32
-        unpricedSeats:
-          type: integer
-          format: int32
-    AiUsersSyncedAttribute:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
+        value:
           type: string
-        usersWithValue:
-          type: integer
-          format: int32
-    LicenseInvoiceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
+        source:
           type: string
-          format: guid
-        provider:
-          $ref: '#/components/schemas/SpendProvider'
-        invoiceNumber:
-          type: string
-        issueDate:
+        rawValue:
           type:
           - string
           - 'null'
-          format: date
-        periodStart:
-          type: string
-          format: date
-        periodEnd:
-          type: string
-          format: date
-        totalCents:
-          type: number
-          format: decimal
-        currency:
-          type: string
-        organizationId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        paymentDueDate:
-          type:
-          - string
-          - 'null'
-          format: date
-        paymentTerms:
-          type:
-          - string
-          - 'null'
-        purchaseOrderNumber:
-          type:
-          - string
-          - 'null'
-        sourceFileName:
-          type: string
-        uploadedAt:
-          type: string
-          format: date-time
-        lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseInvoiceLineDto'
     GatewayUserDailyUsage:
       type: object
       additionalProperties: false
@@ -1199,6 +1122,83 @@ components:
         requestCount:
           type: integer
           format: int32
+    GatewayKeysLicenseSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        usersWithActivity:
+          type: integer
+          format: int32
+        totalCostCents:
+          type:
+          - number
+          - 'null'
+          format: decimal
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/GatewayKeyUserActivity'
+    AiUsersDirectoryOrganization:
+      type: object
+      additionalProperties: false
+      properties:
+        organizationId:
+          type: string
+          format: guid
+        organizationName:
+          type:
+          - string
+          - 'null'
+        connectionName:
+          type:
+          - string
+          - 'null'
+        providerOrganizationId:
+          type:
+          - string
+          - 'null'
+        planType:
+          type: string
+        gatewayConfigurationIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        seatPriceCentsByTier:
+          type: object
+          additionalProperties:
+            type: number
+            format: decimal
+        invoiceNumber:
+          type:
+          - string
+          - 'null'
+    LicenseInvoiceLineKind:
+      type: string
+      description: ''
+      x-enumNames:
+      - Seat
+      - Tax
+      - Discount
+      - Credit
+      - Adjustment
+      enum:
+      - Seat
+      - Tax
+      - Discount
+      - Credit
+      - Adjustment
+    AiUserUtilization:
+      type: object
+      additionalProperties: false
+      properties:
+        value:
+          type: number
+          format: decimal
+        basis:
+          type: string
+        partialCoverage:
+          type: boolean
     AnthropicEnterpriseUserActivity:
       type: object
       additionalProperties: false

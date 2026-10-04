@@ -214,6 +214,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    BrandingAppType:
+      type: string
+      description: ''
+      x-enumNames:
+      - AiriaChatApp
+      enum:
+      - AiriaChatApp
     UpdateBrandingInformation:
       type: object
       additionalProperties: false
@@ -280,143 +287,6 @@ components:
           - string
           - 'null'
         wordTemplateId:
-          type:
-          - string
-          - 'null'
-        watermark:
-          type:
-          - string
-          - 'null'
-        chatHeadline:
-          type:
-          - string
-          - 'null'
-        chatSubheadings:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChatSubheading'
-        headerBackgroundId:
-          type:
-          - string
-          - 'null'
-        headerBackgroundColor:
-          oneOf:
-          - $ref: '#/components/schemas/ColorVariants'
-        searchBackgroundId:
-          type:
-          - string
-          - 'null'
-        searchBackgroundColor:
-          oneOf:
-          - $ref: '#/components/schemas/ColorVariants'
-        backgroundType:
-          type:
-          - string
-          - 'null'
-    BrandingAppType:
-      type: string
-      description: ''
-      x-enumNames:
-      - AiriaChatApp
-      enum:
-      - AiriaChatApp
-    FileTemplate:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        fileName:
-          type:
-          - string
-          - 'null'
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    CreateBrandingInformation:
-      type: object
-      additionalProperties: false
-      properties:
-        logoId:
-          type:
-          - string
-          - 'null'
-        darkModeLogoId:
-          type:
-          - string
-          - 'null'
-        logoMarkId:
-          type:
-          - string
-          - 'null'
-        darkModeLogoMarkId:
-          type:
-          - string
-          - 'null'
-        faviconId:
-          type:
-          - string
-          - 'null'
-        companyName:
-          type:
-          - string
-          - 'null'
-        primaryColor:
-          oneOf:
-          - $ref: '#/components/schemas/ColorVariants'
-        secondaryColor:
-          oneOf:
-          - $ref: '#/components/schemas/ColorVariants'
-        accentColor:
-          oneOf:
-          - $ref: '#/components/schemas/ColorVariants'
-        heroTitle:
-          type:
-          - string
-          - 'null'
-        heroDescription:
-          type:
-          - string
-          - 'null'
-        powerPointTemplate:
-          type:
-          - string
-          - 'null'
-        powerPointTemplateFileName:
-          type:
-          - string
-          - 'null'
-        wordTemplate:
-          type:
-          - string
-          - 'null'
-        wordTemplateFileName:
           type:
           - string
           - 'null'
@@ -524,6 +394,144 @@ components:
           type:
           - string
           - 'null'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    FileTemplate:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+    CreateBrandingInformation:
+      type: object
+      additionalProperties: false
+      properties:
+        logoId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoId:
+          type:
+          - string
+          - 'null'
+        logoMarkId:
+          type:
+          - string
+          - 'null'
+        darkModeLogoMarkId:
+          type:
+          - string
+          - 'null'
+        faviconId:
+          type:
+          - string
+          - 'null'
+        companyName:
+          type:
+          - string
+          - 'null'
+        primaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        secondaryColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        accentColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        heroTitle:
+          type:
+          - string
+          - 'null'
+        heroDescription:
+          type:
+          - string
+          - 'null'
+        powerPointTemplate:
+          type:
+          - string
+          - 'null'
+        powerPointTemplateFileName:
+          type:
+          - string
+          - 'null'
+        wordTemplate:
+          type:
+          - string
+          - 'null'
+        wordTemplateFileName:
+          type:
+          - string
+          - 'null'
+        watermark:
+          type:
+          - string
+          - 'null'
+        chatHeadline:
+          type:
+          - string
+          - 'null'
+        chatSubheadings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatSubheading'
+        headerBackgroundId:
+          type:
+          - string
+          - 'null'
+        headerBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        searchBackgroundId:
+          type:
+          - string
+          - 'null'
+        searchBackgroundColor:
+          oneOf:
+          - $ref: '#/components/schemas/ColorVariants'
+        backgroundType:
+          type:
+          - string
+          - 'null'
+    ColorVariants:
+      type: object
+      additionalProperties: false
+      properties:
+        darkMode:
+          type: string
+        lightMode:
+          type: string
     ChatSubheading:
       type: object
       additionalProperties: false
@@ -535,14 +543,6 @@ components:
           - string
           - 'null'
           format: uri
-    ColorVariants:
-      type: object
-      additionalProperties: false
-      properties:
-        darkMode:
-          type: string
-        lightMode:
-          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

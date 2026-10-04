@@ -150,59 +150,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AgentSourceType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Airia
-      - N8n
-      - Bedrock
-      - AzureAI
-      - AzureCopilot
-      enum:
-      - Airia
-      - N8n
-      - Bedrock
-      - AzureAI
-      - AzureCopilot
-    RecommendationActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - RunRedTeamingCampaign
-      - RouteToGateway
-      - ApplyGuardrail
-      - ApplyAgentConstraints
-      enum:
-      - RunRedTeamingCampaign
-      - RouteToGateway
-      - ApplyGuardrail
-      - ApplyAgentConstraints
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     PagedResultOfRecommendationDto:
       type: object
       additionalProperties: false
@@ -277,6 +224,59 @@ components:
       enum:
       - Active
       - Dismissed
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    RecommendationActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+      enum:
+      - RunRedTeamingCampaign
+      - RouteToGateway
+      - ApplyGuardrail
+      - ApplyAgentConstraints
+    AgentSourceType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Airia
+      - N8n
+      - Bedrock
+      - AzureAI
+      - AzureCopilot
+      enum:
+      - Airia
+      - N8n
+      - Bedrock
+      - AzureAI
+      - AzureCopilot
   securitySchemes:
     ApiKey:
       type: apiKey

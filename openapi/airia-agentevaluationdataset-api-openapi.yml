@@ -86,21 +86,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EvaluationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
-      enum:
-      - Standard
-      - RedTeaming
-      - Bias
-      - StandardBiasDrift
-      - Consistency
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -126,6 +111,21 @@ components:
           type:
           - string
           - 'null'
+    EvaluationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
+      enum:
+      - Standard
+      - RedTeaming
+      - Bias
+      - StandardBiasDrift
+      - Consistency
   securitySchemes:
     ApiKey:
       type: apiKey

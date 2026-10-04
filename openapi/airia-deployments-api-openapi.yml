@@ -1307,33 +1307,392 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BotWebhookInfo:
+    AboutDeploymentMetadata:
       type: object
       additionalProperties: false
       properties:
-        url:
+        version:
+          type: integer
+          format: int32
+        videoUrl:
+          type: string
+    AgentDeploymentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+      enum:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+    DeploymentDTO:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineName:
+          type: string
+        projectId:
+          type: string
+          format: guid
+        deploymentName:
+          type: string
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        deploymentIconUrl:
           type:
           - string
           - 'null'
-        configuration:
+        deploymentIconId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        isRecommended:
+          type: boolean
+        userPrompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPromptDto'
+        deploymentPrompt:
           oneOf:
-          - $ref: '#/components/schemas/WebhookConfiguration'
-        verifyToken:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        conversationType:
+          $ref: '#/components/schemas/ConversationType'
+        externalOAuthCredentialId:
           type:
           - string
           - 'null'
-    DeploymentUserPrompt:
+          format: guid
+        dataSources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDataSourceDto'
+        pipelineUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        about:
+          $ref: '#/components/schemas/AboutDeploymentMetadata'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        displayConsumptionInfo:
+          type: boolean
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        isEndUserPrivate:
+          type: boolean
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        webhook:
+          oneOf:
+          - $ref: '#/components/schemas/BotWebhookInfo'
+    BrowserExtensionConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        quickActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickAction'
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    DeploymentPrompt:
+      type: string
+      description: ''
+      x-enumNames:
+      - Artifact
+      - Citation
+      enum:
+      - Artifact
+      - Citation
+    AssignedAgent:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentUrl:
+          type: string
+        isConfigurable:
+          type: boolean
+    AgentBehaviours:
+      type: string
+      description: ''
+      x-enumNames:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+      enum:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+    DeploymentSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        pipelineId:
+          type: string
+          format: guid
+        pipelineUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        deploymentType:
+          $ref: '#/components/schemas/AgentDeploymentType'
+        deploymentName:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        libraryAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        deploymentIconUrl:
+          type:
+          - string
+          - 'null'
+    ProjectModelBase:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+    TeamsManifestCustomizationConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        botName:
+          type:
+          - string
+          - 'null'
+        colorIconBlobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        outlineIconBlobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    DeploymentDataSourceDto:
       allOf:
-      - $ref: '#/components/schemas/BaseEntity'
+      - $ref: '#/components/schemas/DatasourceSummaryDto'
       - type: object
         additionalProperties: false
         properties:
-          deploymentId:
+          selectedFilesForIngestion:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+          selectedFoldersForIngestion:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+              format: guid
+    UpdateDeployment:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        userPromptIds:
+          type:
+          - array
+          - 'null'
+          items:
             type: string
             format: guid
-          userPromptId:
+        deploymentPrompt:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        isRecommended:
+          type: boolean
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
             type: string
             format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        conversationType:
+          $ref: '#/components/schemas/ConversationType'
+        aboutDeploymentMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/AboutDeploymentMetadata'
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        displayConsumptionInfo:
+          type:
+          - boolean
+          - 'null'
+        deploymentType:
+          oneOf:
+          - $ref: '#/components/schemas/AgentDeploymentType'
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
+          items:
+            type: string
+            format: guid
+        webhookConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
     DeploymentDTOV2:
       type: object
       additionalProperties: false
@@ -1459,153 +1818,127 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/DeploymentTargetAgentDto'
-    DeploymentDTO:
+    ConversationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - StandardChat
+      - ImageOnly
+      - FileOnly
+      enum:
+      - StandardChat
+      - ImageOnly
+      - FileOnly
+    ApiKeyValueViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+    BatchDeploymentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchDeploymentOperation'
+    DeploymentTargetAgentDto:
+      type: object
+      additionalProperties: false
+      properties:
+        targetPipelineId:
+          type: string
+          format: guid
+        targetPipelineName:
+          type:
+          - string
+          - 'null'
+    PagedResultV2OfDeploymentDTOV2:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentDTOV2'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    BatchDeploymentResult:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        createdDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deployment'
+        deletedDeploymentIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        errorMessage:
+          type:
+          - string
+          - 'null'
+    DatasourceSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+    QuickAction:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-          format: guid
-        pipelineId:
+        displayName:
           type: string
-          format: guid
-        pipelineName:
-          type: string
-        projectId:
-          type: string
-          format: guid
-        deploymentName:
-          type: string
-        deploymentType:
-          $ref: '#/components/schemas/AgentDeploymentType'
-        deploymentIconUrl:
+        quickActionType:
+          $ref: '#/components/schemas/QuickActionType'
+        initialMessage:
           type:
           - string
           - 'null'
-        deploymentIconId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        isRecommended:
-          type: boolean
-        userPrompts:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserPromptDto'
-        deploymentPrompt:
+        assignedAgent:
           oneOf:
-          - $ref: '#/components/schemas/DeploymentPrompt'
-        userIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        conversationType:
-          $ref: '#/components/schemas/ConversationType'
-        externalOAuthCredentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dataSources:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentDataSourceDto'
-        pipelineUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        about:
-          $ref: '#/components/schemas/AboutDeploymentMetadata'
-        browserExtensionConfig:
-          oneOf:
-          - $ref: '#/components/schemas/BrowserExtensionConfig'
-        supportedInputModes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedInputMode'
-        displayConsumptionInfo:
-          type: boolean
-        greetingMessage:
-          type:
-          - string
-          - 'null'
-        teamsManifestCustomization:
-          oneOf:
-          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
-        isEndUserPrivate:
-          type: boolean
-        targetAgentIds:
+          - $ref: '#/components/schemas/AssignedAgent'
+        targetDomains:
           type:
           - array
           - 'null'
           items:
             type: string
-            format: guid
-        webhook:
-          oneOf:
-          - $ref: '#/components/schemas/BotWebhookInfo'
-    AssignedAgent:
+    PagedResultOfDeploymentDTOV2:
       type: object
       additionalProperties: false
       properties:
-        deploymentId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        agentUrl:
-          type: string
-        isConfigurable:
-          type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    BrowserExtensionConfig:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        quickActions:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/QuickAction'
+            $ref: '#/components/schemas/DeploymentDTOV2'
+        totalCount:
+          type: integer
+          format: int32
     Deployment:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -1673,137 +2006,6 @@ components:
             type:
             - string
             - 'null'
-    BatchOperationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Create
-      - Delete
-      enum:
-      - Create
-      - Delete
-    DeploymentTargetAgent:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          deploymentId:
-            type: string
-            format: guid
-          targetPipelineId:
-            type: string
-            format: guid
-    DeploymentTargetAgentDto:
-      type: object
-      additionalProperties: false
-      properties:
-        targetPipelineId:
-          type: string
-          format: guid
-        targetPipelineName:
-          type:
-          - string
-          - 'null'
-    QuickAction:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        displayName:
-          type: string
-        quickActionType:
-          $ref: '#/components/schemas/QuickActionType'
-        initialMessage:
-          type:
-          - string
-          - 'null'
-        assignedAgent:
-          oneOf:
-          - $ref: '#/components/schemas/AssignedAgent'
-        targetDomains:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    BatchDeploymentResult:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        createdDeployments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deployment'
-        deletedDeploymentIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        errorMessage:
-          type:
-          - string
-          - 'null'
-    DatasourceSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    DeploymentPrompt:
-      type: string
-      description: ''
-      x-enumNames:
-      - Artifact
-      - Citation
-      enum:
-      - Artifact
-      - Citation
-    AgentBehaviours:
-      type: string
-      description: ''
-      x-enumNames:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
-      enum:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
     BaseEntity:
       allOf:
       - $ref: '#/components/schemas/BaseAuditEntity'
@@ -1820,417 +2022,60 @@ components:
           projectId:
             type: string
             format: guid
-    ProjectModelBase:
+    UserPromptDto:
       type: object
       additionalProperties: false
       properties:
-        id:
+        userPromptId:
           type: string
           format: guid
         name:
           type: string
-    AboutDeploymentMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        version:
+          maxLength: 256
+        message:
+          type: string
+          maxLength: 4096
+        description:
+          type: string
+          maxLength: 4096
+        updatedAt:
+          type: string
+          format: date-time
+        activeDeployments:
           type: integer
           format: int32
-        videoUrl:
-          type: string
-    AgentDeploymentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-      enum:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-    BatchDeploymentOperation:
-      type: object
-      additionalProperties: false
-      properties:
-        operationType:
-          $ref: '#/components/schemas/BatchOperationType'
-        deploymentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        deploymentData:
-          oneOf:
-          - $ref: '#/components/schemas/CreateDeployment'
-        capability:
-          type:
-          - string
-          - 'null'
-    DeploymentAssignments:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          deploymentId:
-            type: string
-            format: guid
-          id:
-            type: string
-            format: guid
-          entityId:
-            type: string
-            format: guid
-          entityType:
-            type: string
-    ConversationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - StandardChat
-      - ImageOnly
-      - FileOnly
-      enum:
-      - StandardChat
-      - ImageOnly
-      - FileOnly
-    QuickActionType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Page
-      - Selection
-      - PageSource
-      enum:
-      - Page
-      - Selection
-      - PageSource
-    TeamsManifestCustomizationConfig:
-      type: object
-      additionalProperties: false
-      properties:
-        botName:
-          type:
-          - string
-          - 'null'
-        colorIconBlobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        outlineIconBlobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    DeploymentSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        deploymentId:
-          type: string
-          format: guid
-        pipelineId:
-          type: string
-          format: guid
-        pipelineUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        deploymentType:
-          $ref: '#/components/schemas/AgentDeploymentType'
-        deploymentName:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        libraryAgentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        agentUnicodeIcon:
-          type:
-          - string
-          - 'null'
-        deploymentIconUrl:
-          type:
-          - string
-          - 'null'
-    CreateDeployment:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineId:
-          type: string
-          format: guid
         projectId:
           type: string
           format: guid
-        name:
-          type: string
-        deploymentIconId:
+        projectName:
           type:
           - string
           - 'null'
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        description:
-          type: string
-        userPromptIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        deploymentPrompt:
+        project:
           oneOf:
-          - $ref: '#/components/schemas/DeploymentPrompt'
-        isRecommended:
-          type: boolean
-        deploymentType:
-          oneOf:
-          - $ref: '#/components/schemas/AgentDeploymentType'
-        userIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        conversationType:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationType'
-        aboutDeploymentMetadata:
-          oneOf:
-          - $ref: '#/components/schemas/AboutDeploymentMetadata'
-        isDeployedViaAssistants:
-          type: boolean
-        supportedInputModes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedInputMode'
-        browserExtensionConfig:
-          oneOf:
-          - $ref: '#/components/schemas/BrowserExtensionConfig'
-        displayConsumptionInfo:
-          type: boolean
-        externalOAuthCredentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        greetingMessage:
-          type:
-          - string
-          - 'null'
-        teamsManifestCustomization:
-          oneOf:
-          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
-        targetAgentIds:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
-          items:
-            type: string
-            format: guid
-        webhookConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/WebhookConfiguration'
-    UpdateDeployment:
+          - $ref: '#/components/schemas/ProjectModelBase'
+    ProblemDetails:
       type: object
-      additionalProperties: false
+      additionalProperties: {}
       properties:
-        name:
-          type: string
-        description:
-          type: string
-        userPromptIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        deploymentPrompt:
-          oneOf:
-          - $ref: '#/components/schemas/DeploymentPrompt'
-        isRecommended:
-          type: boolean
-        userIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        conversationType:
-          $ref: '#/components/schemas/ConversationType'
-        aboutDeploymentMetadata:
-          oneOf:
-          - $ref: '#/components/schemas/AboutDeploymentMetadata'
-        supportedInputModes:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedInputMode'
-        browserExtensionConfig:
-          oneOf:
-          - $ref: '#/components/schemas/BrowserExtensionConfig'
-        displayConsumptionInfo:
-          type:
-          - boolean
-          - 'null'
-        deploymentType:
-          oneOf:
-          - $ref: '#/components/schemas/AgentDeploymentType'
-        externalOAuthCredentialId:
+        type:
           type:
           - string
           - 'null'
-          format: guid
-        greetingMessage:
+        title:
           type:
           - string
           - 'null'
-        teamsManifestCustomization:
-          oneOf:
-          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
-        targetAgentIds:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
-          items:
-            type: string
-            format: guid
-        webhookConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/WebhookConfiguration'
-    SupportedInputMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - FileUpload
-      - Whiteboard
-      - Code
-      - Math
-      enum:
-      - FileUpload
-      - Whiteboard
-      - Code
-      - Math
-    DeploymentDataSourceDto:
-      allOf:
-      - $ref: '#/components/schemas/DatasourceSummaryDto'
-      - type: object
-        additionalProperties: false
-        properties:
-          selectedFilesForIngestion:
-            type:
-            - array
-            - 'null'
-            items:
-              type: string
-              format: guid
-          selectedFoldersForIngestion:
-            type:
-            - array
-            - 'null'
-            items:
-              type: string
-              format: guid
-    PagedResultV2OfDeploymentDTOV2:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentDTOV2'
-        totalCount:
+        status:
           type:
           - integer
           - 'null'
           format: int32
-        hasMore:
+        detail:
           type:
-          - boolean
+          - string
           - 'null'
-    PagedResultOfDeploymentDTOV2:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentDTOV2'
-        totalCount:
-          type: integer
-          format: int32
-    ApiKeyValueViewModel:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
+        instance:
           type:
           - string
           - 'null'
@@ -2381,46 +2226,201 @@ components:
           type:
           - string
           - 'null'
-    UserPromptDto:
+    DeploymentUserPrompt:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          userPromptId:
+            type: string
+            format: guid
+    DeploymentTargetAgent:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          targetPipelineId:
+            type: string
+            format: guid
+    QuickActionType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Page
+      - Selection
+      - PageSource
+      enum:
+      - Page
+      - Selection
+      - PageSource
+    BatchDeploymentOperation:
       type: object
       additionalProperties: false
       properties:
-        userPromptId:
+        operationType:
+          $ref: '#/components/schemas/BatchOperationType'
+        deploymentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        deploymentData:
+          oneOf:
+          - $ref: '#/components/schemas/CreateDeployment'
+        capability:
+          type:
+          - string
+          - 'null'
+    BatchOperationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Create
+      - Delete
+      enum:
+      - Create
+      - Delete
+    CreateDeployment:
+      type: object
+      additionalProperties: false
+      properties:
+        pipelineId:
+          type: string
+          format: guid
+        projectId:
           type: string
           format: guid
         name:
           type: string
-          maxLength: 256
-        message:
-          type: string
-          maxLength: 4096
-        description:
-          type: string
-          maxLength: 4096
-        updatedAt:
-          type: string
-          format: date-time
-        activeDeployments:
-          type: integer
-          format: int32
-        projectId:
-          type: string
-          format: guid
-        projectName:
+        deploymentIconId:
           type:
           - string
           - 'null'
-        project:
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        description:
+          type: string
+        userPromptIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        deploymentPrompt:
           oneOf:
-          - $ref: '#/components/schemas/ProjectModelBase'
-    BatchDeploymentRequest:
+          - $ref: '#/components/schemas/DeploymentPrompt'
+        isRecommended:
+          type: boolean
+        deploymentType:
+          oneOf:
+          - $ref: '#/components/schemas/AgentDeploymentType'
+        userIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        conversationType:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationType'
+        aboutDeploymentMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/AboutDeploymentMetadata'
+        isDeployedViaAssistants:
+          type: boolean
+        supportedInputModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInputMode'
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfig'
+        displayConsumptionInfo:
+          type: boolean
+        externalOAuthCredentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        greetingMessage:
+          type:
+          - string
+          - 'null'
+        teamsManifestCustomization:
+          oneOf:
+          - $ref: '#/components/schemas/TeamsManifestCustomizationConfig'
+        targetAgentIds:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          x-deprecatedMessage: SubAgent deployments are globally available. TargetAgentIds is no longer used.
+          items:
+            type: string
+            format: guid
+        webhookConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
+    BotWebhookInfo:
       type: object
       additionalProperties: false
       properties:
-        operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchDeploymentOperation'
+        url:
+          type:
+          - string
+          - 'null'
+        configuration:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookConfiguration'
+        verifyToken:
+          type:
+          - string
+          - 'null'
+    DeploymentAssignments:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          deploymentId:
+            type: string
+            format: guid
+          id:
+            type: string
+            format: guid
+          entityId:
+            type: string
+            format: guid
+          entityType:
+            type: string
+    SupportedInputMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - FileUpload
+      - Whiteboard
+      - Code
+      - Math
+      enum:
+      - FileUpload
+      - Whiteboard
+      - Code
+      - Math
   securitySchemes:
     ApiKey:
       type: apiKey

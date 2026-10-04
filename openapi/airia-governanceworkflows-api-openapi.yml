@@ -859,134 +859,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WorkflowTrigger:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        type:
-          type: string
-        enabled:
-          type: boolean
-    UpdateWorkflowRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - riskTierScope
-      - regulatoryFrameworks
-      properties:
-        workflowType:
-          oneOf:
-          - $ref: '#/components/schemas/WorkflowType'
-        name:
-          type: string
-          maxLength: 200
-          minLength: 0
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-          minLength: 0
-        riskTierScope:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskLevel'
-        regulatoryFrameworks:
-          type: array
-          items:
-            type: string
-        isActive:
-          type: boolean
-        settings:
-          oneOf:
-          - $ref: '#/components/schemas/WorkflowSettings'
-        triggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WorkflowTrigger'
-        monitors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WorkflowMonitor'
-        stages:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateStageRequest'
-    TemplateUpgradeConflict:
-      type: object
-      additionalProperties: false
-      required:
-      - field
-      - conflictKey
-      properties:
-        stageKey:
-          type: string
-        field:
-          type: string
-        tenantValue:
-          type:
-          - string
-          - 'null'
-        templateValue:
-          type:
-          - string
-          - 'null'
-        conflictKey:
-          type: string
-        changeType:
-          $ref: '#/components/schemas/TemplateUpgradeChangeType'
-    PolicyActionTypeMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        label:
-          type: string
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionParameterMetadata'
-    RegressOnSatisfiedMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        allowedStageNames:
-          type: array
-          items:
-            type: string
-        authorable:
-          type: boolean
-    WorkflowVersionDiffDto:
-      type: object
-      additionalProperties: false
-      properties:
-        fromVersionId:
-          type: string
-          format: guid
-        toVersionId:
-          type: string
-          format: guid
-        fromVersionLabel:
-          type: string
-        toVersionLabel:
-          type: string
-        isMaterial:
-          type: boolean
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowVersionDiffItemDto'
-    DisplaySectionMetadata:
+    RiskLevel:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+      enum:
+      - None
+      - Low
+      - Medium
+      - High
+      - Critical
+    ArtifactCatalogEntry:
       type: object
       additionalProperties: false
       properties:
@@ -994,78 +882,20 @@ components:
           type: string
         label:
           type: string
-        supportedModes:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageDisplayMode'
-    StageType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sequential
-      - Parallel
-      enum:
-      - Sequential
-      - Parallel
-    MetricMetadata:
+        gateRequirementUsable:
+          type: boolean
+        displaySectionUsable:
+          type: boolean
+        supportsCriteria:
+          type: boolean
+    ArtifactTypeMetadata:
       type: object
       additionalProperties: false
       properties:
-        name:
+        key:
           type: string
-        comparison:
+        label:
           type: string
-        allowedStageNames:
-          type: array
-          items:
-            type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    WorkflowType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Governance
-      - Security
-      - WhatIfScenarios
-      enum:
-      - Governance
-      - Security
-      - WhatIfScenarios
-    WorkflowVersionChangeType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Changed
-      - Added
-      - Removed
-      enum:
-      - Changed
-      - Added
-      - Removed
     JsonNode:
       type: object
       x-abstract: true
@@ -1080,276 +910,6 @@ components:
           - $ref: '#/components/schemas/JsonNode'
         root:
           $ref: '#/components/schemas/JsonNode'
-    DisplaySectionV2Dto:
-      type: object
-      additionalProperties: false
-      properties:
-        actionable:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-        representational:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-    DocumentSlotOptionsMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        supported:
-          type: boolean
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionParameterMetadata'
-    OperatorMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        op:
-          type: string
-        label:
-          type: string
-        impliedValue:
-          type:
-          - string
-          - 'null'
-    ScheduleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-      enum:
-      - Hourly
-      - Daily
-      - Weekly
-      - Minute
-      - OneTime
-      - Monthly
-      - Quarterly
-    PagedResultOfWorkflowDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowDto'
-        totalCount:
-          type: integer
-          format: int32
-    StageFailurePolicy:
-      type: string
-      description: ''
-      x-enumNames:
-      - FailWorkflow
-      - RouteTo
-      - PauseForUser
-      enum:
-      - FailWorkflow
-      - RouteTo
-      - PauseForUser
-    WorkflowVersionDiffItemDto:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      properties:
-        key:
-          type: string
-        stageKey:
-          type:
-          - string
-          - 'null'
-        field:
-          type:
-          - string
-          - 'null'
-        changeType:
-          $ref: '#/components/schemas/WorkflowVersionChangeType'
-        isMaterial:
-          type: boolean
-        oldValue:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        newValue:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-    WorkflowMonitor:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - sensor
-      - action
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-          maxLength: 200
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        sensor:
-          type: string
-          maxLength: 100
-          minLength: 1
-        condition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        action:
-          $ref: '#/components/schemas/GovernanceAction'
-        stageName:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        priority:
-          type: integer
-          format: int32
-        enabled:
-          type: boolean
-    StagePolicy:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - condition
-      - action
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-          minLength: 1
-        condition:
-          $ref: '#/components/schemas/ConditionNode'
-        action:
-          $ref: '#/components/schemas/GovernanceAction'
-        source:
-          type: string
-        enforced:
-          type: boolean
-        priority:
-          type: integer
-          format: int32
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/RuleSchedule'
-    TemplateUpgradeChangeType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Change
-      - Remove
-      enum:
-      - Change
-      - Remove
-    GovernanceAction:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-    WorkflowSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        autoProgress:
-          type: boolean
-        autoApplyMajorUpdates:
-          type: boolean
-    AutomationCatalogEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        label:
-          type: string
-        description:
-          type: string
-        icon:
-          type: string
-        category:
-          type: string
-        managementTier:
-          type: string
-        allowedStageNames:
-          type: array
-          items:
-            type: string
-        supportedTimings:
-          type: array
-          items:
-            type: string
-        supportsCondition:
-          type: boolean
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionParameterMetadata'
-    GateOptionsMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        requirementTypes:
-          type: array
-          items:
-            type: string
-        attestationKeys:
-          type: array
-          items:
-            type: string
-        documentSlots:
-          $ref: '#/components/schemas/DocumentSlotOptionsMetadata'
-        regressOnSatisfied:
-          $ref: '#/components/schemas/RegressOnSatisfiedMetadata'
-        sla:
-          $ref: '#/components/schemas/SlaOptionsMetadata'
-        conditionGrammar:
-          $ref: '#/components/schemas/ConditionGrammarMetadata'
-    StageDisplayMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Requirement
-      - Summary
-      - Informational
-      enum:
-      - Requirement
-      - Summary
-      - Informational
-    TemplateUpgradeAddition:
-      type: object
-      additionalProperties: false
-      required:
-      - field
-      - description
-      properties:
-        stageKey:
-          type: string
-        field:
-          type: string
-        value:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
     StageDto:
       type: object
       additionalProperties: false
@@ -1424,64 +984,120 @@ components:
           - $ref: '#/components/schemas/DefaultApproversDto'
         approvalRelevant:
           type: boolean
-    StageAutomationConfig:
+    SubFieldMetadata:
       type: object
-      x-abstract: true
       additionalProperties: false
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    ConditionGrammarMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        logicalOperators:
+          type: array
+          items:
+            type: string
+        comparisonOperators:
+          type: array
+          items:
+            type: string
+        staticFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionFieldMetadata'
+        fieldPatterns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionFieldPatternMetadata'
+    WorkflowChangeSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        tier:
+          type: string
+        isMaterial:
+          type: boolean
+        changedItemKeys:
+          type: array
+          items:
+            type: string
+    WorkflowMonitor:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - sensor
+      - action
       properties:
         id:
           type: string
           format: guid
-        type:
+        name:
           type: string
-        timing:
-          type: string
-        condition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-    SetStageApproversRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        userIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        roleIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-        groupIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: guid
-    SdkStepMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        stepType:
-          type: string
-        group:
-          type:
-          - string
-          - 'null'
+          maxLength: 200
+          minLength: 1
         description:
           type:
           - string
           - 'null'
-        icon:
+          maxLength: 1000
+        sensor:
+          type: string
+          maxLength: 100
+          minLength: 1
+        condition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        action:
+          $ref: '#/components/schemas/GovernanceAction'
+        stageName:
           type:
           - string
           - 'null'
+          maxLength: 200
+        priority:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+    OperatorMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        op:
+          type: string
+        label:
+          type: string
+        impliedValue:
+          type:
+          - string
+          - 'null'
+    WorkflowVersionState:
+      type: string
+      description: ''
+      x-enumNames:
+      - Draft
+      - Published
+      - Archived
+      enum:
+      - Draft
+      - Published
+      - Archived
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
     PolicyConditionFieldMetadata:
       type: object
       additionalProperties: false
@@ -1508,6 +1124,204 @@ components:
           - 'null'
           items:
             type: string
+    WorkflowBuilderMetadataDto:
+      type: object
+      additionalProperties: false
+      properties:
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricMetadata'
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationTypeMetadata'
+        approvalLogicOptions:
+          type: array
+          items:
+            type: string
+        riskTiers:
+          type: array
+          items:
+            type: string
+        policyActionTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyActionTypeMetadata'
+        policyConditionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyConditionFieldMetadata'
+        artifactTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactTypeMetadata'
+        displaySections:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionMetadata'
+        sensorTypes:
+          type: array
+          items:
+            type: string
+        monitorConditionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyConditionFieldMetadata'
+        sdkSteps:
+          type: array
+          items:
+            $ref: '#/components/schemas/SdkStepMetadata'
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageNameMetadata'
+        automationCatalog:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationCatalogEntry'
+        artifactCatalog:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactCatalogEntry'
+        gateOptions:
+          $ref: '#/components/schemas/GateOptionsMetadata'
+    WorkflowVersionChangeType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Changed
+      - Added
+      - Removed
+      enum:
+      - Changed
+      - Added
+      - Removed
+    TemplateUpgradeChangeType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Change
+      - Remove
+      enum:
+      - Change
+      - Remove
+    SdkStepMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        stepType:
+          type: string
+        group:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        icon:
+          type:
+          - string
+          - 'null'
+    RuleSchedule:
+      type: object
+      additionalProperties: false
+      required:
+      - scheduleType
+      properties:
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        minute:
+          type: integer
+          format: int32
+          maximum: 59
+          minimum: 0
+        hour:
+          type: integer
+          format: int32
+          maximum: 23
+          minimum: 0
+        day:
+          type: integer
+          format: int32
+          maximum: 31
+          minimum: 1
+        month:
+          type: integer
+          format: int32
+          maximum: 12
+          minimum: 1
+        daysOfWeek:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    TemplateUpgradeAvailability:
+      type: object
+      additionalProperties: false
+      required:
+      - tenantWorkflowId
+      - sourceTemplateFamilyId
+      - targetTemplateVersionId
+      properties:
+        tenantWorkflowId:
+          type: string
+          format: guid
+        sourceTemplateFamilyId:
+          type: string
+          format: guid
+        adoptedTemplateVersion:
+          type: integer
+          format: int32
+        availableTemplateVersion:
+          type: integer
+          format: int32
+        targetTemplateVersionId:
+          type: string
+          format: guid
+    DisplaySectionMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        supportedModes:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageDisplayMode'
+    CreateFromTemplateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - templateId
+      - name
+      properties:
+        templateId:
+          type: string
+          format: guid
+          minLength: 1
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
     CreateWorkflowRequest:
       type: object
       additionalProperties: false
@@ -1553,67 +1367,439 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreateStageRequest'
-    TemplateUpgradePreview:
+    StagePolicy:
       type: object
       additionalProperties: false
       required:
-      - tenantWorkflowId
+      - name
+      - condition
+      - action
       properties:
-        tenantWorkflowId:
+        id:
           type: string
           format: guid
-        adoptedTemplateVersion:
+        name:
+          type: string
+          minLength: 1
+        condition:
+          $ref: '#/components/schemas/ConditionNode'
+        action:
+          $ref: '#/components/schemas/GovernanceAction'
+        source:
+          type: string
+        enforced:
+          type: boolean
+        priority:
           type: integer
           format: int32
-        targetTemplateVersion:
-          type: integer
-          format: int32
-        additions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemplateUpgradeAddition'
-        conflicts:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemplateUpgradeConflict'
-        updates:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemplateUpgradeConflict'
-    SubFieldMetadata:
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/RuleSchedule'
+    StageDisplayMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Requirement
+      - Summary
+      - Informational
+      enum:
+      - Requirement
+      - Summary
+      - Informational
+    DisplaySectionItemDto:
       type: object
       additionalProperties: false
       properties:
         key:
           type: string
+        order:
+          type: integer
+          format: int32
+        systemRequirement:
+          type: boolean
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        isRequired:
+          type: boolean
+        requirementReason:
+          type:
+          - string
+          - 'null'
+    ScheduleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+      enum:
+      - Hourly
+      - Daily
+      - Weekly
+      - Minute
+      - OneTime
+      - Monthly
+      - Quarterly
+    PolicyActionTypeMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
         label:
           type: string
-        options:
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameterMetadata'
+    WorkflowSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        autoProgress:
+          type: boolean
+        autoApplyMajorUpdates:
+          type: boolean
+    TemplateUpgradeConflict:
+      type: object
+      additionalProperties: false
+      required:
+      - field
+      - conflictKey
+      properties:
+        stageKey:
+          type: string
+        field:
+          type: string
+        tenantValue:
+          type:
+          - string
+          - 'null'
+        templateValue:
+          type:
+          - string
+          - 'null'
+        conflictKey:
+          type: string
+        changeType:
+          $ref: '#/components/schemas/TemplateUpgradeChangeType'
+    SlaOptionsMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        supported:
+          type: boolean
+        escalationSupported:
+          type: boolean
+    WorkflowVersionDiffItemDto:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          type: string
+        stageKey:
+          type:
+          - string
+          - 'null'
+        field:
+          type:
+          - string
+          - 'null'
+        changeType:
+          $ref: '#/components/schemas/WorkflowVersionChangeType'
+        isMaterial:
+          type: boolean
+        oldValue:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        newValue:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    WorkflowType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Governance
+      - Security
+      - WhatIfScenarios
+      enum:
+      - Governance
+      - Security
+      - WhatIfScenarios
+    ConditionFieldMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        field:
+          type: string
+        label:
+          type: string
+        valueType:
+          type: string
+        values:
           type:
           - array
           - 'null'
           items:
             type: string
-    ConditionGrammarMetadata:
+    WorkflowDto:
       type: object
       additionalProperties: false
       properties:
-        logicalOperators:
+        id:
+          type: string
+          format: guid
+        workflowType:
+          $ref: '#/components/schemas/WorkflowType'
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        stageCount:
+          type: integer
+          format: int32
+        riskTierScope:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskLevel'
+        regulatoryFrameworks:
           type: array
           items:
             type: string
-        comparisonOperators:
+        isActive:
+          type: boolean
+        version:
+          type: integer
+          format: int32
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: integer
+          format: int32
+        versionLabel:
+          type: string
+        changeSummary:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowChangeSummaryDto'
+        versionState:
+          $ref: '#/components/schemas/WorkflowVersionState'
+        familyId:
+          type: string
+          format: guid
+        sourceTemplateFamilyId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        hasDraft:
+          type: boolean
+        draftId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isTemplate:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/WorkflowSettings'
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        createdByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdByName:
+          type:
+          - string
+          - 'null'
+        updatedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        updatedByName:
+          type:
+          - string
+          - 'null'
+    CreateStageRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - order
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        order:
+          type: integer
+          format: int32
+        type:
+          $ref: '#/components/schemas/StageType'
+        mandatory:
+          type: boolean
+        regulatoryMappings:
           type: array
           items:
             type: string
-        staticFields:
+        gate:
+          oneOf:
+          - $ref: '#/components/schemas/StageGateConfig'
+        automations:
           type: array
           items:
-            $ref: '#/components/schemas/ConditionFieldMetadata'
-        fieldPatterns:
+            $ref: '#/components/schemas/StageAutomationConfig'
+        policies:
           type: array
           items:
-            $ref: '#/components/schemas/ConditionFieldPatternMetadata'
+            $ref: '#/components/schemas/StagePolicy'
+        failurePolicy:
+          $ref: '#/components/schemas/StageFailurePolicy'
+        failureRouteStageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        dependsOn:
+          type: array
+          items:
+            type: string
+            format: guid
+        joinMode:
+          $ref: '#/components/schemas/JoinMode'
+        entryCondition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        branchGroup:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          minLength: 0
+        scheduledStartAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        isSteadyState:
+          type: boolean
+        manualEntryOnly:
+          type: boolean
+        displaySection:
+          oneOf:
+          - $ref: '#/components/schemas/DisplaySectionV2Dto'
+    ConditionFieldPatternMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        pattern:
+          type: string
+        label:
+          type: string
+        valueType:
+          type: string
+    TemplateUpgradeAddition:
+      type: object
+      additionalProperties: false
+      required:
+      - field
+      - description
+      properties:
+        stageKey:
+          type: string
+        field:
+          type: string
+        value:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+    ArtifactCriterion:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        category:
+          type:
+          - string
+          - 'null'
+        subCategories:
+          type: array
+          items:
+            type: string
+    StageNameMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        label:
+          type: string
+        kind:
+          type: string
+        description:
+          type: string
+        appliesStageRestrictions:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DocumentSlotOptionsMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        supported:
+          type: boolean
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameterMetadata'
     DocumentSlot:
       type: object
       additionalProperties: false
@@ -1634,56 +1820,6 @@ components:
           - 'null'
           items:
             type: string
-    RuleSchedule:
-      type: object
-      additionalProperties: false
-      required:
-      - scheduleType
-      properties:
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-        minute:
-          type: integer
-          format: int32
-          maximum: 59
-          minimum: 0
-        hour:
-          type: integer
-          format: int32
-          maximum: 23
-          minimum: 0
-        day:
-          type: integer
-          format: int32
-          maximum: 31
-          minimum: 1
-        month:
-          type: integer
-          format: int32
-          maximum: 12
-          minimum: 1
-        daysOfWeek:
-          type:
-          - string
-          - 'null'
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ArtifactTypeMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        label:
-          type: string
     WorkflowDetailDto:
       type: object
       additionalProperties: false
@@ -1791,76 +1927,112 @@ components:
           type:
           - string
           - 'null'
-    SlaOptionsMetadata:
+    UpdateWorkflowRequest:
       type: object
       additionalProperties: false
+      required:
+      - name
+      - riskTierScope
+      - regulatoryFrameworks
       properties:
-        supported:
+        workflowType:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowType'
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        riskTierScope:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskLevel'
+        regulatoryFrameworks:
+          type: array
+          items:
+            type: string
+        isActive:
           type: boolean
-        escalationSupported:
-          type: boolean
-    WorkflowBuilderMetadataDto:
-      type: object
-      additionalProperties: false
-      properties:
-        metrics:
-          type: array
+        settings:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowSettings'
+        triggers:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/MetricMetadata'
-        automations:
-          type: array
+            $ref: '#/components/schemas/WorkflowTrigger'
+        monitors:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/AutomationTypeMetadata'
-        approvalLogicOptions:
-          type: array
-          items:
-            type: string
-        riskTiers:
-          type: array
-          items:
-            type: string
-        policyActionTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyActionTypeMetadata'
-        policyConditionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyConditionFieldMetadata'
-        artifactTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArtifactTypeMetadata'
-        displaySections:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionMetadata'
-        sensorTypes:
-          type: array
-          items:
-            type: string
-        monitorConditionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyConditionFieldMetadata'
-        sdkSteps:
-          type: array
-          items:
-            $ref: '#/components/schemas/SdkStepMetadata'
+            $ref: '#/components/schemas/WorkflowMonitor'
         stages:
           type: array
           items:
-            $ref: '#/components/schemas/StageNameMetadata'
-        automationCatalog:
+            $ref: '#/components/schemas/UpdateStageRequest'
+    StageFailurePolicy:
+      type: string
+      description: ''
+      x-enumNames:
+      - FailWorkflow
+      - RouteTo
+      - PauseForUser
+      enum:
+      - FailWorkflow
+      - RouteTo
+      - PauseForUser
+    GateOptionsMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        requirementTypes:
           type: array
           items:
-            $ref: '#/components/schemas/AutomationCatalogEntry'
-        artifactCatalog:
+            type: string
+        attestationKeys:
           type: array
           items:
-            $ref: '#/components/schemas/ArtifactCatalogEntry'
-        gateOptions:
-          $ref: '#/components/schemas/GateOptionsMetadata'
+            type: string
+        documentSlots:
+          $ref: '#/components/schemas/DocumentSlotOptionsMetadata'
+        regressOnSatisfied:
+          $ref: '#/components/schemas/RegressOnSatisfiedMetadata'
+        sla:
+          $ref: '#/components/schemas/SlaOptionsMetadata'
+        conditionGrammar:
+          $ref: '#/components/schemas/ConditionGrammarMetadata'
+    ConditionNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    SetMajorUpdatePolicyRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        autoApplyMajorUpdates:
+          type: boolean
+    WorkflowTrigger:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        enabled:
+          type: boolean
     ActionParameterMetadata:
       type: object
       additionalProperties: false
@@ -1893,99 +2065,6 @@ components:
           type:
           - string
           - 'null'
-    StageNameMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        label:
-          type: string
-        kind:
-          type: string
-        description:
-          type: string
-        appliesStageRestrictions:
-          type: boolean
-    DefaultApproversDto:
-      type: object
-      additionalProperties: false
-      properties:
-        approverUserIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approverGroupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approvalLogic:
-          type: string
-    StageGateConfig:
-      type: object
-      additionalProperties: false
-      properties:
-        requiresApproval:
-          type: boolean
-        genericApproval:
-          type: boolean
-        approverUserIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approverRoleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approverGroupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approvalLogic:
-          type: string
-        slaHours:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        escalationUserIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        evaluationThresholds:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-        requiredArtifacts:
-          type: array
-          items:
-            type: string
-        requiredArtifactCriteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArtifactCriterion'
-        documentSlots:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DocumentSlot'
-        requiredAttestations:
-          type: array
-          items:
-            type: string
-        satisfactionCondition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        regressOnSatisfied:
-          type: boolean
     JoinMode:
       type: string
       description: ''
@@ -1997,311 +2076,62 @@ components:
       - All
       - Any
       - Majority
-    ConditionNode:
+    StageAutomationConfig:
       type: object
       x-abstract: true
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-    CreateStageRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - order
-      properties:
-        name:
-          type: string
-          maxLength: 200
-          minLength: 0
-        order:
-          type: integer
-          format: int32
-        type:
-          $ref: '#/components/schemas/StageType'
-        mandatory:
-          type: boolean
-        regulatoryMappings:
-          type: array
-          items:
-            type: string
-        gate:
-          oneOf:
-          - $ref: '#/components/schemas/StageGateConfig'
-        automations:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageAutomationConfig'
-        policies:
-          type: array
-          items:
-            $ref: '#/components/schemas/StagePolicy'
-        failurePolicy:
-          $ref: '#/components/schemas/StageFailurePolicy'
-        failureRouteStageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        dependsOn:
-          type: array
-          items:
-            type: string
-            format: guid
-        joinMode:
-          $ref: '#/components/schemas/JoinMode'
-        entryCondition:
-          oneOf:
-          - $ref: '#/components/schemas/ConditionNode'
-        branchGroup:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-          minLength: 0
-        scheduledStartAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        isSteadyState:
-          type: boolean
-        manualEntryOnly:
-          type: boolean
-        displaySection:
-          oneOf:
-          - $ref: '#/components/schemas/DisplaySectionV2Dto'
-    WorkflowDto:
-      type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        workflowType:
-          $ref: '#/components/schemas/WorkflowType'
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        stageCount:
-          type: integer
-          format: int32
-        riskTierScope:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskLevel'
-        regulatoryFrameworks:
-          type: array
-          items:
-            type: string
-        isActive:
-          type: boolean
-        version:
-          type: integer
-          format: int32
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: integer
-          format: int32
-        versionLabel:
-          type: string
-        changeSummary:
-          oneOf:
-          - $ref: '#/components/schemas/WorkflowChangeSummaryDto'
-        versionState:
-          $ref: '#/components/schemas/WorkflowVersionState'
-        familyId:
-          type: string
-          format: guid
-        sourceTemplateFamilyId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        hasDraft:
-          type: boolean
-        draftId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isTemplate:
-          type: boolean
-        settings:
-          $ref: '#/components/schemas/WorkflowSettings'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        createdByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        createdByName:
-          type:
-          - string
-          - 'null'
-        updatedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        updatedByName:
-          type:
-          - string
-          - 'null'
-    RiskLevel:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-      enum:
-      - None
-      - Low
-      - Medium
-      - High
-      - Critical
-    AutomationTypeMetadata:
-      type: object
-      additionalProperties: false
-      properties:
         type:
           type: string
-        label:
+        timing:
           type: string
-        allowedStageNames:
-          type: array
-          items:
-            type: string
-        category:
-          type: string
-        status:
-          type: string
-    WorkflowVersionState:
+        condition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+    StageType:
       type: string
       description: ''
       x-enumNames:
-      - Draft
-      - Published
-      - Archived
+      - Sequential
+      - Parallel
       enum:
-      - Draft
-      - Published
-      - Archived
-    ConditionFieldMetadata:
+      - Sequential
+      - Parallel
+    WorkflowVersionDiffDto:
       type: object
       additionalProperties: false
       properties:
-        field:
+        fromVersionId:
           type: string
-        label:
-          type: string
-        valueType:
-          type: string
-        values:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    ArtifactCriterion:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        category:
-          type:
-          - string
-          - 'null'
-        subCategories:
-          type: array
-          items:
-            type: string
-    AdoptTemplateUpgradeRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        conflictResolutions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        templateFamilyId:
-          type:
-          - string
-          - 'null'
           format: guid
-        force:
-          type: boolean
-    JsonNodeOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyNameCaseInsensitive:
-          type: boolean
-    ConditionFieldPatternMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        pattern:
+        toVersionId:
           type: string
-        label:
+          format: guid
+        fromVersionLabel:
           type: string
-        valueType:
-          type: string
-    WorkflowChangeSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        tier:
+        toVersionLabel:
           type: string
         isMaterial:
           type: boolean
-        changedItemKeys:
+        items:
           type: array
           items:
-            type: string
-    DisplaySectionItemDto:
+            $ref: '#/components/schemas/WorkflowVersionDiffItemDto'
+    DisplaySectionV2Dto:
       type: object
       additionalProperties: false
       properties:
-        key:
-          type: string
-        order:
-          type: integer
-          format: int32
-        systemRequirement:
-          type: boolean
-        options:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        isRequired:
-          type: boolean
-        requirementReason:
-          type:
-          - string
-          - 'null'
+        actionable:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+        representational:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
     UpdateStageRequest:
       type: object
       additionalProperties: false
@@ -2385,70 +2215,240 @@ components:
         displaySection:
           oneOf:
           - $ref: '#/components/schemas/DisplaySectionV2Dto'
-    CreateFromTemplateRequest:
+    AutomationCatalogEntry:
       type: object
       additionalProperties: false
-      required:
-      - templateId
-      - name
       properties:
-        templateId:
+        type:
           type: string
-          format: guid
-          minLength: 1
-        name:
+        label:
           type: string
-          maxLength: 200
-          minLength: 0
         description:
+          type: string
+        icon:
+          type: string
+        category:
+          type: string
+        managementTier:
+          type: string
+        allowedStageNames:
+          type: array
+          items:
+            type: string
+        supportedTimings:
+          type: array
+          items:
+            type: string
+        supportsCondition:
+          type: boolean
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionParameterMetadata'
+    GovernanceAction:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    RegressOnSatisfiedMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedStageNames:
+          type: array
+          items:
+            type: string
+        authorable:
+          type: boolean
+    AdoptTemplateUpgradeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        conflictResolutions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        templateFamilyId:
           type:
           - string
           - 'null'
-          maxLength: 1000
-          minLength: 0
-    SetMajorUpdatePolicyRequest:
+          format: guid
+        force:
+          type: boolean
+    StageGateConfig:
       type: object
       additionalProperties: false
       properties:
-        autoApplyMajorUpdates:
+        requiresApproval:
           type: boolean
-    TemplateUpgradeAvailability:
+        genericApproval:
+          type: boolean
+        approverUserIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approverRoleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approverGroupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approvalLogic:
+          type: string
+        slaHours:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        escalationUserIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        evaluationThresholds:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        requiredArtifacts:
+          type: array
+          items:
+            type: string
+        requiredArtifactCriteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactCriterion'
+        documentSlots:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DocumentSlot'
+        requiredAttestations:
+          type: array
+          items:
+            type: string
+        satisfactionCondition:
+          oneOf:
+          - $ref: '#/components/schemas/ConditionNode'
+        regressOnSatisfied:
+          type: boolean
+    AutomationTypeMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        label:
+          type: string
+        allowedStageNames:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        status:
+          type: string
+    DefaultApproversDto:
+      type: object
+      additionalProperties: false
+      properties:
+        approverUserIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approverGroupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approvalLogic:
+          type: string
+    TemplateUpgradePreview:
       type: object
       additionalProperties: false
       required:
       - tenantWorkflowId
-      - sourceTemplateFamilyId
-      - targetTemplateVersionId
       properties:
         tenantWorkflowId:
-          type: string
-          format: guid
-        sourceTemplateFamilyId:
           type: string
           format: guid
         adoptedTemplateVersion:
           type: integer
           format: int32
-        availableTemplateVersion:
+        targetTemplateVersion:
           type: integer
           format: int32
-        targetTemplateVersionId:
-          type: string
-          format: guid
-    ArtifactCatalogEntry:
+        additions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateUpgradeAddition'
+        conflicts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateUpgradeConflict'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateUpgradeConflict'
+    SetStageApproversRequest:
       type: object
       additionalProperties: false
       properties:
-        key:
+        userIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        roleIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+        groupIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: guid
+    PagedResultOfWorkflowDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowDto'
+        totalCount:
+          type: integer
+          format: int32
+    MetricMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
           type: string
-        label:
+        comparison:
           type: string
-        gateRequirementUsable:
-          type: boolean
-        displaySectionUsable:
-          type: boolean
-        supportsCriteria:
-          type: boolean
+        allowedStageNames:
+          type: array
+          items:
+            type: string
   securitySchemes:
     ApiKey:
       type: apiKey

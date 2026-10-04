@@ -429,34 +429,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultOfProjectGraphDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectGraphDto'
-        totalCount:
-          type: integer
-          format: int32
-    GraphRelationshipRecordsInfoDto:
-      type: object
-      additionalProperties: false
-      properties:
-        from:
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-        to:
-          type: array
-          items:
-            type: string
-        count:
-          type: integer
-          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -482,6 +454,23 @@ components:
           type:
           - string
           - 'null'
+    GraphRelationshipRecordsInfoDto:
+      type: object
+      additionalProperties: false
+      properties:
+        from:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        to:
+          type: array
+          items:
+            type: string
+        count:
+          type: integer
+          format: int32
     ProjectGraphDto:
       type: object
       additionalProperties: false
@@ -519,6 +508,17 @@ components:
           type:
           - string
           - 'null'
+    PagedResultOfProjectGraphDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectGraphDto'
+        totalCount:
+          type: integer
+          format: int32
   securitySchemes:
     ApiKey:
       type: apiKey

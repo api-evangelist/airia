@@ -453,29 +453,113 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PagedResultOfRunbookExecutionSummaryV1:
+    RunbookV1:
       type: object
       additionalProperties: false
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunbookExecutionSummaryV1'
-        totalCount:
-          type: integer
-          format: int32
-    RunbookExecutionResultV1:
-      type: object
-      additionalProperties: false
-      properties:
-        executionId:
+        id:
           type: string
           format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
         status:
           type: string
-        startedAt:
-          type: string
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+        createdAt:
+          type:
+          - string
+          - 'null'
           format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        hasHistory:
+          type: boolean
+    CreateRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - trigger
+      - actions
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+    ExecuteRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - context
+      properties:
+        context:
+          type: object
+          additionalProperties: {}
+    UpdateRunbookRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - trigger
+      - actions
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 0
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+          minLength: 0
+        trigger:
+          $ref: '#/components/schemas/RunbookTriggerV1'
+        actions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RunbookActionV1'
+    RunbookCatalogItemV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        eventType:
+          type: string
     RunbookExecutionSummaryV1:
       type: object
       additionalProperties: false
@@ -518,38 +602,6 @@ components:
           - string
           - 'null'
           format: date-time
-    RunbookTriggerV1:
-      type: object
-      additionalProperties: false
-      required:
-      - eventType
-      properties:
-        eventType:
-          type: string
-          minLength: 1
-        filters:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        triggerMode:
-          $ref: '#/components/schemas/RunbookTriggerMode'
-    RunbookCatalogItemV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        eventType:
-          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -575,6 +627,24 @@ components:
           type:
           - string
           - 'null'
+    RunbookActionV1:
+      type: object
+      additionalProperties: false
+      required:
+      - stepType
+      - parametersJson
+      properties:
+        stepType:
+          type: string
+          minLength: 1
+        parametersJson:
+          type: string
+          minLength: 1
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
     PagedResultOfRunbookSummaryV1:
       type: object
       additionalProperties: false
@@ -586,64 +656,17 @@ components:
         totalCount:
           type: integer
           format: int32
-    UpdateRunbookRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - trigger
-      - actions
-      properties:
-        name:
-          type: string
-          maxLength: 200
-          minLength: 0
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-          minLength: 0
-        trigger:
-          $ref: '#/components/schemas/RunbookTriggerV1'
-        actions:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/RunbookActionV1'
-    RunbookV1:
+    PagedResultOfRunbookExecutionSummaryV1:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        status:
-          type: string
-        trigger:
-          $ref: '#/components/schemas/RunbookTriggerV1'
-        actions:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/RunbookActionV1'
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        hasHistory:
-          type: boolean
+            $ref: '#/components/schemas/RunbookExecutionSummaryV1'
+        totalCount:
+          type: integer
+          format: int32
     RunbookTriggerMode:
       type: string
       description: ''
@@ -680,58 +703,35 @@ components:
           - string
           - 'null'
           format: date-time
-    ExecuteRunbookRequest:
+    RunbookExecutionResultV1:
       type: object
       additionalProperties: false
-      required:
-      - context
       properties:
-        context:
-          type: object
-          additionalProperties: {}
-    RunbookActionV1:
-      type: object
-      additionalProperties: false
-      required:
-      - stepType
-      - parametersJson
-      properties:
-        stepType:
+        executionId:
           type: string
-          minLength: 1
-        parametersJson:
-          type: string
-          minLength: 1
-        credentialId:
-          type:
-          - string
-          - 'null'
           format: guid
-    CreateRunbookRequest:
+        status:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+    RunbookTriggerV1:
       type: object
       additionalProperties: false
       required:
-      - name
-      - trigger
-      - actions
+      - eventType
       properties:
-        name:
+        eventType:
           type: string
-          maxLength: 200
-          minLength: 0
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-          minLength: 0
-        trigger:
-          $ref: '#/components/schemas/RunbookTriggerV1'
-        actions:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/RunbookActionV1'
+          minLength: 1
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          $ref: '#/components/schemas/RunbookTriggerMode'
   securitySchemes:
     ApiKey:
       type: apiKey

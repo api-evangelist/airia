@@ -191,23 +191,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ClassificationLabelResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        labelName:
-          type: string
-        isDefaultValue:
-          type: boolean
-        classificationId:
-          type: string
-          format: guid
-        priority:
-          type: integer
-          format: int32
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -241,6 +224,23 @@ components:
           type:
           - string
           - 'null'
+    ClassificationLabelResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        labelName:
+          type: string
+        isDefaultValue:
+          type: boolean
+        classificationId:
+          type: string
+          format: guid
+        priority:
+          type: integer
+          format: int32
     CreateClassificationLabelRequest:
       type: object
       additionalProperties: false

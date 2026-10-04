@@ -260,6 +260,95 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    SpendSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        spendCharged:
+          type: number
+          format: double
+        inWarning:
+          type: number
+          format: double
+        blockedAttempted:
+          type: number
+          format: double
+    BudgetEvaluationTransactionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+        userName:
+          type: string
+        messageSource:
+          $ref: '#/components/schemas/MessageSourceDto'
+        amount:
+          type: number
+          format: double
+        budgetsEvaluated:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvaluatedBudgetDto'
+        nearestReset:
+          type: string
+        executionId:
+          type: string
+        result:
+          type: string
+    SpendBucketDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: string
+        counted:
+          type: number
+          format: double
+        warning:
+          type: number
+          format: double
+        blocked:
+          type: number
+          format: double
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    PagedFeedResultDtoOfBudgetEvaluationRecordDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BudgetEvaluationRecordDto'
+        totalCount:
+          type: integer
+          format: int32
     PagedFeedResultDtoOfBudgetEvaluationTransactionDto:
       type: object
       additionalProperties: false
@@ -271,6 +360,14 @@ components:
         totalCount:
           type: integer
           format: int32
+    MessageSourceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        name:
+          type: string
     BudgetEvaluationRecordDto:
       type: object
       additionalProperties: false
@@ -305,88 +402,6 @@ components:
           type: string
         resourceName:
           type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    MessageSourceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        name:
-          type: string
-    SpendDataDto:
-      type: object
-      additionalProperties: false
-      properties:
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpendBucketDto'
-        summary:
-          $ref: '#/components/schemas/SpendSummaryDto'
-    SpendBucketDto:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: string
-        counted:
-          type: number
-          format: double
-        warning:
-          type: number
-          format: double
-        blocked:
-          type: number
-          format: double
-    PagedFeedResultDtoOfBudgetEvaluationRecordDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/BudgetEvaluationRecordDto'
-        totalCount:
-          type: integer
-          format: int32
-    SpendSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        spendCharged:
-          type: number
-          format: double
-        inWarning:
-          type: number
-          format: double
-        blockedAttempted:
-          type: number
-          format: double
     EvaluatedBudgetDto:
       type: object
       additionalProperties: false
@@ -417,31 +432,16 @@ components:
           type: string
         resourceName:
           type: string
-    BudgetEvaluationTransactionDto:
+    SpendDataDto:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-        timestamp:
-          type: string
-        userName:
-          type: string
-        messageSource:
-          $ref: '#/components/schemas/MessageSourceDto'
-        amount:
-          type: number
-          format: double
-        budgetsEvaluated:
+        buckets:
           type: array
           items:
-            $ref: '#/components/schemas/EvaluatedBudgetDto'
-        nearestReset:
-          type: string
-        executionId:
-          type: string
-        result:
-          type: string
+            $ref: '#/components/schemas/SpendBucketDto'
+        summary:
+          $ref: '#/components/schemas/SpendSummaryDto'
   securitySchemes:
     ApiKey:
       type: apiKey

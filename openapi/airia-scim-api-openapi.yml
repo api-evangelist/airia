@@ -196,6 +196,16 @@ components:
           type: string
         scope:
           type: string
+    ScimTokenTestResult:
+      type: object
+      additionalProperties: false
+      properties:
+        success:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
     ScimTokenResponse:
       type: object
       additionalProperties: false
@@ -210,16 +220,6 @@ components:
         daysUntilExpiry:
           type: integer
           format: int32
-    ScimTokenTestResult:
-      type: object
-      additionalProperties: false
-      properties:
-        success:
-          type: boolean
-        error:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

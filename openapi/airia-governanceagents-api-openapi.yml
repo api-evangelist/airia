@@ -116,19 +116,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BulkImportResult:
-      type: object
-      additionalProperties: false
-      properties:
-        createdCount:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            type: string
-        hasErrors:
-          type: boolean
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -154,6 +141,19 @@ components:
           type:
           - string
           - 'null'
+    BulkImportResult:
+      type: object
+      additionalProperties: false
+      properties:
+        createdCount:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            type: string
+        hasErrors:
+          type: boolean
     CreateGovernanceAgentRequest:
       type: object
       additionalProperties: false

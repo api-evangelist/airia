@@ -209,58 +209,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GraphNodeDto:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - name
-      - type
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        risk:
-          type: integer
-          format: int32
-        status:
-          type:
-          - string
-          - 'null'
-        provider:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     AttackPathDiffChangeDto:
       type: object
       additionalProperties: false
@@ -353,16 +301,57 @@ components:
         findingCount:
           type: integer
           format: int32
-    AttackPathRefreshResponse:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GraphNodeDto:
       type: object
       additionalProperties: false
       required:
-      - status
-      - message
+      - id
+      - name
+      - type
       properties:
-        status:
+        id:
           type: string
-        message:
+        name:
+          type: string
+        type:
+          type: string
+        risk:
+          type: integer
+          format: int32
+        status:
+          type:
+          - string
+          - 'null'
+        provider:
+          type:
+          - string
+          - 'null'
+        description:
           type: string
     ScoreFactorDto:
       type: object
@@ -381,39 +370,6 @@ components:
         points:
           type: integer
           format: int32
-    AttackPathGraphStatusResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - status
-      properties:
-        status:
-          type: string
-        isRunning:
-          type: boolean
-        generatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        truncated:
-          type: boolean
-        error:
-          type:
-          - string
-          - 'null'
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphNodeDto'
-        edges:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphEdgeDto'
-        paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttackPathDto'
     AttackPathDto:
       type: object
       additionalProperties: false
@@ -459,6 +415,50 @@ components:
             $ref: '#/components/schemas/ScoreFactorDto'
         detectorId:
           type: string
+    AttackPathRefreshResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    AttackPathGraphStatusResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      properties:
+        status:
+          type: string
+        isRunning:
+          type: boolean
+        generatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        truncated:
+          type: boolean
+        error:
+          type:
+          - string
+          - 'null'
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNodeDto'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphEdgeDto'
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttackPathDto'
   securitySchemes:
     ApiKey:
       type: apiKey

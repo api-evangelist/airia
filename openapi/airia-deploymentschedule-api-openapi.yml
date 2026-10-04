@@ -480,6 +480,70 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    DeploymentScheduleAdminModel:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentScheduleModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          ownerUserId:
+            type: string
+            format: guid
+          ownerUserName:
+            type:
+            - string
+            - 'null'
+          ownerUserEmail:
+            type:
+            - string
+            - 'null'
+          userInput:
+            type:
+            - string
+            - 'null'
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+    ScheduleThreadingMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - NewThread
+      - SameThread
+      enum:
+      - NewThread
+      - SameThread
     ScheduleModel:
       type: object
       additionalProperties: false
@@ -550,27 +614,6 @@ components:
           - string
           - 'null'
           format: date-time
-    DeploymentScheduleAdminModel:
-      allOf:
-      - $ref: '#/components/schemas/DeploymentScheduleModel'
-      - type: object
-        additionalProperties: false
-        properties:
-          ownerUserId:
-            type: string
-            format: guid
-          ownerUserName:
-            type:
-            - string
-            - 'null'
-          ownerUserEmail:
-            type:
-            - string
-            - 'null'
-          userInput:
-            type:
-            - string
-            - 'null'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -658,49 +701,6 @@ components:
             - string
             - 'null'
             format: guid
-    MonthlyWeekOccurrence:
-      type: string
-      description: ''
-      x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-    ScheduleThreadingMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - NewThread
-      - SameThread
-      enum:
-      - NewThread
-      - SameThread
   securitySchemes:
     ApiKey:
       type: apiKey

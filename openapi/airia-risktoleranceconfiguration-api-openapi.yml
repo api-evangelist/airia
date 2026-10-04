@@ -153,24 +153,32 @@ components:
       - Medium
       - High
       - Critical
-    RiskDomainToleranceItem:
+    RiskToleranceConfigurationResponse:
       type: object
       additionalProperties: false
       properties:
-        riskDomainId:
-          type: string
-          format: guid
-        name:
-          type: string
-        color:
-          type:
-          - string
-          - 'null'
-        displayOrder:
-          type: integer
-          format: int32
-        level:
+        posture:
+          $ref: '#/components/schemas/RiskTolerancePosture'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDomainToleranceItem'
+    SetRiskDomainToleranceOverrideRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - maxRiskLevel
+      properties:
+        maxRiskLevel:
           $ref: '#/components/schemas/RiskLevel'
+    SetRiskTolerancePostureRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - posture
+      properties:
+        posture:
+          $ref: '#/components/schemas/RiskTolerancePosture'
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -196,14 +204,24 @@ components:
           type:
           - string
           - 'null'
-    SetRiskTolerancePostureRequest:
+    RiskDomainToleranceItem:
       type: object
       additionalProperties: false
-      required:
-      - posture
       properties:
-        posture:
-          $ref: '#/components/schemas/RiskTolerancePosture'
+        riskDomainId:
+          type: string
+          format: guid
+        name:
+          type: string
+        color:
+          type:
+          - string
+          - 'null'
+        displayOrder:
+          type: integer
+          format: int32
+        level:
+          $ref: '#/components/schemas/RiskLevel'
     RiskTolerancePosture:
       type: string
       description: ''
@@ -217,24 +235,6 @@ components:
       - Conservative
       - Balanced
       - Progressive
-    RiskToleranceConfigurationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        posture:
-          $ref: '#/components/schemas/RiskTolerancePosture'
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskDomainToleranceItem'
-    SetRiskDomainToleranceOverrideRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - maxRiskLevel
-      properties:
-        maxRiskLevel:
-          $ref: '#/components/schemas/RiskLevel'
   securitySchemes:
     ApiKey:
       type: apiKey

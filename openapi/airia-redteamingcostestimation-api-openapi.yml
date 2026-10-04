@@ -264,6 +264,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ModelIdentifierType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Library
+      - Project
+      enum:
+      - None
+      - Library
+      - Project
+    DayOfWeek:
+      type: string
+      description: ''
+      x-enumNames:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
     RedTeamingCampaignType:
       type: string
       description: ''
@@ -273,6 +303,98 @@ components:
       enum:
       - DatasetBased
       - AgenticAI
+    TokenCountAccuracy:
+      type: string
+      description: ''
+      x-enumNames:
+      - High
+      - Low
+      - NotAvailable
+      enum:
+      - High
+      - Low
+      - NotAvailable
+    CreateAgenticAiRedTeamingCampaignRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - campaignName
+      - attackObjective
+      - orchestratorType
+      properties:
+        campaignName:
+          type: string
+          maxLength: 255
+          minLength: 1
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+        attackObjective:
+          type: string
+          maxLength: 2000
+          minLength: 1
+        orchestratorType:
+          type: string
+          minLength: 1
+        converterType:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        targetAgentId:
+          type: string
+          format: guid
+        httpEndpointConfig:
+          oneOf:
+          - $ref: '#/components/schemas/ExternalAgentHttpConfigurationDto'
+        spmAgentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        spmAliasId:
+          type:
+          - string
+          - 'null'
+        startDate:
+          type:
+          - string
+          - 'null'
+        startTime:
+          type:
+          - string
+          - 'null'
+        parameters: {}
+        schedule:
+          oneOf:
+          - $ref: '#/components/schemas/ScheduleModel'
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        modelIdentifierType:
+          $ref: '#/components/schemas/ModelIdentifierType'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        campaignType:
+          $ref: '#/components/schemas/RedTeamingCampaignType'
     ProviderType:
       type: string
       description: ''
@@ -330,6 +452,21 @@ components:
       - GenericOpenAI
       - GenericAnthropic
       - Google Vertex AI
+    MonthlyWeekOccurrence:
+      type: string
+      description: ''
+      x-enumNames:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
     ScheduleModel:
       type: object
       additionalProperties: false
@@ -425,73 +562,6 @@ components:
           type:
           - string
           - 'null'
-    ModelIdentifierType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Library
-      - Project
-      enum:
-      - None
-      - Library
-      - Project
-    ExternalAgentHttpConfigurationDto:
-      type: object
-      additionalProperties: false
-      required:
-      - endpointUrl
-      - httpMethod
-      properties:
-        endpointUrl:
-          type: string
-          format: uri
-          maxLength: 2000
-          minLength: 1
-        httpMethod:
-          type: string
-          maxLength: 10
-          minLength: 1
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        headersJson:
-          type:
-          - string
-          - 'null'
-        bodyTemplate:
-          type:
-          - string
-          - 'null'
-        responseJsonPath:
-          type:
-          - string
-          - 'null'
-          maxLength: 500
-        timeoutMs:
-          type: integer
-          format: int32
-          maximum: 60000
-          minimum: 1000
-        queryStringsJson:
-          type:
-          - string
-          - 'null'
-        ignoreSslErrors:
-          type: boolean
-        bodyType:
-          type:
-          - string
-          - 'null'
-          maxLength: 20
-        credentialId:
-          type:
-          - string
-          - 'null'
-          format: guid
     ScheduleType:
       type: string
       description: ''
@@ -577,40 +647,62 @@ components:
         campaignModelCosts:
           oneOf:
           - $ref: '#/components/schemas/ModelCostBreakdown'
-    MonthlyWeekOccurrence:
-      type: string
-      description: ''
-      x-enumNames:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-    DayOfWeek:
-      type: string
-      description: ''
-      x-enumNames:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
+    ExternalAgentHttpConfigurationDto:
+      type: object
+      additionalProperties: false
+      required:
+      - endpointUrl
+      - httpMethod
+      properties:
+        endpointUrl:
+          type: string
+          format: uri
+          maxLength: 2000
+          minLength: 1
+        httpMethod:
+          type: string
+          maxLength: 10
+          minLength: 1
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        headersJson:
+          type:
+          - string
+          - 'null'
+        bodyTemplate:
+          type:
+          - string
+          - 'null'
+        responseJsonPath:
+          type:
+          - string
+          - 'null'
+          maxLength: 500
+        timeoutMs:
+          type: integer
+          format: int32
+          maximum: 60000
+          minimum: 1000
+        queryStringsJson:
+          type:
+          - string
+          - 'null'
+        ignoreSslErrors:
+          type: boolean
+        bodyType:
+          type:
+          - string
+          - 'null'
+          maxLength: 20
+        credentialId:
+          type:
+          - string
+          - 'null'
+          format: guid
     ModelCostBreakdown:
       type: object
       additionalProperties: false
@@ -654,98 +746,6 @@ components:
           - integer
           - 'null'
           format: int32
-    TokenCountAccuracy:
-      type: string
-      description: ''
-      x-enumNames:
-      - High
-      - Low
-      - NotAvailable
-      enum:
-      - High
-      - Low
-      - NotAvailable
-    CreateAgenticAiRedTeamingCampaignRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - campaignName
-      - attackObjective
-      - orchestratorType
-      properties:
-        campaignName:
-          type: string
-          maxLength: 255
-          minLength: 1
-        description:
-          type:
-          - string
-          - 'null'
-          maxLength: 1000
-        attackObjective:
-          type: string
-          maxLength: 2000
-          minLength: 1
-        orchestratorType:
-          type: string
-          minLength: 1
-        converterType:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        targetAgentId:
-          type: string
-          format: guid
-        httpEndpointConfig:
-          oneOf:
-          - $ref: '#/components/schemas/ExternalAgentHttpConfigurationDto'
-        spmAgentId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        spmAliasId:
-          type:
-          - string
-          - 'null'
-        startDate:
-          type:
-          - string
-          - 'null'
-        startTime:
-          type:
-          - string
-          - 'null'
-        parameters: {}
-        schedule:
-          oneOf:
-          - $ref: '#/components/schemas/ScheduleModel'
-        modelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        modelIdentifierType:
-          $ref: '#/components/schemas/ModelIdentifierType'
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        campaignType:
-          $ref: '#/components/schemas/RedTeamingCampaignType'
   securitySchemes:
     ApiKey:
       type: apiKey

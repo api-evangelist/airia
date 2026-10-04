@@ -137,28 +137,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GenerateDocumentRequestV1:
-      type: object
-      additionalProperties: false
-      required:
-      - content
-      - type
-      properties:
-        content:
-          type: string
-          minLength: 1
-        type:
-          $ref: '#/components/schemas/DocumentType'
-        prepared:
-          type: boolean
-        disableCache:
-          type: boolean
-        strict:
-          type: boolean
-        textToReplace:
-          type: object
-          additionalProperties:
-            type: string
     GenerateDocumentRequestV2:
       type: object
       additionalProperties: false
@@ -183,6 +161,15 @@ components:
           - 'null'
           additionalProperties:
             type: string
+    DocumentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - PowerPoint
+      - Word
+      enum:
+      - PowerPoint
+      - Word
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -208,6 +195,28 @@ components:
           type:
           - string
           - 'null'
+    GenerateDocumentRequestV1:
+      type: object
+      additionalProperties: false
+      required:
+      - content
+      - type
+      properties:
+        content:
+          type: string
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/DocumentType'
+        prepared:
+          type: boolean
+        disableCache:
+          type: boolean
+        strict:
+          type: boolean
+        textToReplace:
+          type: object
+          additionalProperties:
+            type: string
     GenerateDocumentResponseV2:
       type: object
       additionalProperties: false
@@ -234,15 +243,6 @@ components:
           - integer
           - 'null'
           format: int64
-    DocumentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - PowerPoint
-      - Word
-      enum:
-      - PowerPoint
-      - Word
   securitySchemes:
     ApiKey:
       type: apiKey

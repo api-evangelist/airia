@@ -231,559 +231,49 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PipelineDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        executionName:
-          type:
-          - string
-          - 'null'
-        agentIcon:
-          type:
-          - string
-          - 'null'
-        agentDescription:
-          type: string
-        markdownDescription:
-          type:
-          - string
-          - 'null'
-        tagline:
-          type:
-          - string
-          - 'null'
-        videoLink:
-          type:
-          - string
-          - 'null'
-        industry:
-          type:
-          - string
-          - 'null'
-        subIndustries:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        agentDetails:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/AgentDetailItemDefinition'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineStepDefinition'
-        behaviours:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        agentUnicodeIcon:
-          type:
-          - string
-          - 'null'
-        agentIconBase64:
-          type:
-          - string
-          - 'null'
-        alignment:
-          type: string
-        saveToolResponsesToHistory:
-          type:
-          - boolean
-          - 'null'
-    AgentEventTriggerDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        eventTypeName:
-          type:
-          - string
-          - 'null'
-        filters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        triggerMode:
-          type:
-          - string
-          - 'null'
-    UserPromptDefinition:
+    ToolParametersDefinition:
       type: object
       additionalProperties: false
       properties:
         name:
           type: string
-        message:
+        parameterType:
           type: string
-        promptDescription:
+        parameterDescription:
           type: string
-    CustomFormActionDefinition:
+        default:
+          type: string
+        validOptions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        arrayItemType:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolParametersDefinition'
+        requirement:
+          type: string
+    PipelineStepDependencyDefinition:
       type: object
       additionalProperties: false
       properties:
-        id:
+        parentId:
           type: string
           format: guid
-        label:
+        parentHandleId:
           type: string
+          format: guid
         handleId:
           type: string
           format: guid
-        style:
-          type: string
-        confirmationText:
-          type:
-          - string
-          - 'null'
-        requiresComment:
-          type: boolean
-    AgentCardSignature2:
-      type: object
-      additionalProperties: false
-      properties:
-        protected:
-          type: string
-        signature:
-          type: string
-        header:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    MemoryDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        isUserSpecific:
-          type: boolean
-        isConversationScoped:
-          type:
-          - boolean
-          - 'null'
-        defaultValue:
-          type:
-          - string
-          - 'null'
-    ToolHeadersDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-        sensitive:
-          type: boolean
-    BrowserExtensionConfigDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        browserType:
-          type: string
-        quickActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuickActionDefinition'
-    AgentDetailItemDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        itemType:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        options:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    CredentialsDataListDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    AgentCardDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        agentCardId:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        supportedInterfaces:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentInterface2'
-        provider:
-          oneOf:
-          - $ref: '#/components/schemas/AgentProvider2'
-        version:
-          type: string
-        documentationUrl:
-          type:
-          - string
-          - 'null'
-        iconUrl:
-          type:
-          - string
-          - 'null'
-        capabilities:
-          $ref: '#/components/schemas/AgentCapabilities2'
-        securitySchemes:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SecurityScheme2'
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement2'
-        signatures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentCardSignature2'
-        defaultInputModes:
-          type: array
-          items:
-            type: string
-        defaultOutputModes:
-          type: array
-          items:
-            type: string
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentSkill2'
-    AgentProvider2:
-      type: object
-      additionalProperties: false
-      properties:
-        organization:
-          type: string
-        url:
-          type: string
-    ExportPipelineDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        available:
-          type: boolean
-        metadata:
-          $ref: '#/components/schemas/PipelineDefinitionMetadata'
-        agent:
-          $ref: '#/components/schemas/PipelineDefinition'
-        dataSources:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DataSourcesDefinition'
-        prompts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PromptDefinition'
-        tools:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolsExportDefinition'
-        models:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModelDefinition'
-        memories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/MemoryDefinition'
-        pythonCodeBlocks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PythonCodeBlockDefinition'
-        routers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RouterDefinition'
-        approvalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ApprovalRequestDefinition'
-        webhookApprovalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WebhookApprovalRequestDefinition'
-        customFormApprovalRequests:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomFormApprovalRequestDefinition'
-        agentCards:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentCardDefinition'
-        subAgents:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PipelineDefinition'
-        subAgentInterfaces:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/InterfacesDefinition'
-        deployment:
-          oneOf:
-          - $ref: '#/components/schemas/DeploymentDefinition'
-        interfaces:
-          oneOf:
-          - $ref: '#/components/schemas/InterfacesDefinition'
-        eventTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentEventTriggerDefinition'
-        sdkSteps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SdkStepDefinition'
-        mcpServerPlaceholders:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/McpServerPlaceholderDefinition'
-    AgentToolInterfaceDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type: string
-        inputSchema:
-          type: string
-        outputSchema:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type: boolean
-        annotations:
-          oneOf:
-          - $ref: '#/components/schemas/AgentToolAnnotationsDefinition'
-    AgentCapabilities2:
-      type: object
-      additionalProperties: false
-      properties:
-        streaming:
-          type:
-          - boolean
-          - 'null'
-        pushNotifications:
-          type:
-          - boolean
-          - 'null'
-        extendedAgentCard:
-          type:
-          - boolean
-          - 'null'
-        extensions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AgentExtension2'
-    AgentTriggersDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        allowedType:
-          type:
-          - string
-          - 'null'
-        emailAction:
-          type:
-          - string
-          - 'null'
-    PagedResultOfShareableLink:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShareableLink'
-        totalCount:
-          type: integer
-          format: int32
-    DataSourcesDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-        executionName:
-          type:
-          - string
-          - 'null'
-        chunkingConfig:
-          oneOf:
-          - $ref: '#/components/schemas/ChunkingConfigDefinition'
-        dataSourceType:
-          type: string
-        databaseType:
-          type:
-          - string
-          - 'null'
-        embeddingProvider:
-          type:
-          - string
-          - 'null'
-        isUserSpecific:
-          type: boolean
-        files:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DataSourceFileDefinition'
-        fileCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        configurationJson:
-          type:
-          - string
-          - 'null'
-        credentials:
-          oneOf:
-          - $ref: '#/components/schemas/CredentialsDefinition'
-        isImageProcessingEnabled:
-          type: boolean
-        description:
-          type:
-          - string
-          - 'null'
-        vectorStore:
-          oneOf:
-          - $ref: '#/components/schemas/VectorStoreDefinition'
-        scanDocumentForImages:
-          type: boolean
-        imageProcessingPrompt:
-          type:
-          - string
-          - 'null'
-        storeType:
-          type:
-          - string
-          - 'null'
-        tableDocumentProcessingMode:
-          type:
-          - string
-          - 'null'
-        parserConfigurationJson:
-          type:
-          - string
-          - 'null'
     SdkStepDefinition:
       type: object
       additionalProperties: false
@@ -811,49 +301,17 @@ components:
           type: array
           items:
             type: string
-    PromptDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        versionChangeDescription:
-          type: string
-        promptMessage:
-          type:
-          - string
-          - 'null'
-        isAgentSpecific:
-          type:
-          - boolean
-          - 'null'
-        isGlobal:
-          type:
-          - boolean
-          - 'null'
-        id:
-          type: string
-          format: guid
-    LoopStepBatchConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        batchSize:
-          type: integer
-          format: int32
-        batchDelaySeconds:
-          type: integer
-          format: int32
-    InterfacesDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        emailInbox:
-          oneOf:
-          - $ref: '#/components/schemas/AgentTriggersDefinition'
-        toolInterface:
-          oneOf:
-          - $ref: '#/components/schemas/AgentToolInterfaceDefinition'
+    McpHydrationFailurePolicyDefinition:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
+      enum:
+      - Unspecified
+      - ContinueWithoutUnavailableTools
+      - FailExecution
     ToolsExportDefinition:
       type: object
       additionalProperties: false
@@ -959,43 +417,30 @@ components:
           - string
           - 'null'
           format: guid
-    ConditionalBranchConfigurationDefinition:
+    AgentInterface2:
       type: object
       additionalProperties: false
       properties:
-        id:
+        url:
           type: string
-          format: guid
-        label:
+        protocolBinding:
+          type: string
+        protocolVersion:
+          type: string
+        tenant:
           type:
           - string
           - 'null'
-    LoopStepConfigurationDefinition:
+    BrowserExtensionConfigDefinition:
       type: object
       additionalProperties: false
       properties:
-        stopOnError:
-          type: boolean
-        retryOnError:
-          type: boolean
-        retryOnErrorCount:
-          type: integer
-          format: int32
-        maxIterations:
-          type: integer
-          format: int32
-        executionMode:
+        browserType:
           type: string
-        parallelConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/LoopStepParallelConfigurationDefinition'
-        batchConfiguration:
-          oneOf:
-          - $ref: '#/components/schemas/LoopStepBatchConfigurationDefinition'
-        inputExpression:
-          type:
-          - string
-          - 'null'
+        quickActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickActionDefinition'
     CreateShareableLinkRequest:
       type: object
       additionalProperties: false
@@ -1011,6 +456,56 @@ components:
           type: string
           format: guid
           minLength: 1
+    PagedResultOfShareableLink:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShareableLink'
+        totalCount:
+          type: integer
+          format: int32
+    AgentToolAnnotationsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        destructiveHint:
+          type:
+          - boolean
+          - 'null'
+        idempotentHint:
+          type:
+          - boolean
+          - 'null'
+        openWorldHint:
+          type:
+          - boolean
+          - 'null'
+        readOnlyHint:
+          type:
+          - boolean
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+    ChunkingConfigDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        chunkSize:
+          type: integer
+          format: int32
+        chunkOverlap:
+          type: integer
+          format: int32
+        strategyType:
+          type: string
     PipelineStepDefinition:
       type: object
       additionalProperties: false
@@ -1350,163 +845,6 @@ components:
           type:
           - string
           - 'null'
-    ApprovalRequestDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        message:
-          type:
-          - string
-          - 'null'
-        emailNotification:
-          type: boolean
-        approvalDescription:
-          type:
-          - string
-          - 'null'
-        denialDescription:
-          type:
-          - string
-          - 'null'
-        approvedHandleId:
-          type: string
-          format: guid
-        deniedHandleId:
-          type: string
-          format: guid
-    RouterDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        modelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        routerConfigJson:
-          type:
-          - string
-          - 'null'
-        routerConfig:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RouterConfigurationDefinition'
-        isMultiRoute:
-          type:
-          - boolean
-          - 'null'
-        includeChatHistory:
-          type: boolean
-    AgentSkill2:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        examples:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        inputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        outputModes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        securityRequirements:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SecurityRequirement2'
-    McpHydrationFailurePolicyDefinition:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unspecified
-      - ContinueWithoutUnavailableTools
-      - FailExecution
-      enum:
-      - Unspecified
-      - ContinueWithoutUnavailableTools
-      - FailExecution
-    RouterConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        prompt:
-          type: string
-        isDefault:
-          type:
-          - boolean
-          - 'null'
-    SecurityScheme2:
-      type: object
-      discriminator:
-        propertyName: type
-        mapping:
-          apiKey: '#/components/schemas/ApiKeySecurityScheme2'
-          http: '#/components/schemas/HttpSecurityScheme2'
-          oauth2: '#/components/schemas/OAuth2SecurityScheme2'
-          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme2'
-          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme2'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        type:
-          type: string
-    PositionDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        x:
-          type: string
-        y:
-          type: string
-    QuickActionDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        displayName:
-          type: string
-        quickActionType:
-          type: string
-        assignedAgent:
-          oneOf:
-          - $ref: '#/components/schemas/AssignedAgentDefinition'
     RetryConfigurationDefinition:
       type: object
       additionalProperties: false
@@ -1527,67 +865,32 @@ components:
           format: double
         useJitter:
           type: boolean
-    AssignedAgentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        deploymentId:
-          type: string
-          format: guid
-        agentName:
-          type: string
-        agentUrl:
-          type: string
-        isConfigurable:
-          type: boolean
-    AgentInterface2:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-        protocolBinding:
-          type: string
-        protocolVersion:
-          type: string
-        tenant:
-          type:
-          - string
-          - 'null'
-    CustomFormApprovalRequestDefinition:
+    MemoryDefinition:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        emailNotification:
+        name:
+          type: string
+        isUserSpecific:
           type: boolean
-        title:
+        isConversationScoped:
+          type:
+          - boolean
+          - 'null'
+        defaultValue:
           type:
           - string
           - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        actions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomFormActionDefinition'
-        structuredOutputSchema: {}
-        useCustomFields:
-          type: boolean
-    JsonFormatterStepConfigurationDefinition:
+    LoopStepParallelConfigurationDefinition:
       type: object
       additionalProperties: false
       properties:
-        template:
-          type: string
-        fallbackToRawResultOnUnresolvedPath:
-          type: boolean
+        maxDegreeOfParallelism:
+          type: integer
+          format: int32
     HandleDefinition:
       type: object
       additionalProperties: false
@@ -1613,60 +916,6 @@ components:
         y:
           type: number
           format: float
-    LoopStepParallelConfigurationDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        maxDegreeOfParallelism:
-          type: integer
-          format: int32
-    PythonCodeBlockDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        code:
-          type: string
-        credentialIds:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        oAuthProviderConfigIds:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        isStructuredOutputEnabled:
-          type:
-          - boolean
-          - 'null'
-        includeParsedFiles:
-          type:
-          - boolean
-          - 'null'
-        credentialsDefinitions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CredentialsDefinition'
-    DateTimeTimezoneSettingsDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        mode:
-          type:
-          - string
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
     VectorStoreDefinition:
       type: object
       additionalProperties: false
@@ -1705,39 +954,40 @@ components:
           type:
           - string
           - 'null'
-    SecurityRequirement2:
+    AgentProvider2:
       type: object
       additionalProperties: false
       properties:
-        schemes:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    PromptSegmentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        promptId:
+        organization:
           type: string
-          format: guid
-        order:
+        url:
+          type: string
+    LoopStepConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        stopOnError:
+          type: boolean
+        retryOnError:
+          type: boolean
+        retryOnErrorCount:
           type: integer
           format: int32
-    PipelineStepDependencyDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        parentId:
+        maxIterations:
+          type: integer
+          format: int32
+        executionMode:
           type: string
-          format: guid
-        parentHandleId:
-          type: string
-          format: guid
-        handleId:
-          type: string
-          format: guid
+        parallelConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepParallelConfigurationDefinition'
+        batchConfiguration:
+          oneOf:
+          - $ref: '#/components/schemas/LoopStepBatchConfigurationDefinition'
+        inputExpression:
+          type:
+          - string
+          - 'null'
     ModelDefinition:
       type: object
       additionalProperties: false
@@ -1852,100 +1102,154 @@ components:
           - integer
           - 'null'
           format: int32
-    ToolParametersDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        parameterType:
-          type: string
-        parameterDescription:
-          type: string
-        default:
-          type: string
-        validOptions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        arrayItemType:
-          type:
-          - string
-          - 'null'
-        parameters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolParametersDefinition'
-        requirement:
-          type: string
-    AgentExtension2:
-      type: object
-      additionalProperties: false
-      properties:
-        uri:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        required:
-          type:
-          - boolean
-          - 'null'
-        params:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    WebhookApprovalRequestDefinition:
+    PythonCodeBlockDefinition:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        webhookUrl:
+        code:
           type: string
-        timeoutSeconds:
-          type: integer
-          format: int32
-        maxRetryAttempts:
-          type: integer
-          format: int32
-        message:
+        credentialIds:
           type:
-          - string
+          - object
           - 'null'
-        approvedHandleId:
-          type: string
-          format: guid
-        deniedHandleId:
-          type: string
-          format: guid
-    CreateShareableLinkResponse:
+          additionalProperties:
+            type: string
+        oAuthProviderConfigIds:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        isStructuredOutputEnabled:
+          type:
+          - boolean
+          - 'null'
+        includeParsedFiles:
+          type:
+          - boolean
+          - 'null'
+        credentialsDefinitions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CredentialsDefinition'
+    CustomFormActionDefinition:
       type: object
       additionalProperties: false
       properties:
-        linkId:
+        id:
           type: string
           format: guid
-        linkUrl:
+        label:
           type: string
-        expiresAt:
+        handleId:
           type: string
-          format: date-time
-        linkedVersion:
+          format: guid
+        style:
           type: string
-        hasOlderActiveLink:
-          type: boolean
-        olderLinkVersion:
+        confirmationText:
           type:
           - string
           - 'null'
+        requiresComment:
+          type: boolean
+    AgentDetailItemDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        itemType:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    AgentCardDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        agentCardId:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        supportedInterfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentInterface2'
+        provider:
+          oneOf:
+          - $ref: '#/components/schemas/AgentProvider2'
+        version:
+          type: string
+        documentationUrl:
+          type:
+          - string
+          - 'null'
+        iconUrl:
+          type:
+          - string
+          - 'null'
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities2'
+        securitySchemes:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SecurityScheme2'
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
+        signatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardSignature2'
+        defaultInputModes:
+          type: array
+          items:
+            type: string
+        defaultOutputModes:
+          type: array
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSkill2'
+    SdkStepCredentialReference:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyName:
+          type: string
+        originalCredentialId:
+          type: string
+          format: guid
+        credentialsDefinition:
+          $ref: '#/components/schemas/CredentialsDefinition'
+        required:
+          type: boolean
+        supportedTypes:
+          type: array
+          items:
+            type: string
     McpServerPlaceholderDefinition:
       type: object
       additionalProperties: false
@@ -1976,21 +1280,853 @@ components:
           type:
           - string
           - 'null'
-    ChunkingConfigDefinition:
+    AgentEventTriggerDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        eventTypeName:
+          type:
+          - string
+          - 'null'
+        filters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        triggerMode:
+          type:
+          - string
+          - 'null'
+    PromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        versionChangeDescription:
+          type: string
+        promptMessage:
+          type:
+          - string
+          - 'null'
+        isAgentSpecific:
+          type:
+          - boolean
+          - 'null'
+        isGlobal:
+          type:
+          - boolean
+          - 'null'
+        id:
+          type: string
+          format: guid
+    UserPromptDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        promptDescription:
+          type: string
+    AgentExtension2:
+      type: object
+      additionalProperties: false
+      properties:
+        uri:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    ExportPipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        available:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/PipelineDefinitionMetadata'
+        agent:
+          $ref: '#/components/schemas/PipelineDefinition'
+        dataSources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourcesDefinition'
+        prompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PromptDefinition'
+        tools:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolsExportDefinition'
+        models:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModelDefinition'
+        memories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/MemoryDefinition'
+        pythonCodeBlocks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PythonCodeBlockDefinition'
+        routers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RouterDefinition'
+        approvalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApprovalRequestDefinition'
+        webhookApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WebhookApprovalRequestDefinition'
+        customFormApprovalRequests:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormApprovalRequestDefinition'
+        agentCards:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentCardDefinition'
+        subAgents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PipelineDefinition'
+        subAgentInterfaces:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/InterfacesDefinition'
+        deployment:
+          oneOf:
+          - $ref: '#/components/schemas/DeploymentDefinition'
+        interfaces:
+          oneOf:
+          - $ref: '#/components/schemas/InterfacesDefinition'
+        eventTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentEventTriggerDefinition'
+        sdkSteps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SdkStepDefinition'
+        mcpServerPlaceholders:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/McpServerPlaceholderDefinition'
+    CustomFormApprovalRequestDefinition:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
           format: guid
-        chunkSize:
-          type: integer
-          format: int32
-        chunkOverlap:
-          type: integer
-          format: int32
-        strategyType:
+        emailNotification:
+          type: boolean
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        actions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomFormActionDefinition'
+        structuredOutputSchema: {}
+        useCustomFields:
+          type: boolean
+    RouterConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
           type: string
+          format: guid
+        prompt:
+          type: string
+        isDefault:
+          type:
+          - boolean
+          - 'null'
+    CredentialsDataListDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    JsonFormatterStepConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        template:
+          type: string
+        fallbackToRawResultOnUnresolvedPath:
+          type: boolean
+    AgentTriggersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        allowedType:
+          type:
+          - string
+          - 'null'
+        emailAction:
+          type:
+          - string
+          - 'null'
+    LoopStepBatchConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        batchSize:
+          type: integer
+          format: int32
+        batchDelaySeconds:
+          type: integer
+          format: int32
+    AgentCardSignature2:
+      type: object
+      additionalProperties: false
+      properties:
+        protected:
+          type: string
+        signature:
+          type: string
+        header:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    QuickActionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        quickActionType:
+          type: string
+        assignedAgent:
+          oneOf:
+          - $ref: '#/components/schemas/AssignedAgentDefinition'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    AgentCapabilities2:
+      type: object
+      additionalProperties: false
+      properties:
+        streaming:
+          type:
+          - boolean
+          - 'null'
+        pushNotifications:
+          type:
+          - boolean
+          - 'null'
+        extendedAgentCard:
+          type:
+          - boolean
+          - 'null'
+        extensions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AgentExtension2'
+    InterfacesDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        emailInbox:
+          oneOf:
+          - $ref: '#/components/schemas/AgentTriggersDefinition'
+        toolInterface:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolInterfaceDefinition'
+    DataSourcesDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
+        executionName:
+          type:
+          - string
+          - 'null'
+        chunkingConfig:
+          oneOf:
+          - $ref: '#/components/schemas/ChunkingConfigDefinition'
+        dataSourceType:
+          type: string
+        databaseType:
+          type:
+          - string
+          - 'null'
+        embeddingProvider:
+          type:
+          - string
+          - 'null'
+        isUserSpecific:
+          type: boolean
+        files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DataSourceFileDefinition'
+        fileCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        configurationJson:
+          type:
+          - string
+          - 'null'
+        credentials:
+          oneOf:
+          - $ref: '#/components/schemas/CredentialsDefinition'
+        isImageProcessingEnabled:
+          type: boolean
+        description:
+          type:
+          - string
+          - 'null'
+        vectorStore:
+          oneOf:
+          - $ref: '#/components/schemas/VectorStoreDefinition'
+        scanDocumentForImages:
+          type: boolean
+        imageProcessingPrompt:
+          type:
+          - string
+          - 'null'
+        storeType:
+          type:
+          - string
+          - 'null'
+        tableDocumentProcessingMode:
+          type:
+          - string
+          - 'null'
+        parserConfigurationJson:
+          type:
+          - string
+          - 'null'
+    DeploymentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        deploymentIcon:
+          type:
+          - string
+          - 'null'
+        deploymentDescription:
+          type: string
+        userPrompts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UserPromptDefinition'
+        deploymentPrompt:
+          type:
+          - string
+          - 'null'
+        isRecommended:
+          type: boolean
+        deploymentType:
+          type: string
+        conversationType:
+          type: string
+        aboutJson:
+          type:
+          - string
+          - 'null'
+        supportedInputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        browserExtensionConfig:
+          oneOf:
+          - $ref: '#/components/schemas/BrowserExtensionConfigDefinition'
+        displayConsumptionInfo:
+          type: boolean
+    PromptSegmentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        promptId:
+          type: string
+          format: guid
+        order:
+          type: integer
+          format: int32
+    ShareableLink:
+      type: object
+      additionalProperties: false
+      properties:
+        linkId:
+          type: string
+          format: guid
+        linkIdentifier:
+          type: string
+        linkUrl:
+          type:
+          - string
+          - 'null'
+        versionId:
+          type: string
+          format: guid
+        versionNumber:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        consumptionCount:
+          type: integer
+          format: int32
+        maxConsumptions:
+          type: integer
+          format: int32
+        isActive:
+          type: boolean
+        createdByUserName:
+          type:
+          - string
+          - 'null'
+    WebhookApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        webhookUrl:
+          type: string
+        timeoutSeconds:
+          type: integer
+          format: int32
+        maxRetryAttempts:
+          type: integer
+          format: int32
+        message:
+          type:
+          - string
+          - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    RouterDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        modelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        routerConfigJson:
+          type:
+          - string
+          - 'null'
+        routerConfig:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RouterConfigurationDefinition'
+        isMultiRoute:
+          type:
+          - boolean
+          - 'null'
+        includeChatHistory:
+          type: boolean
+    ToolHeadersDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        sensitive:
+          type: boolean
+    ConditionalBranchConfigurationDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        label:
+          type:
+          - string
+          - 'null'
+    AgentToolInterfaceDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type: string
+        inputSchema:
+          type: string
+        outputSchema:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type: boolean
+        annotations:
+          oneOf:
+          - $ref: '#/components/schemas/AgentToolAnnotationsDefinition'
+    PositionDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        x:
+          type: string
+        y:
+          type: string
+    DateTimeTimezoneSettingsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        mode:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    AssignedAgentDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        deploymentId:
+          type: string
+          format: guid
+        agentName:
+          type: string
+        agentUrl:
+          type: string
+        isConfigurable:
+          type: boolean
+    PipelineDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        executionName:
+          type:
+          - string
+          - 'null'
+        agentIcon:
+          type:
+          - string
+          - 'null'
+        agentDescription:
+          type: string
+        markdownDescription:
+          type:
+          - string
+          - 'null'
+        tagline:
+          type:
+          - string
+          - 'null'
+        videoLink:
+          type:
+          - string
+          - 'null'
+        industry:
+          type:
+          - string
+          - 'null'
+        subIndustries:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentDetailItemDefinition'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStepDefinition'
+        behaviours:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        agentUnicodeIcon:
+          type:
+          - string
+          - 'null'
+        agentIconBase64:
+          type:
+          - string
+          - 'null'
+        alignment:
+          type: string
+        saveToolResponsesToHistory:
+          type:
+          - boolean
+          - 'null'
+    CreateShareableLinkResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        linkId:
+          type: string
+          format: guid
+        linkUrl:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+        linkedVersion:
+          type: string
+        hasOlderActiveLink:
+          type: boolean
+        olderLinkVersion:
+          type:
+          - string
+          - 'null'
+    SecurityScheme2:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          apiKey: '#/components/schemas/ApiKeySecurityScheme2'
+          http: '#/components/schemas/HttpSecurityScheme2'
+          oauth2: '#/components/schemas/OAuth2SecurityScheme2'
+          openIdConnect: '#/components/schemas/OpenIdConnectSecurityScheme2'
+          mutualTLS: '#/components/schemas/MutualTlsSecurityScheme2'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+    DataSourceFileDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        dataSourceId:
+          type: string
+          format: guid
+        filePath:
+          type:
+          - string
+          - 'null'
+        inputToken:
+          type:
+          - string
+          - 'null'
+    CredentialsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        credentialType:
+          type: string
+        sourceType:
+          type: string
+        credentialDataList:
+          type: array
+          items:
+            $ref: '#/components/schemas/CredentialsDataListDefinition'
+        displayIdentifierName:
+          type:
+          - string
+          - 'null'
+        administrativeScope:
+          type:
+          - string
+          - 'null'
+        origin:
+          type:
+          - string
+          - 'null'
+        customCredentials:
+          oneOf:
+          - $ref: '#/components/schemas/CustomCredentialsDefinition'
+        id:
+          type: string
+          format: guid
+    ApprovalRequestDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        message:
+          type:
+          - string
+          - 'null'
+        emailNotification:
+          type: boolean
+        approvalDescription:
+          type:
+          - string
+          - 'null'
+        denialDescription:
+          type:
+          - string
+          - 'null'
+        approvedHandleId:
+          type: string
+          format: guid
+        deniedHandleId:
+          type: string
+          format: guid
+    CustomCredentialsDefinition:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        credentialType:
+          type: string
+        credentialData:
+          type:
+          - string
+          - 'null'
     PipelineDefinitionMetadata:
       type: object
       additionalProperties: false
@@ -2053,190 +2189,54 @@ components:
           type:
           - string
           - 'null'
-    AgentToolAnnotationsDefinition:
+    SecurityRequirement2:
       type: object
       additionalProperties: false
       properties:
-        destructiveHint:
-          type:
-          - boolean
-          - 'null'
-        idempotentHint:
-          type:
-          - boolean
-          - 'null'
-        openWorldHint:
-          type:
-          - boolean
-          - 'null'
-        readOnlyHint:
-          type:
-          - boolean
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-    ShareableLink:
-      type: object
-      additionalProperties: false
-      properties:
-        linkId:
-          type: string
-          format: guid
-        linkIdentifier:
-          type: string
-        linkUrl:
-          type:
-          - string
-          - 'null'
-        versionId:
-          type: string
-          format: guid
-        versionNumber:
-          type:
-          - string
-          - 'null'
-        createdAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        consumptionCount:
-          type: integer
-          format: int32
-        maxConsumptions:
-          type: integer
-          format: int32
-        isActive:
-          type: boolean
-        createdByUserName:
-          type:
-          - string
-          - 'null'
-    CustomCredentialsDefinition:
+        schemes:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    AgentSkill2:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
-          format: guid
         name:
           type: string
-        credentialType:
+        description:
           type: string
-        credentialData:
-          type:
-          - string
-          - 'null'
-    DeploymentDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        deploymentIcon:
-          type:
-          - string
-          - 'null'
-        deploymentDescription:
-          type: string
-        userPrompts:
-          type:
-          - array
-          - 'null'
+        tags:
+          type: array
           items:
-            $ref: '#/components/schemas/UserPromptDefinition'
-        deploymentPrompt:
-          type:
-          - string
-          - 'null'
-        isRecommended:
-          type: boolean
-        deploymentType:
-          type: string
-        conversationType:
-          type: string
-        aboutJson:
-          type:
-          - string
-          - 'null'
-        supportedInputModes:
+            type: string
+        examples:
           type:
           - array
           - 'null'
           items:
             type: string
-        browserExtensionConfig:
-          oneOf:
-          - $ref: '#/components/schemas/BrowserExtensionConfigDefinition'
-        displayConsumptionInfo:
-          type: boolean
-    CredentialsDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        credentialType:
-          type: string
-        sourceType:
-          type: string
-        credentialDataList:
-          type: array
-          items:
-            $ref: '#/components/schemas/CredentialsDataListDefinition'
-        displayIdentifierName:
+        inputModes:
           type:
-          - string
+          - array
           - 'null'
-        administrativeScope:
-          type:
-          - string
-          - 'null'
-        origin:
-          type:
-          - string
-          - 'null'
-        customCredentials:
-          oneOf:
-          - $ref: '#/components/schemas/CustomCredentialsDefinition'
-        id:
-          type: string
-          format: guid
-    DataSourceFileDefinition:
-      type: object
-      additionalProperties: false
-      properties:
-        dataSourceId:
-          type: string
-          format: guid
-        filePath:
-          type:
-          - string
-          - 'null'
-        inputToken:
-          type:
-          - string
-          - 'null'
-    SdkStepCredentialReference:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyName:
-          type: string
-        originalCredentialId:
-          type: string
-          format: guid
-        credentialsDefinition:
-          $ref: '#/components/schemas/CredentialsDefinition'
-        required:
-          type: boolean
-        supportedTypes:
-          type: array
           items:
             type: string
+        outputModes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        securityRequirements:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SecurityRequirement2'
   securitySchemes:
     ApiKey:
       type: apiKey

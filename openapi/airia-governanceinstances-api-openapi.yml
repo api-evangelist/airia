@@ -1293,63 +1293,33 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProblemDetails:
+    RecordApprovalRequest:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
+      required:
+      - decision
       properties:
-        type:
+        decision:
+          $ref: '#/components/schemas/ApprovalDecision'
+        comments:
           type:
           - string
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
+    StageOutputSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        stageName:
+          type: string
+        stageOrder:
+          type: integer
           format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    ArchiveUseCaseRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        reason:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
-    AutomationSummaryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        automationId:
-          type: string
-          format: guid
-        automationType:
-          type: string
-        timing:
-          type: string
-        displayName:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/AutomationExecutionStatus'
-        externalJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        startedAt:
+        finalStatus:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        outcome:
+          oneOf:
+          - $ref: '#/components/schemas/StageOutcome'
+        enteredAt:
           type:
           - string
           - 'null'
@@ -1359,63 +1329,123 @@ components:
           - string
           - 'null'
           format: date-time
-        error:
-          type:
-          - string
-          - 'null'
-        sequence:
-          type:
-          - integer
-          - 'null'
-          format: int32
         durationMs:
           type:
           - integer
           - 'null'
           format: int64
-    DisplaySectionV2Dto:
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationOutputSummary'
+    WorkflowHistoryEntry:
       type: object
       additionalProperties: false
       properties:
-        actionable:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-        representational:
-          type: array
-          items:
-            $ref: '#/components/schemas/DisplaySectionItemDto'
-    ApprovalDecision:
-      type: string
-      description: ''
-      x-enumNames:
-      - Approved
-      - Rejected
-      - Deferred
-      - Bypassed
-      enum:
-      - Approved
-      - Rejected
-      - Deferred
-      - Bypassed
-    OverrideInfoDto:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
+        eventType:
           type: string
-        reason:
-          type:
-          - string
-          - 'null'
-        performedByUserId:
+        timestamp:
+          type: string
+          format: date-time
+        userId:
           type:
           - string
           - 'null'
           format: guid
-        performedAt:
+        stageOrder:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        stageName:
+          type:
+          - string
+          - 'null'
+        details:
           type: string
-          format: date-time
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    PagedResultOfWorkflowInstanceDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowInstanceDto'
+        totalCount:
+          type: integer
+          format: int32
+    WorkflowLifecycleActionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+    UserDecisionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          $ref: '#/components/schemas/UserDecision'
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+    StageAutomationTailStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - Running
+      - Completed
+      - Abandoned
+      enum:
+      - Pending
+      - Running
+      - Completed
+      - Abandoned
+    BulkMigrateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseIds
+      properties:
+        useCaseIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        targetVersionId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    GateBlockingDto:
+      type: object
+      additionalProperties: false
+      properties:
+        isBlocked:
+          type: boolean
+        reason:
+          type:
+          - string
+          - 'null'
+        blockingArtifacts:
+          type: array
+          items:
+            type: string
+        riskStale:
+          type: boolean
     WorkflowInstanceDto:
       type: object
       additionalProperties: false
@@ -1458,117 +1488,6 @@ components:
         skippedActionCount:
           type: integer
           format: int32
-    ExecutionOutcome:
-      type: string
-      description: ''
-      x-enumNames:
-      - Success
-      - Skipped
-      - Failed
-      - InProgress
-      enum:
-      - Success
-      - Skipped
-      - Failed
-      - InProgress
-    UseCaseMigrationResult:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseId
-      - status
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        status:
-          type: string
-        result:
-          oneOf:
-          - $ref: '#/components/schemas/WorkflowMigrationResult'
-        reason:
-          type:
-          - string
-          - 'null'
-    StageAutomationTailStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - Running
-      - Completed
-      - Abandoned
-      enum:
-      - Pending
-      - Running
-      - Completed
-      - Abandoned
-    StartWorkflowRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - workflowId
-      - useCaseId
-      properties:
-        workflowId:
-          type: string
-          format: guid
-          minLength: 1
-        useCaseId:
-          type: string
-          format: guid
-          minLength: 1
-    WorkflowLifecycleActionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        reason:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
-    RecordAttestationRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - attestationType
-      properties:
-        attestationType:
-          type: string
-          minLength: 1
-    StageProgressionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        workflowInstanceId:
-          type: string
-          format: guid
-        useCaseId:
-          type: string
-          format: guid
-        status:
-          $ref: '#/components/schemas/WorkflowInstanceStatus'
-        currentStageOrder:
-          type: integer
-          format: int32
-        canRegress:
-          type: boolean
-        regressTargetStageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        nextStageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        currentStageRegressesOnSatisfied:
-          type: boolean
-        stages:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageProgressionStepDto'
     AutomationExecutionStatus:
       type: string
       description: ''
@@ -1584,61 +1503,24 @@ components:
       - Completed
       - Failed
       - Skipped
-    AttestationRecord:
+    OverrideInfoDto:
       type: object
       additionalProperties: false
       properties:
-        attested:
-          type: boolean
-        attestedByUserId:
+        type:
+          type: string
+        reason:
+          type:
+          - string
+          - 'null'
+        performedByUserId:
           type:
           - string
           - 'null'
           format: guid
-        attestedAt:
-          type:
-          - string
-          - 'null'
+        performedAt:
+          type: string
           format: date-time
-    PagedResultOfWorkflowInstanceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowInstanceDto'
-        totalCount:
-          type: integer
-          format: int32
-    BypassGateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - reason
-      properties:
-        reason:
-          type: string
-          maxLength: 2000
-          minLength: 1
-    AutomationOutputSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        automationType:
-          type: string
-        timing:
-          type: string
-        status:
-          $ref: '#/components/schemas/AutomationExecutionStatus'
-        durationMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        output:
-          oneOf:
-          - $ref: '#/components/schemas/ActionOutput'
     WorkflowDecision:
       type: string
       description: ''
@@ -1650,45 +1532,296 @@ components:
       - Approved
       - Cancelled
       - Failed
-    WorkflowInstanceStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Active
-      - Completed
-      - Suspended
-      - Cancelled
-      - Failed
-      enum:
-      - Active
-      - Completed
-      - Suspended
-      - Cancelled
-      - Failed
-    UserDecisionRequest:
+    WorkflowOutput:
       type: object
       additionalProperties: false
-      required:
-      - decision
       properties:
         decision:
-          $ref: '#/components/schemas/UserDecision'
+          $ref: '#/components/schemas/WorkflowDecision'
+        decisionReason:
+          type:
+          - string
+          - 'null'
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        totalDurationMs:
+          type: integer
+          format: int64
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageOutputSummary'
+    QuarantineUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
         reason:
           type:
           - string
           - 'null'
           maxLength: 2000
-    UserDecision:
+    ExecutionOutcome:
       type: string
       description: ''
       x-enumNames:
-      - Continue
-      - Retry
-      - Abort
+      - Success
+      - Skipped
+      - Failed
+      - InProgress
       enum:
-      - Continue
-      - Retry
-      - Abort
+      - Success
+      - Skipped
+      - Failed
+      - InProgress
+    ApprovalRecordDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        stageInstanceId:
+          type: string
+          format: guid
+        approverUserId:
+          type: string
+          format: guid
+        decision:
+          $ref: '#/components/schemas/ApprovalDecision'
+        comments:
+          type:
+          - string
+          - 'null'
+        decidedAt:
+          type: string
+          format: date-time
+        invalidatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        invalidatedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    DisplaySectionItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        order:
+          type: integer
+          format: int32
+        systemRequirement:
+          type: boolean
+        options:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+        isRequired:
+          type: boolean
+        requirementReason:
+          type:
+          - string
+          - 'null'
+    StageProgressionStepDto:
+      type: object
+      additionalProperties: false
+      properties:
+        stageId:
+          type: string
+          format: guid
+        stageInstanceId:
+          type: string
+          format: guid
+        stageKey:
+          type: string
+        name:
+          type: string
+        order:
+          type: integer
+          format: int32
+        status:
+          $ref: '#/components/schemas/StageInstanceStatus'
+        isCurrent:
+          type: boolean
+        isSteadyState:
+          type: boolean
+        wasEntered:
+          type: boolean
+        willTraverse:
+          type: boolean
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationSummaryDto'
+    StageAutomationProgressDto:
+      type: object
+      additionalProperties: false
+      properties:
+        stageEntryExecutionId:
+          type: string
+          format: guid
+        batchId:
+          type: string
+          format: guid
+        batchCreatedAt:
+          type: string
+          format: date-time
+        timing:
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        tailStatus:
+          oneOf:
+          - $ref: '#/components/schemas/StageAutomationTailStatus'
+        blocksStageExit:
+          type: boolean
+        currentSequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        currentAutomationType:
+          type:
+          - string
+          - 'null'
+        completedSteps:
+          type: integer
+          format: int32
+        finishedSteps:
+          type: integer
+          format: int32
+        failedSteps:
+          type: integer
+          format: int32
+        skippedSteps:
+          type: integer
+          format: int32
+        totalSteps:
+          type: integer
+          format: int32
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationSummaryDto'
+    StartWorkflowRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - workflowId
+      - useCaseId
+      properties:
+        workflowId:
+          type: string
+          format: guid
+          minLength: 1
+        useCaseId:
+          type: string
+          format: guid
+          minLength: 1
+    ApprovalDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+      enum:
+      - Approved
+      - Rejected
+      - Deferred
+      - Bypassed
+    ActionOutput:
+      type: object
+      discriminator:
+        propertyName: $type
+        mapping:
+          WebhookOutput: '#/components/schemas/WebhookOutput'
+          RunEvaluationOutput: '#/components/schemas/RunEvaluationOutput'
+          RunRedTeamOutput: '#/components/schemas/RunRedTeamOutput'
+          HttpRequestOutput: '#/components/schemas/HttpRequestOutput'
+          AddGateRequirementOutput: '#/components/schemas/AddGateRequirementOutput'
+          RemoveGateRequirementOutput: '#/components/schemas/RemoveGateRequirementOutput'
+          RegressToStageOutput: '#/components/schemas/RegressToStageOutput'
+          SdkStepOutput: '#/components/schemas/SdkStepOutput'
+          RunAutomationOutput: '#/components/schemas/RunAutomationOutput'
+          RunSystemAgentOutput: '#/components/schemas/RunSystemAgentOutput'
+          GenerateNutritionLabelOutput: '#/components/schemas/GenerateNutritionLabelOutput'
+          GenerateReceiptOutput: '#/components/schemas/GenerateReceiptOutput'
+          SealNutritionLabelOutput: '#/components/schemas/SealNutritionLabelOutput'
+          RunInitialRiskAnalysisOutput: '#/components/schemas/RunInitialRiskAnalysisOutput'
+          RunInherentRiskAnalysisOutput: '#/components/schemas/RunInherentRiskAnalysisOutput'
+          RunResidualRiskAnalysisOutput: '#/components/schemas/RunResidualRiskAnalysisOutput'
+          RunAssessmentOutput: '#/components/schemas/RunAssessmentOutput'
+          NotifyOutput: '#/components/schemas/NotifyOutput'
+      x-abstract: true
+      additionalProperties: false
+      required:
+      - $type
+      properties:
+        outcome:
+          $ref: '#/components/schemas/ExecutionOutcome'
+        message:
+          type:
+          - string
+          - 'null'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        $type:
+          type: string
+    GovernanceRequestDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        workflowInstanceId:
+          type: string
+          format: guid
+        stageInstanceId:
+          type: string
+          format: guid
+        actionType:
+          type: string
+        status:
+          type: string
+        requestedByUserId:
+          type: string
+          format: guid
+        requestedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        executionError:
+          type:
+          - string
+          - 'null'
+    ArchiveUseCaseRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
     StageInstanceDto:
       type: object
       additionalProperties: false
@@ -1761,6 +1894,622 @@ components:
         blocking:
           oneOf:
           - $ref: '#/components/schemas/GateBlockingDto'
+    GovernanceGateCheckResult:
+      type: object
+      additionalProperties: false
+      properties:
+        isBlocked:
+          type: boolean
+        governanceRequestId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        workflowInstanceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        stageInstanceId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        blockReason:
+          type:
+          - string
+          - 'null'
+    AutomationOutputSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        automationType:
+          type: string
+        timing:
+          type: string
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        output:
+          oneOf:
+          - $ref: '#/components/schemas/ActionOutput'
+    CheckGateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - actionType
+      - actionPayload
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+          minLength: 1
+        actionType:
+          type: string
+          minLength: 1
+        actionPayload:
+          type: string
+          minLength: 1
+    ArtifactCriterion:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+        category:
+          type:
+          - string
+          - 'null'
+        subCategories:
+          type: array
+          items:
+            type: string
+    PendingAction:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        type:
+          type: string
+        message:
+          type: string
+        targetStageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        createdAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    AttestationRecord:
+      type: object
+      additionalProperties: false
+      properties:
+        attested:
+          type: boolean
+        attestedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        attestedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    DocumentSlot:
+      type: object
+      additionalProperties: false
+      properties:
+        slotKey:
+          type: string
+        label:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        required:
+          type: boolean
+        acceptedFileTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    AutomationSummaryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        automationId:
+          type: string
+          format: guid
+        automationType:
+          type: string
+        timing:
+          type: string
+        displayName:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/AutomationExecutionStatus'
+        externalJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        error:
+          type:
+          - string
+          - 'null'
+        sequence:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    StageProgressionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        workflowInstanceId:
+          type: string
+          format: guid
+        useCaseId:
+          type: string
+          format: guid
+        status:
+          $ref: '#/components/schemas/WorkflowInstanceStatus'
+        currentStageOrder:
+          type: integer
+          format: int32
+        canRegress:
+          type: boolean
+        regressTargetStageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        nextStageId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        currentStageRegressesOnSatisfied:
+          type: boolean
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageProgressionStepDto'
+    InstanceUpdatePlanDto:
+      type: object
+      additionalProperties: false
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        useCaseName:
+          type:
+          - string
+          - 'null'
+        workflowInstanceId:
+          type: string
+          format: guid
+        currentVersion:
+          type: integer
+          format: int32
+        outcome:
+          type: string
+        regressionTargetStageKey:
+          type:
+          - string
+          - 'null'
+        approvalsInvalidated:
+          type: integer
+          format: int32
+        stagesReset:
+          type: array
+          items:
+            type: string
+        orphanedBranchStagesRetired:
+          type: integer
+          format: int32
+        blockers:
+          type: array
+          items:
+            type: string
+    ConditionNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+    WorkflowMigrationResult:
+      type: object
+      additionalProperties: false
+      required:
+      - workflowInstanceId
+      properties:
+        workflowInstanceId:
+          type: string
+          format: guid
+        fromVersion:
+          type: integer
+          format: int32
+        toVersion:
+          type: integer
+          format: int32
+        material:
+          type: boolean
+        regressed:
+          type: boolean
+        addedStageKeys:
+          type: array
+          items:
+            type: string
+        removedStageKeys:
+          type: array
+          items:
+            type: string
+    WorkflowUpgradeAvailability:
+      type: object
+      additionalProperties: false
+      required:
+      - targetVersionId
+      properties:
+        currentVersion:
+          type: integer
+          format: int32
+        availableVersion:
+          type: integer
+          format: int32
+        availableVersionLabel:
+          type:
+          - string
+          - 'null'
+        tier:
+          type:
+          - string
+          - 'null'
+        changedItemKeys:
+          type: array
+          items:
+            type: string
+        targetVersionId:
+          type: string
+          format: guid
+        isMaterial:
+          type: boolean
+        isCrossFamily:
+          type: boolean
+        targetWorkflowName:
+          type:
+          - string
+          - 'null'
+    RegressStageRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason:
+          type:
+          - string
+          - 'null'
+          maxLength: 2000
+    RecordAttestationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - attestationType
+      properties:
+        attestationType:
+          type: string
+          minLength: 1
+    BypassGateRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - reason
+      properties:
+        reason:
+          type: string
+          maxLength: 2000
+          minLength: 1
+    UserDecision:
+      type: string
+      description: ''
+      x-enumNames:
+      - Continue
+      - Retry
+      - Abort
+      enum:
+      - Continue
+      - Retry
+      - Abort
+    UseCaseMigrationResult:
+      type: object
+      additionalProperties: false
+      required:
+      - useCaseId
+      - status
+      properties:
+        useCaseId:
+          type: string
+          format: guid
+        status:
+          type: string
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowMigrationResult'
+        reason:
+          type:
+          - string
+          - 'null'
+    StageRequirementStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        approvalResolution:
+          type:
+          - string
+          - 'null'
+        approvalsReceived:
+          type: integer
+          format: int32
+        approvalsRequired:
+          type: integer
+          format: int32
+        evaluationResults:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ThresholdResult'
+        artifactStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        documentSlotStatus:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        artifactRequirementReasons:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        attestationStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttestationRecord'
+        approvalNotificationSentAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        defaultApprovalResolution:
+          type:
+          - string
+          - 'null'
+        defaultApprovalsReceived:
+          type: integer
+          format: int32
+        defaultApprovalsRequired:
+          type: integer
+          format: int32
+        requiresApprovalOverride:
+          type:
+          - boolean
+          - 'null'
+    UpdatePreviewResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        familyId:
+          type: string
+          format: guid
+        targetVersionId:
+          type: string
+          format: guid
+        targetVersion:
+          type: integer
+          format: int32
+        targetVersionLabel:
+          type:
+          - string
+          - 'null'
+        anyRegressions:
+          type: boolean
+        plans:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceUpdatePlanDto'
+    DisplaySectionV2Dto:
+      type: object
+      additionalProperties: false
+      properties:
+        actionable:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+        representational:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisplaySectionItemDto'
+    RecordArtifactRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - artifactType
+      properties:
+        artifactType:
+          type: string
+          minLength: 1
+        slotKey:
+          type:
+          - string
+          - 'null'
+    ThresholdResult:
+      type: object
+      additionalProperties: false
+      properties:
+        actualValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        requiredValue:
+          type: number
+          format: double
+        passed:
+          type: boolean
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        evaluatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    StageOutcome:
+      type: string
+      description: ''
+      x-enumNames:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+      enum:
+      - NoDecision
+      - Approved
+      - Rejected
+      - FlaggedForReview
+    RecordEvaluationResultRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - metricName
+      - actualValue
+      properties:
+        metricName:
+          type: string
+          minLength: 1
+        actualValue:
+          type: number
+          format: double
+        evaluationJobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    WorkflowInstanceDetailDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        workflowId:
+          type: string
+          format: guid
+        workflowName:
+          type: string
+        workflowFamilyId:
+          type: string
+          format: guid
+        workflowVersion:
+          type: integer
+          format: int32
+        useCaseId:
+          type: string
+          format: guid
+        status:
+          $ref: '#/components/schemas/WorkflowInstanceStatus'
+        currentStageOrder:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        initiatedByUserId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        stageInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/StageInstanceDto'
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowHistoryEntry'
+        pendingActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PendingAction'
+        output:
+          oneOf:
+          - $ref: '#/components/schemas/WorkflowOutput'
     AutomationExecutionRecord:
       type: object
       additionalProperties: false
@@ -1832,249 +2581,6 @@ components:
           - string
           - 'null'
           format: date-time
-    CheckGateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseId
-      - actionType
-      - actionPayload
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-          minLength: 1
-        actionType:
-          type: string
-          minLength: 1
-        actionPayload:
-          type: string
-          minLength: 1
-    QuarantineUseCaseRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        reason:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
-    RecordEvaluationResultRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - metricName
-      - actualValue
-      properties:
-        metricName:
-          type: string
-          minLength: 1
-        actualValue:
-          type: number
-          format: double
-        evaluationJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    DocumentSlot:
-      type: object
-      additionalProperties: false
-      properties:
-        slotKey:
-          type: string
-        label:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        required:
-          type: boolean
-        acceptedFileTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    StageProgressionStepDto:
-      type: object
-      additionalProperties: false
-      properties:
-        stageId:
-          type: string
-          format: guid
-        stageInstanceId:
-          type: string
-          format: guid
-        stageKey:
-          type: string
-        name:
-          type: string
-        order:
-          type: integer
-          format: int32
-        status:
-          $ref: '#/components/schemas/StageInstanceStatus'
-        isCurrent:
-          type: boolean
-        isSteadyState:
-          type: boolean
-        wasEntered:
-          type: boolean
-        willTraverse:
-          type: boolean
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationSummaryDto'
-    WorkflowHistoryEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        eventType:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        stageOrder:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        stageName:
-          type:
-          - string
-          - 'null'
-        details:
-          type: string
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-    GateBlockingDto:
-      type: object
-      additionalProperties: false
-      properties:
-        isBlocked:
-          type: boolean
-        reason:
-          type:
-          - string
-          - 'null'
-        blockingArtifacts:
-          type: array
-          items:
-            type: string
-        riskStale:
-          type: boolean
-    WorkflowUpgradeAvailability:
-      type: object
-      additionalProperties: false
-      required:
-      - targetVersionId
-      properties:
-        currentVersion:
-          type: integer
-          format: int32
-        availableVersion:
-          type: integer
-          format: int32
-        availableVersionLabel:
-          type:
-          - string
-          - 'null'
-        tier:
-          type:
-          - string
-          - 'null'
-        changedItemKeys:
-          type: array
-          items:
-            type: string
-        targetVersionId:
-          type: string
-          format: guid
-        isMaterial:
-          type: boolean
-        isCrossFamily:
-          type: boolean
-        targetWorkflowName:
-          type:
-          - string
-          - 'null'
-    DefaultApproversDto:
-      type: object
-      additionalProperties: false
-      properties:
-        approverUserIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approverGroupIds:
-          type: array
-          items:
-            type: string
-            format: guid
-        approvalLogic:
-          type: string
-    InstanceUpdatePlanDto:
-      type: object
-      additionalProperties: false
-      properties:
-        useCaseId:
-          type: string
-          format: guid
-        useCaseName:
-          type:
-          - string
-          - 'null'
-        workflowInstanceId:
-          type: string
-          format: guid
-        currentVersion:
-          type: integer
-          format: int32
-        outcome:
-          type: string
-        regressionTargetStageKey:
-          type:
-          - string
-          - 'null'
-        approvalsInvalidated:
-          type: integer
-          format: int32
-        stagesReset:
-          type: array
-          items:
-            type: string
-        orphanedBranchStagesRetired:
-          type: integer
-          format: int32
-        blockers:
-          type: array
-          items:
-            type: string
-    RecordArtifactRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - artifactType
-      properties:
-        artifactType:
-          type: string
-          minLength: 1
-        slotKey:
-          type:
-          - string
-          - 'null'
     StageGateConfig:
       type: object
       additionalProperties: false
@@ -2138,514 +2644,37 @@ components:
           - $ref: '#/components/schemas/ConditionNode'
         regressOnSatisfied:
           type: boolean
-    UpdatePreviewResponse:
+    DefaultApproversDto:
       type: object
       additionalProperties: false
       properties:
-        familyId:
-          type: string
-          format: guid
-        targetVersionId:
-          type: string
-          format: guid
-        targetVersion:
-          type: integer
-          format: int32
-        targetVersionLabel:
-          type:
-          - string
-          - 'null'
-        anyRegressions:
-          type: boolean
-        plans:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceUpdatePlanDto'
-    ConditionNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-    StageRequirementStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        approvalResolution:
-          type:
-          - string
-          - 'null'
-        approvalsReceived:
-          type: integer
-          format: int32
-        approvalsRequired:
-          type: integer
-          format: int32
-        evaluationResults:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ThresholdResult'
-        artifactStatus:
-          type: object
-          additionalProperties:
-            type: boolean
-        documentSlotStatus:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        artifactRequirementReasons:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        attestationStatus:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/AttestationRecord'
-        approvalNotificationSentAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        defaultApprovalResolution:
-          type:
-          - string
-          - 'null'
-        defaultApprovalsReceived:
-          type: integer
-          format: int32
-        defaultApprovalsRequired:
-          type: integer
-          format: int32
-        requiresApprovalOverride:
-          type:
-          - boolean
-          - 'null'
-    BulkMigrateRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - useCaseIds
-      properties:
-        useCaseIds:
+        approverUserIds:
           type: array
           items:
             type: string
             format: guid
-        targetVersionId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    StageOutcome:
+        approverGroupIds:
+          type: array
+          items:
+            type: string
+            format: guid
+        approvalLogic:
+          type: string
+    WorkflowInstanceStatus:
       type: string
       description: ''
       x-enumNames:
-      - NoDecision
-      - Approved
-      - Rejected
-      - FlaggedForReview
-      enum:
-      - NoDecision
-      - Approved
-      - Rejected
-      - FlaggedForReview
-    RecordApprovalRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - decision
-      properties:
-        decision:
-          $ref: '#/components/schemas/ApprovalDecision'
-        comments:
-          type:
-          - string
-          - 'null'
-    StageAutomationProgressDto:
-      type: object
-      additionalProperties: false
-      properties:
-        stageEntryExecutionId:
-          type: string
-          format: guid
-        batchId:
-          type: string
-          format: guid
-        batchCreatedAt:
-          type: string
-          format: date-time
-        timing:
-          type: string
-        status:
-          $ref: '#/components/schemas/AutomationExecutionStatus'
-        tailStatus:
-          oneOf:
-          - $ref: '#/components/schemas/StageAutomationTailStatus'
-        blocksStageExit:
-          type: boolean
-        currentSequence:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        currentAutomationType:
-          type:
-          - string
-          - 'null'
-        completedSteps:
-          type: integer
-          format: int32
-        finishedSteps:
-          type: integer
-          format: int32
-        failedSteps:
-          type: integer
-          format: int32
-        skippedSteps:
-          type: integer
-          format: int32
-        totalSteps:
-          type: integer
-          format: int32
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationSummaryDto'
-    PendingAction:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        type:
-          type: string
-        message:
-          type: string
-        targetStageId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        createdAt:
-          type: string
-          format: date-time
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    WorkflowMigrationResult:
-      type: object
-      additionalProperties: false
-      required:
-      - workflowInstanceId
-      properties:
-        workflowInstanceId:
-          type: string
-          format: guid
-        fromVersion:
-          type: integer
-          format: int32
-        toVersion:
-          type: integer
-          format: int32
-        material:
-          type: boolean
-        regressed:
-          type: boolean
-        addedStageKeys:
-          type: array
-          items:
-            type: string
-        removedStageKeys:
-          type: array
-          items:
-            type: string
-    WorkflowInstanceDetailDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        workflowId:
-          type: string
-          format: guid
-        workflowName:
-          type: string
-        workflowFamilyId:
-          type: string
-          format: guid
-        workflowVersion:
-          type: integer
-          format: int32
-        useCaseId:
-          type: string
-          format: guid
-        status:
-          $ref: '#/components/schemas/WorkflowInstanceStatus'
-        currentStageOrder:
-          type: integer
-          format: int32
-        startedAt:
-          type: string
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        initiatedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        stageInstances:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageInstanceDto'
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowHistoryEntry'
-        pendingActions:
-          type: array
-          items:
-            $ref: '#/components/schemas/PendingAction'
-        output:
-          oneOf:
-          - $ref: '#/components/schemas/WorkflowOutput'
-    WorkflowOutput:
-      type: object
-      additionalProperties: false
-      properties:
-        decision:
-          $ref: '#/components/schemas/WorkflowDecision'
-        decisionReason:
-          type:
-          - string
-          - 'null'
-        startedAt:
-          type: string
-          format: date-time
-        completedAt:
-          type: string
-          format: date-time
-        totalDurationMs:
-          type: integer
-          format: int64
-        stages:
-          type: array
-          items:
-            $ref: '#/components/schemas/StageOutputSummary'
-    ActionOutput:
-      type: object
-      discriminator:
-        propertyName: $type
-        mapping:
-          WebhookOutput: '#/components/schemas/WebhookOutput'
-          RunEvaluationOutput: '#/components/schemas/RunEvaluationOutput'
-          RunRedTeamOutput: '#/components/schemas/RunRedTeamOutput'
-          HttpRequestOutput: '#/components/schemas/HttpRequestOutput'
-          AddGateRequirementOutput: '#/components/schemas/AddGateRequirementOutput'
-          RemoveGateRequirementOutput: '#/components/schemas/RemoveGateRequirementOutput'
-          RegressToStageOutput: '#/components/schemas/RegressToStageOutput'
-          SdkStepOutput: '#/components/schemas/SdkStepOutput'
-          RunAutomationOutput: '#/components/schemas/RunAutomationOutput'
-          RunSystemAgentOutput: '#/components/schemas/RunSystemAgentOutput'
-          GenerateNutritionLabelOutput: '#/components/schemas/GenerateNutritionLabelOutput'
-          GenerateReceiptOutput: '#/components/schemas/GenerateReceiptOutput'
-          SealNutritionLabelOutput: '#/components/schemas/SealNutritionLabelOutput'
-          RunInitialRiskAnalysisOutput: '#/components/schemas/RunInitialRiskAnalysisOutput'
-          RunInherentRiskAnalysisOutput: '#/components/schemas/RunInherentRiskAnalysisOutput'
-          RunResidualRiskAnalysisOutput: '#/components/schemas/RunResidualRiskAnalysisOutput'
-          RunAssessmentOutput: '#/components/schemas/RunAssessmentOutput'
-          NotifyOutput: '#/components/schemas/NotifyOutput'
-      x-abstract: true
-      additionalProperties: false
-      required:
-      - $type
-      properties:
-        outcome:
-          $ref: '#/components/schemas/ExecutionOutcome'
-        message:
-          type:
-          - string
-          - 'null'
-        externalJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        $type:
-          type: string
-    StageOutputSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        stageName:
-          type: string
-        stageOrder:
-          type: integer
-          format: int32
-        finalStatus:
-          $ref: '#/components/schemas/StageInstanceStatus'
-        outcome:
-          oneOf:
-          - $ref: '#/components/schemas/StageOutcome'
-        enteredAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        durationMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        automations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationOutputSummary'
-    GovernanceGateCheckResult:
-      type: object
-      additionalProperties: false
-      properties:
-        isBlocked:
-          type: boolean
-        governanceRequestId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        workflowInstanceId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        stageInstanceId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        blockReason:
-          type:
-          - string
-          - 'null'
-    ArtifactCriterion:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        category:
-          type:
-          - string
-          - 'null'
-        subCategories:
-          type: array
-          items:
-            type: string
-    ApprovalRecordDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        stageInstanceId:
-          type: string
-          format: guid
-        approverUserId:
-          type: string
-          format: guid
-        decision:
-          $ref: '#/components/schemas/ApprovalDecision'
-        comments:
-          type:
-          - string
-          - 'null'
-        decidedAt:
-          type: string
-          format: date-time
-        invalidatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        invalidatedByUserId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    StageInstanceStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pending
-      - AwaitingSchedule
       - Active
-      - AwaitingGate
-      - AwaitingAutomation
       - Completed
-      - Skipped
-      - Regressed
-      - Bypassed
+      - Suspended
+      - Cancelled
       - Failed
-      - AwaitingUserReview
       enum:
-      - Pending
-      - AwaitingSchedule
       - Active
-      - AwaitingGate
-      - AwaitingAutomation
       - Completed
-      - Skipped
-      - Regressed
-      - Bypassed
+      - Suspended
+      - Cancelled
       - Failed
-      - AwaitingUserReview
-    DisplaySectionItemDto:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-        order:
-          type: integer
-          format: int32
-        systemRequirement:
-          type: boolean
-        options:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-        isRequired:
-          type: boolean
-        requirementReason:
-          type:
-          - string
-          - 'null'
-    RegressStageRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        reason:
-          type:
-          - string
-          - 'null'
-          maxLength: 2000
     ExecutionUsageMetrics:
       type: object
       additionalProperties: false
@@ -2683,62 +2712,33 @@ components:
           type:
           - string
           - 'null'
-    GovernanceRequestDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        workflowInstanceId:
-          type: string
-          format: guid
-        stageInstanceId:
-          type: string
-          format: guid
-        actionType:
-          type: string
-        status:
-          type: string
-        requestedByUserId:
-          type: string
-          format: guid
-        requestedAt:
-          type: string
-          format: date-time
-        completedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        executionError:
-          type:
-          - string
-          - 'null'
-    ThresholdResult:
-      type: object
-      additionalProperties: false
-      properties:
-        actualValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        requiredValue:
-          type: number
-          format: double
-        passed:
-          type: boolean
-        evaluationJobId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        evaluatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
+    StageInstanceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
+      enum:
+      - Pending
+      - AwaitingSchedule
+      - Active
+      - AwaitingGate
+      - AwaitingAutomation
+      - Completed
+      - Skipped
+      - Regressed
+      - Bypassed
+      - Failed
+      - AwaitingUserReview
   securitySchemes:
     ApiKey:
       type: apiKey

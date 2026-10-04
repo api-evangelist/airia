@@ -479,39 +479,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ArtifactModel:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      - messageId
-      - conversationId
-      - assistantId
-      properties:
-        id:
-          type: string
-          format: guid
-        updatedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        messageId:
-          type: string
-          format: guid
-        conversationId:
-          type: string
-          format: guid
-        assistantId:
-          type: string
-          format: guid
-        name:
-          type: string
-        content:
-          type: string
-        isBookmarked:
-          type: boolean
     PagedResultOfArtifactModel:
       type: object
       additionalProperties: false
@@ -548,6 +515,39 @@ components:
           type:
           - string
           - 'null'
+    ArtifactModel:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - messageId
+      - conversationId
+      - assistantId
+      properties:
+        id:
+          type: string
+          format: guid
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        messageId:
+          type: string
+          format: guid
+        conversationId:
+          type: string
+          format: guid
+        assistantId:
+          type: string
+          format: guid
+        name:
+          type: string
+        content:
+          type: string
+        isBookmarked:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

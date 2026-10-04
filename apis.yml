@@ -4463,8 +4463,6 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
-  - Audit Logs
-  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
@@ -4561,8 +4559,6 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
-  - MCP Server
-  tags_raw:
   - MCP Servers
   properties:
   - type: OpenAPI
@@ -4611,8 +4607,6 @@ apis:
   humanURL: https://airia.ai/docs/mcp-servers/end-user-usage/how-to-set-up-a-gateway
   baseURL: https://mcp-gateway.airia.ai
   tags:
-  - Text-to-Speech
-  tags_raw:
   - Text To Speech
   properties:
   - type: OpenAPI

@@ -266,6 +266,55 @@ components:
       - $ref: '#/components/schemas/GatewayApiKeyWithId'
       - type: object
         additionalProperties: false
+    GatewayApiKeyType2:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+      enum:
+      - Unknown
+      - Standard
+      - ExternalAgent
+      - User
+    GatewayApiKeyRevocationMode:
+      type: string
+      description: ''
+      x-enumNames:
+      - Natural
+      - Immediate
+      enum:
+      - Natural
+      - Immediate
+    GatewayApiKeyWithId:
+      allOf:
+      - $ref: '#/components/schemas/GatewayApiKeyModel'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+            format: guid
+          apiKey:
+            type: string
+          updatedAt:
+            type: string
+            format: date-time
+          createdAt:
+            type:
+            - string
+            - 'null'
+            format: date-time
+          createdByUserId:
+            type:
+            - string
+            - 'null'
+            format: guid
+          origin:
+            oneOf:
+            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
     GatewayApiKeyModel:
       type: object
       additionalProperties: false
@@ -326,55 +375,6 @@ components:
           type:
           - string
           - 'null'
-    GatewayApiKeyType2:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
-      enum:
-      - Unknown
-      - Standard
-      - ExternalAgent
-      - User
-    GatewayApiKeyRevocationMode:
-      type: string
-      description: ''
-      x-enumNames:
-      - Natural
-      - Immediate
-      enum:
-      - Natural
-      - Immediate
-    GatewayApiKeyWithId:
-      allOf:
-      - $ref: '#/components/schemas/GatewayApiKeyModel'
-      - type: object
-        additionalProperties: false
-        properties:
-          id:
-            type: string
-            format: guid
-          apiKey:
-            type: string
-          updatedAt:
-            type: string
-            format: date-time
-          createdAt:
-            type:
-            - string
-            - 'null'
-            format: date-time
-          createdByUserId:
-            type:
-            - string
-            - 'null'
-            format: guid
-          origin:
-            oneOf:
-            - $ref: '#/components/schemas/GatewayApiKeyOrigin2'
     GatewayApiKeyLimitReachedError:
       type: object
       additionalProperties: false

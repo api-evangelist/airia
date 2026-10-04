@@ -239,6 +239,21 @@ components:
           format: guid
         content:
           type: string
+    VectorChunk:
+      type: object
+      additionalProperties: false
+      properties:
+        chunk:
+          type: string
+        documentId:
+          type: string
+        sequenceNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metadata:
+          type: string
     ChunksPageResponse:
       type: object
       additionalProperties: false
@@ -289,21 +304,6 @@ components:
       additionalProperties: false
       properties:
         results:
-          type: string
-    VectorChunk:
-      type: object
-      additionalProperties: false
-      properties:
-        chunk:
-          type: string
-        documentId:
-          type: string
-        sequenceNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        metadata:
           type: string
     VectorSearchGetRequest:
       type: object

@@ -74,169 +74,80 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AgentDeploymentType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-      enum:
-      - Chat
-      - AddinChat
-      - AddinPlaybookCompare
-      - AddinPlaybookRules
-      - ChromeExtensionSummarize
-      - ChromeExtensionKeyPoints
-      - ChromeExtensionTranslate
-      - BrowserExtension
-      - SlackBot
-      - TeamsBot
-      - AddinOutlookEmailAssistant
-      - NativeSpotlightSearch
-      - WhatsAppBot
-      - AddinOutlookCustomReadView
-      - AddinPowerPointChat
-      - AddinExcelChat
-      - SalesforceChat
-      - OmniAgent
-      - HubSpotChat
-      - SubAgent
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    PipelineVersion:
+    PipelineStepPosition:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
       - type: object
         additionalProperties: false
         properties:
-          pipelineId:
+          x:
+            type: number
+            format: float
+          y:
+            type: number
+            format: float
+          pipelineStepId:
             type: string
             format: guid
-          majorVersion:
-            type: integer
-            format: int32
-          minorVersion:
-            type: integer
-            format: int32
-          versionNumber:
-            type: string
-          isDraftVersion:
-            type: boolean
-          isLatest:
-            type: boolean
-          steps:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStep'
-          alignment:
-            $ref: '#/components/schemas/PipelineAlignment'
-          description:
-            type:
-            - string
-            - 'null'
-            maxLength: 1024
-          versionName:
-            type:
-            - string
-            - 'null'
-            maxLength: 256
-          isDeprecated:
-            type: boolean
-          boxedAgentDefinition:
-            type:
-            - string
-            - 'null'
-          overrides:
-            type:
-            - string
-            - 'null'
-    PipelineStep:
+    AgentBehaviours:
+      type: string
+      description: ''
+      x-enumNames:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+      enum:
+      - IterateCsv
+      - IterateFiles
+      - Voice
+      - IterateDatasourceFiles
+      - IterateDatasourceFileContent
+    RetryConfiguration:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        maxRetries:
+          type: integer
+          format: int32
+          maximum: 100
+          minimum: 0
+        delay:
+          type: integer
+          format: int32
+          maximum: 300000
+          minimum: 1
+        maxDelay:
+          type: integer
+          format: int32
+          maximum: 600000
+          minimum: 1
+        backoffMultiplier:
+          type: number
+          format: double
+          maximum: 10
+          minimum: 1
+        useJitter:
+          type: boolean
+    BaseEntity:
       allOf:
-      - $ref: '#/components/schemas/BaseEntity'
+      - $ref: '#/components/schemas/BaseAuditEntity'
       - type: object
         x-abstract: true
         additionalProperties: false
         properties:
-          position:
-            oneOf:
-            - $ref: '#/components/schemas/PipelineStepPosition'
-          handles:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStepHandle'
-          dependenciesObject:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PipelineStepDependency'
-          stepType:
-            $ref: '#/components/schemas/StepType'
-          pipelineVersionId:
+          id:
             type: string
             format: guid
-          stepTitle:
+          tenantId:
             type: string
-            maxLength: 100
-            minLength: 0
-          parentId:
-            type:
-            - string
-            - 'null'
             format: guid
-          width:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          height:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          retryConfiguration:
-            oneOf:
-            - $ref: '#/components/schemas/RetryConfiguration'
+          projectId:
+            type: string
+            format: guid
     StepType:
       type: string
       description: ''
@@ -292,59 +203,21 @@ components:
       - customFormHumanApprovalStep
       - imageGenerationStep
       - documentSplitterStep
-    RetryConfiguration:
+    AgentDetailItem:
       type: object
       additionalProperties: false
       properties:
-        enabled:
-          type: boolean
-        maxRetries:
-          type: integer
-          format: int32
-          maximum: 100
-          minimum: 0
-        delay:
-          type: integer
-          format: int32
-          maximum: 300000
-          minimum: 1
-        maxDelay:
-          type: integer
-          format: int32
-          maximum: 600000
-          minimum: 1
-        backoffMultiplier:
-          type: number
-          format: double
-          maximum: 10
-          minimum: 1
-        useJitter:
-          type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
         type:
+          type: string
+        name:
+          type: string
+        value: {}
+        options:
           type:
-          - string
+          - array
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+          items:
+            type: string
     PaginatedAgentDto:
       type: object
       additionalProperties: false
@@ -508,21 +381,6 @@ components:
           format: guid
         isEndUserPrivate:
           type: boolean
-    AgentDetailItem:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        name:
-          type: string
-        value: {}
-        options:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
     DeploymentInfo:
       type: object
       additionalProperties: false
@@ -535,64 +393,134 @@ components:
         pipelineId:
           type: string
           format: guid
-    PipelineStepPosition:
+    PipelineVersion:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
       - type: object
         additionalProperties: false
         properties:
-          x:
-            type: number
-            format: float
-          y:
-            type: number
-            format: float
-          pipelineStepId:
+          pipelineId:
             type: string
             format: guid
-    PipelineStepDependency:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntity'
-      - type: object
-        additionalProperties: false
-        properties:
-          pipelineStepId:
+          majorVersion:
+            type: integer
+            format: int32
+          minorVersion:
+            type: integer
+            format: int32
+          versionNumber:
             type: string
-            format: guid
-          parentId:
-            type: string
-            format: guid
-          parentHandleId:
-            type: string
-            format: guid
-          handleId:
-            type: string
-            format: guid
-    ExecutionStats:
-      type: object
-      additionalProperties: false
-      properties:
-        successCount:
-          type: integer
-          format: int32
-        failureCount:
-          type: integer
-          format: int32
-    AgentBehaviours:
+          isDraftVersion:
+            type: boolean
+          isLatest:
+            type: boolean
+          steps:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStep'
+          alignment:
+            $ref: '#/components/schemas/PipelineAlignment'
+          description:
+            type:
+            - string
+            - 'null'
+            maxLength: 1024
+          versionName:
+            type:
+            - string
+            - 'null'
+            maxLength: 256
+          isDeprecated:
+            type: boolean
+          boxedAgentDefinition:
+            type:
+            - string
+            - 'null'
+          overrides:
+            type:
+            - string
+            - 'null'
+    PipelineAlignment:
       type: string
       description: ''
       x-enumNames:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
+      - Horizontal
+      - Vertical
       enum:
-      - IterateCsv
-      - IterateFiles
-      - Voice
-      - IterateDatasourceFiles
-      - IterateDatasourceFileContent
+      - Horizontal
+      - Vertical
+    AgentDeploymentType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+      enum:
+      - Chat
+      - AddinChat
+      - AddinPlaybookCompare
+      - AddinPlaybookRules
+      - ChromeExtensionSummarize
+      - ChromeExtensionKeyPoints
+      - ChromeExtensionTranslate
+      - BrowserExtension
+      - SlackBot
+      - TeamsBot
+      - AddinOutlookEmailAssistant
+      - NativeSpotlightSearch
+      - WhatsAppBot
+      - AddinOutlookCustomReadView
+      - AddinPowerPointChat
+      - AddinExcelChat
+      - SalesforceChat
+      - OmniAgent
+      - HubSpotChat
+      - SubAgent
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     PipelineStepHandle:
       allOf:
       - $ref: '#/components/schemas/BaseEntity'
@@ -627,31 +555,103 @@ components:
             - number
             - 'null'
             format: float
-    BaseEntity:
+    ExecutionStats:
+      type: object
+      additionalProperties: false
+      properties:
+        successCount:
+          type: integer
+          format: int32
+        failureCount:
+          type: integer
+          format: int32
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PipelineStepDependency:
       allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
+      - $ref: '#/components/schemas/BaseEntity'
+      - type: object
+        additionalProperties: false
+        properties:
+          pipelineStepId:
+            type: string
+            format: guid
+          parentId:
+            type: string
+            format: guid
+          parentHandleId:
+            type: string
+            format: guid
+          handleId:
+            type: string
+            format: guid
+    PipelineStep:
+      allOf:
+      - $ref: '#/components/schemas/BaseEntity'
       - type: object
         x-abstract: true
         additionalProperties: false
         properties:
-          id:
+          position:
+            oneOf:
+            - $ref: '#/components/schemas/PipelineStepPosition'
+          handles:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepHandle'
+          dependenciesObject:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PipelineStepDependency'
+          stepType:
+            $ref: '#/components/schemas/StepType'
+          pipelineVersionId:
             type: string
             format: guid
-          tenantId:
+          stepTitle:
             type: string
+            maxLength: 100
+            minLength: 0
+          parentId:
+            type:
+            - string
+            - 'null'
             format: guid
-          projectId:
-            type: string
-            format: guid
-    PipelineAlignment:
-      type: string
-      description: ''
-      x-enumNames:
-      - Horizontal
-      - Vertical
-      enum:
-      - Horizontal
-      - Vertical
+          width:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          height:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          retryConfiguration:
+            oneOf:
+            - $ref: '#/components/schemas/RetryConfiguration'
   securitySchemes:
     ApiKey:
       type: apiKey

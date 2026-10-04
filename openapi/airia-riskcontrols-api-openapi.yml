@@ -121,6 +121,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskTreatmentStepInfo'
+    RiskControlGroupResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        isEnabled:
+          type: boolean
+        controls:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskControlResponse'
+    RiskControlResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        controlId:
+          type: string
+        name:
+          type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -162,32 +188,6 @@ components:
           type: string
         callToAction:
           type: string
-    RiskControlResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        controlId:
-          type: string
-        name:
-          type: string
-    RiskControlGroupResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        isEnabled:
-          type: boolean
-        controls:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskControlResponse'
   securitySchemes:
     ApiKey:
       type: apiKey

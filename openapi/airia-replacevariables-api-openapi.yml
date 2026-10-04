@@ -82,24 +82,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ReplaceVariablesRequestV2:
+    ReplaceVariablesResponseV2:
       type: object
       additionalProperties: false
-      required:
-      - variables
       properties:
-        file:
+        url:
+          type: string
+        filename:
+          type: string
+        duration:
           type:
-          - string
+          - integer
           - 'null'
-        fileUrl:
-          type:
-          - string
-          - 'null'
-        variables:
-          type: object
-          additionalProperties:
-            type: string
+          format: int64
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -125,19 +120,24 @@ components:
           type:
           - string
           - 'null'
-    ReplaceVariablesResponseV2:
+    ReplaceVariablesRequestV2:
       type: object
       additionalProperties: false
+      required:
+      - variables
       properties:
-        url:
-          type: string
-        filename:
-          type: string
-        duration:
+        file:
           type:
-          - integer
+          - string
           - 'null'
-          format: int64
+        fileUrl:
+          type:
+          - string
+          - 'null'
+        variables:
+          type: object
+          additionalProperties:
+            type: string
   securitySchemes:
     ApiKey:
       type: apiKey

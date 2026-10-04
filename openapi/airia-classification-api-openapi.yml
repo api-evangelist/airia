@@ -188,47 +188,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ClassificationLabelDto:
-      type: object
-      additionalProperties: false
-      properties:
-        labelName:
-          type: string
-        labelId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        isDefaultValue:
-          type: boolean
-        priority:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     CreateClassificationRequest:
       type: object
       additionalProperties: false
@@ -282,6 +241,58 @@ components:
         priority:
           type: integer
           format: int32
+    ClassificationType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Default
+      - Custom
+      - RiskLevel
+      enum:
+      - Default
+      - Custom
+      - RiskLevel
+    ClassificationLabelDto:
+      type: object
+      additionalProperties: false
+      properties:
+        labelName:
+          type: string
+        labelId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        isDefaultValue:
+          type: boolean
+        priority:
+          type: integer
+          format: int32
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     ClassificationResponse:
       type: object
       additionalProperties: false
@@ -301,17 +312,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassificationLabelResponse'
-    ClassificationType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Default
-      - Custom
-      - RiskLevel
-      enum:
-      - Default
-      - Custom
-      - RiskLevel
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -267,6 +267,30 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreateAiAssetMetadataDefinitionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        metadataName:
+          type: string
+        metadataType:
+          $ref: '#/components/schemas/AiAssetMetadataType'
+        valueType:
+          $ref: '#/components/schemas/AiAssetMetadataValueType'
+        isRequired:
+          type: boolean
+        defaultValue:
+          type:
+          - string
+          - 'null'
+        assetType:
+          $ref: '#/components/schemas/AiAssetType'
+        options:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
     AiAssetType:
       type: string
       description: ''
@@ -342,17 +366,17 @@ components:
           type:
           - string
           - 'null'
-    AiAssetMetadataDefinitionOptionDto:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: guid
-        value:
-          type: string
+    AiAssetMetadataType:
+      type: string
+      description: ''
+      x-enumNames:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
+      enum:
+      - DirectValue
+      - SingleOption
+      - MultipleOption
     AiAssetMetadataDefinitionResponse:
       type: object
       additionalProperties: false
@@ -382,30 +406,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionResponse'
-    CreateAiAssetMetadataDefinitionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        metadataName:
-          type: string
-        metadataType:
-          $ref: '#/components/schemas/AiAssetMetadataType'
-        valueType:
-          $ref: '#/components/schemas/AiAssetMetadataValueType'
-        isRequired:
-          type: boolean
-        defaultValue:
-          type:
-          - string
-          - 'null'
-        assetType:
-          $ref: '#/components/schemas/AiAssetType'
-        options:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
     UpdateAiAssetMetadataDefinitionRequest:
       type: object
       additionalProperties: false
@@ -434,6 +434,17 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/AiAssetMetadataDefinitionOptionDto'
+    AiAssetMetadataDefinitionOptionDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: guid
+        value:
+          type: string
     AiAssetMetadataDefinitionOptionResponse:
       type: object
       additionalProperties: false
@@ -443,17 +454,6 @@ components:
           format: guid
         value:
           type: string
-    AiAssetMetadataType:
-      type: string
-      description: ''
-      x-enumNames:
-      - DirectValue
-      - SingleOption
-      - MultipleOption
-      enum:
-      - DirectValue
-      - SingleOption
-      - MultipleOption
   securitySchemes:
     ApiKey:
       type: apiKey

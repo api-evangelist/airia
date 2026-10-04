@@ -541,16 +541,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PipelineUsageInfoResult:
+    PagedResultOfMemoryDto:
       type: object
       additionalProperties: false
       properties:
-        references:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/PipelineUsageInfo'
-        usedInOtherProjects:
-          type: boolean
+            $ref: '#/components/schemas/MemoryDto'
+        totalCount:
+          type: integer
+          format: int32
     MemoryDto:
       type: object
       additionalProperties: false
@@ -595,27 +596,6 @@ components:
           - integer
           - 'null'
           format: int64
-    PipelineReferenceDto:
-      type: object
-      additionalProperties: false
-      properties:
-        pipelineName:
-          type: string
-        versionDisplay:
-          type: string
-        isLatest:
-          type: boolean
-        pipelineId:
-          type: string
-          format: guid
-        pipelineVersionId:
-          type: string
-          format: guid
-        projectId:
-          type: string
-          format: guid
-        versionNumber:
-          type: string
     PipelineUsageInfo:
       type: object
       additionalProperties: false
@@ -662,6 +642,24 @@ components:
           type:
           - string
           - 'null'
+    PipelineUsageInfoResult:
+      type: object
+      additionalProperties: false
+      properties:
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+    UpdateUserMemoryDataRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type:
+          - string
+          - 'null'
     UserMemoryDataDto:
       type: object
       additionalProperties: false
@@ -675,25 +673,27 @@ components:
           - string
           - 'null'
           format: date-time
-    UpdateUserMemoryDataRequest:
+    PipelineReferenceDto:
       type: object
       additionalProperties: false
       properties:
-        data:
-          type:
-          - string
-          - 'null'
-    PagedResultOfMemoryDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemoryDto'
-        totalCount:
-          type: integer
-          format: int32
+        pipelineName:
+          type: string
+        versionDisplay:
+          type: string
+        isLatest:
+          type: boolean
+        pipelineId:
+          type: string
+          format: guid
+        pipelineVersionId:
+          type: string
+          format: guid
+        projectId:
+          type: string
+          format: guid
+        versionNumber:
+          type: string
   securitySchemes:
     ApiKey:
       type: apiKey

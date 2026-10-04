@@ -338,37 +338,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateUserPrompt:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - message
-      properties:
-        name:
-          type: string
-          maxLength: 256
-          minLength: 1
-        message:
-          type: string
-          maxLength: 4096
-          minLength: 1
-        description:
-          type: string
-          maxLength: 4096
-        projectId:
-          type: string
-          format: guid
-    PipelineUsageInfoResult:
-      type: object
-      additionalProperties: false
-      properties:
-        references:
-          type: array
-          items:
-            $ref: '#/components/schemas/PipelineUsageInfo'
-        usedInOtherProjects:
-          type: boolean
     PipelineUsageInfo:
       type: object
       additionalProperties: false
@@ -390,31 +359,6 @@ components:
           - string
           - 'null'
           format: guid
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
     UserPromptDto:
       type: object
       additionalProperties: false
@@ -447,6 +391,27 @@ components:
         project:
           oneOf:
           - $ref: '#/components/schemas/ProjectModelBase'
+    CreateUserPrompt:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - message
+      properties:
+        name:
+          type: string
+          maxLength: 256
+          minLength: 1
+        message:
+          type: string
+          maxLength: 4096
+          minLength: 1
+        description:
+          type: string
+          maxLength: 4096
+        projectId:
+          type: string
+          format: guid
     ProjectModelBase:
       type: object
       additionalProperties: false
@@ -456,6 +421,41 @@ components:
           format: guid
         name:
           type: string
+    PipelineUsageInfoResult:
+      type: object
+      additionalProperties: false
+      properties:
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineUsageInfo'
+        usedInOtherProjects:
+          type: boolean
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

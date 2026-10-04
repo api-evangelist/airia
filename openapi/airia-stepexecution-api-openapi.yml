@@ -236,6 +236,99 @@ components:
           - string
           - 'null'
           format: date-time
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    StepExecutionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        userInput:
+          type:
+          - string
+          - 'null'
+        currentDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        promptVariables:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        variables:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        input:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    PipelineStepResult:
+      type: object
+      additionalProperties: false
+      properties:
+        stepId:
+          type: string
+          format: guid
+        stepType:
+          oneOf:
+          - $ref: '#/components/schemas/StepType'
+        StepTitle:
+          type: string
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/AgentBaseStepResult'
+        input:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentBaseStepResult'
+        success:
+          type:
+          - boolean
+          - 'null'
+        completionStatus:
+          $ref: '#/components/schemas/AgentStepCompletionStatus'
+        timeTrackingData:
+          $ref: '#/components/schemas/TimeTrackingData'
+        exceptionMessage:
+          type:
+          - string
+          - 'null'
+        debugInformation:
+          type: object
+          additionalProperties: {}
     IPipelineStepResult:
       type: object
       x-abstract: true
@@ -316,99 +409,6 @@ components:
           format: guid
         $type:
           type: string
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PipelineStepResult:
-      type: object
-      additionalProperties: false
-      properties:
-        stepId:
-          type: string
-          format: guid
-        stepType:
-          oneOf:
-          - $ref: '#/components/schemas/StepType'
-        StepTitle:
-          type: string
-        result:
-          oneOf:
-          - $ref: '#/components/schemas/AgentBaseStepResult'
-        input:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentBaseStepResult'
-        success:
-          type:
-          - boolean
-          - 'null'
-        completionStatus:
-          $ref: '#/components/schemas/AgentStepCompletionStatus'
-        timeTrackingData:
-          $ref: '#/components/schemas/TimeTrackingData'
-        exceptionMessage:
-          type:
-          - string
-          - 'null'
-        debugInformation:
-          type: object
-          additionalProperties: {}
-    StepExecutionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        userInput:
-          type:
-          - string
-          - 'null'
-        currentDateTime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        promptVariables:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        variables:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        input:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentBaseStepResult'
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
   securitySchemes:
     ApiKey:
       type: apiKey

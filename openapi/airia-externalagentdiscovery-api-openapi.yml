@@ -60,6 +60,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    FetchExternalAgentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          format: uri
+          minLength: 1
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -85,16 +95,6 @@ components:
           type:
           - string
           - 'null'
-    FetchExternalAgentRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - url
-      properties:
-        url:
-          type: string
-          format: uri
-          minLength: 1
   securitySchemes:
     ApiKey:
       type: apiKey

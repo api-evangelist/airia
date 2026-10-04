@@ -328,55 +328,64 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProjectInfoModel:
-      type: object
-      additionalProperties: false
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type:
-          - string
-          - 'null'
-    AgentFeedbackStatus:
+    AgentFeedbackSentiment:
       type: string
       description: ''
       x-enumNames:
-      - Open
-      - Declined
-      - Resolved
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
       enum:
-      - Open
-      - Declined
-      - Resolved
-    ProblemDetails:
+      - Blocked
+      - NeedsImprovement
+      - Good
+      - NotGood
+      - Great
+    PagedResultOfAgentFeedbackModel:
       type: object
-      additionalProperties: {}
+      additionalProperties: false
       properties:
-        type:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentFeedbackModel'
+        totalCount:
+          type: integer
+          format: int32
+    CreateAgentFeedbackModel:
+      type: object
+      additionalProperties: false
+      required:
+      - userId
+      - executionId
+      properties:
+        comment:
+          type: string
+        userId:
+          type: string
+          format: guid
+        executionId:
+          type: string
+          format: guid
+        agent:
+          oneOf:
+          - $ref: '#/components/schemas/AgentModel'
+        requestVersion:
           type:
           - string
           - 'null'
-        title:
+          format: guid
+        requestVersionNumber:
           type:
           - string
           - 'null'
         status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/AgentFeedbackStatus'
+        sentiment:
+          $ref: '#/components/schemas/AgentFeedbackSentiment'
     AgentFeedbackModel:
       type: object
       additionalProperties: false
@@ -444,38 +453,17 @@ components:
           type:
           - string
           - 'null'
-    CreateAgentFeedbackModel:
-      type: object
-      additionalProperties: false
-      required:
-      - userId
-      - executionId
-      properties:
-        comment:
-          type: string
-        userId:
-          type: string
-          format: guid
-        executionId:
-          type: string
-          format: guid
-        agent:
-          oneOf:
-          - $ref: '#/components/schemas/AgentModel'
-        requestVersion:
-          type:
-          - string
-          - 'null'
-          format: guid
-        requestVersionNumber:
-          type:
-          - string
-          - 'null'
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/AgentFeedbackStatus'
-        sentiment:
-          $ref: '#/components/schemas/AgentFeedbackSentiment'
+    AgentFeedbackStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Open
+      - Declined
+      - Resolved
+      enum:
+      - Open
+      - Declined
+      - Resolved
     AgentModel:
       type: object
       additionalProperties: false
@@ -510,32 +498,44 @@ components:
         project:
           oneOf:
           - $ref: '#/components/schemas/ProjectInfoModel'
-    PagedResultOfAgentFeedbackModel:
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    ProjectInfoModel:
       type: object
       additionalProperties: false
+      required:
+      - id
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgentFeedbackModel'
-        totalCount:
-          type: integer
-          format: int32
-    AgentFeedbackSentiment:
-      type: string
-      description: ''
-      x-enumNames:
-      - Blocked
-      - NeedsImprovement
-      - Good
-      - NotGood
-      - Great
-      enum:
-      - Blocked
-      - NeedsImprovement
-      - Good
-      - NotGood
-      - Great
+        id:
+          type: string
+          format: guid
+        name:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKey:
       type: apiKey

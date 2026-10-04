@@ -402,6 +402,102 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ReorderModelResiliencyRulesRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - ruleIds
+      properties:
+        ruleIds:
+          type: array
+          items:
+            type: string
+            format: guid
+    CreateModelResiliencyRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - primaryModelId
+      - replacementModelId
+      - type
+      properties:
+        enabled:
+          type: boolean
+        primaryModelId:
+          type: string
+          format: guid
+          minLength: 1
+        replacementModelId:
+          type: string
+          format: guid
+          minLength: 1
+        type:
+          $ref: '#/components/schemas/ModelResiliencyRuleType'
+    ToggleModelResiliencyRuleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+    UpdateModelResiliencyRuleRequest:
+      allOf:
+      - $ref: '#/components/schemas/CreateModelResiliencyRuleRequest'
+      - type: object
+        additionalProperties: false
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            format: guid
+            minLength: 1
+    PagedResultOfModelResiliencyRuleDto:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelResiliencyRuleDto'
+        totalCount:
+          type: integer
+          format: int32
+    ModelResiliencyRuleType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Failover
+      - Override
+      enum:
+      - Failover
+      - Override
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     ModelResiliencyRuleDto:
       type: object
       additionalProperties: false
@@ -442,102 +538,6 @@ components:
         updatedByUserId:
           type: string
           format: guid
-    UpdateModelResiliencyRuleRequest:
-      allOf:
-      - $ref: '#/components/schemas/CreateModelResiliencyRuleRequest'
-      - type: object
-        additionalProperties: false
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            format: guid
-            minLength: 1
-    ReorderModelResiliencyRulesRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - ruleIds
-      properties:
-        ruleIds:
-          type: array
-          items:
-            type: string
-            format: guid
-    ModelResiliencyRuleType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Failover
-      - Override
-      enum:
-      - Failover
-      - Override
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    PagedResultOfModelResiliencyRuleDto:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelResiliencyRuleDto'
-        totalCount:
-          type: integer
-          format: int32
-    ToggleModelResiliencyRuleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - enabled
-      properties:
-        enabled:
-          type: boolean
-    CreateModelResiliencyRuleRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - primaryModelId
-      - replacementModelId
-      - type
-      properties:
-        enabled:
-          type: boolean
-        primaryModelId:
-          type: string
-          format: guid
-          minLength: 1
-        replacementModelId:
-          type: string
-          format: guid
-          minLength: 1
-        type:
-          $ref: '#/components/schemas/ModelResiliencyRuleType'
   securitySchemes:
     ApiKey:
       type: apiKey

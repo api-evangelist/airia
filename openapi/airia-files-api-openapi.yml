@@ -78,64 +78,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    FileTransferRequest:
+    FileTransferSource:
       type: object
       additionalProperties: false
-      required:
-      - source
-      - target
       properties:
-        source:
-          $ref: '#/components/schemas/FileTransferSource'
-        target:
-          $ref: '#/components/schemas/FileTransferTarget'
-    FileTransferTarget:
-      type: object
-      additionalProperties: false
-      required:
-      - storeConnectorId
-      - projectId
-      - fileName
-      properties:
-        storeConnectorId:
-          type: string
+        blobId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        datastoreFileId:
+          type:
+          - string
+          - 'null'
           format: guid
         projectId:
-          type: string
-          format: guid
-        fileName:
-          type: string
-        folderId:
           type:
           - string
           - 'null'
           format: guid
-        conflict:
+        generatedText:
           type:
           - string
           - 'null'
@@ -185,26 +147,64 @@ components:
           type:
           - string
           - 'null'
-    FileTransferSource:
+    FileTransferRequest:
       type: object
       additionalProperties: false
+      required:
+      - source
+      - target
       properties:
-        blobId:
+        source:
+          $ref: '#/components/schemas/FileTransferSource'
+        target:
+          $ref: '#/components/schemas/FileTransferTarget'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
           type:
           - string
           - 'null'
-          format: guid
-        datastoreFileId:
+        title:
           type:
           - string
           - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    FileTransferTarget:
+      type: object
+      additionalProperties: false
+      required:
+      - storeConnectorId
+      - projectId
+      - fileName
+      properties:
+        storeConnectorId:
+          type: string
           format: guid
         projectId:
+          type: string
+          format: guid
+        fileName:
+          type: string
+        folderId:
           type:
           - string
           - 'null'
           format: guid
-        generatedText:
+        conflict:
           type:
           - string
           - 'null'

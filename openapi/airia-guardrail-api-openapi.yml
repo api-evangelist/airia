@@ -402,242 +402,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GuardrailDefinitionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type: string
-        enabled:
-          type: boolean
-        applyDatasource:
-          type: boolean
-        applyToTools:
-          type: boolean
-        applyToToolCalls:
-          type: boolean
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseFilterDefinitionV1'
-        guardrailAssignments:
-          type: array
-          items:
-            $ref: '#/components/schemas/GuardrailAssignmentDefinitionV1'
-        guardrailTargets:
-          type: array
-          items:
-            $ref: '#/components/schemas/GuardrailTargetDefinitionV1'
-        originId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        originSource:
-          type:
-          - string
-          - 'null'
-        originContext:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-    GuardrailAssignmentRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        entityType:
-          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-        entityId:
-          type: string
-          format: guid
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        targetEntityType:
-          oneOf:
-          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-    GuardrailTargetDefinitionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        entityType:
-          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-        targetType:
-          $ref: '#/components/schemas/GuardrailTargetType'
-        isException:
-          type: boolean
-    GuardrailAssignmentDefinitionV1:
-      type: object
-      additionalProperties: false
-      properties:
-        entityType:
-          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-        entityId:
-          type: string
-          format: guid
-        projectId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        targetEntityType:
-          oneOf:
-          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-    FilterType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Pci
-      - Pii
-      - Phi
-      - AllowList
-      - KeywordDetector
-      - CustomDetector
-      - HtmlSanitization
-      - UrlSanitization
-      - Moderation
-      - PromptInjection
-      - Secrets
-      - RateLimiting
-      - AgentAlignment
-      - PythonFilter
-      - AgentSystemPromptAdherence
-      enum:
-      - Pci
-      - Pii
-      - Phi
-      - AllowList
-      - KeywordDetector
-      - CustomDetector
-      - HtmlSanitization
-      - UrlSanitization
-      - Moderation
-      - PromptInjection
-      - Secrets
-      - RateLimiting
-      - AgentAlignment
-      - PythonFilter
-      - AgentSystemPromptAdherence
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    GuardrailTargetRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        entityType:
-          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
-        targetType:
-          $ref: '#/components/schemas/GuardrailTargetType'
-        isException:
-          type: boolean
-    BaseFilterDefinitionV1:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        guardrailId:
-          type: string
-          format: guid
-        tenantId:
-          type: string
-          format: guid
-        filterType:
-          $ref: '#/components/schemas/FilterType'
-    GuardrailTargetType:
-      type: string
-      description: ''
-      x-enumNames:
-      - None
-      - Input
-      - Output
-      - Both
-      enum:
-      - None
-      - Input
-      - Output
-      - Both
-    GuardrailAssignmentEntityType:
-      type: string
-      description: ''
-      x-enumNames:
-      - Tenant
-      - Project
-      - Agent
-      - Model
-      - Datasource
-      - AgentStep
-      - Gateway
-      - McpGateway
-      - Claude
-      - BrowserExtension
-      - Group
-      - User
-      - InferenceHooks
-      - LiteLlm
-      enum:
-      - Tenant
-      - Project
-      - Agent
-      - Model
-      - Datasource
-      - AgentStep
-      - Gateway
-      - McpGateway
-      - Claude
-      - BrowserExtension
-      - Group
-      - User
-      - InferenceHooks
-      - LiteLlm
-    GetApplicableGuardrailsRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - projectId
-      properties:
-        projectId:
-          type: string
-          format: guid
-          minLength: 1
-        agentId:
-          type:
-          - string
-          - 'null'
-          format: guid
     AddGuardrailRequest:
       type: object
       additionalProperties: false
@@ -692,6 +456,242 @@ components:
           type: boolean
         filterType:
           $ref: '#/components/schemas/FilterType'
+    GuardrailAssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        entityId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        targetEntityType:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+    GuardrailTargetDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        targetType:
+          $ref: '#/components/schemas/GuardrailTargetType'
+        isException:
+          type: boolean
+    GuardrailDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        applyDatasource:
+          type: boolean
+        applyToTools:
+          type: boolean
+        applyToToolCalls:
+          type: boolean
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseFilterDefinitionV1'
+        guardrailAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailAssignmentDefinitionV1'
+        guardrailTargets:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuardrailTargetDefinitionV1'
+        originId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        originSource:
+          type:
+          - string
+          - 'null'
+        originContext:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    GuardrailTargetType:
+      type: string
+      description: ''
+      x-enumNames:
+      - None
+      - Input
+      - Output
+      - Both
+      enum:
+      - None
+      - Input
+      - Output
+      - Both
+    FilterType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Pci
+      - Pii
+      - Phi
+      - AllowList
+      - KeywordDetector
+      - CustomDetector
+      - HtmlSanitization
+      - UrlSanitization
+      - Moderation
+      - PromptInjection
+      - Secrets
+      - RateLimiting
+      - AgentAlignment
+      - PythonFilter
+      - AgentSystemPromptAdherence
+      enum:
+      - Pci
+      - Pii
+      - Phi
+      - AllowList
+      - KeywordDetector
+      - CustomDetector
+      - HtmlSanitization
+      - UrlSanitization
+      - Moderation
+      - PromptInjection
+      - Secrets
+      - RateLimiting
+      - AgentAlignment
+      - PythonFilter
+      - AgentSystemPromptAdherence
+    GetApplicableGuardrailsRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - projectId
+      properties:
+        projectId:
+          type: string
+          format: guid
+          minLength: 1
+        agentId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    GuardrailAssignmentEntityType:
+      type: string
+      description: ''
+      x-enumNames:
+      - Tenant
+      - Project
+      - Agent
+      - Model
+      - Datasource
+      - AgentStep
+      - Gateway
+      - McpGateway
+      - Claude
+      - BrowserExtension
+      - Group
+      - User
+      - InferenceHooks
+      - LiteLlm
+      enum:
+      - Tenant
+      - Project
+      - Agent
+      - Model
+      - Datasource
+      - AgentStep
+      - Gateway
+      - McpGateway
+      - Claude
+      - BrowserExtension
+      - Group
+      - User
+      - InferenceHooks
+      - LiteLlm
+    BaseFilterDefinitionV1:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        guardrailId:
+          type: string
+          format: guid
+        tenantId:
+          type: string
+          format: guid
+        filterType:
+          $ref: '#/components/schemas/FilterType'
+    GuardrailAssignmentDefinitionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        entityId:
+          type: string
+          format: guid
+        projectId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        targetEntityType:
+          oneOf:
+          - $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+    GuardrailTargetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        entityType:
+          $ref: '#/components/schemas/GuardrailAssignmentEntityType'
+        targetType:
+          $ref: '#/components/schemas/GuardrailTargetType'
+        isException:
+          type: boolean
   securitySchemes:
     ApiKey:
       type: apiKey

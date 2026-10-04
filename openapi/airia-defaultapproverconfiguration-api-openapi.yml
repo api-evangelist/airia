@@ -64,33 +64,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DefaultApproverConfiguration:
-      allOf:
-      - $ref: '#/components/schemas/BaseAuditEntity'
-      - type: object
-        additionalProperties: false
-        required:
-        - tenantId
-        properties:
-          id:
-            type: string
-            format: guid
-          tenantId:
-            type: string
-            format: guid
-            minLength: 1
-          approverUserIds:
-            type: array
-            items:
-              type: string
-              format: guid
-          approverGroupIds:
-            type: array
-            items:
-              type: string
-              format: guid
-          approvalLogic:
-            type: string
     ProblemDetails:
       type: object
       additionalProperties: {}
@@ -152,6 +125,33 @@ components:
             format: guid
         approvalLogic:
           type: string
+    DefaultApproverConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/BaseAuditEntity'
+      - type: object
+        additionalProperties: false
+        required:
+        - tenantId
+        properties:
+          id:
+            type: string
+            format: guid
+          tenantId:
+            type: string
+            format: guid
+            minLength: 1
+          approverUserIds:
+            type: array
+            items:
+              type: string
+              format: guid
+          approverGroupIds:
+            type: array
+            items:
+              type: string
+              format: guid
+          approvalLogic:
+            type: string
   securitySchemes:
     ApiKey:
       type: apiKey

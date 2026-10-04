@@ -409,36 +409,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    McpServerV1:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        scope:
-          type: string
-        transport:
-          type: string
-        endpoint:
-          type: string
-        authType:
-          type: string
-        hasPlaintextSecret:
-          type: boolean
-        routedThroughGateway:
-          type: boolean
-        sanctioned:
-          type: boolean
-        replaceableTier:
-          type: string
-        capability:
-          type:
-          - string
-          - 'null'
-        reportedByDeviceIds:
-          type: array
-          items:
-            type: string
     EndpointDeletionStatusV1:
       type: string
       description: ''
@@ -450,16 +420,106 @@ components:
       - Deleted
       - NotFound
       - ExternallySourced
-    EndpointDeviceReportV1:
-      allOf:
-      - $ref: '#/components/schemas/DeviceReportV1'
-      - type: object
-        additionalProperties: false
-        properties:
-          appId:
-            type: string
-          appName:
-            type: string
+    EndpointAppRefV1:
+      type: object
+      additionalProperties: false
+      properties:
+        appId:
+          type: string
+        name:
+          type: string
+        mcpCount:
+          type: integer
+          format: int32
+        plaintextSecretCount:
+          type: integer
+          format: int32
+        routedThroughGateway:
+          type: boolean
+    EndpointDeletionResultV1:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          $ref: '#/components/schemas/EndpointDeletionStatusV1'
+        deviceId:
+          type: string
+        hostName:
+          type: string
+        removedAppCount:
+          type: integer
+          format: int32
+        retainedAppCount:
+          type: integer
+          format: int32
+    PagedResultOfEndpointAgentReconcileActionV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndpointAgentReconcileActionV1'
+        totalCount:
+          type: integer
+          format: int32
+    PagedResultV2OfEndpointFindingRecordV1:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndpointFindingRecordV1'
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hasMore:
+          type:
+          - boolean
+          - 'null'
+    OllamaModelV1:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+        digest:
+          type: string
+        manifestPath:
+          type: string
+        manifestSizeBytes:
+          type: integer
+          format: int64
+        logicalSizeBytes:
+          type: integer
+          format: int64
+        onDiskSizeBytes:
+          type: integer
+          format: int64
+        loadState:
+          type: string
+        blobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OllamaBlobV1'
+    AiApiKeyFinding:
+      type: object
+      additionalProperties: false
+      properties:
+        provider:
+          type: string
+        configPath:
+          type: string
+        line:
+          type:
+          - integer
+          - 'null'
+          format: int32
     EndpointAgentReconcileActionV1:
       type: object
       additionalProperties: false
@@ -499,67 +559,31 @@ components:
         ingestedAt:
           type: string
           format: date-time
-    DeviceReportV1:
+    ProblemDetails:
       type: object
-      additionalProperties: false
+      additionalProperties: {}
       properties:
-        deviceId:
-          type: string
-        hostName:
-          type: string
-        userName:
-          type: string
-        userEmail:
-          type: string
-        os:
-          type: string
-        version:
-          type: string
-        lastSeen:
-          type: string
-          format: date-time
-        llmApiBaseUrl:
-          type: string
-        llmApiConfigSource:
-          type: string
-        llmApiRouted:
-          type: boolean
-        gatewayConfigurationName:
+        type:
           type:
           - string
           - 'null'
-        keystoreEntryPresent:
-          type: boolean
-        aiApiKeyFindings:
-          type: array
-          items:
-            $ref: '#/components/schemas/AiApiKeyFinding'
-        managedPolicyPresent:
-          type: boolean
-        mdmEnforcedKeys:
-          type: array
-          items:
-            type: string
-        configParseErrors:
-          type: integer
-          format: int32
-        parseErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConfigParseErrorV1'
-        mcpServerCount:
-          type: integer
-          format: int32
-        policyRevision:
+        title:
+          type:
+          - string
+          - 'null'
+        status:
           type:
           - integer
           - 'null'
-          format: int64
-        policyMode:
-          type: string
-        ollama:
-          oneOf:
-          - $ref: '#/components/schemas/OllamaDetailV1'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
     OllamaBlobV1:
       type: object
       additionalProperties: false
@@ -580,109 +604,6 @@ components:
           - integer
           - 'null'
           format: int64
-    EndpointFindingRecordV1:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        findingId:
-          type: string
-        appId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        clientId:
-          type: string
-        kind:
-          type: string
-        configId:
-          type:
-          - string
-          - 'null'
-        configPath:
-          type:
-          - string
-          - 'null'
-        location:
-          type:
-          - string
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-        data:
-          type: object
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        deviceId:
-          type: string
-        hostName:
-          type: string
-        userName:
-          type: string
-        agentVersion:
-          type: string
-        occurredAt:
-          type: string
-          format: date-time
-        ingestedAt:
-          type: string
-          format: date-time
-    OllamaDetailV1:
-      type: object
-      additionalProperties: false
-      properties:
-        serverState:
-          type: string
-        serverObservedAt:
-          type: string
-          format: date-time
-        inventoryStatus:
-          type: string
-        inventoryObservedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        lastInventoryAttemptAt:
-          type: string
-          format: date-time
-        scanErrorCount:
-          type: integer
-          format: int32
-        omittedModelCount:
-          type: integer
-          format: int32
-        retentionDroppedModelCount:
-          type: integer
-          format: int32
-        retentionDroppedBlobCount:
-          type: integer
-          format: int32
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/OllamaModelV1'
-    EndpointDetailV1:
-      allOf:
-      - $ref: '#/components/schemas/EndpointSummaryV1'
-      - type: object
-        additionalProperties: false
-        properties:
-          reports:
-            type: array
-            items:
-              $ref: '#/components/schemas/EndpointDeviceReportV1'
-          mcpServers:
-            type: array
-            items:
-              $ref: '#/components/schemas/McpServerV1'
     EndpointSummaryV1:
       type: object
       additionalProperties: false
@@ -763,131 +684,105 @@ components:
           type: string
         cid:
           type: string
-    EndpointDeletionResultV1:
+    EndpointFindingRecordV1:
       type: object
       additionalProperties: false
       properties:
-        status:
-          $ref: '#/components/schemas/EndpointDeletionStatusV1'
+        id:
+          type: string
+          format: guid
+        findingId:
+          type: string
+        appId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        clientId:
+          type: string
+        kind:
+          type: string
+        configId:
+          type:
+          - string
+          - 'null'
+        configPath:
+          type:
+          - string
+          - 'null'
+        location:
+          type:
+          - string
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+        data:
+          type: object
+          additionalProperties:
+            type:
+            - string
+            - 'null'
         deviceId:
           type: string
         hostName:
           type: string
-        removedAppCount:
-          type: integer
-          format: int32
-        retainedAppCount:
-          type: integer
-          format: int32
-    PagedResultOfEndpointAgentReconcileActionV1:
+        userName:
+          type: string
+        agentVersion:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        ingestedAt:
+          type: string
+          format: date-time
+    EndpointDeviceReportV1:
+      allOf:
+      - $ref: '#/components/schemas/DeviceReportV1'
+      - type: object
+        additionalProperties: false
+        properties:
+          appId:
+            type: string
+          appName:
+            type: string
+    OllamaDetailV1:
       type: object
       additionalProperties: false
       properties:
-        items:
+        serverState:
+          type: string
+        serverObservedAt:
+          type: string
+          format: date-time
+        inventoryStatus:
+          type: string
+        inventoryObservedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastInventoryAttemptAt:
+          type: string
+          format: date-time
+        scanErrorCount:
+          type: integer
+          format: int32
+        omittedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedModelCount:
+          type: integer
+          format: int32
+        retentionDroppedBlobCount:
+          type: integer
+          format: int32
+        models:
           type: array
           items:
-            $ref: '#/components/schemas/EndpointAgentReconcileActionV1'
-        totalCount:
-          type: integer
-          format: int32
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    EndpointAppRefV1:
-      type: object
-      additionalProperties: false
-      properties:
-        appId:
-          type: string
-        name:
-          type: string
-        mcpCount:
-          type: integer
-          format: int32
-        plaintextSecretCount:
-          type: integer
-          format: int32
-        routedThroughGateway:
-          type: boolean
-    AiApiKeyFinding:
-      type: object
-      additionalProperties: false
-      properties:
-        provider:
-          type: string
-        configPath:
-          type: string
-        line:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    PagedResultV2OfEndpointFindingRecordV1:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/EndpointFindingRecordV1'
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        hasMore:
-          type:
-          - boolean
-          - 'null'
-    OllamaModelV1:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        tag:
-          type: string
-        digest:
-          type: string
-        manifestPath:
-          type: string
-        manifestSizeBytes:
-          type: integer
-          format: int64
-        logicalSizeBytes:
-          type: integer
-          format: int64
-        onDiskSizeBytes:
-          type: integer
-          format: int64
-        loadState:
-          type: string
-        blobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/OllamaBlobV1'
+            $ref: '#/components/schemas/OllamaModelV1'
     ConfigParseErrorV1:
       type: object
       additionalProperties: false
@@ -902,6 +797,111 @@ components:
           type: string
         errorMessage:
           type: string
+    McpServerV1:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        scope:
+          type: string
+        transport:
+          type: string
+        endpoint:
+          type: string
+        authType:
+          type: string
+        hasPlaintextSecret:
+          type: boolean
+        routedThroughGateway:
+          type: boolean
+        sanctioned:
+          type: boolean
+        replaceableTier:
+          type: string
+        capability:
+          type:
+          - string
+          - 'null'
+        reportedByDeviceIds:
+          type: array
+          items:
+            type: string
+    DeviceReportV1:
+      type: object
+      additionalProperties: false
+      properties:
+        deviceId:
+          type: string
+        hostName:
+          type: string
+        userName:
+          type: string
+        userEmail:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+        llmApiBaseUrl:
+          type: string
+        llmApiConfigSource:
+          type: string
+        llmApiRouted:
+          type: boolean
+        gatewayConfigurationName:
+          type:
+          - string
+          - 'null'
+        keystoreEntryPresent:
+          type: boolean
+        aiApiKeyFindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiApiKeyFinding'
+        managedPolicyPresent:
+          type: boolean
+        mdmEnforcedKeys:
+          type: array
+          items:
+            type: string
+        configParseErrors:
+          type: integer
+          format: int32
+        parseErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigParseErrorV1'
+        mcpServerCount:
+          type: integer
+          format: int32
+        policyRevision:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        policyMode:
+          type: string
+        ollama:
+          oneOf:
+          - $ref: '#/components/schemas/OllamaDetailV1'
+    EndpointDetailV1:
+      allOf:
+      - $ref: '#/components/schemas/EndpointSummaryV1'
+      - type: object
+        additionalProperties: false
+        properties:
+          reports:
+            type: array
+            items:
+              $ref: '#/components/schemas/EndpointDeviceReportV1'
+          mcpServers:
+            type: array
+            items:
+              $ref: '#/components/schemas/McpServerV1'
   securitySchemes:
     ApiKey:
       type: apiKey

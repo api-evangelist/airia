@@ -588,6 +588,220 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+        role:
+          type: string
+        responseTime:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toolResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolResponse'
+        toolRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolRequest'
+    ExperiencesAppStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - InProgress
+      - InGeneration
+      - Finished
+      - Fail
+      - Example
+      - Template
+      enum:
+      - InProgress
+      - InGeneration
+      - Finished
+      - Fail
+      - Example
+      - Template
+    PagedResultOfExperiencesApp:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperiencesApp'
+        totalCount:
+          type: integer
+          format: int32
+    JsonNode:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        underlyingElement: {}
+        options:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNodeOptions'
+        parent:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+        root:
+          $ref: '#/components/schemas/JsonNode'
+    ExperiencesAppDetail:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        reactCode:
+          type:
+          - string
+          - 'null'
+    GenerateExperiencesAppRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        prompt:
+          type: string
+        experiencesAppId:
+          type:
+          - string
+          - 'null'
+          format: guid
+        inMemoryMessages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+    ExperiencesAppSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: guid
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+    ToolResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        toolCallId:
+          type: string
+        toolName:
+          type: string
+        response:
+          type:
+          - string
+          - 'null'
+    ToolRequest:
+      allOf:
+      - $ref: '#/components/schemas/BaseAssistantMessagePart'
+      - type: object
+        additionalProperties: false
+        properties:
+          toolCallId:
+            type: string
+          toolName:
+            type: string
+          parameters:
+            type: array
+            items:
+              $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
+          thoughtSignature:
+            type:
+            - string
+            - 'null'
+    KeyValuePairOfStringAndJsonNode:
+      type: object
+      additionalProperties: false
+      properties:
+        key:
+          type:
+          - string
+          - 'null'
+        value:
+          oneOf:
+          - $ref: '#/components/schemas/JsonNode'
+    ProblemDetails:
+      type: object
+      additionalProperties: {}
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+    BaseAssistantMessagePart:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        index:
+          type: integer
+          format: int32
+    BaseAuditEntity:
+      type: object
+      x-abstract: true
+      additionalProperties: false
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userId:
+          type:
+          - string
+          - 'null'
+          format: guid
+    JsonNodeOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        propertyNameCaseInsensitive:
+          type: boolean
     ExperiencesApp:
       allOf:
       - $ref: '#/components/schemas/BaseAuditEntity'
@@ -621,209 +835,6 @@ components:
             - 'null'
           status:
             $ref: '#/components/schemas/ExperiencesAppStatus'
-    ToolResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        toolCallId:
-          type: string
-        toolName:
-          type: string
-        response:
-          type:
-          - string
-          - 'null'
-    BaseAuditEntity:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        updatedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        userId:
-          type:
-          - string
-          - 'null'
-          format: guid
-    ExperiencesAppStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - InProgress
-      - InGeneration
-      - Finished
-      - Fail
-      - Example
-      - Template
-      enum:
-      - InProgress
-      - InGeneration
-      - Finished
-      - Fail
-      - Example
-      - Template
-    ExperiencesAppDetail:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        reactCode:
-          type:
-          - string
-          - 'null'
-    JsonNodeOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        propertyNameCaseInsensitive:
-          type: boolean
-    ProblemDetails:
-      type: object
-      additionalProperties: {}
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-    JsonNode:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        underlyingElement: {}
-        options:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNodeOptions'
-        parent:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
-        root:
-          $ref: '#/components/schemas/JsonNode'
-    BaseAssistantMessagePart:
-      type: object
-      x-abstract: true
-      additionalProperties: false
-      properties:
-        index:
-          type: integer
-          format: int32
-    ExperiencesAppSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          format: guid
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-    ToolRequest:
-      allOf:
-      - $ref: '#/components/schemas/BaseAssistantMessagePart'
-      - type: object
-        additionalProperties: false
-        properties:
-          toolCallId:
-            type: string
-          toolName:
-            type: string
-          parameters:
-            type: array
-            items:
-              $ref: '#/components/schemas/KeyValuePairOfStringAndJsonNode'
-          thoughtSignature:
-            type:
-            - string
-            - 'null'
-    ChatMessage:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-        timestamp:
-          type: string
-        role:
-          type: string
-        responseTime:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toolResponses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolResponse'
-        toolRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolRequest'
-    GenerateExperiencesAppRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        prompt:
-          type: string
-        experiencesAppId:
-          type:
-          - string
-          - 'null'
-          format: guid
-        inMemoryMessages:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChatMessage'
-    PagedResultOfExperiencesApp:
-      type: object
-      additionalProperties: false
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExperiencesApp'
-        totalCount:
-          type: integer
-          format: int32
     ExperiencesSeedResult:
       type: object
       additionalProperties: false
@@ -834,17 +845,6 @@ components:
         pipelineId:
           type: string
           format: guid
-    KeyValuePairOfStringAndJsonNode:
-      type: object
-      additionalProperties: false
-      properties:
-        key:
-          type:
-          - string
-          - 'null'
-        value:
-          oneOf:
-          - $ref: '#/components/schemas/JsonNode'
   securitySchemes:
     ApiKey:
       type: apiKey
