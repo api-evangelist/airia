@@ -1,0 +1,263 @@
+slug: airia
+provider: Airia
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 23
+edges:
+- tag: OutboundWebhookSubscription
+  spec_file: airia-outboundwebhooksubscription-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.92
+  evidence: Outbound webhook subscription create; Outbound webhook subscription regenerate secret; Outbound
+    webhook subscription get delivery log
+  reason: Full lifecycle of outbound webhook subscriptions including signing-secret rotation and delivery
+    logs — precisely Webhook & Event Subscription Management.
+- tag: Custom Roles
+  spec_file: airia-custom-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /v1/custom-roles/permissions 'Custom roles get available permissions'; POST /v1/custom-roles/validate-permissions;
+    schemas CustomRoleDetail, PermissionValidationIssue
+  reason: Full CRUD over custom roles plus permission catalogue, assignability and validation — role-based
+    access control administration, i.e. identity & access management.
+- tag: Groups
+  spec_file: airia-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/Groups/{groupId}/roles 'Groups assign role to group2'; POST /v1/Groups/AssignRole;
+    POST /v1/Groups/bulk-invite 'Groups bulk invite group users2'; schemas RoleViewModel, AssignUserGroupRoleRequest
+  reason: Group lifecycle plus role assignment to groups and members and user invitation — textbook identity
+    and access management (RBAC administration), not HR group or customer segmentation.
+- tag: Roles
+  spec_file: airia-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: Roles_GetRolePolicies; Roles_UnassignRoleFromUser; Roles_UnassignRoleFromGroup; schemas RoleUserAssignmentViewModel,
+    RolePoliciesViewModel
+  reason: Role definitions, attached policies and assignment/unassignment of roles to users and groups
+    — standard role-based access control administration, i.e. identity & access management.
+- tag: AgentEvaluation
+  spec_file: airia-agentevaluation-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.82
+  evidence: GET /v1/AgentEvaluation/AggregatedResults/{evaluationJobId}; AgentEvaluation_ListAiriaEvaluators;
+    schemas EvaluatorRunStatus, EvaluationTestCaseInput, EvaluationThresholdResponse, AgentEvaluationComparisonResponse
+  reason: A full evaluation harness for AI agents — evaluators, test datasets, evaluation jobs, thresholds,
+    aggregated/comparison results across agent versions. This is AI/ML model evaluation and lifecycle
+    governance, not generic software test management, because the subjects are agent versions and model
+    identifiers.
+- tag: RiskToleranceConfiguration
+  spec_file: airia-risktoleranceconfiguration-api-openapi.yml
+  capability_id: BC-120.10
+  capability_id_l1: BC-120
+  capability_name: Risk Framework & Appetite Management
+  confidence: 0.82
+  evidence: PUT /v1/governance/configurations/risk-tolerance/posture  RiskToleranceConfiguration_SetPosture2;
+    schemas RiskTolerancePosture, RiskDomainToleranceItem
+  reason: Sets an organisation-wide risk tolerance posture with per-risk-domain overrides, which is exactly
+    risk appetite/tolerance framework configuration.
+- tag: AiAssets
+  spec_file: airia-aiassets-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.8
+  evidence: GET /v1/AiAssets  AiAssets_GetFilteredAiAssets; GET /v1/AiAssets/mcpServer/{mcpServerId}  Ai
+    assets get mcp server details; GET /v1/AiAssets/models/export/csv  Ai assets export all models to
+    csv
+  reason: Inventory and detail retrieval across AI assets — models, agents, MCP servers, consolidated
+    applications — which is the AI/ML asset lifecycle and AI discovery capability described by the vendor.
+- tag: SpendAttributionLicenses
+  spec_file: airia-spendattributionlicenses-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.8
+  evidence: '"Spend attribution licenses upload license invoice2", "Spend attribution licenses export
+    focus cost and usage2", schemas "AiUserLicense", "LicenseInvoiceDto", "AiUserUtilization"'
+  reason: Attributes AI/LLM licence and gateway spend to users and organisations, ingests licence invoices
+    and exports FOCUS cost-and-usage data — i.e. technology spend visibility, chargeback/showback and
+    licence utilisation, which is IT Financial Management.
+- tag: ThreatDetectionEvents
+  spec_file: airia-threatdetectionevents-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: GET /v1/spm/threat-detection/events 'Threat detection events get events'; schema 'SpmThreatDetectionVerdict'
+  reason: The operations retrieve threat-detection events with verdicts, i.e. security detection telemetry
+    for review and response. That is Threat Detection & Response Management. Some ambiguity remains because
+    it is read-only event retrieval within an AI security posture module rather than a full SOC workflow.
+- tag: Users
+  spec_file: airia-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: Users_CreateUser2, Users_ReinviteUser2, Users_GetCredentials2, Users_GetFederatedIdentities2,
+    Users_ResetPassword2; schemas 'AssignUserRoleViewModel', 'FederatedIdentityRepresentation'
+  reason: User account provisioning, role assignment, credentials, federated identities and password reset
+    — this is administrative identity and access management for the platform, not HR employee records.
+- tag: AttackPaths
+  spec_file: airia-attackpaths-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.78
+  evidence: GET /v1/spm/attack-paths/graph  AttackPaths_GetGraph; schemas AttackPathDto, ScoreFactorDto,
+    AttackPathDiffResponse
+  reason: Security posture management surface computing attack-path graphs, scored risk factors and run-to-run
+    diffs — plainly cybersecurity exposure analysis. Left at L1 because attack-path graphing straddles
+    vulnerability management and threat detection and the operations do not name either narrower practice.
+- tag: UseCase
+  spec_file: airia-usecase-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.75
+  evidence: GET /v1/governance/usecases 'Use case get all use cases', 'Use case get ownership gaps', schemas
+    'NutritionLabelFrameworkRiskEntry', 'UseCaseRiskProfileSection', 'AiAssetType'
+  reason: A registry of AI use cases under /governance with versioning, ownership gaps, stage advancement,
+    disclosures and AI nutrition labels — this is responsible-AI / AI asset governance, the clearest fit
+    being Artificial Intelligence Management. Residual ambiguity with generic compliance or risk capabilities
+    keeps it below 0.8.
+- tag: CopilotStudioThreatDetection
+  spec_file: airia-copilotstudiothreatdetection-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v1/copilot-studio/analyze-tool-execution  'Copilot studio threat detection analyze tool
+    execution'; schemas ThreatDetectionEvaluationRequest, ThreatDetectionValidationResponse
+  reason: Operations evaluate agent prompts and tool executions for threats and return validation/analysis
+    verdicts — security threat detection and response applied to AI agent traffic. Some ambiguity between
+    threat detection and broader AI governance, hence moderate confidence.
+- tag: Guardrail
+  spec_file: airia-guardrail-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.72
+  evidence: POST /v1/Guardrail 'Guardrail create guardrail'; POST /v1/Guardrail/applicable; schemas GuardrailDefinitionV1,
+    GuardrailTargetDefinitionV1, BaseFilterDefinitionV1
+  reason: Defines and assigns AI guardrails (filters applied to targeted entities) that constrain model/agent
+    behaviour — responsible-AI controls within AI/ML lifecycle management. Some ambiguity against a security-controls
+    reading, hence 0.72.
+- tag: NonAiriaAiAsset
+  spec_file: airia-nonairiaaiasset-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.72
+  evidence: POST /v1/NonAiriaAiAsset/azure-openai, POST /v1/NonAiriaAiAsset/aws-bedrock, GET /v1/NonAiriaAiAsset/connections
+    — AiAssetSourceType
+  reason: Registers and inventories external AI model sources (Azure OpenAI, Bedrock, Vertex) as AI assets
+    — AI estate/model inventory management, which is Artificial Intelligence Management rather than generic
+    connector plumbing.
+- tag: RiskRegistry
+  spec_file: airia-riskregistry-api-openapi.yml
+  capability_id: BC-120.30
+  capability_id_l1: BC-120
+  capability_name: Risk Treatment Management
+  confidence: 0.72
+  evidence: POST /v1/risk-registry/{id}/mitigation-steps  RiskRegistry_AddMitigationStep; schemas RiskTreatmentStepsResponse,
+    CreateRiskTransferDecisionRequest, CreateAcceptanceDecisionRequest, ResidualRisk
+  reason: CRUD over a risk register with controls, mitigation steps, risk transfer and acceptance decisions
+    and residual risk — the mitigate/transfer/accept treatment decisions of ERM. Framework tags (EuAiActCategory,
+    NistAiRmfTier) indicate AI-risk scope but the operations themselves perform risk treatment management.
+- tag: Security
+  spec_file: airia-security-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.72
+  evidence: GET /v1/Security/inventory  Security_GetUnifiedInventory2; GET /v1/Security/inventory/top-risk  Security_GetTopRiskAgents2;
+    schemas SecurePostureStatus, SecurityStatsDto
+  reason: Unified inventory of AI components with security posture statistics, coverage, ownership gaps
+    and top-risk agents — security posture visibility and governance reporting. Evidence does not single
+    out one sub-capability, so L1 only.
+- tag: Assistants
+  spec_file: airia-assistants-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /v1/Assistants  Assistants_Create; schemas ModelParameters, PromptParameters, DataStoreParameters,
+    PersonalityTypes
+  reason: CRUD over AI assistant definitions configured with model, prompt and data-store parameters —
+    the lifecycle management of AI/LLM artefacts, best fitted by Artificial Intelligence Management. It
+    is the vendor's own product object, so some argument exists for treating it as plain product configuration;
+    hence 0.7.
+- tag: MicrosoftSentinelPlaybook
+  spec_file: airia-microsoftsentinelplaybook-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /v1/spm/microsoft-sentinel/playbook-events  MicrosoftSentinelPlaybook_ReportPlaybookEvent;
+    schema MicrosoftSentinelPlaybookTargetEntity
+  reason: Integration with Microsoft Sentinel (SIEM/SOAR) to report and query security playbook events
+    against target entities — automated threat detection and response workflow. Confidence moderate since
+    the surface is a callback/event log rather than full incident handling.
+- tag: RedTeamingEvaluation
+  spec_file: airia-redteamingevaluation-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.7
+  evidence: GET /v1/RedTeamingEvaluation/{id}/vulnerabilities  Red teaming evaluation get vulnerabilities
+    by evaluation id
+  reason: Creates and runs red-teaming evaluations of AI agents and returns the vulnerabilities and attack-success-rate
+    trends discovered, which is explicitly vulnerability discovery and tracking under Cybersecurity Management.
+- tag: RiskDomain
+  spec_file: airia-riskdomain-api-openapi.yml
+  capability_id: BC-120.10
+  capability_id_l1: BC-120
+  capability_name: Risk Framework & Appetite Management
+  confidence: 0.7
+  evidence: GET /v1/risk-registry/risk-domains/taxonomy  RiskDomain_GetRiskTaxonomy; schemas RiskTaxonomyDomainResponse,
+    RiskFrameworkControlsResponse
+  reason: Read-only surface exposing the risk domain/sub-domain taxonomy and associated framework controls
+    — i.e. the risk taxonomy and framework layer of enterprise risk management, not an operational risk
+    assessment or treatment surface.
+- tag: UseCaseRiskAnalysis
+  spec_file: airia-usecaseriskanalysis-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /v1/governance/usecases/{useCaseId}/risk-analysis, schemas 'RiskProfileFrameworkDto',
+    'RiskScoreBreakdownDto', 'LikelihoodDriversDto'
+  reason: Computes and recomputes risk profiles and scores for AI use cases against risk frameworks —
+    AI risk governance, best fitted by Artificial Intelligence Management (responsible AI). A generic
+    Risk Identification & Assessment reading is also defensible, so confidence is moderate.
+- tag: UseCaseRiskClassifications
+  spec_file: airia-usecaseriskclassifications-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: GET /v1/governance/usecases/{useCaseId}/risk-classifications/active; schemas 'EuAiActCategory',
+    'Iso42001Level', 'NistAiRmfTier'
+  reason: Classifies AI use cases against EU AI Act, ISO 42001 and NIST AI RMF tiers — responsible-AI
+    regulatory classification. Mapped to Artificial Intelligence Management; a Regulatory Compliance Management
+    reading is plausible, hence 0.7.
