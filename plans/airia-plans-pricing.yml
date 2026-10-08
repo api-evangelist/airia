@@ -45,3 +45,27 @@ sales_gate:
     Also transactable through the Microsoft Marketplace listing, where private-offer pricing is set
     per customer rather than published.
 fulfillment_policy: https://airia.app.box.com/file/1856364321327?v=Airia-Legal-Fulfillment-Policy
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Professional
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Teams
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
