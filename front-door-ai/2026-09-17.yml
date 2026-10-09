@@ -1,0 +1,33 @@
+# Front Door AI Index — airia — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: airia
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: airia.com
+  final_host: airia.com
+  ownership: own
+  owner: airia
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 44
+  band: 6
+  band_label: dominant
+  host_score: 44
+  density: 54.46
+  words: 808
+  tiers:
+    agentic: 8
+    core: 36
+    model: 0
+  ambiguous: 21
+  top_terms:
+    AI: 36
+    agent: 21
+    AI agent: 4
+    agentic: 2
+    AI assistant: 1
+    MCP: 1
