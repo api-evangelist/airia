@@ -27,3 +27,16 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: airia-splunk-own
+  label: Splunk (own)
+  partner: splunk
+  partner_name: Splunk (own)
+  category: app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://splunkbase.splunk.com/app/8382/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
